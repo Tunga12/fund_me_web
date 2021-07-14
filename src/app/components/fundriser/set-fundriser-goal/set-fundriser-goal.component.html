@@ -1,0 +1,62 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <img src="/src/assets/images/logo.png" alt="goFundMe" />
+    <span class="nav-group-spacer"></span>
+    <p>
+      Don't you have account?<a
+        routerLink="/sign-up"
+        routerLinkActive="router-link-active"
+        mat-link
+        class="btn-link"
+        >Sign in</a
+      >
+      <!-- <button mat-stroked-button color="accent">Accent</button> -->
+    </p>
+  </mat-toolbar>
+</nav>
+<mat-card class="fundriser-form">
+  <mat-card-content>
+<h4 class="progress-bar-sections-title heading-4">Step 0 of 4</h4>
+    <div class="progress-bar-sections-wrap">
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--remaining"></div>
+    </div>
+    <h2>Set your fundraising goal</h2>
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>How much would you like to rise? </mat-label>
+        <!-- <label for="amount">How much would yyou like to rise?</label> -->
+        <input
+        id="amount"
+          matInput
+          class="matInput"
+          placeholder="Enter goal amount"
+          type="number"
+        />
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00 USD</span>
+      </mat-form-field>
+      <p>
+        Keep in mind that transaction fees, including credit and debit charges,
+        are deducted from each donation.
+      </p>
+      <div id="note">
+        <p>money raised, please make sure the person withdrawing has:
+        </p>
+        <ul>
+          <li>A US social security number</li>
+          <li>A bank account and mailing address in one of the 50 states</li>
+        </ul>
+      </div>
+      <p><input
+        type="button"
+        (click)="next()"
+        class="btn-large btn-primary"
+        value="Next"
+      /></p>
+    </form>
+  </mat-card-content>
+</mat-card>
+<p class="footer-logo"></p>

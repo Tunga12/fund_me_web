@@ -1,0 +1,77 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <!-- <img src="/assets/images/logo.png" alt="goFundMe" /> -->
+    <span class="nav-group-spacer"></span>
+    <p>
+      Don't you have account?<a
+        routerLink="/sign-up"
+        routerLinkActive="router-link-active"
+        mat-link
+        class="btn-link"
+        >Sign in</a
+      >
+      <!-- <button mat-stroked-button color="accent">Accent</button> -->
+    </p>
+  </mat-toolbar>
+</nav>
+<mat-card class="fundriser-form">
+  <mat-card-content>
+    <h4 class="progress-bar-sections-title heading-4">Step 0 of 4</h4>
+    <div class="progress-bar-sections-wrap">
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
+      <div class="progress-bar-sections-section progress-bar-sections-section--remaining"></div>
+    </div>
+    <h2>Add a cover photo or video</h2>
+    <p>
+      A high-quality photo or video will help tell your story and build trust
+      with donors.
+    </p>
+    <form>
+      <div class="add-button" (click)="select($event)">
+
+        <div class="add-media">
+          <div class="add-media-content">
+             <input #image
+          type="file"
+          name="image"
+          id="image"
+          accept="image/jpeg,,image/png, image/bmp"
+          style="z-index: 0; display: block; height: 100%;"
+        />
+            Drag and drop or upload a photo that best represents your
+            fundraiser.
+          </div>
+        </div>
+      </div>
+      <div class="or-divider">
+        <p class="bar"></p>
+        <p style="font-weight: 600;" >or</p>
+        <p class="bar"></p>
+      </div>
+      <p>Add a yotube  video link</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Yotube video link </mat-label>
+        <!-- <label for="amount">How much would yyou like to rise?</label> -->
+        <input
+          id="amount"
+          matInput
+          class="matInput"
+          placeholder="Enter goal amount"
+          link
+        />
+        <span matPrefix>link&nbsp;</span>
+      </mat-form-field>
+      <p>
+        <input
+          type="button"
+          (click)="next()"
+          class="btn-large btn-primary"
+          value="Next"
+        />
+      </p>
+    </form>
+  </mat-card-content>
+</mat-card>
+<p class="footer-logo"></p>

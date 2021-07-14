@@ -1,0 +1,80 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <span class="nav-group-spacer"></span>
+    <div>
+      <!-- First menu -->
+      <a
+        mat-button
+        [matMenuTriggerFor]="discover"
+        #discovermenuTrigger="matMenuTrigger"
+        (onMenuClose)="toggleDiscoverCaret()"
+        (onMenuOpen)="toggleDiscoverCaret()"
+
+        class="nav-link mat-button"
+      >
+        Discover
+        <mat-icon *ngIf="discoverCaret">expand_more</mat-icon>
+        <mat-icon *ngIf="!discoverCaret">expand_less</mat-icon>
+      </a>
+
+      <mat-menu #discover="matMenu" [hasBackdrop]="false" [overlapTrigger]="false">
+        <button mat-menu-item>Baikal oilffundrise</button>
+        <button mat-menu-item>Bala shark</button>
+        <button mat-menu-item>Ballan wrasse</button>
+        <button mat-menu-item>Bamboo shark</button>
+        <button mat-menu-item>Banded killiffundrise</button>
+      </mat-menu>
+      <!--
+    SECOND MENU
+ -->
+      <a
+        mat-button
+        [matMenuTriggerFor]="fundrise"
+        #funndrisemenuTrigger="matMenuTrigger"
+        (onMenuClose)="toggleFundriseCaret()"
+        (onMenuOpen)="toggleFundriseCaret()"
+        class="nav-link mat-button"
+      >
+
+
+      <mat-menu
+        #fundrise="matMenu"
+        #ffundriseMenu
+        [hasBackdrop]="false"
+        [overlapTrigger]="false"
+      >
+        <a mat-menu-item routerLink="'/create-contact'" class="mat-menu-item">
+          Create Contact
+        </a>
+        <a mat-menu-item routerLink="'/activities'" class="mat-menu-item">
+          Activities
+        </a>
+        <a mat-menu-item routerLink="'/create-activity'" class="mat-menu-item">
+          Create Activity
+        </a>
+      </mat-menu>
+      Fundrise for
+        <mat-icon *ngIf="fundriseCaret">expand_more</mat-icon>
+        <mat-icon *ngIf="!fundriseCaret">expand_less</mat-icon>
+      </a>
+    </div>
+
+    <!-- LOGO -->
+    <span class="nav-group-spacer"></span>
+   <img src="\assets\images\logo.png" alt="logo" style="width: 200px; height: 70%;">
+    <span class="nav-group-spacer"></span>
+
+    <div>
+      <a mat-button routerLink="'/create-contact'" class="nav-link mat-button">
+        Create Contact
+      </a>
+      <a mat-button routerLink="'/activities'" class="nav-link mat-button">
+        Activities
+      </a>
+      <a mat-button routerLink="'/create-activity'" class="nav-link mat-button">
+        Create Activity
+      </a>
+    </div>
+    <span class="nav-group-spacer"></span>
+  </mat-toolbar>
+</nav>

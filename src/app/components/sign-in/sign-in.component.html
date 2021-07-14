@@ -1,0 +1,90 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <p>Banner</p>
+    <span class="nav-group-spacer"></span>
+    <p>
+      Don't you have account?<a
+        routerLink="/sign-up"
+        routerLinkActive="router-link-active"
+        mat-link
+        class="btn-link"
+        >Sign up</a
+      >
+      <!-- <button mat-stroked-button color="accent">Accent</button> -->
+    </p>
+  </mat-toolbar>
+</nav>
+
+<mat-card class="form-container">
+  <!-- Title of an Card -->
+  <mat-card-title>
+    <h1 class="headline">Sign in</h1>
+    <mat-divider mat-inset></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form>
+      <table>
+        <tr>
+          <button mat-button class="btn facebook-btn">
+            <mat-icon>facebook</mat-icon> Continue with Facebook
+          </button>
+        </tr>
+        <tr>
+          <div class="or-divider">
+            <p class="bar"></p>
+            <p style="font-weight: 600">or</p>
+            <p class="bar"></p>
+          </div>
+        </tr>
+        <tr>
+          <mat-form-field appearance="outline">
+            <mat-label> Email Address </mat-label>
+            <input
+              matInput
+              class="matInput"
+              placeholder="Email address"
+              type="email"
+              email
+            />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="outline">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <!-- <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon> -->
+            </button>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <input
+            class="btn-primary btn-large"
+            type="submit"
+            value="Sign in to GoFundMe"
+          />
+        </tr>
+      </table>
+    </form>
+    <mat-divider mat-inset></mat-divider>
+  </mat-card-content>
+  <mat-card-footer style="margin: 20px auto">
+    <a
+      link
+      routerLink="sign-up"
+      routerLinkActive="router-link-active"
+      color="accent"
+    >
+      Forgot password?</a
+    >
+  </mat-card-footer>
+</mat-card>
+
+<p class="footer-logo"></p>

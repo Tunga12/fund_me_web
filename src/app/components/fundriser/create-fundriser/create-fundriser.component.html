@@ -1,0 +1,86 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <img src="/src/assets/images/logo.png" alt="goFundMe" />
+    <span class="nav-group-spacer"></span>
+    <p>
+      Don't you have account?<a
+        routerLink="/sign-up"
+        routerLinkActive="router-link-active"
+        mat-link
+        class="btn-link"
+        >Sign in</a
+      >
+      <!-- <button mat-stroked-button color="accent">Accent</button> -->
+    </p>
+  </mat-toolbar>
+</nav>
+<mat-card class="fundriser-form">
+  <mat-card-content>
+    <mat-horizontal-stepper>
+      <mat-step > </mat-step>
+      <mat-step > </mat-step>
+    </mat-horizontal-stepper>
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Country </mat-label>
+        <input
+          matInput
+          class="matInput"
+          placeholder="Email address"
+          type="email"
+          email
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Postal Code </mat-label>
+        <input
+          matInput
+          class="matInput"
+          placeholder="Postal Code"
+          type="email"
+          email
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Choose Category</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option>Choose Category</mat-option>
+          <mat-option value="option1">Option 1</mat-option>
+          <mat-option value="option2">Option 2</mat-option>
+          <mat-option value="option3">Option 3</mat-option>
+        </mat-select>
+      </mat-form-field>
+ <mat-form-field appearance="outline">
+        <mat-label>What is your fundriser title? </mat-label>
+        <input
+          matInput
+          class="matInput"
+          placeholder="What is your fundriser title?"
+          type="email"
+          email
+        />
+      </mat-form-field>
+        <input type="button" (click)="next()"  class="btn-large btn-primary" value="Next" />
+
+    </form>
+    <p>By continuing, you agree to the GoFundMe  <a
+        link
+        routerLink="/terms"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        terms</a
+      >
+      and acknowledge receipt of our
+      <a
+        link
+        routerLink="/privacy"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        privacy policy</a
+      >.</p>
+  </mat-card-content>
+</mat-card>
+<p class="footer-logo"></p>
+

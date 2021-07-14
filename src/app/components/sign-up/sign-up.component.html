@@ -1,0 +1,123 @@
+<nav>
+  <mat-toolbar [classList]="'bg-white'">
+    <img src="src/assets/images/logo.png" alt="goFundMe" />
+    <span class="nav-group-spacer"></span>
+    <p>
+      Don't you have account?<a
+        routerLink="/sign-in"
+        routerLinkActive="router-link-active"
+        mat-link
+        class="btn-link"
+        >Sign in</a
+      >
+      <!-- <button mat-stroked-button color="accent">Accent</button> -->
+    </p>
+  </mat-toolbar>
+</nav>
+
+<mat-card class="form-container">
+  <!-- Title of an Card -->
+  <mat-card-title>
+    <h1 class="headline">Sign up</h1>
+    <mat-divider mat-inset></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form>
+      <table>
+        <tr>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>First name </mat-label>
+              <input
+                matInput
+                class="matInput"
+                placeholder="Email address"
+                type="email"
+                email
+              />
+              <mat-icon matSuffix></mat-icon>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label> Last name </mat-label>
+              <input
+                matInput
+                class="matInput"
+                placeholder="Email address"
+                type="email"
+                email
+              />
+              <mat-icon matSuffix></mat-icon>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td [colSpan]="2">
+            <mat-form-field appearance="outline">
+              <mat-label> Email Address </mat-label>
+              <input
+                matInput
+                class="matInput"
+                placeholder="Email address"
+                type="email"
+                email
+              />
+              <mat-icon matSuffix></mat-icon>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td [colSpan]="2">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <!-- <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon> -->
+              </button>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td [colSpan]="2">
+        <input type="submit"  class="btn-large btn-primary" value="Next" />
+
+          </td>
+        </tr>
+      </table>
+    </form>
+    <mat-divider mat-inset></mat-divider>
+  </mat-card-content>
+    <p>
+      GoFundMe's fee is 5% from each donation you receive. The payment processor
+      fee is 2.9% + $0.30 per donation. By continuing, you agree to the GoFundMe
+      <a
+        link
+        routerLink="/terms"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        terms</a
+      >
+      and acknowledge receipt of our
+      <a
+        link
+        routerLink="/privacy"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        privacy</a
+      >
+      policy.
+    </p>
+</mat-card>
+
+<p class="footer-logo"></p>

@@ -1,0 +1,68 @@
+<div mat-dialog-title>
+  <h4 matDialogTitle style="display: inline">Add team members</h4>
+  <span mat-dialog-close class="close-dialog">X</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <!-- <h1>Search by email</h1> -->
+  <form (submit)="$event.preventDefault()">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        #emailInput
+        formControlName="email"
+        type="link"
+        required
+        placeholder="Search by email"
+        (keyup.enter)="addEmail(emailInput.value); emailInput.value = ''"
+      />
+      <span matPrefix><mat-icon>search</mat-icon></span>
+    </mat-form-field>
+    <mat-list dense>
+      <mat-list-item
+        *ngIf="emailInput.value.trim()"
+        style="margin-bottom: 10px"
+      >
+        <a routerLink="item.link"
+          ><mat-icon style="margin-right: 20px"> email </mat-icon>
+          <div style="display: inline-block">
+            <p class="bold" style="margin-bottom: -3px">
+              {{ emailInput.value }}
+            </p>
+            <p style="color: #999 !important">{{ emailInput.value }}</p>
+          </div></a
+        >
+        <mat-checkbox
+          value="{{ emailInput.value }}"
+          #current
+          color="primary"
+          (checked)="(current.value === emailInput.value)"
+          style="margin-left: auto"
+        ></mat-checkbox>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <mat-list-item *ngFor="let email of emails" style="margin-bottom: 10px">
+        <a routerLink="item.link"
+          ><mat-icon style="margin-right: 20px"> email </mat-icon>
+          <div style="display: inline-block">
+            <p class="bold" style="margin-bottom: -3px">{{ email }}</p>
+            <p style="color: #999 !important">{{ email }}</p>
+          </div></a
+        >
+        <mat-checkbox
+          [checked]="true"
+          value="{{ email }}"
+          #current
+          color="primary"
+          (change)="removeEmail(current.value)"
+          style="margin-left: auto"
+        ></mat-checkbox>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <p><a  (click)="openImportContactsDialog()" > Import your email contacts</a></p>
+    <p>
+      <button mat-raised-button class="btn-primary btn-large">Next</button>
+    </p>
+  </form>
+</mat-dialog-content>

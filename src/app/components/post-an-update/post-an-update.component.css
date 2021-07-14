@@ -1,0 +1,17 @@
+
+mat-dialog-content.mat-dialog-content{
+  width: 400px;
+  margin: 30px 0px;
+}
+.close-dialog{
+  float: right; cursor: pointer;
+  margin-top: -20px;
+}
+textarea {
+    min-height: 7rem;
+    resize: none;
+}
+.media
+{
+margin: 10px 0px;
+}

@@ -1,0 +1,22 @@
+<div mat-dialog-title>
+  <h4 matDialogTitle style="display: inline">Add team members</h4>
+  <span mat-dialog-close class="close-dialog">X</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <!-- <h1>Search by email</h1> -->
+  
+  
+    <mat-list dense>
+      <mat-list-item *ngFor="let email of email_clients" style="margin-bottom: 10px;align-items: center;">
+        <a routerLink="item.link"
+          ><mat-icon style="margin-right: 20px"> {{email}} </mat-icon>
+            {{ email }}
+      </a>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  
+      <button mat-raised-button mat-dialog-close class="btn-primary btn-large">Back</button>
+    
+</mat-dialog-content>

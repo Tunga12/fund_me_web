@@ -1,0 +1,156 @@
+<nav-bar></nav-bar>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <button mat-raised-button class="bold" style="margin: 20px 0px">
+        &lt; Back
+      </button>
+      <!-- Title -->
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="card-gird">
+      <div class="card-grid left">
+        <div>
+          <img matCardImage src="\assets\images\step2.PNG" />
+        </div>
+        <div class="detail-column">
+          <h2>Hello wold</h2>
+          <p><a link>Hello wold</a> &nbsp; &nbsp; <a>Hello wold</a></p>
+          <mat-progress-bar
+            mode="buffer"
+            [value]="40"
+            [bufferValue]="1000"
+            color="primary"
+          ></mat-progress-bar>
+          <p>Total rased $0</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div>fkdfk</div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab
+      label="{{ index === 0 ? 'Donors' : index === 1 ? 'Team' : 'Updates' }}"
+      *ngFor="let tab of tabs; let index = index"
+    >
+      <div *ngIf="index === 0">
+        <div style="text-align: center; margin: 50px auto">
+          <h3 style="font-weight: 600 !important">
+            You haven’t posted an update yet.
+          </h3>
+          <h3>Keep your supporters up to date on your fundraisers!</h3>
+          <button
+            (click)="openUpdateDialog()"
+            mat-button
+            class="btn-primary btn-small"
+          >
+            Post an update
+          </button>
+        </div>
+        <mat-tab-group [disableRipple]="false">
+          <mat-tab
+            label="{{ index === 0 ? 'Donations' : 'Invited contacts' }}"
+            draggable="true"
+            *ngFor="let tab of [0, 1]; let index = index"
+          >
+            <div
+              *ngIf="index === 0"
+              style="text-align: center; margin: 50px auto"
+            >
+              <h3 style="font-weight: 600 !important">
+                Your fundraiser has no donations yet.
+              </h3>
+              <h3>
+                Donations will show up here. Start by sharing your fundraiser
+                with friends and family.
+              </h3>
+              <button
+                mat-button
+                class="btn-primary btn-small"
+                (click)="openShareDialog()"
+              >
+                Share fundriser
+              </button>
+            </div>
+            <div
+              *ngIf="index === 1"
+              style="text-align: center; margin: 50px auto"
+            >
+              <h3 style="font-weight: 600 !important">
+                You haven't sent any invites yet.
+              </h3>
+              <h3>
+                Your invited contacts will show up here. Start by sending at
+                least 20 invites via email or text message
+              </h3>
+              <button mat-button class="btn-primary btn-small">
+                Invite via email
+              </button>
+              <button mat-button class="btn-primary btn-small">
+                Invite via text
+              </button>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <div *ngIf="index === 1">
+        <div style="text-align: center; margin: 50px auto">
+          <h3 style="font-weight: 600 !important">
+            You haven’t added team members yet.
+          </h3>
+          <h3>Keep your supporters up to date on your fundraisers!</h3>
+          <button mat-button
+          (click)="openAddTeamMembertsDialog()"
+          class="btn-primary btn-small" >
+            Add team members
+          </button>
+        </div>
+        <div class="or-divider">
+          <p class="bar"></p>
+          <p style="font-weight: 600">or</p>
+          <p class="bar"></p>
+        </div>
+        <div style="display: flex; align-items: center; justify-items: center">
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="text"
+              value="https://fund.mem.com/blalbsl/fff"
+              [disabled]="true"
+            />
+          </mat-form-field>
+          <span 
+          mat-button
+          class="btn-primary"
+          style="padding: 13px; margin: 0px 0px 20px -30px"
+          >
+          Copy
+        </span>
+        </div>
+
+        <p style="text-align: center">
+          Only share this invite link with people you want to join your
+          fundraising team.
+        </p>
+      </div>
+      <div *ngIf="index === 2" style="text-align: center; margin: 50px auto">
+        <h3 style="font-weight: 600 !important">
+          You haven’t posted an update yet.
+        </h3>
+        <h3>Keep your supporters up to date on your fundraisers!</h3>
+        <button
+          mat-button
+          (click)="openUpdateDialog()"
+          class="btn-primary btn-small"
+        >
+          Post an update
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

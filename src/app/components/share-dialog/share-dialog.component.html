@@ -1,0 +1,22 @@
+<!-- <p mat-dialog-title> Share
+<mat-icon mat-dialog-close >cancel</mat-icon>
+</p> -->
+ <div mat-dialog-title >
+   <h4 matDialogTitle style="display: inline;">Title </h4>
+ <span mat-dialog-close class="close-dialog">X</span>
+
+ </div>
+ <mat-divider></mat-divider>
+ <mat-dialog-content>
+   <mat-list dense>
+       <mat-list-item *ngFor="let item of items">
+         <a routerLink="item.link"><mat-icon style="margin-right: 20px;"> {{ item.icon }}</mat-icon>  {{item.text}}</a>
+         <mat-divider></mat-divider>
+       </mat-list-item>
+   </mat-list>
+</mat-dialog-content>
+
+
+
+<!-- <button mat-raised-button mat-dialog-close="yes">Yes</button>
+<button mat-raised-button mat-dialog-close="No">No</button> -->

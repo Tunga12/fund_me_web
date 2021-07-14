@@ -1,0 +1,28 @@
+<div mat-dialog-title>
+  <h4 matDialogTitle style="display: inline">Post an update</h4>
+  <span mat-dialog-close class="close-dialog">X</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <!-- TODO -->
+  <h1 class="bold">Add a photo or video</h1>
+  <p>
+    <button mat-raised-button class="facebook-btn btn-large">
+      <mat-icon>facebook</mat-icon>
+      Add a Facebook photo
+    </button>
+  </p>
+  <p>
+    <button mat-raised-button class="btn-primary btn-large">
+      <mat-icon>link</mat-icon> Upload a photo
+    </button>
+  </p>
+  <p>
+    <button mat-raised-button class="btn-primary btn-large" (click)="openYoutubLinkDialog()">
+      <mat-icon> play_circle_outline </mat-icon> Add a YouTube video
+    </button>
+  </p>
+  <p style="margin:20px">A high-quality photo or video will help tell your story.</p>
+  <mat-divider></mat-divider>
+  <p mat-dialog-close class="dialog-go-back-btn">Go back</p>
+</mat-dialog-content>

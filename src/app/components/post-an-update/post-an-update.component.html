@@ -1,0 +1,66 @@
+<!-- <p mat-dialog-title> Share
+<mat-icon mat-dialog-close >cancel</mat-icon>
+</p> -->
+<div mat-dialog-title>
+  <h4 matDialogTitle style="display: inline">Post an update</h4>
+  <span mat-dialog-close class="close-dialog">X</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <form>
+    <mat-form-field appearance="outline">
+      <textarea matInput required placeholder="Share your news"></textarea>
+    </mat-form-field>
+    <!-- TODO -->
+    <input
+      type="button"
+      class="btn-primary btn-large"
+      mat-raised-button
+      value="Add a photo or video"
+      (click)="openAddPhotoOrVedioDialog()"
+    />
+    <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
+    <mat-divider></mat-divider>
+    <div class="media">
+      <p>
+        <mat-checkbox
+          formControlName="formControlName"
+          value="here"
+          color="primary"
+          >Campign page(Default)</mat-checkbox
+        >
+      </p>
+      <p>
+        <mat-checkbox
+          formControlName="formControlName"
+          value="donors&followers"
+          color="primary"
+          >Donors and Folowers</mat-checkbox
+        >
+      </p>
+
+      <p>
+        <mat-checkbox
+          formControlName="formControlName"
+          value="facebook"
+          color="primary"
+          >Facebook</mat-checkbox
+        >
+      </p>
+      <p>
+        <mat-checkbox
+          formControlName="formControlName"
+          value="twitter"
+          color="primary"
+          >Twitter</mat-checkbox
+        >
+      </p>
+      <mat-divider></mat-divider>
+    </div>
+    <!-- TODO -->
+    <input type="submit" class="btn-primary btn-large" value="Post update" />
+  </form>
+</mat-dialog-content>
+
+<!-- <button mat-raised-button mat-dialog-close="yes">Yes</button>
+<button mat-raised-button mat-dialog-close="No">No</button> -->
