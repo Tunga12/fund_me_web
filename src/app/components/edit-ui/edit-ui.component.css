@@ -1,0 +1,64 @@
+mat-card.mat-card {
+  padding: 0px 72px !important;
+}
+
+mat-grid-tile.mat-grid-tile {
+  overflow: visible;
+}
+.input-container {
+  width: 100%;
+  padding: 0px 10px;
+}
+mat-checkbox.mat-checkbox {
+  float: right;
+}
+.delete-btn {
+  color: rgb(206, 6, 6);
+  text-decoration: underline;
+  padding-left: 5px;
+}
+.fudriser-setting-checkbox {
+  margin: 20px 0px;
+}
+.setting {
+  margin: 40px 0px;
+}
+.save {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.delete-fundriser {
+  width: 100%;
+  display: flex;
+  align-content: space-between;
+}
+.info-text {
+  color: #999 !important;
+  width: 70%;
+}
+.tab-content {
+  /* text-align: center !important;
+  padding: 72px auto !important; */
+  margin: 50px 100px;
+}
+.tab-content.radio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+mat-radio-button.mat-radio-button {
+  margin: 13px;
+}
+
+img {
+  /* margin-right: -2rem !important; */
+  max-width: 56px !important;
+  max-height: 40px !important;
+}
+.edit-header {
+  display: flex;
+  width: 23% !important;
+  align-items: stretch;
+  justify-content: space-around;
+}

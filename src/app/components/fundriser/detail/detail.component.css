@@ -25,3 +25,20 @@ mat-card-content div.detail-column {
 mat-card.mat-card {
   padding: 0 100px;
 }
+
+.tab-content {
+  text-align: center;
+  margin: 50px auto;
+}
+
+.tab-content-header {
+  font-weight: 600 !important;
+}
+
+a {
+  color: black;
+  text-align: left;
+  text-decoration: underline;
+}
+
+

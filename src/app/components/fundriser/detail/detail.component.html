@@ -39,10 +39,8 @@
       *ngFor="let tab of tabs; let index = index"
     >
       <div *ngIf="index === 0">
-        <div style="text-align: center; margin: 50px auto">
-          <h3 style="font-weight: 600 !important">
-            You haven’t posted an update yet.
-          </h3>
+        <div class="tab-content">
+          <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
           <h3>Keep your supporters up to date on your fundraisers!</h3>
           <button
             (click)="openUpdateDialog()"
@@ -77,11 +75,9 @@
                 Share fundriser
               </button>
             </div>
-            <div
-              *ngIf="index === 1"
-              style="text-align: center; margin: 50px auto"
-            >
-              <h3 style="font-weight: 600 !important">
+
+            <div class="tab-content" *ngIf="index === 1">
+              <h3 class="tab-content-header">
                 You haven't sent any invites yet.
               </h3>
               <h3>
@@ -99,14 +95,24 @@
         </mat-tab-group>
       </div>
       <div *ngIf="index === 1">
-        <div style="text-align: center; margin: 50px auto">
-          <h3 style="font-weight: 600 !important">
+        <p style="padding-top: 20px">
+          <a routerLink="/edit">
+            <mat-icon style="height: 10px; width: 10px; font-size: 13px">
+              settings
+            </mat-icon>
+            Team settings</a
+          >
+        </p>
+        <div class="tab-content">
+          <h3 class="tab-content-header">
             You haven’t added team members yet.
           </h3>
           <h3>Keep your supporters up to date on your fundraisers!</h3>
-          <button mat-button
-          (click)="openAddTeamMembertsDialog()"
-          class="btn-primary btn-small" >
+          <button
+            mat-button
+            (click)="openAddTeamMembertsDialog()"
+            class="btn-primary btn-small"
+          >
             Add team members
           </button>
         </div>
@@ -124,13 +130,13 @@
               [disabled]="true"
             />
           </mat-form-field>
-          <span 
-          mat-button
-          class="btn-primary"
-          style="padding: 13px; margin: 0px 0px 20px -30px"
+          <span
+            mat-button
+            class="btn-primary"
+            style="padding: 13px; margin: 0px 0px 20px -30px"
           >
-          Copy
-        </span>
+            Copy
+          </span>
         </div>
 
         <p style="text-align: center">
@@ -138,10 +144,9 @@
           fundraising team.
         </p>
       </div>
-      <div *ngIf="index === 2" style="text-align: center; margin: 50px auto">
-        <h3 style="font-weight: 600 !important">
-          You haven’t posted an update yet.
-        </h3>
+
+      <div class="tab-content" *ngIf="index === 2">
+        <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
         <h3>Keep your supporters up to date on your fundraisers!</h3>
         <button
           mat-button
