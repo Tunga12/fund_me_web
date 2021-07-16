@@ -1,0 +1,27 @@
+mat-card.mat-card {
+  cursor: pointer;
+  max-height: 350px !important;
+  margin-bottom: 20px;
+}
+
+mat-card.mat-card:hover {
+  -webkit-box-shadow: 0 0.14rem 0.1975rem 0.14rem rgb(160, 159, 159);
+  box-shadow: 0 0.125rem 0.1975rem 0.125rem rgb(160, 159, 159);
+}
+mat-card.mat-card {
+  -webkit-box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+}
+
+.mat-card-image {
+  width: 300px;
+  height: auto;
+  border-radius: 4px;
+}
+.items-row {
+  flex-wrap: wrap;
+}
+
+.content {
+  padding: 0px 72px;
+}

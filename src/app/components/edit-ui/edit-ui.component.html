@@ -19,11 +19,13 @@
   </div>
 </header>
 
+
 <div class="mat-content">
   <mat-tab-group
     [disableRipple]="false"
     [style.backgroundColor]="'#fff'"
     style="margin: 40px auto !important; width: 81.66667%; padding: auto"
+    mat-align-tabs="start"
   >
     <mat-tab
       label="{{
@@ -36,6 +38,7 @@
           : 'Notification'
       }}"
       *ngFor="let tab of tabs; let index = index"
+
     >
       <div *ngIf="index === 0" class="tab-content">
         <mat-grid-list cols="2" rowHeight="fit" [style.height]="'400px'">

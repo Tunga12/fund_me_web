@@ -27,6 +27,9 @@ import { ImportContactsDialogComponent } from './components/teams/import-contact
 import { YoutubeVideoPlayerComponent } from './components/youtube-video-player/youtube-video-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { StoryTextAreaComponent } from './components/story-text-area/story-text-area.component';
+import { WithdrawalComponent } from './components/withdrawal/withdrawal.component';
+import { FundriserListComponent } from './components/fundriser-list/fundriser-list.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { StoryTextAreaComponent } from './components/story-text-area/story-text-
     EditUiComponent,
     YoutubeVideoPlayerComponent,
     StoryTextAreaComponent,
+    WithdrawalComponent,
+    FundriserListComponent,
   ],
   entryComponents: [],
   imports: [
@@ -60,6 +65,7 @@ import { StoryTextAreaComponent } from './components/story-text-area/story-text-
     MyMaterialModule,
     RouterModule,
     AppRoutesModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,42 +1,47 @@
-<nav>
-  <mat-toolbar [classList]="'bg-white'">
-    <span class="nav-group-spacer"></span>
-    <div>
-      <!-- First menu -->
-      <a
-        mat-button
-        [matMenuTriggerFor]="discover"
-        #discovermenuTrigger="matMenuTrigger"
-        (onMenuClose)="toggleDiscoverCaret()"
-        (onMenuOpen)="toggleDiscoverCaret()"
+<mat-toolbar
+  [classList]="'bg-white'"
+  fxLayout="row"
+  fxLayout.xm="column"
+  fxLayoutAlign="space-between center"
+  style="width: 100%"
+>
+  <div>
+    <!-- First menu -->
+    <a
+      mat-button
+      [matMenuTriggerFor]="discover"
+      #discovermenuTrigger="matMenuTrigger"
+      (onMenuClose)="toggleDiscoverCaret()"
+      (onMenuOpen)="toggleDiscoverCaret()"
+      class="nav-link mat-button"
+    >
+      Discover
+      <mat-icon *ngIf="discoverCaret">expand_more</mat-icon>
+      <mat-icon *ngIf="!discoverCaret">expand_less</mat-icon>
+    </a>
 
-        class="nav-link mat-button"
-      >
-        Discover
-        <mat-icon *ngIf="discoverCaret">expand_more</mat-icon>
-        <mat-icon *ngIf="!discoverCaret">expand_less</mat-icon>
-      </a>
-
-      <mat-menu #discover="matMenu" [hasBackdrop]="false" [overlapTrigger]="false">
-        <button mat-menu-item>Baikal oilffundrise</button>
-        <button mat-menu-item>Bala shark</button>
-        <button mat-menu-item>Ballan wrasse</button>
-        <button mat-menu-item>Bamboo shark</button>
-        <button mat-menu-item>Banded killiffundrise</button>
-      </mat-menu>
-      <!--
+    <mat-menu
+      #discover="matMenu"
+      [hasBackdrop]="false"
+      [overlapTrigger]="false"
+    >
+      <button mat-menu-item>Baikal oilffundrise</button>
+      <button mat-menu-item>Bala shark</button>
+      <button mat-menu-item>Ballan wrasse</button>
+      <button mat-menu-item>Bamboo shark</button>
+      <button mat-menu-item>Banded killiffundrise</button>
+    </mat-menu>
+    <!--
     SECOND MENU
  -->
-      <a
-        mat-button
-        [matMenuTriggerFor]="fundrise"
-        #funndrisemenuTrigger="matMenuTrigger"
-        (onMenuClose)="toggleFundriseCaret()"
-        (onMenuOpen)="toggleFundriseCaret()"
-        class="nav-link mat-button"
-      >
-
-
+    <a
+      mat-button
+      [matMenuTriggerFor]="fundrise"
+      #funndrisemenuTrigger="matMenuTrigger"
+      (onMenuClose)="toggleFundriseCaret()"
+      (onMenuOpen)="toggleFundriseCaret()"
+      class="nav-link mat-button"
+    >
       <mat-menu
         #fundrise="matMenu"
         #ffundriseMenu
@@ -54,27 +59,24 @@
         </a>
       </mat-menu>
       Fundrise for
-        <mat-icon *ngIf="fundriseCaret">expand_more</mat-icon>
-        <mat-icon *ngIf="!fundriseCaret">expand_less</mat-icon>
-      </a>
-    </div>
+      <mat-icon *ngIf="fundriseCaret">expand_more</mat-icon>
+      <mat-icon *ngIf="!fundriseCaret">expand_less</mat-icon>
+    </a>
+  </div>
 
-    <!-- LOGO -->
-    <span class="nav-group-spacer"></span>
-   <img src="\assets\images\logo.png" alt="logo" style="width: 200px; height: 70%;">
-    <span class="nav-group-spacer"></span>
+  <!-- LOGO -->
+  <img
+    src="\assets\images\logo.png"
+    alt="logo"
+    style="width: 200px; height: 70%"
+  />
 
-    <div>
-      <a mat-button routerLink="'/create-contact'" class="nav-link mat-button">
-        Create Contact
-      </a>
-      <a mat-button routerLink="'/activities'" class="nav-link mat-button">
-        Activities
-      </a>
-      <a mat-button routerLink="'/create-activity'" class="nav-link mat-button">
-        Create Activity
-      </a>
-    </div>
-    <span class="nav-group-spacer"></span>
-  </mat-toolbar>
-</nav>
+  <div>
+    <a mat-button routerLink="'/create-contact'" class="nav-link mat-button">
+      Your fundrisers
+    </a>
+    <a mat-button routerLink="'/activities'" class="nav-link mat-button">
+      Getachew
+    </a>
+  </div>
+</mat-toolbar>
