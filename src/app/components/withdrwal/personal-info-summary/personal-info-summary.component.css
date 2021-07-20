@@ -1,0 +1,7 @@
+mat-card.mat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 50px auto 100px auto;
+}

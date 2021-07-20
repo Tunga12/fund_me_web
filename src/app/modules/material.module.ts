@@ -42,6 +42,7 @@ const imports = [
   MatTabsModule,
   MatDialogModule,
   MatCheckboxModule,
+  
 ];
 const exports = imports;
 @NgModule({

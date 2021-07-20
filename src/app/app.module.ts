@@ -6,12 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { MyMaterialModule } from './modules/material.module';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { AppRoutesModule } from './modules/app-routes.module';
+import { AppRoutesModule } from './modules/routes.module';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { EditUiComponent } from './components/edit-ui/edit-ui.component';
 import { EmailInviteDialogComponent } from './components/email-invite-dialog/email-invite-dialog.component';
 import { CreateFundriserComponent } from './components/fundriser/create-fundriser/create-fundriser.component';
-import { DetailComponent } from './components/fundriser/detail/detail.component';
+import { MyFundriserDetailComponent } from './components/fundriser/my-fundriser-detail/detail.component';
 import { SetFundriserGoalComponent } from './components/fundriser/set-fundriser-goal/set-fundriser-goal.component';
 import { SetFundriserMediaComponent } from './components/fundriser/set-fundriser-media/set-fundriser-media.component';
 import { SetFundriserStoryComponent } from './components/fundriser/set-fundriser-story/set-fundriser-story.component';
@@ -27,10 +27,38 @@ import { ImportContactsDialogComponent } from './components/teams/import-contact
 import { YoutubeVideoPlayerComponent } from './components/youtube-video-player/youtube-video-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { StoryTextAreaComponent } from './components/story-text-area/story-text-area.component';
-import { WithdrawalComponent } from './components/withdrawal/withdrawal.component';
 import { FundriserListComponent } from './components/fundriser-list/fundriser-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { WithdrwalComponent } from './components/withdrwal/withdrwal.component';
+import { PersonalInfoComponent } from './components/withdrwal/personal-info/personal-info.component';
+import { PersonalInfoSummaryComponent } from './components/withdrwal/personal-info-summary/personal-info-summary.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+} from '@fortawesome/free-brands-svg-icons';
+import { BeneficiaryFormComponent } from './components/withdrwal/beneficiary-form/beneficiary-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FudriserDetailPublicComponent } from './components/fundriser/fudriser-detail-public/fudriser-detail-public.component';
+import { DonateComponent } from './components/donate/donate.component';
+import { DoantionsComponent } from './components/fundriser/fudriser-detail-public/doantions/doantions.component';
+import { TopDoantionsComponent } from './components/fundriser/fudriser-detail-public/top-doantions/top-doantions.component';
 
+const customConfig = {
+  // prop: {
+  //   facebook: {
+  //     icon: ['fab', 'fa-facebook-official'],
+  //     text: 'Share',
+  //   },
+  //   twitter: {
+  //     icon: ['fab', 'fa-twitter-square'],
+  //     text: 'Tweet',
+  //   },
+  //   // and so on...
+  // },
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +70,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SetFundriserMediaComponent,
     SetFundriserStoryComponent,
     HomePageComponent,
-    DetailComponent,
+    MyFundriserDetailComponent,
     ShareDialogComponent,
     EmailInviteDialogComponent,
     PhoneInviteDialogComponent,
@@ -54,8 +82,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     EditUiComponent,
     YoutubeVideoPlayerComponent,
     StoryTextAreaComponent,
-    WithdrawalComponent,
     FundriserListComponent,
+    WithdrwalComponent,
+    PersonalInfoComponent,
+    PersonalInfoSummaryComponent,
+    BeneficiaryFormComponent,
+    FudriserDetailPublicComponent,
+    DonateComponent,
+    DoantionsComponent,
+    TopDoantionsComponent,
   ],
   entryComponents: [],
   imports: [
@@ -65,7 +100,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MyMaterialModule,
     RouterModule,
     AppRoutesModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxEditorModule,
+    ShareButtonsModule.withConfig(customConfig),
+    ShareIconsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

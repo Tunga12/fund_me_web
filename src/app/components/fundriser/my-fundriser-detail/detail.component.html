@@ -3,7 +3,12 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <button mat-raised-button class="bold" style="margin: 20px 0px">
+      <button
+        mat-raised-button
+        color="primary"
+        class="bold"
+        style="margin: 20px 0px"
+      >
         &lt; Back
       </button>
       <!-- Title -->
@@ -44,8 +49,8 @@
           <h3>Keep your supporters up to date on your fundraisers!</h3>
           <button
             (click)="openUpdateDialog()"
-            mat-button
-            class="btn-primary btn-small"
+            mat-raised-button
+            color="primary"
           >
             Post an update
           </button>
@@ -68,8 +73,9 @@
                 with friends and family.
               </h3>
               <button
-                mat-button
-                class="btn-primary btn-small"
+                mat-raised-button
+                color="primary"
+                color="primary"
                 (click)="openShareDialog()"
               >
                 Share fundriser
@@ -84,12 +90,10 @@
                 Your invited contacts will show up here. Start by sending at
                 least 20 invites via email or text message
               </h3>
-              <button mat-button class="btn-primary btn-small">
+              <button mat-raised-button color="primary">
                 Invite via email
               </button>
-              <button mat-button class="btn-primary btn-small">
-                Invite via text
-              </button>
+              <button mat-raised-button color="primary">Invite via text</button>
             </div>
           </mat-tab>
         </mat-tab-group>
@@ -109,9 +113,9 @@
           </h3>
           <h3>Keep your supporters up to date on your fundraisers!</h3>
           <button
-            mat-button
             (click)="openAddTeamMembertsDialog()"
-            class="btn-primary btn-small"
+            mat-raised-button
+            color="primary"
           >
             Add team members
           </button>
@@ -131,7 +135,6 @@
             />
           </mat-form-field>
           <span
-            mat-button
             class="btn-primary"
             style="padding: 13px; margin: 0px 0px 20px -30px"
           >
@@ -148,11 +151,7 @@
       <div class="tab-content" *ngIf="index === 2">
         <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
         <h3>Keep your supporters up to date on your fundraisers!</h3>
-        <button
-          mat-button
-          (click)="openUpdateDialog()"
-          class="btn-primary btn-small"
-        >
+        <button (click)="openUpdateDialog()" mat-raised-button color="primary">
           Post an update
         </button>
       </div>

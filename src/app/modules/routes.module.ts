@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomePageComponent } from '../components/home-page/home-page.component';
-import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
 import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { CreateFundriserComponent } from '../components/fundriser/create-fundriser/create-fundriser.component';
 import { SetFundriserGoalComponent } from '../components/fundriser/set-fundriser-goal/set-fundriser-goal.component';
 import { SetFundriserMediaComponent } from '../components/fundriser/set-fundriser-media/set-fundriser-media.component';
 import { SetFundriserStoryComponent } from '../components/fundriser/set-fundriser-story/set-fundriser-story.component';
-import { EmailInviteDialogComponent } from '../components/email-invite-dialog/email-invite-dialog.component';
-import { ShareDialogComponent } from '../components/share-dialog/share-dialog.component';
-import { DetailComponent } from '../components/fundriser/detail/detail.component';
-import { PhoneInviteDialogComponent } from '../components/phone-invite-dialog/phone-invite-dialog.component';
-import { PostAnUpdateComponent } from '../components/post-an-update/post-an-update.component';
-import { AddPhotoVideoDialogComponent } from '../components/post-an-update/add-photo-video-dialog/add-photo-video-dialog.component';
-import { AddYoutubeVideoDialogComponent } from '../components/post-an-update/add-youtube-video-dialog/add-youtube-video-dialog.component';
+import { MyFundriserDetailComponent } from '../components/fundriser/my-fundriser-detail/detail.component';
 import { EditUiComponent } from '../components/edit-ui/edit-ui.component';
-import { AddTeamMembersDialogComponent } from '../components/teams/add-team-members-dialog/add-team-members-dialog.component';
-import { ImportContactsDialogComponent } from '../components/teams/import-contacts-dialog/import-contacts-dialog.component';
 import { RouterModule } from '@angular/router';
+import { PersonalInfoComponent } from '../components/withdrwal/personal-info/personal-info.component';
+import { ShareDialogComponent } from '../components/share-dialog/share-dialog.component';
+import { BeneficiaryFormComponent } from '../components/withdrwal/beneficiary-form/beneficiary-form.component';
+import { WithdrwalComponent } from '../components/withdrwal/withdrwal.component';
+import { PersonalInfoSummaryComponent } from '../components/withdrwal/personal-info-summary/personal-info-summary.component';
+import { FudriserDetailPublicComponent } from '../components/fundriser/fudriser-detail-public/fudriser-detail-public.component';
+import { DonateComponent } from '../components/donate/donate.component';
 
 const ROUTES = [
   {
@@ -50,18 +48,46 @@ const ROUTES = [
     component: HomePageComponent,
   },
   {
+    path: 'my-fundriser-detail',
+    component: MyFundriserDetailComponent,
+  },
+  {
     path: 'fundriser-detail',
-    component: DetailComponent,
+    component: FudriserDetailPublicComponent,
   },
   {
     path: 'edit',
     component: EditUiComponent,
   },
+  {
+    path: 'share',
+    component: ShareDialogComponent,
+  },
+  {
+    path: 'withdrawal/personal-info',
+    component: PersonalInfoComponent,
+  },
+  {
+    path: 'withdrawal/beneficiary-form',
+    component: BeneficiaryFormComponent,
+  },
+  {
+    path: 'withdrawal/personal-info-summary',
+    component: PersonalInfoSummaryComponent,
+  },
+  {
+    path: 'withdrawal',
+    component: WithdrwalComponent,
+  },
+  {
+    path: 'donate',
+    component:DonateComponent
+  }
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(ROUTES)],
-  exports: [RouterModule],
+exports: [RouterModule],
 })
 export class AppRoutesModule {}

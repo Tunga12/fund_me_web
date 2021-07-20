@@ -1,25 +1,7 @@
-.form-container{
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  background-color: #fff;
+mat-card.mat-card {
   align-items: center;
-  box-shadow: 0 0.5rem 1.5rem 0 rgb(0 0 0 / 10%);
-  min-width: 150px;
-  margin: 80px auto;
-  width: 50%;
-  padding: 20px auto;
 }
 
-
-.facebook-btn{
-  font-size: 16;
-  background-color: rgb(59, 87, 157);
-  color: #fff;
-  padding: 0.3rem 1rem;
-  margin-top: 20px;
-  width: 100%;
+form {
+  margin: 30px auto !important;
 }
-

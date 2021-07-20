@@ -17,6 +17,9 @@ export class ShareDialogComponent implements OnInit {
     { link: '', text: 'Telegram', icon: 'send' },
     { link: '', text: 'Print poster', icon: 'facebook' },
   ];
+
+  show = 11;
+
   constructor(@Inject(MAT_DIALOG_DATA) data: any) {
     console.log('Data', data);
   }

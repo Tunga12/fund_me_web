@@ -1,3 +1,13 @@
-<mat-form-field floatPlaceholder="auto" appearance="outline">
-  <textarea matInput required placeholder="Please write your story here"></textarea>
-</mat-form-field>
+<div class="container">
+  <h2 class="title">Your fundriser story</h2>
+  <div class="content">
+    <form>
+      <div class="editor">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+        </ngx-editor-menu>
+        <ngx-editor [editor]="editor" formControlName="editorContent">
+        </ngx-editor>
+      </div>
+    </form>
+  </div>
+</div>

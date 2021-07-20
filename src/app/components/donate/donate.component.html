@@ -1,0 +1,135 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="start start"
+  fxLayoutGap="20px"
+  [ngStyle]="{ width: '80%', margin: '30px auto' }"
+  [ngStyle.xs]="{ width: '98%', margin: '30px auto' }"
+>
+  <div>
+    <button mat-stroked-button (click)="backToFundriser()">
+      <mat-icon class="mat-18">arrow_back_ios</mat-icon>Back to fundriser
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <img class="fundriser-img" src="/assets/images/step2.jpg" alt="fundriser" />
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
+      <p>You're supporting <strong>Mahamed funeral costs</strong></p>
+      <span class="color-gray text-small">
+        Your donation will benefit <strong>Anwar Ugas</strong>
+      </span>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+    <form [formGroup]="form" style="width: 60%" [ngStyle.xs]="{ width: '98%' }">
+      <h2 class="bold">Enter your donation</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Donation amount</mat-label>
+        <input
+          class="bold"
+          matInput
+          [(ngModel)]="donation_amount"
+          formControlName="donation_amount"
+          type="number"
+          required
+          placeholder="Donation amount"
+        />
+        <span matPrefix>
+          <mat-icon class="mat-18">attach_money</mat-icon>
+        </span>
+      </mat-form-field>
+      <!-- Tip amount -->
+      <h3 class="bold">Tip amount</h3>
+      <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
+        <mat-form-field appearance="outline">
+          <mat-label>Tip amount</mat-label>
+          <input matInput formControlName="tip_amount" type="text" />
+          <span matPrefix>
+            <mat-icon class="mat-18">attach_money</mat-icon>
+          </span>
+        </mat-form-field>
+
+        <button mat-stroked-button (click)="changeTipType()">
+          Back to default
+        </button>
+      </div>
+
+      <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
+        <!-- Add a tooltip here -->
+        <mat-slider
+          step="1"
+          value="5"
+          #slider
+          (change)="sliderChange(slider)"
+          tickInterval="1"
+        ></mat-slider>
+        <button mat-stroked-button (click)="changeTipType()">
+          Enter custom tip
+        </button>
+      </div>
+      <div>
+        <mat-checkbox
+          formControlName="anonymous"
+          (change)="changeAnonymity()"
+          [indeterminate]="false"
+          color="primary"
+        >
+          Don't display my name publicly on the campaign.
+        </mat-checkbox>
+      </div>
+      <button
+        fxHide.lt-sm
+        mat-raised-button
+        color="primary"
+        style="width: 60%; margin: 20px auto"
+      >
+        Donate now
+      </button>
+    </form>
+
+    <mat-card [ngStyle.xs]="{ width: '90%', 'box-shadow': 'none' }">
+      <mat-card-content>
+        <h2 class="bold">Your donation</h2>
+        <div
+          class="color-gray"
+          fxLayout="row"
+          fxLayoutAlign="space-between start"
+        >
+          <p>Your donation</p>
+          <p>$44.00</p>
+        </div>
+
+        <div
+          class="color-gray"
+          fxLayout="row"
+          fxLayoutAlign="space-between start"
+        >
+          <p>GOFuundMe tip</p>
+          <p>$4.00</p>
+        </div>
+        <div>
+          <mat-divider></mat-divider>
+        </div>
+        <p></p>
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+          <p>Total due today</p>
+          <p>$44.00</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Donate now button -->
+    <button
+      fxHide.gt-xs
+      mat-raised-button
+      color="primary"
+      style="width: 60%; margin: 20px auto"
+    >
+      Donate now
+    </button>
+  </div>
+</div>
