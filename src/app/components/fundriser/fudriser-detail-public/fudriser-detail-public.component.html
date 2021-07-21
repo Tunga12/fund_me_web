@@ -316,8 +316,13 @@
         <div>
           <mat-divider></mat-divider>
         </div>
-        <div *ngFor="let item of [1, 2, 3, 4]; let last=last;">
-          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" style="margin: 20px 0px">
+        <div *ngFor="let item of [1, 2, 3, 4]; let last = last">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            fxLayoutGap="20px"
+            style="margin: 20px 0px"
+          >
             <img
               src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
             />
@@ -331,7 +336,14 @@
               </p>
             </div>
           </div>
-          <button *ngIf="last" mat-stroked-button color="primary" class="btn-outline">Show more</button>
+          <button
+            *ngIf="last"
+            mat-stroked-button
+            color="primary"
+            class="btn-outline"
+          >
+            Show more
+          </button>
           <div>
             <mat-divider></mat-divider>
           </div>

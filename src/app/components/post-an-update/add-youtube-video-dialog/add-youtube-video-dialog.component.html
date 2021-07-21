@@ -4,21 +4,26 @@
 </div>
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  <h1 class="bold"> Add YouTube link</h1>
-  <form >
-    <mat-form-field appearance ="outline">
-          <input matInput formControlName="formControlName"
-                 type="link"
-                 required
-                 placeholder="put a youtube link here">
-    </mat-form-field>   
+  <h1 class="bold">Add YouTube link</h1>
+  <form>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="formControlName"
+        type="link"
+        required
+        placeholder="put a youtube link here"
+      />
+    </mat-form-field>
     <p>
-      <button mat-raised-button class="btn-primary btn-large">
+      <button mat-raised-button color="primary" class="btn-large">
         <mat-icon> play_circle_outline </mat-icon> Add a YouTube video
       </button>
     </p>
-    <p style="margin:20px">If you would like to use a video from your phone, upload to YouTube first.</p>
+    <p style="margin: 20px">
+      If you would like to use a video from your phone, upload to YouTube first.
+    </p>
     <mat-divider></mat-divider>
-    <p mat-dialog-close class="dialog-go-back-btn" >Go back</p>
+    <p mat-dialog-close class="dialog-go-back-btn">Go back</p>
   </form>
 </mat-dialog-content>

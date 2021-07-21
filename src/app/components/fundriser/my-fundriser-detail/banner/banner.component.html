@@ -1,0 +1,32 @@
+<div class="baner">
+  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+    <div
+      *ngIf="show_facebook_banner"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="10px"
+    >
+      <mat-icon color="blue" style="color: blue">facebook</mat-icon>
+      <p>
+        <strong>Did you know?</strong> Sharing on Facebook can increase your
+        donations as much as 350%. <a> <strong>Share on Facebook </strong></a>
+      </p>
+    </div>
+    <div
+      *ngIf="!show_facebook_banner"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="10px"
+    >
+      <mat-icon color="blue">announcement</mat-icon>
+      <p>
+        <strong>Let your supporters know your progress.</strong> An update can
+        help increase momentum and encourage supporters to share or donate
+        again. <a> <strong> Post an update. </strong></a>
+      </p>
+    </div>
+
+    <!-- Toggle banner -->
+    <mat-icon (click)="toggleBanner()" style="cursor: pointer">close</mat-icon>
+  </div>
+</div>

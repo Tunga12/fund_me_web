@@ -4,3 +4,6 @@ a{
   text-decoration: underline;
 font-weight: 400;
 }
+form{
+  margin: 20px auto;
+}

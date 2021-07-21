@@ -1,0 +1,82 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+  <button mat-stroked-button class="bold" style="margin: 20px 0px">
+    <mat-icon class="mat-18"> arrow_back_ios </mat-icon> Back
+  </button>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+    style="width: 100%"
+  >
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+      <img src="/assets/images/step2.jpg" height="126px" width="176px" alt="" />
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        <h2 class="bold">Fundriser name</h2>
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
+          <a fxLayout="row" fxLayoutAlign="start center"
+            ><mat-icon> edit </mat-icon> <span>Edit & Settings</span></a
+          >
+          <a fxLayout="row" fxLayoutAlign="start center"
+            ><mat-icon>visibility </mat-icon> <span>View fundriser</span>
+          </a>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="20"
+          color="primary"
+        ></mat-progress-bar>
+        <p>Total raised: $20</p>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+      <a fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <div class="bg-green-avatar">
+          <mat-icon> ios_share </mat-icon>
+        </div>
+        <span class="text-md">Share</span>
+      </a>
+      <a fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div class="green-outline-avatar">
+          <mat-icon> update </mat-icon>
+        </div>
+        <span class="text-md">Update</span>
+      </a>
+      <a fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div class="green-outline-avatar">
+          <mat-icon> account_balance </mat-icon>
+        </div>
+        <span class="text-md">Withdraw</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div>
+  <mat-divider></mat-divider>
+</div>
+
+<!-- Share on facebook banner -->
+<banner></banner>
+
+<!-- main area -->
+<mat-tab-group [disableRipple]="false">
+  <mat-tab
+    label="{{ index === 0 ? 'Donors' : index === 1 ? 'Team' : 'Updates' }}"
+    *ngFor="let tab of tabs; let index = index"
+  >
+    <div *ngIf="index === 0">
+      <donors-tab-conntent></donors-tab-conntent>
+    </div>
+
+    <!-- Team tab -->
+    <div *ngIf="index === 1">
+      <team-tab-content></team-tab-content>
+    </div>
+
+    <!-- Updates tab -->
+    <div class="tab-content" *ngIf="index === 2">
+      <updates-tab-content></updates-tab-content>
+    </div>
+  </mat-tab>
+</mat-tab-group>

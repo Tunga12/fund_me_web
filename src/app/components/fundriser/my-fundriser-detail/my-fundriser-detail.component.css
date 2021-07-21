@@ -1,0 +1,48 @@
+.tab-content {
+  text-align: center;
+  margin: 50px auto;
+}
+
+.tab-content-header {
+  font-weight: 600 !important;
+}
+img {
+  border-radius: 4px;
+}
+
+a {
+  color: black;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.bg-green-avatar {
+  background-color: #02a95c;
+  border-radius: 50%;
+  color: #fff;
+  width: 3rem;
+  height: 3rem;
+}
+
+.green-outline-avatar {
+  color: #02a95c;
+  border: 1px solid #02a95c;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+
+mat-icon.mat-icon {
+  overflow: hidden;
+}
+
+.bg-green-avatar mat-icon.mat-icon,
+.green-outline-avatar mat-icon.mat-icon {
+  margin: 11px;
+}
+
+.text-md {
+  font-weight: 600;
+}
+
+

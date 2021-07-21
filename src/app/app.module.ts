@@ -9,14 +9,13 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AppRoutesModule } from './modules/routes.module';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { EditUiComponent } from './components/edit-ui/edit-ui.component';
-import { EmailInviteDialogComponent } from './components/email-invite-dialog/email-invite-dialog.component';
+import { EmailInviteDialogComponent } from './components/invite/email-invite-dialog/email-invite-dialog.component';
 import { CreateFundriserComponent } from './components/fundriser/create-fundriser/create-fundriser.component';
-import { MyFundriserDetailComponent } from './components/fundriser/my-fundriser-detail/detail.component';
-import { SetFundriserGoalComponent } from './components/fundriser/set-fundriser-goal/set-fundriser-goal.component';
-import { SetFundriserMediaComponent } from './components/fundriser/set-fundriser-media/set-fundriser-media.component';
-import { SetFundriserStoryComponent } from './components/fundriser/set-fundriser-story/set-fundriser-story.component';
+import { SetFundriserGoalComponent } from './components/fundriser/create-fundriser/set-fundriser-goal/set-fundriser-goal.component';
+import { SetFundriserMediaComponent } from './components/fundriser/create-fundriser/set-fundriser-media/set-fundriser-media.component';
+import { SetFundriserStoryComponent } from './components/fundriser/create-fundriser/set-fundriser-story/set-fundriser-story.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { PhoneInviteDialogComponent } from './components/phone-invite-dialog/phone-invite-dialog.component';
+import { PhoneInviteDialogComponent } from './components/invite/phone-invite-dialog/phone-invite-dialog.component';
 import { AddPhotoVideoDialogComponent } from './components/post-an-update/add-photo-video-dialog/add-photo-video-dialog.component';
 import { AddYoutubeVideoDialogComponent } from './components/post-an-update/add-youtube-video-dialog/add-youtube-video-dialog.component';
 import { PostAnUpdateComponent } from './components/post-an-update/post-an-update.component';
@@ -45,6 +44,13 @@ import { FudriserDetailPublicComponent } from './components/fundriser/fudriser-d
 import { DonateComponent } from './components/donate/donate.component';
 import { DoantionsComponent } from './components/fundriser/fudriser-detail-public/doantions/doantions.component';
 import { TopDoantionsComponent } from './components/fundriser/fudriser-detail-public/top-doantions/top-doantions.component';
+import { MyFundriserDetailComponent } from './components/fundriser/my-fundriser-detail/my-funriser-detail.component';
+import { BannerComponent } from './components/fundriser/my-fundriser-detail/banner/banner.component';
+import { DonationsTabConntentComponent } from './components/fundriser/my-fundriser-detail/donors-tab-conntent/donations-tab-conntent/donations-tab-conntent.component';
+import { InvitedContactsTabContentComponent } from './components/fundriser/my-fundriser-detail/donors-tab-conntent/invited-contacts-tab-content/invited-contacts-tab-content.component';
+import { DonorsTabConntentComponent } from './components/fundriser/my-fundriser-detail/donors-tab-conntent/donors-tab-conntent.component';
+import { TeamTabContentComponent } from './components/fundriser/my-fundriser-detail/team-tab-content/team-tab-content.component';
+import { UpdatesTabContentComponent } from './components/fundriser/my-fundriser-detail/updates-tab-content/updates-tab-content.component';
 
 const customConfig = {
   // prop: {
@@ -91,6 +97,12 @@ const customConfig = {
     DonateComponent,
     DoantionsComponent,
     TopDoantionsComponent,
+    BannerComponent,
+    DonationsTabConntentComponent,
+    InvitedContactsTabContentComponent,
+    DonorsTabConntentComponent,
+    TeamTabContentComponent,
+    UpdatesTabContentComponent,
   ],
   entryComponents: [],
   imports: [

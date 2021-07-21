@@ -13,16 +13,23 @@
     </button>
   </p>
   <p>
-    <button mat-raised-button class="btn-primary btn-large">
+    <button mat-raised-button color="primary" class="btn-large">
       <mat-icon>link</mat-icon> Upload a photo
     </button>
   </p>
   <p>
-    <button mat-raised-button class="btn-primary btn-large" (click)="openYoutubLinkDialog()">
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn-large"
+      (click)="openYoutubLinkDialog()"
+    >
       <mat-icon> play_circle_outline </mat-icon> Add a YouTube video
     </button>
   </p>
-  <p style="margin:20px">A high-quality photo or video will help tell your story.</p>
+  <p style="margin: 20px">
+    A high-quality photo or video will help tell your story.
+  </p>
   <mat-divider></mat-divider>
   <p mat-dialog-close class="dialog-go-back-btn">Go back</p>
 </mat-dialog-content>

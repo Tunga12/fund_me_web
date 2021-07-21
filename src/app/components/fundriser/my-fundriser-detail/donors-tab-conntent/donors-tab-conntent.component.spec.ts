@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ButtonOutlinedComponent } from './button-outlined.component';
+import { DonorsTabConntentComponent } from './donors-tab-conntent.component';
 
-describe('ButtonOutlinedComponent', () => {
-  let component: ButtonOutlinedComponent;
-  let fixture: ComponentFixture<ButtonOutlinedComponent>;
+describe('DonorsTabConntentComponent', () => {
+  let component: DonorsTabConntentComponent;
+  let fixture: ComponentFixture<DonorsTabConntentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonOutlinedComponent ]
+      declarations: [ DonorsTabConntentComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ButtonOutlinedComponent);
+    fixture = TestBed.createComponent(DonorsTabConntentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

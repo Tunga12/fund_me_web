@@ -1,0 +1,10 @@
+a {
+  color: black;
+  text-align: left;
+  text-decoration: underline;
+}
+mat-icon.mat-icon {
+  height: 10px;
+  width: 10px;
+  font-size: 13px;
+}

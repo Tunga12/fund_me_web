@@ -1,0 +1,68 @@
+<div fxLayout="row" style="padding-top: 20px" fxLayoutGap="20px">
+  <a *ngIf="emails.length > 0" (click)="openAddTeamMembersDialog()"
+    ><mat-icon class="mat-18">add_circle_outline</mat-icon> Add team member</a
+  >
+  <a routerLink="/edit">
+    <mat-icon> settings </mat-icon>
+    Team settings</a
+  >
+</div>
+
+<div *ngIf="emails.length > 0">
+  <h3 class="bold">Pending Requests</h3>
+  <div
+    *ngFor="let email of emails; let index = index"
+    fxLayout="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="30px"
+  >
+    <div *ngIf="index != 0">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p>
+          {{ email }}
+        </p>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
+          <a href=""> Resend request</a>
+          <mat-icon class="mat-18">more_vert</mat-icon>
+        </div>
+      </div>
+      <div>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-content">
+  <h3 class="tab-content-header">You haven’t added team members yet.</h3>
+  <h3>Keep your supporters up to date on your fundraisers!</h3>
+  <button
+    (click)="openAddTeamMembersDialog()"
+    mat-raised-button
+    color="primary"
+  >
+    Add team members
+  </button>
+</div>
+<div class="or-divider">
+  <p class="bar"></p>
+  <p style="font-weight: 600">or</p>
+  <p class="bar"></p>
+</div>
+<div style="display: flex; align-items: center; justify-items: center">
+  <mat-form-field appearance="fill">
+    <input
+      matInput
+      type="text"
+      value="https://fund.mem.com/blalbsl/fff"
+      [disabled]="true"
+    />
+  </mat-form-field>
+  <span class="btn-primary" style="padding: 13px; margin: 0px 0px 20px -30px">
+    Copy
+  </span>
+</div>
+
+<p style="text-align: center">
+  Only share this invite link with people you want to join your fundraising
+  team.
+</p>

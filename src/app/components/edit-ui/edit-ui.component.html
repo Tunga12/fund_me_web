@@ -19,7 +19,6 @@
   </div>
 </header>
 
-
 <div class="mat-content">
   <mat-tab-group
     [disableRipple]="false"
@@ -38,7 +37,6 @@
           : 'Notification'
       }}"
       *ngFor="let tab of tabs; let index = index"
-
     >
       <div *ngIf="index === 0" class="tab-content">
         <mat-grid-list cols="2" rowHeight="fit" [style.height]="'400px'">
@@ -217,7 +215,7 @@
 
           <div class="save">
             <!-- TODO add save actions -->
-            <button class="btn-primary" mat-raised-button style="width: 50%">
+            <button color="primary" mat-raised-button style="width: 50%">
               Save
             </button>
           </div>
@@ -247,6 +245,7 @@
         <div>
           <button
             mat-raised-button
+            color="primary"
             (click)="openAddPhotoOrVedioDialog()"
             class="btn-primary btn-large"
             style="width: 30% !important"
@@ -276,8 +275,9 @@
         </mat-radio-group>
         <button
           mat-raised-button
+          color="primary"
           (click)="openAddPhotoOrVedioDialog()"
-          class="btn-primary btn-large"
+          class="btn-large"
           style="width: 30% !important"
         >
           Save changes

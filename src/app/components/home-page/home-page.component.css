@@ -1,0 +1,55 @@
+mat-card.mat-card {
+  width: 25%;
+  margin-bottom: 30px;
+}
+
+button {
+  width: max-content;
+}
+
+h1.bold,
+h2.bold {
+  font-weight: 900;
+  font-size: xx-large;
+}
+
+.mobile-header {
+  width: 94%;
+  margin: 0px auto;
+}
+
+.illustration {
+  background-image: url(https://d25oniaj7o2jcw.cloudfront.net/gofundme-homepage-illustration-1920w.png);
+  background-position: 50% center;
+  padding: 100px 100px 200px 100px;
+  height: 90% !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-icon.mat-icon {
+  color: primary;
+}
+
+.trending-topic {
+  color: #960064;
+}
+
+.notes {
+  margin: 100px auto;
+}
+
+.img-mobile {
+  /* background-size: cover; */
+  max-width: 100%;
+
+}
+
+.start-gofundme-btn{
+  width: 80%;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}

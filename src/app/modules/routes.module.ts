@@ -4,10 +4,9 @@ import { HomePageComponent } from '../components/home-page/home-page.component';
 import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { CreateFundriserComponent } from '../components/fundriser/create-fundriser/create-fundriser.component';
-import { SetFundriserGoalComponent } from '../components/fundriser/set-fundriser-goal/set-fundriser-goal.component';
-import { SetFundriserMediaComponent } from '../components/fundriser/set-fundriser-media/set-fundriser-media.component';
-import { SetFundriserStoryComponent } from '../components/fundriser/set-fundriser-story/set-fundriser-story.component';
-import { MyFundriserDetailComponent } from '../components/fundriser/my-fundriser-detail/detail.component';
+import { SetFundriserGoalComponent } from '../components/fundriser/create-fundriser/set-fundriser-goal/set-fundriser-goal.component';
+import { SetFundriserMediaComponent } from '../components/fundriser/create-fundriser/set-fundriser-media/set-fundriser-media.component';
+import { SetFundriserStoryComponent } from '../components/fundriser/create-fundriser/set-fundriser-story/set-fundriser-story.component';
 import { EditUiComponent } from '../components/edit-ui/edit-ui.component';
 import { RouterModule } from '@angular/router';
 import { PersonalInfoComponent } from '../components/withdrwal/personal-info/personal-info.component';
@@ -17,6 +16,7 @@ import { WithdrwalComponent } from '../components/withdrwal/withdrwal.component'
 import { PersonalInfoSummaryComponent } from '../components/withdrwal/personal-info-summary/personal-info-summary.component';
 import { FudriserDetailPublicComponent } from '../components/fundriser/fudriser-detail-public/fudriser-detail-public.component';
 import { DonateComponent } from '../components/donate/donate.component';
+import { MyFundriserDetailComponent } from '../components/fundriser/my-fundriser-detail/my-funriser-detail.component';
 
 const ROUTES = [
   {
