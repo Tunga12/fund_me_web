@@ -15,8 +15,17 @@
     <mat-divider></mat-divider>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-    <img class="fundriser-img" src="/assets/images/step2.jpg" alt="fundriser" />
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="15px"
+  >
+    <img
+      class="fundriser-img"
+      src="/assets/images/step2.jpg"
+
+      [ngStyle.xs]="{ width: '100% !important' }"
+    />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
       <p>You're supporting <strong>Mahamed funeral costs</strong></p>
       <span class="color-gray text-small">
@@ -62,6 +71,7 @@
       <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
         <!-- Add a tooltip here -->
         <mat-slider
+          color="primary"
           step="1"
           value="5"
           #slider
@@ -101,7 +111,7 @@
           fxLayoutAlign="space-between start"
         >
           <p>Your donation</p>
-          <p>$44.00</p>
+          <p>${{ donation_amount }}</p>
         </div>
 
         <div
@@ -109,8 +119,8 @@
           fxLayout="row"
           fxLayoutAlign="space-between start"
         >
-          <p>GOFuundMe tip</p>
-          <p>$4.00</p>
+          <p>GOFundMe tip</p>
+          <p>${{tip_amount}}</p>
         </div>
         <div>
           <mat-divider></mat-divider>
@@ -118,7 +128,7 @@
         <p></p>
         <div fxLayout="row" fxLayoutAlign="space-between start">
           <p>Total due today</p>
-          <p>$44.00</p>
+          <p>{{ donation_amount + tip_amount}}</p>
         </div>
       </mat-card-content>
     </mat-card>

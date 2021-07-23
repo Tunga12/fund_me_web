@@ -1,5 +1,10 @@
 <div class="baner">
-  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="10px"
+    ngStyle.xl="{width:'80%'}"
+  >
     <div
       *ngIf="show_facebook_banner"
       fxLayout="row"
@@ -9,7 +14,7 @@
       <mat-icon color="blue" style="color: blue">facebook</mat-icon>
       <p>
         <strong>Did you know?</strong> Sharing on Facebook can increase your
-        donations as much as 350%. <a> <strong>Share on Facebook </strong></a>
+        donations as much as 350%. <a (click)="openShareDialog()"> <strong>Share on Facebook </strong></a>
       </p>
     </div>
     <div
@@ -22,7 +27,7 @@
       <p>
         <strong>Let your supporters know your progress.</strong> An update can
         help increase momentum and encourage supporters to share or donate
-        again. <a> <strong> Post an update. </strong></a>
+        again. <a (click)="openUpdateDialog()">  <strong> Post an update. </strong></a>
       </p>
     </div>
 

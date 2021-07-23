@@ -1,178 +1,163 @@
-<nav-bar></nav-bar>
-
 <header>
-  <div class="header">
+  <div
+    [ngStyle.lt-md]="{ width: '98%' }"
+    [ngStyle.md]="{ width: '80%', margin: '20px auto' }"
+  >
     <div class="back-btn">
-      <button mat-raised-button class="bold" style="margin: 20px 0px">
-        &lt; Back
+      <button
+        (click)="backToDetailPage()"
+        mat-raised-button
+        class="bold"
+        style="margin: 20px 0px"
+      >
+        <mat-icon class="mat-18">arrow_back_ios</mat-icon> Back
       </button>
     </div>
-    <div class="edit-header">
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
       <!-- TODO -->
-      <img matCardImage src="\assets\images\step2.PNG" />
+      <img
+        matCardImage
+        [ngStyle.xs]="{ width: '100%', height: '200px' }"
+        src="\assets\images\step2.jpg"
+      />
       <div>
         <h2 style="padding: 0px !important; margin: 0px">Edit & Settings</h2>
         <!--TODO-->
-        <p>vmcvcn bcb</p>
+        <p>Fundriser title</p>
       </div>
     </div>
   </div>
 </header>
 
-<div class="mat-content">
-  <mat-tab-group
-    [disableRipple]="false"
-    [style.backgroundColor]="'#fff'"
-    style="margin: 40px auto !important; width: 81.66667%; padding: auto"
-    mat-align-tabs="start"
+<mat-tab-group
+  [disableRipple]="false"
+  [style.backgroundColor]="'#fff'"
+  style="margin: 40px auto !important; width: 80%; padding: auto"
+  [ngStyle.lt-md]="{ width: '98%', margin: '40px auto' }"
+  mat-align-tabs="start"
+>
+  <mat-tab
+    label="{{
+      index === 0
+        ? 'Overview'
+        : index === 1
+        ? 'Photo'
+        : index === 2
+        ? 'Story'
+        : 'Notification'
+    }}"
+    *ngFor="let tab of tabs; let index = index"
   >
-    <mat-tab
-      label="{{
-        index === 0
-          ? 'Overview'
-          : index === 1
-          ? 'Photo'
-          : index === 2
-          ? 'Story'
-          : 'Notification'
-      }}"
-      *ngFor="let tab of tabs; let index = index"
+    <div
+      *ngIf="index === 0"
+      [ngStyle.lt-md]="{ width: '100%', margin: '30px auto' }"
+      class="tab-content"
     >
-      <div *ngIf="index === 0" class="tab-content">
-        <mat-grid-list cols="2" rowHeight="fit" [style.height]="'400px'">
-          <!-- <mat-grid-tile [colspan]="1" [rowspan]="1">
-          </mat-grid-tile> -->
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <div class="input-container">
-              <mat-form-field appearance="outline">
-                <mat-label>Title </mat-label>
-                <input
-                  matInput
-                  class="matInput"
-                  placeholder="Title of your campign"
-                  type="text"
-                />
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <div class="input-container">
-              <mat-form-field appearance="outline">
-                <mat-label> Goal </mat-label>
-                <input
-                  matInput
-                  class="matInput"
-                  placeholder="goal"
-                  type="number"
-                />
-                <span matPrefix> <mat-icon>$</mat-icon> </span>
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label>Title </mat-label>
+          <input
+            matInput
+            class="matInput"
+            placeholder="Title of your campign"
+            type="text"
+          />
+        </mat-form-field>
 
-          <!-- <mat-grid-tile [colspan]="2"></mat-grid-tile> -->
+        <mat-form-field appearance="outline">
+          <mat-label> Goal </mat-label>
+          <input matInput class="matInput" placeholder="goal" type="number" />
+          <span matPrefix> <mat-icon>$</mat-icon> </span>
+        </mat-form-field>
+      </div>
 
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <div class="input-container">
-              <mat-form-field appearance="outline">
-                <mat-label> Category </mat-label>
-                <mat-select placeholder="Select category">
-                  <mat-option [value]=""></mat-option>
-                  <mat-option [value]="">Category 1</mat-option>
-                  <mat-option [value]="">Category 1</mat-option>
-                  <mat-option [value]="">Category 1</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <div class="input-container">
-              <mat-form-field appearance="outline">
-                <mat-label> Zip code </mat-label>
-                <input
-                  matInput
-                  class="matInput"
-                  placeholder="goal"
-                  type="text"
-                />
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label> Category </mat-label>
+          <mat-select placeholder="Select category">
+            <mat-option [value]=""></mat-option>
+            <mat-option [value]="">Category 1</mat-option>
+            <mat-option [value]="">Category 1</mat-option>
+            <mat-option [value]="">Category 1</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <mat-grid-tile [colspan]="2">
-            <div class="input-container">
-              <p class="bold">Campign link</p>
-              <mat-divider></mat-divider>
-              <h3>gofundme.com/f/sbdsbd</h3>
-              <p>
-                This link can only be changed once. Changing your link does not
-                break your previous link
-              </p>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <div class="input-container">
-              <mat-form-field appearance="outline">
-                <mat-label> Campign link </mat-label>
-                <input
-                  matInput
-                  class="matInput"
-                  #link
-                  placeholder="goal"
-                  value="hfdjfhd"
-                  type="text"
-                />
-                <mat-hint
-                  ><h5 class="bold">
-                    preview: www.gofundme.com/{{ link.value }}
-                  </h5>
-                </mat-hint>
-                <mat-sufix matSuffix> {{ 45 - link.value.length }} </mat-sufix>
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <mat-form-field appearance="outline">
+          <mat-label> Zip code </mat-label>
+          <input matInput class="matInput" placeholder="goal" type="text" />
+        </mat-form-field>
+      </div>
 
-        <!-- TEAM SETTINGS -->
-        <div class="setting">
-          <h4 class="bold">Team Settings</h4>
-          <div class="input-container">
-            <p></p>
-            <mat-form-field appearance="outline">
-              <mat-label> Team Name </mat-label>
-              <input
-                matInput
-                class="matInput"
-                #teamName
-                placeholder="goal"
-                value="hfdjfhd"
-                type="text"
-              />
-              <mat-sufix matSuffix>
-                {{ 45 - teamName.value.length }}
-              </mat-sufix>
-            </mat-form-field>
-          </div>
-          <div class="input-container">
-            <label for="show-amount"
-              >Show the amount each team member has raised publicly
-            </label>
-            <mat-checkbox
-              id="show-amount"
-              value=""
-              color="primary"
-            ></mat-checkbox>
-          </div>
+      <p class="bold">Campign link</p>
+      <mat-divider></mat-divider>
+      <h3>gofundme.com/f/sbdsbd</h3>
+      <p>
+        This link can only be changed once. Changing your link does not break
+        your previous link
+      </p>
 
-          <!-- TODO add photo button -->
+      <mat-form-field appearance="outline">
+        <mat-label> Campign link </mat-label>
+        <input
+          matInput
+          class="matInput"
+          #link
+          placeholder="goal"
+          value="hfdjfhd"
+          type="text"
+        />
+        <mat-hint
+          ><h5 class="bold">preview: www.gofundme.com/{{ link.value }}</h5>
+        </mat-hint>
+        <mat-sufix matSuffix> {{ 45 - link.value.length }} </mat-sufix>
+      </mat-form-field>
 
-          <!-- TODO add  delete action-->
-          <button class="delete-btn" mat-button>Delete Team</button>
-        </div>
-        <!-- FUNDRISER SETTINGS -->
-        <div class="setting">
-          <h4 class="bold">Fundriser Settings</h4>
-          <div class="input-container fudriser-setting-checkbox">
+      <!-- TEAM SETTINGS -->
+      <div class="setting">
+        <h2 class="bold">Team Settings</h2>
+        <p></p>
+        <mat-form-field appearance="outline">
+          <mat-label> Team Name </mat-label>
+          <input
+            matInput
+            class="matInput"
+            #teamName
+            placeholder="goal"
+            value="hfdjfhd"
+            type="text"
+          />
+          <mat-sufix matSuffix>
+            {{ 45 - teamName.value.length }}
+          </mat-sufix>
+        </mat-form-field>
+
+        <label for="show-amount"
+          >Show the amount each team member has raised publicly
+        </label>
+        <mat-checkbox id="show-amount" value="" color="primary"></mat-checkbox>
+
+        <!-- TODO add photo button -->
+
+        <!-- TODO add  delete action-->
+        <button class="delete-btn" mat-button>Delete Team</button>
+      </div>
+
+      <!-- FUNDRISER SETTINGS -->
+      <div class="setting">
+        <h2 class="bold">Fundriser Settings</h2>
+
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <div style="width: 100%">
             <label for="allow-comment">
               Allow donors to leave comments on my fundraiser
             </label>
@@ -181,9 +166,10 @@
               value=""
               color="primary"
             ></mat-checkbox>
+            <mat-divider></mat-divider>
           </div>
-          <mat-divider></mat-divider>
-          <div class="input-container fudriser-setting-checkbox">
+
+          <div style="width: 100%">
             <label for="allow-donations">
               Allow donations to my fundraiser
             </label>
@@ -192,9 +178,9 @@
               value=""
               color="primary"
             ></mat-checkbox>
+            <mat-divider></mat-divider>
           </div>
-          <mat-divider></mat-divider>
-          <div class="input-container fudriser-setting-checkbox">
+          <div>
             <label for="allow-search">
               Allow my fundraiser to appear in search results
             </label>
@@ -212,77 +198,86 @@
               >
             </div>
           </div>
+        </div>
 
-          <div class="save">
-            <!-- TODO add save actions -->
-            <button color="primary" mat-raised-button style="width: 50%">
-              Save
-            </button>
-          </div>
-        </div>
-        <div class="setting">
-          <div class="delete-fundriser">
-            <div>
-              <h4 class="bold">Delete my fundriser</h4>
-              <div class="info-text">
-                <span>
-                  You will no longer have access to this fundraiser after
-                  deleting. If you received donations, your donors will still be
-                  able to view a summary.
-                </span>
-              </div>
-            </div>
-            <!-- TODO add  delete action-->
-            <button class="delete-btn bold" mat-button>Delete Fundriser</button>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="index === 1" class="tab-content">
-        <div style="width: 100%">
-          <youtube-video-player> </youtube-video-player>
-        </div>
-        <div>
+        <div class="save">
+          <!-- TODO add save actions -->
           <button
-            mat-raised-button
             color="primary"
-            (click)="openAddPhotoOrVedioDialog()"
-            class="btn-primary btn-large"
-            style="width: 30% !important"
+            mat-raised-button
+            class="btn-large"
+            style="width: 50% !important"
           >
-            Change
+            Save
           </button>
         </div>
       </div>
-
-      <div *ngIf="index === 2" class="tab-content">
-        <story-text-area></story-text-area>
+      <div class="setting">
+        <div>
+          <h2 class="bold">Delete my fundriser</h2>
+          <div class="info-text">
+            <span>
+              You will no longer have access to this fundraiser after deleting.
+              If you received donations, your donors will still be able to view
+              a summary.
+            </span>
+          </div>
+        </div>
+        <!-- TODO add  delete action-->
+        <button class="delete-btn bold" mat-button>Delete Fundriser</button>
       </div>
+    </div>
 
-      <div *ngIf="index === 3" class="tab-content radio">
-        <p style="width: 50%; text-align: justify">
-          Choose how you would like to receive emails when others donate or
-          comment on your fundraiser.
-        </p>
-        <mat-radio-group>
-          <mat-radio-button color="primary" value="yes" style="display: block">
-            Send me an email for every donation or comment
-          </mat-radio-button>
-          <mat-radio-button color="primary" value="no" style="display: block">
-            Send me a daily highlight of donations and
-            comments</mat-radio-button
-          >
-        </mat-radio-group>
+    <div *ngIf="index === 1" class="tab-content">
+      <div style="width: 100%">
+        <youtube-video-player> </youtube-video-player>
+      </div>
+      <div>
         <button
           mat-raised-button
           color="primary"
           (click)="openAddPhotoOrVedioDialog()"
-          class="btn-large"
+          class="btn-primary btn-large"
           style="width: 30% !important"
         >
-          Save changes
+          Change
         </button>
       </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+    </div>
+
+    <div *ngIf="index === 2" class="tab-content">
+      <story-text-area></story-text-area>
+    </div>
+
+    <div
+      *ngIf="index === 3"
+      [ngStyle.xs]="{ width: '100%', margin: '30px auto' }"
+      class="tab-content radio"
+    >
+      <p
+        style="width: 50%; text-align: justify"
+        [ngStyle.lt-md]="{ width: '100%' }"
+      >
+        Choose how you would like to receive emails when others donate or
+        comment on your fundraiser.
+      </p>
+      <mat-radio-group>
+        <mat-radio-button color="primary" value="yes" style="display: block">
+          Send me an email for every donation or comment
+        </mat-radio-button>
+        <mat-radio-button color="primary" value="no" style="display: block">
+          Send me a daily highlight of donations and comments</mat-radio-button
+        >
+      </mat-radio-group>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openAddPhotoOrVedioDialog()"
+        class="btn-large"
+        style="width: 30% !important"
+      >
+        Save changes
+      </button>
+    </div>
+  </mat-tab>
+</mat-tab-group>

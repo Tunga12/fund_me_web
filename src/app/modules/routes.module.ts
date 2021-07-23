@@ -17,6 +17,8 @@ import { PersonalInfoSummaryComponent } from '../components/withdrwal/personal-i
 import { FudriserDetailPublicComponent } from '../components/fundriser/fudriser-detail-public/fudriser-detail-public.component';
 import { DonateComponent } from '../components/donate/donate.component';
 import { MyFundriserDetailComponent } from '../components/fundriser/my-fundriser-detail/my-funriser-detail.component';
+import { NotificationComponent } from '../components/notification/notification.component';
+import { FundriserListComponent } from '../components/fundriser-list/fundriser-list.component';
 
 const ROUTES = [
   {
@@ -28,19 +30,19 @@ const ROUTES = [
     component: SignInComponent,
   },
   {
-    path: 'create-fundriser',
+    path: 'create',
     component: CreateFundriserComponent,
   },
   {
-    path: 'set-fundriser-goal',
+    path: 'create/set-fundriser-goal',
     component: SetFundriserGoalComponent,
   },
   {
-    path: 'set-fundriser-media',
+    path: 'create/set-fundriser-media',
     component: SetFundriserMediaComponent,
   },
   {
-    path: 'set-fundriser-story',
+    path: 'create/set-fundriser-story',
     component: SetFundriserStoryComponent,
   },
   {
@@ -81,13 +83,21 @@ const ROUTES = [
   },
   {
     path: 'donate',
-    component:DonateComponent
-  }
+    component: DonateComponent,
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent,
+  },
+  {
+    path: 'my-fundrisers',
+    component: FundriserListComponent,
+  },
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(ROUTES)],
-exports: [RouterModule],
+  exports: [RouterModule],
 })
 export class AppRoutesModule {}

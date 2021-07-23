@@ -8,47 +8,119 @@
   >
 </div>
 
-<div *ngIf="emails.length > 0">
-  <h3 class="bold">Pending Requests</h3>
-  <div
-    *ngFor="let email of emails; let index = index"
-    fxLayout="column"
-    fxLayoutAlign="center"
-    fxLayoutGap="30px"
-  >
-    <div *ngIf="index != 0">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>
-          {{ email }}
-        </p>
-        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
-          <a href=""> Resend request</a>
-          <mat-icon class="mat-18">more_vert</mat-icon>
-        </div>
+<!-- Fudrising team section -->
+<div fxLayout="column" fxLayoutGap="20px">
+  <div>
+    <div fxLayout="row" fxLayout="column"  fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <h2 class="bold">Fundrising team: Team Teamname(4)</h2>
+         <button
+         
+      (click)="openAddTeamMembersDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      Add team members
+    </button>
+    </div>
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      style="width: fit-content"
+    >
+      <img class="avatar" src="/assets/images/step2.jpg" />
+      <div fxLayout="column" style="width: fit-content">
+        <span class="bold">Ikraam Os</span>
+        <span>Organizer</span>
+        <span>Atlanta, GA</span>
       </div>
-      <div>
-        <mat-divider></mat-divider>
+    </div>
+    <button mat-stroked-button color="primary">Contact</button>
+  </div>
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+    <div fxFlex="25" *ngFor="let item of [12, 3, 44, 5]">
+      <div fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
+        <img
+          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+        />
+        <div fxLayout="column">
+          <span class="bold">Team Membername</span>
+          <span class="text-small">team member</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<div class="tab-content">
-  <h3 class="tab-content-header">You haven’t added team members yet.</h3>
-  <h3>Keep your supporters up to date on your fundraisers!</h3>
-  <button
-    (click)="openAddTeamMembersDialog()"
-    mat-raised-button
-    color="primary"
+
+<div *ngIf="emails.length > 0" style="margin: 20px">
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <p class="bold">Pending Requests</p>
+    <button
+      (click)="openAddTeamMembersDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      Add team members
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div
+    *ngFor="let email of emails; let index = index"
+    fxLayout="column"
+    fxLayoutAlign="center"
+    style="margin: 10px auto"
   >
-    Add team members
-  </button>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <p>
+        {{ email }}
+      </p>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
+        <a href=""> Resend request</a>
+        <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
+          >more_vert</mat-icon
+        >
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Contact invitee</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="deleteInvitation(email)">
+            Delete invitation
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
 </div>
-<div class="or-divider">
-  <p class="bar"></p>
-  <p style="font-weight: 600">or</p>
-  <p class="bar"></p>
-</div>
-<div style="display: flex; align-items: center; justify-items: center">
+
+<div *ngIf="emails.length === 0" class="tab-content">
+  <div>
+    <h3 class="tab-content-header">You haven’t added team members yet.</h3>
+    <h3>Keep your supporters up to date on your fundraisers!</h3>
+    <button
+      (click)="openAddTeamMembersDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      Add team members
+    </button>
+  </div>
+  <div class="or-divider">
+    <p class="bar"></p>
+    <p style="font-weight: 600">or</p>
+    <p class="bar"></p>
+  </div>
   <mat-form-field appearance="fill">
     <input
       matInput
@@ -57,12 +129,10 @@
       [disabled]="true"
     />
   </mat-form-field>
-  <span class="btn-primary" style="padding: 13px; margin: 0px 0px 20px -30px">
-    Copy
-  </span>
-</div>
+  <button mat-raised-button color="primary">Copy link</button>
 
-<p style="text-align: center">
-  Only share this invite link with people you want to join your fundraising
-  team.
-</p>
+  <p style="text-align: center">
+    Only share this invite link with people you want to join your fundraising
+    team.
+  </p>
+</div>

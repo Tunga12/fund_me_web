@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPhotoVideoDialogComponent } from '../post-an-update/add-photo-video-dialog/add-photo-video-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-ui',
@@ -9,7 +10,7 @@ import { AddPhotoVideoDialogComponent } from '../post-an-update/add-photo-video-
 })
 export class EditUiComponent implements OnInit {
   tabs = [1, 2, 3, 4];
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {}
   openAddPhotoOrVedioDialog() {
@@ -17,5 +18,8 @@ export class EditUiComponent implements OnInit {
       .open(AddPhotoVideoDialogComponent, { data: { id: 1 } })
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
+  }
+  backToDetailPage() {
+    this.router.navigateByUrl('/my-fundriser-detail');
   }
 }

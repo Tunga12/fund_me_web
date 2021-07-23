@@ -12,13 +12,14 @@ mat-slider.mat-slider {
 }
 form {
   width: 100%;
+  margin: 30px auto;
 }
 
 mat-card.mat-card {
   background-color: #fff;
-  width: 30%;
   box-shadow: 0 0.3125rem 1rem -0.1875rem rgb(0 0 0 / 20%);
-  padding-bottom: 1.5rem;
-  padding-top: 1.5rem;
+  padding: 1.5rem 0rem;
+  width: 30%;
+  margin: 30px auto;
+  padding: 10px;
 }
-

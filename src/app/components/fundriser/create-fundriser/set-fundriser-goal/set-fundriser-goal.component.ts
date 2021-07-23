@@ -4,18 +4,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-set-fundriser-goal',
   templateUrl: './set-fundriser-goal.component.html',
-  styleUrls: ['./set-fundriser-goal.component.css']
+  styleUrls: ['./set-fundriser-goal.component.css'],
 })
 export class SetFundriserGoalComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor(
-    private router:Router
-  ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   next() {
-    this.router.navigate(["/set-fundriser-media"]);
+    this.router.navigate(['/create/set-fundriser-media']);
   }
 }

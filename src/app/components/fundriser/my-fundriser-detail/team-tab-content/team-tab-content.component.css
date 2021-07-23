@@ -8,3 +8,18 @@ mat-icon.mat-icon {
   width: 10px;
   font-size: 13px;
 }
+
+.tab-content {
+  text-align: center;
+  margin: 50px auto;
+}
+
+.more {
+  cursor: pointer;
+}
+
+img.avatar{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}

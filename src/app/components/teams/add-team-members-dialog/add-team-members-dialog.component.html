@@ -5,7 +5,9 @@
 <mat-divider></mat-divider>
 <mat-dialog-content>
   <!-- <h1>Search by email</h1> -->
-  <form (submit)="$event.preventDefault()">
+  <form (submit)="$event.preventDefault()"
+  [formGroup]="form"
+  >
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -13,6 +15,7 @@
         formControlName="email"
         type="link"
         required
+        [(ngModel)]="email"
         placeholder="Search by email"
         (keyup.enter)="addEmail(emailInput.value); emailInput.value = ''"
       />
@@ -64,7 +67,7 @@
       <a (click)="openImportContactsDialog()"> Import your email contacts</a>
     </p>
     <p>
-      <button mat-raised-button class="btn-primary btn-large">Next</button>
+      <button mat-raised-button  [mat-dialog-close]="emails" color="primary" class="btn-large">Next</button>
     </p>
   </form>
 </mat-dialog-content>

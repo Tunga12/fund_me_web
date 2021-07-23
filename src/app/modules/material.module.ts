@@ -18,8 +18,16 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgModule } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const imports = [
+  MatSidenavModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTableModule,
   MatRadioModule,
   MatProgressBarModule,
   MatButtonModule,
@@ -42,11 +50,12 @@ const imports = [
   MatTabsModule,
   MatDialogModule,
   MatCheckboxModule,
-  
 ];
 const exports = imports;
 @NgModule({
   imports: imports,
   exports: exports,
 })
-export class MyMaterialModule {}
+export class MyMaterialModule {
+  
+}

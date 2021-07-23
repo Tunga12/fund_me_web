@@ -1,0 +1,24 @@
+p {
+  text-align: justify;
+}
+div {
+  width: 100%;
+}
+
+.avatar-contain {
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  color: #ddd;
+  font-size: 0.875rem;
+  border-radius: 50%;
+  border: 0.0625rem solid #ddd;
+}
+
+.more {
+  cursor: pointer;
+}
+
+.btn-update{
+  margin-left: auto;
+}

@@ -14,20 +14,11 @@ body {
   background-color: #fff;
 }
 
-nav {
-  background: #fff;
-  -webkit-box-shadow: 0 0.125rem 0.1875rem -0.125rem rgb(0 0 0 / 20%);
-  box-shadow: 0 0.125rem 0.1875rem -0.125rem rgb(0 0 0 / 20%);
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  z-index: 2;
-  width: 100%;
-  padding: 0px 72px;
-}
+
 
 .nav-fixed {
   background-color: rgb(255, 255, 255);
-  position: fixed;
+  position: static;
   top: 0;
 }
 
@@ -38,9 +29,6 @@ nav {
   position: relative;
 }
 
-.nav-group-spacer {
-  flex: auto 1 1;
-}
 
 .nav-link {
   font-size: 14px;

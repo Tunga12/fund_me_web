@@ -1,6 +1,7 @@
 mat-card.mat-card {
   width: 25%;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 button {

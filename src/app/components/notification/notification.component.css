@@ -1,0 +1,20 @@
+.notification {
+  margin: 10px auto;
+  padding: 20px;
+  width: 70%;
+  background-color: rgb(186, 247, 247);
+  opacity: 1;
+  text-align: justify;
+  border-radius: 10px;
+}
+
+img {
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.4;
+  border-radius: 1rem;
+}
+
+.time {
+  margin-left: auto;
+}

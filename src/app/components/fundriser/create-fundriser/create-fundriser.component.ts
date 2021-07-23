@@ -17,7 +17,7 @@ export class CreateFundriserComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(["/set-fundriser-goal"]);
+    this.router.navigate(["/create/set-fundriser-goal"]);
   }
 
 }

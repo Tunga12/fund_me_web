@@ -51,6 +51,7 @@ import { InvitedContactsTabContentComponent } from './components/fundriser/my-fu
 import { DonorsTabConntentComponent } from './components/fundriser/my-fundriser-detail/donors-tab-conntent/donors-tab-conntent.component';
 import { TeamTabContentComponent } from './components/fundriser/my-fundriser-detail/team-tab-content/team-tab-content.component';
 import { UpdatesTabContentComponent } from './components/fundriser/my-fundriser-detail/updates-tab-content/updates-tab-content.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 const customConfig = {
   // prop: {
@@ -103,6 +104,7 @@ const customConfig = {
     DonorsTabConntentComponent,
     TeamTabContentComponent,
     UpdatesTabContentComponent,
+    NotificationComponent,
   ],
   entryComponents: [],
   imports: [

@@ -7,21 +7,23 @@ mat-card.mat-card {
 mat-card.mat-card:hover {
   -webkit-box-shadow: 0 0.14rem 0.1975rem 0.14rem rgb(160, 159, 159);
   box-shadow: 0 0.125rem 0.1975rem 0.125rem rgb(160, 159, 159);
+  transform: scaleY(1.036);
 }
 mat-card.mat-card {
   -webkit-box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
 }
 
-.mat-card-image {
-  width: 300px;
-  height: auto;
-  border-radius: 4px;
-}
+
 .items-row {
   flex-wrap: wrap;
 }
 
-.content {
-  padding: 0px 72px;
+.nav-sticky
+{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+
 }

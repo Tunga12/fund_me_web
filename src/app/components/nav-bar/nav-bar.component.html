@@ -1,9 +1,7 @@
 <mat-toolbar
   [classList]="'bg-white'"
-  fxLayout="row"
-  fxLayout.xs="column"
+  fxLayout="row wrap"
   fxLayoutAlign="space-between center"
-  style="width: 100%;"
 >
   <div>
     <!-- First menu -->
@@ -16,21 +14,13 @@
       class="nav-link mat-button"
     >
       Discover
-      <mat-icon *ngIf="discoverCaret">expand_more</mat-icon>
-      <mat-icon *ngIf="!discoverCaret">expand_less</mat-icon>
+      <mat-icon>{{ discoverCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
 
-    <mat-menu
-      #discover="matMenu"
-      [hasBackdrop]="false"
-      [overlapTrigger]="false"
-      
-    >
-      <button mat-menu-item>Baikal oilffundrise</button>
-      <button mat-menu-item>Bala shark</button>
-      <button mat-menu-item>Ballan wrasse</button>
-      <button mat-menu-item>Bamboo shark</button>
-      <button mat-menu-item>Banded killiffundrise</button>
+    <mat-menu #discover="matMenu">
+      <button mat-menu-item>Fundrisers</button>
+      <button mat-menu-item>Success stories</button>
+      <button mat-menu-item>Trending topic</button>
     </mat-menu>
     <!--
     SECOND MENU
@@ -43,41 +33,80 @@
       (onMenuOpen)="toggleFundriseCaret()"
       class="nav-link mat-button"
     >
-      <mat-menu
-        #fundrise="matMenu"
-        #ffundriseMenu
-        [hasBackdrop]="false"
-        [overlapTrigger]="false"
-      >
-        <a mat-menu-item routerLink="'/create-contact'" class="mat-menu-item">
-          Create Contact
+      <mat-menu #fundrise="matMenu">
+        <a mat-menu-item routerLink="'/medical'" class="mat-menu-item">
+          Medical
         </a>
-        <a mat-menu-item routerLink="'/activities'" class="mat-menu-item">
-          Activities
+        <a mat-menu-item routerLink="'/memorial'" class="mat-menu-item">
+          Memorial
         </a>
-        <a mat-menu-item routerLink="'/create-activity'" class="mat-menu-item">
-          Create Activity
+        <a mat-menu-item routerLink="'/non-profit'" class="mat-menu-item">
+          Non profit
         </a>
+        <a mat-menu-item routerLink="'/emergency'" class="mat-menu-item">
+          Emergency
+        </a>
+        <a mat-menu-item routerLink="'/edcation'" class="mat-menu-item">
+          Education
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item routerLink="'/see-all'">See all</a>
       </mat-menu>
       Fundrise for
-      <mat-icon *ngIf="fundriseCaret">expand_more</mat-icon>
-      <mat-icon *ngIf="!fundriseCaret">expand_less</mat-icon>
+      <mat-icon>{{ fundriseCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
   </div>
 
   <!-- LOGO -->
-  <img
-    src="\assets\images\logo.png"
-    alt="logo"
-    style="width: 200px; height: 70%"
-  />
+  <!-- <img src="/assets/images/logo.jpg" height="70%" width="10%" /> -->
 
   <div>
-    <a mat-button routerLink="'/create-contact'" class="nav-link mat-button">
+    <a mat-button routerLink='/my-fundrisers' class="nav-link mat-button">
       Your fundrisers
     </a>
-    <a mat-button routerLink="'/activities'" class="nav-link mat-button">
+
+    <!-- USER account MENU -->
+    <a
+      mat-button
+      [matMenuTriggerFor]="account"
+      #funndrisemenuTrigger="matMenuTrigger"
+      (onMenuClose)="toggleAccountCaret()"
+      (onMenuOpen)="toggleAccountCaret()"
+      class="nav-link mat-button"
+    >
+      <mat-menu #account="matMenu">
+        <a 
+        (click)="myFundrisers()"
+        mat-menu-item routerLink="/my-fundrisers" class="mat-menu-item">
+          Your fundrisers
+        </a>
+        <a mat-menu-item routerLink="'/my-donations'" class="mat-menu-item">
+          Donations you've made
+        </a>
+        <a mat-menu-item routerLink="'/account-setting'" class="mat-menu-item">
+          Account settings
+        </a>
+        <a
+        (click)="newFundriser()"
+        mat-menu-item routerLink="'/create'" class="mat-menu-item">
+          Start a new fundriser
+        </a>
+        <a mat-menu-item routerLink="'/help'" class="mat-menu-item">
+          Help center
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item routerLink="'/sign-in'">Sign out</a>
+      </mat-menu>
       Getachew
+      <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
+
+    <button
+      mat-icon-button
+      fxShow="true"
+      fxHide.gt-sm
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
   </div>
 </mat-toolbar>

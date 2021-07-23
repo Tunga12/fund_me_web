@@ -1,14 +1,4 @@
-mat-card.mat-card {
-  padding: 0px 72px !important;
-}
 
-mat-grid-tile.mat-grid-tile {
-  overflow: visible;
-}
-.input-container {
-  width: 100%;
-  padding: 0px 10px;
-}
 mat-checkbox.mat-checkbox {
   float: right;
 }
@@ -28,18 +18,12 @@ mat-checkbox.mat-checkbox {
   display: flex;
   flex-direction: column;
 }
-.delete-fundriser {
-  width: 100%;
-  display: flex;
-  align-content: space-between;
-}
+
 .info-text {
   color: #999 !important;
   width: 70%;
 }
 .tab-content {
-  /* text-align: center !important;
-  padding: 72px auto !important; */
   margin: 50px 100px;
 }
 .tab-content.radio {
@@ -56,27 +40,5 @@ img {
   max-width: 56px !important;
   max-height: 40px !important;
 }
-.edit-header {
-  display: flex;
-  width: 23% !important;
-  align-items: stretch;
-  justify-content: space-around;
-}
 
-/*  */
 
-.img {
-  width: 100%;
-  margin-bottom: 18%;
-}
-.card-picture {
-  width: 23%;
-  margin-bottom: 2%;
-}
-.container {
-  min-height: 100%;
-  width: 100%;
-}
-.search-form {
-  width: 90%;
-}

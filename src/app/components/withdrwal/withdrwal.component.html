@@ -1,9 +1,15 @@
-<nav-bar></nav-bar>
-<mat-card class="fundriser-form">
+<nav>
+  <nav-bar></nav-bar>
+</nav>
+<mat-card
+ fxLayout="column"
+ [ngStyle.xs]="{width:'94%'}"
+ [ngStyle.sm]="{width:'60%'}"
+  fxLayoutGap="10px">
   <mat-card-header>
     <mat-card-title>Select withdrawal type </mat-card-title>
   </mat-card-header>
-  <mat-divider></mat-divider>
+  <div><mat-divider></mat-divider></div>
 
   <mat-card-content>
     <form
@@ -35,9 +41,7 @@
           [(ngModel)]="saving_type"
           placeholder=""
         >
-          <mat-option
-            >What type of saving_type withdrawal is right for you?</mat-option
-          >
+          <mat-option>What type of withdrawal is right for you?</mat-option>
           <mat-option value="personal"> Personal </mat-option>
           <mat-option value="company"> Company </mat-option>
           <mat-option value="partnership"> Partnership </mat-option>
@@ -47,7 +51,7 @@
         <mat-icon
           *ngIf="saving_type !== ''"
           [ngStyle]="{ 'margin-right': '10px' }"
-          >home</mat-icon
+          >account_balance</mat-icon
         >
         <p *ngIf="saving_type === 'personal'">
           Funds will be withdrawn to a personal bank account.
@@ -77,8 +81,12 @@
         manage, or direct the organization (e.g., a Chief Executive Officer,
         Vice President, Treasurer, or a controller).
       </mat-hint>
-      <button mat-raised-button [fxFlexAlign]="'center'" class="btn-md" color="primary"
-      (click)="openPersonalInfoForm()"
+      <button
+        mat-raised-button
+        [fxFlexAlign]="'center'"
+        class="btn-large"
+        color="primary"
+        (click)="openPersonalInfoForm()"
       >
         Next
       </button>

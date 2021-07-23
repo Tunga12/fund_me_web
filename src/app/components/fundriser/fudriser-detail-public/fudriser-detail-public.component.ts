@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
 import { DoantionsComponent } from './doantions/doantions.component';
+import { DonateComponent } from './../../donate/donate.component';
 
 @Component({
   selector: 'app-fudriser-detail-public',
@@ -38,7 +39,7 @@ export class FudriserDetailPublicComponent implements OnInit {
   // open top donations dialog
   topDonations() {
     this.dialog
-      .open(ShareDialogComponent, { data: { id: 1 } })
+      .open(DonateComponent, { data: { id: 1 } })
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }

@@ -1,0 +1,20 @@
+.tab-content {
+  text-align: center;
+  margin: 50px auto;
+}
+
+.table-container {
+  width: 80%;
+  margin: 30px auto;
+}
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.donations{
+  margin: 20px auto; text-align: justify;
+}

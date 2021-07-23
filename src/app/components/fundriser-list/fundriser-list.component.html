@@ -1,62 +1,50 @@
-<div>
-  <nav fxLayout="column" class="nav-fixed">
-    <nav-bar></nav-bar>
+<div [ngStyle.gt-sm]="{ width: '80%', margin: '0px auto' }">
+    <nav fxLayout="column" class="nav-sticky">
+      <!-- <nav-bar></nav-bar> -->
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start start"
+        style="width: 100%"
+      >
+        <h1 class="bold" fxFlexAlign="start start" style="margin-right: auto">
+          Your funrisers
+        </h1>
+        <button
+        (click)="createFundriser()"
+        mat-raised-button color="primary">Start a new fundriser</button>
+      </div>
+    </nav>
+  <div>
     <div
       fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="center center"
-      style="width: 100%"
+      fxLayout.sm="column"
+      fxLayoutGap="32px"
+      fxLayoutAlign="start start"
+      class="items-row"
     >
-      <h1 class="bold" fxFlexAlign="start start" style="margin-right: auto">
-        Your funrisers
-      </h1>
-      <button
-        class="btn-primary"
-        [ngStyle.xs]="{ width: '70%', margin: '0px auto 20px auto' }"
-        [ngStyle.sm]="{ width: '40%', margin: '0 0 0 auto' }"
-        style="
-          font-size: 15px;
-          padding: 14px;
-          margin: 0 0 0 auto !important;
-          width: 25%;
-        "
+      <mat-card
+        (click)="manageFundriser()"
+        *ngFor="let item of [1, 2, 4, 8, 5]; let i = index"
+        [ngStyle.sm]="{ 'margin-bottom': '30px' }"
       >
-        Start a new fundriser
-      </button>
+        <div>
+          <img
+            matCardImage
+            src="/assets/images/step2.jpg"
+            [ngStyle.xs]="{ width: '100%', height: '200px !important' }"
+            [ngStyle.sm]="{ width: '100%', height: '200px' }"
+          />
+        </div>
+        <mat-card-header>
+          <mat-card-title>Title {{ i }}</mat-card-title>
+          <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <p style="text-align: center">Manage</p>
+        </mat-card-actions>
+      </mat-card>
     </div>
-  </nav>
-</div>
-<div
-  [ngStyle.xs]="{ 'margin-top': '250px' }"
-  [ngStyle]="{ 'margin-top': '200px' }"
->
-  <div
-    fxLayout="row"
-    fxLayout.sm="column"
-    fxLayoutGap="32px"
-    fxLayoutAlign="center"
-    class="items-row"
-  >
-    <mat-card
-      *ngFor="let item of [1, 2, 4, 5, 4, 5, 6, 6, 7, 8]; let i = index"
-      [ngStyle.sm]="{ 'margin-bottom': '30px' }"
-    >
-      <div>
-        <img
-          matCardImage
-          src="/assets/images/step2.PNG"
-          [ngStyle.xs]="{ width: '100%', height: '200px !important' }"
-          [ngStyle.sm]="{ width: '100%', height: '200px' }"
-        />
-      </div>
-      <mat-card-header>
-        <mat-card-title>Title {{ i }}</mat-card-title>
-        <mat-card-subtitle>Subtitle</mat-card-subtitle>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-actions>
-        <p style="text-align: center">Manage</p>
-      </mat-card-actions>
-    </mat-card>
   </div>
 </div>

@@ -1,63 +1,76 @@
-<div mat-dialog-title>
-  <h4 matDialogTitle style="display: inline">Post an update</h4>
-  <span mat-dialog-close class="close-dialog">X</span>
-</div>
-<mat-divider></mat-divider>
-<mat-dialog-content>
-  <form>
-    <mat-form-field appearance="outline">
-      <textarea matInput required placeholder="Share your news"></textarea>
-    </mat-form-field>
-    <!-- TODO -->
-    <button
-      color="primary"
-      class="btn-large"
-      mat-raised-button
-      (click)="openAddPhotoOrVedioDialog()"
-    >
-      Add a photo or video
-    </button>
-    <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
-    <mat-divider></mat-divider>
-    <div class="media">
-      <p>
-        <mat-checkbox
-          formControlName="formControlName"
-          value="here"
-          color="primary"
-          >Campign page(Default)</mat-checkbox
-        >
-      </p>
-      <p>
-        <mat-checkbox
-          formControlName="formControlName"
-          value="donors&followers"
-          color="primary"
-          >Donors and Folowers</mat-checkbox
-        >
-      </p>
-
-      <p>
-        <mat-checkbox
-          formControlName="formControlName"
-          value="facebook"
-          color="primary"
-          >Facebook</mat-checkbox
-        >
-      </p>
-      <p>
-        <mat-checkbox
-          formControlName="formControlName"
-          value="twitter"
-          color="primary"
-          >Twitter</mat-checkbox
-        >
-      </p>
+<div>
+  <div mat-dialog-title>
+    <h4 matDialogTitle style="display: inline">Post an update</h4>
+    <span mat-dialog-close class="close-dialog">X</span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <textarea
+          formControlName="story"
+          matInput
+          required
+          placeholder="Share your news"
+          [(ngModel)]="story"
+        ></textarea>
+      </mat-form-field>
+      <!-- TODO -->
+      <button
+        color="primary"
+        mat-stroked-button
+        (click)="openAddPhotoOrVedioDialog()"
+      >
+        Add a photo or video
+      </button>
+      <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
       <mat-divider></mat-divider>
-    </div>
-    <!-- TODO -->
-    <button mat-raised-button type="submit" color="primary" class="btn-large">
-      Post an update
-    </button>
-  </form>
-</mat-dialog-content>
+      <div class="media">
+        <p>
+          <mat-checkbox
+            formControlName="campign_page"
+            value="here"
+            color="primary"
+            >Campign page(Default)</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox
+            formControlName="donors_followers"
+            value="donors & followers"
+            color="primary"
+            >Donors and Folowers</mat-checkbox
+          >
+        </p>
+
+        <p>
+          <mat-checkbox
+            formControlName="facebook"
+            value="facebook"
+            color="primary"
+            >Facebook</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox
+            formControlName="twitter"
+            value="twitter"
+            color="primary"
+            >Twitter</mat-checkbox
+          >
+        </p>
+        <mat-divider></mat-divider>
+      </div>
+      <!-- TODO -->
+      <button
+        mat-raised-button
+        [mat-dialog-close]="{ imageUrl: '', updateText: story }"
+        type="submit"
+        color="primary"
+        class="btn-large"
+      >
+        Post an update
+      </button>
+    </form>
+  </mat-dialog-content>
+</div>

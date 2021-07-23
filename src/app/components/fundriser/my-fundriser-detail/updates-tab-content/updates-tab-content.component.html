@@ -1,5 +1,61 @@
-<h3 class="tab-content-header">You haven’t posted an update yet.</h3>
-      <h3>Keep your supporters up to date on your fundraisers!</h3>
-      <button (click)="openUpdateDialog()" mat-raised-button color="primary">
-        Post an update
-      </button>
+<!-- If no updates made yet show no updates made -->
+<!-- <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
+<h3>Keep your supporters up to date on your fundraisers!</h3>
+<button (click)="openUpdateDialog()" mat-raised-button color="primary">
+  Post an update
+</button> -->
+
+<!-- If there are updates show them -->
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <p class="bold">Updates</p>
+    <button
+      (click)="openUpdateDialog()"
+      mat-raised-button
+      color="primary"
+      class="btn-update"
+    >
+      Post an update
+    </button>
+  </div>
+  <div
+    *ngFor="let update of updates"
+    fxLayout="column"
+    fxLayoutAlign="start start"
+    fxLayoutGap="20px"
+    style="margin: 20px auto"
+  >
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div class="avatar-contain">GT</div>
+        <strong>Getacew Tebikew</strong>
+      </div>
+      <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
+        >more_vert</mat-icon
+      >
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Edit update</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="deleteUpdate(update)">
+          Delete update
+        </button>
+      </mat-menu>
+
+      <!-- <mat-icon class="mat-18">more_vert</mat-icon> -->
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="start start"
+      fxLayoutGap="30px"
+    >
+      <img [src]="update.imageUrl" alt="" />
+      <p>
+        {{ update.updateText }}
+      </p>
+    </div>
+    <p class="text-small color-gray">This was shared with your donors</p>
+    <div><mat-divider> </mat-divider></div>
+  </div>
+</div>

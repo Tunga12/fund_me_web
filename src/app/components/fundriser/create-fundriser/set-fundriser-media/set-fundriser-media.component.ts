@@ -14,7 +14,7 @@ export class SetFundriserMediaComponent implements OnInit {
 
   ngOnInit(): void {}
   next() {
-    this.router.navigateByUrl("/set-fundriser-story");
+    this.router.navigateByUrl("/create/set-fundriser-story");
   }
   select(src: MouseEvent) {
     // console.log(src.focus);

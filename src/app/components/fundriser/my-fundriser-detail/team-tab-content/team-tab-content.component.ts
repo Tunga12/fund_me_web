@@ -18,9 +18,15 @@ export class TeamTabContentComponent implements OnInit {
       .afterClosed()
       .subscribe((close_result) => {
         console.log('before', this.emails);
-        this.emails = [this.emails, ...close_result];
+        let duplicateEmails = [...this.emails, ...close_result];
+        this.emails = [...new Set(duplicateEmails)];
         console.log(close_result);
         console.log('after', this.emails);
       });
+  }
+
+  deleteInvitation(email: string) {
+    let index = this.emails.indexOf(email);
+    this.emails.splice(index, 1);
   }
 }

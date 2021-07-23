@@ -1,46 +1,44 @@
-<nav>
-  <mat-toolbar [classList]="'bg-white'">
-    <img src="/src/assets/images/logo.png" alt="goFundMe" />
-    <span class="nav-group-spacer"></span>
-    <p>
-      Don't you have account?<a
-        routerLink="/sign-up"
-        routerLinkActive="router-link-active"
-        mat-link
-        class="btn-link"
-        >Sign in</a
-      >
-      <!-- <button mat-stroked-button color="accent">Accent</button> -->
-    </p>
-  </mat-toolbar>
-</nav>
-<mat-card class="fundriser-form">
+<mat-card
+  [ngStyle]="{ width: '60%' }"
+  [ngStyle.xs]="{ width: '94%' }"
+  [ngStyle.sm]="{ width: '70%' }"
+  class="fundriser-form"
+>
   <mat-card-content>
-    <h4 class="progress-bar-sections-title heading-4">Step 0 of 4</h4>
+    <h4 class="progress-bar-sections-title heading-4">Step 4 of 4</h4>
     <div class="progress-bar-sections-wrap">
-      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
-      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
-      <div class="progress-bar-sections-section progress-bar-sections-section--complete"></div>
-      <div class="progress-bar-sections-section progress-bar-sections-section--remaining"></div>
+      <div
+        class="
+          progress-bar-sections-section progress-bar-sections-section--complete
+        "
+      ></div>
+      <div
+        class="
+          progress-bar-sections-section progress-bar-sections-section--complete
+        "
+      ></div>
+      <div
+        class="
+          progress-bar-sections-section progress-bar-sections-section--complete
+        "
+      ></div>
+      <div
+        class="
+          progress-bar-sections-section progress-bar-sections-section--complete
+        "
+      ></div>
     </div>
     <h2>Set your fundraiser story</h2>
     <form>
-        <p class="bold">Why are you fundrising? </p>
-        <!-- <label for="amount">How much would yyou like to rise?</label> -->
-        <textarea class="editor" placeholder="your story">
-        </textarea>
-      <p><input
-        type="button"
+      <story-text-area></story-text-area>
+      <button
+        mat-raised-button
+        color="primary"
         (click)="next()"
-        class="btn-large btn-primary"
-        value="Next"
-      /></p>
-      <p><input
-        type="button"
-        (click)="next()"
-        class="btn-large btn-primary"
-        value="Next"
-      /></p>
+        class="btn-large"
+      >
+        Complete fundriser
+      </button>
     </form>
   </mat-card-content>
 </mat-card>
