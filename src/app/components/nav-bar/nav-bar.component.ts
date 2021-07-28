@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CategoryService } from './../../services/category/category.service';
 import { Category } from 'src/app/models/category.model';
-import {  Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
 
@@ -52,6 +52,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
       .getCurrentUser()
       .subscribe((user) => {
         this.currentUser = user;
+
+        localStorage.setItem('userId', this.currentUser?._id || '');
+
+        console.log(this.currentUser);
       });
   }
 

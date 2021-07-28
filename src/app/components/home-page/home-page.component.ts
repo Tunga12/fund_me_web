@@ -2,10 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { Router } from '@angular/router';
 import { HomeFundraiser } from 'src/app/models/home-fundraiser.model';
-import { UserService } from './../../services/user/user.service';
-import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-home-page',

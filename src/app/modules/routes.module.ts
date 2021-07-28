@@ -44,7 +44,7 @@ const ROUTES = [
     component: FudraiserDetailPublicComponent,
   },
   {
-    path: 'edit',
+    path: 'edit/:id',
     component: EditUiComponent,
   },
   {
@@ -76,7 +76,7 @@ const ROUTES = [
     component: NotificationComponent,
   },
   {
-    path: 'my-fundraisers',
+    path: 'my-fundraisers/:userId',
     component: FundraiserListComponent,
   },
 
@@ -87,6 +87,6 @@ const ROUTES = [
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(ROUTES)],
-exports: [RouterModule],
+  exports: [RouterModule],
 })
 export class AppRoutesModule {}

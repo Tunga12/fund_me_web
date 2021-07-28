@@ -23,21 +23,21 @@
       class="items-row"
     >
       <mat-card
-        (click)="manageFundraiser()"
-        *ngFor="let item of [1, 2, 4, 8, 5]; let i = index"
+        [routerLink]="['/edit',fundraiser._id]"
+        *ngFor="let fundraiser of myFundraisers; let i = index"
         [ngStyle.sm]="{ 'margin-bottom': '30px' }"
       >
         <div>
           <img
             matCardImage
-            src="/assets/images/step2.jpg"
+            [src]="fundraiser.image"
             [ngStyle.xs]="{ width: '100%', height: '200px !important' }"
             [ngStyle.sm]="{ width: '100%', height: '200px' }"
           />
         </div>
         <mat-card-header>
-          <mat-card-title>Title {{ i }}</mat-card-title>
-          <mat-card-subtitle>Subtitle</mat-card-subtitle>
+          <mat-card-title> {{ fundraiser.title }} </mat-card-title>
+          <mat-card-subtitle>{{ fundraiser.dateCreated }}</mat-card-subtitle>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-actions>

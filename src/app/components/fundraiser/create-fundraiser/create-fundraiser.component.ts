@@ -18,12 +18,16 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
   // location info
   locationSub?: Subscription;
 
+  // fundraiser subscription
+  fundraiserSub?: Subscription;
+
   form: FormGroup;
 
   constructor(
     private locationServ: LocationService,
     private formBuilder: FormBuilder,
-    private fundraiserServ: FundraiserService
+    private fundraiserServ: FundraiserService,
+    private router: Router
   ) {
     // initialise the fundriser with empty fields
     this.fundraiser = {
@@ -54,13 +58,16 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
 
   // subit the form to create teh fundraiser
   submit(fundraiser: Fundraiser) {
-    //mark this fundraiser as published
-    this.fundraiser.isPublished = true;
     fundraiser = this.fundraiser;
+    // get the current user id from local storage
+    let userId = localStorage.getItem('userId');
     // post fundraiser
-    this.fundraiserServ
+    this.fundraiserSub = this.fundraiserServ
       .createFundraiser(fundraiser)
-      .subscribe((fund) => console.log(fund));
+      .subscribe((fund) => {
+        console.log(fund);
+        this.router.navigateByUrl(`/my-fundraisers/${userId}`);
+      });
   }
 
   // get current location of the user in terms of latitude and longitude
@@ -90,6 +97,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.fundraiserSub) this.fundraiserSub.unsubscribe();
     if (this.locationSub) this.locationSub.unsubscribe();
   }
 }
