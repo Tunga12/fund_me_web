@@ -6,8 +6,8 @@
   [ngStyle.xs]="{ width: '98%', margin: '30px auto' }"
 >
   <div>
-    <button mat-stroked-button (click)="backToFundriser()">
-      <mat-icon class="mat-18">arrow_back_ios</mat-icon>Back to fundriser
+    <button mat-stroked-button (click)="backToFundraiser()">
+      <mat-icon class="mat-18">arrow_back_ios</mat-icon>Back to fundraiser
     </button>
   </div>
 
@@ -15,15 +15,10 @@
     <mat-divider></mat-divider>
   </div>
 
-  <div
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="15px"
-  >
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
     <img
-      class="fundriser-img"
+      class="fundraiser-img"
       src="/assets/images/step2.jpg"
-
       [ngStyle.xs]="{ width: '100% !important' }"
     />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
@@ -120,7 +115,7 @@
           fxLayoutAlign="space-between start"
         >
           <p>GOFundMe tip</p>
-          <p>${{tip_amount}}</p>
+          <p>${{ tip_amount }}</p>
         </div>
         <div>
           <mat-divider></mat-divider>
@@ -128,7 +123,7 @@
         <p></p>
         <div fxLayout="row" fxLayoutAlign="space-between start">
           <p>Total due today</p>
-          <p>{{ donation_amount + tip_amount}}</p>
+          <p>{{ donation_amount + tip_amount }}</p>
         </div>
       </mat-card-content>
     </mat-card>

@@ -43,6 +43,7 @@
     </h2>
     <h1 class="color-gray">Get Started Today.</h1>
     <button
+      routerLink="/create"
       ngClass.lt-md="btn-large"
       mat-raised-button
       color="primary"
@@ -58,29 +59,32 @@
   </div>
 </div>
 
-<!-- Fundrisers list  -->
+<!-- fundraisers list  -->
 <div
   fxLayout="column"
   fxLayoutGap="20px"
   style="width: 80%; margin: 50px auto"
   [ngStyle.lt-md]="{ width: '98%', margin: '0px auto' }"
 >
-  <h2 class="bold">Top Fundrisers</h2>
-  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+  <h2 class="bold">Top fundraisers</h2>
+  <a   
+  fxLayout="row wrap"
+  fxLayoutAlign="start start"
+  fxLayoutGap="20px"
+    fxFlex.md="31"
+    fxFlex.lt-md="45"
+  >
     <mat-card
-      *ngFor="let item of [1, 3, 5, 6, 7]"
-      fxFlex.md="31"
-      fxFlex.lt-md="45"
-      routerLink="/fundriser-detail"
+     *ngFor="let fundraiser of fundraisers"
+    [routerLink]="['/fundraiser-detail', fundraiser._id]"
     >
-      <img matCardImage src="/assets/images/step2.jpg" />
+      <img matCardImage [src]="fundraiser.image" />
       <mat-card-header>
-        <mat-card-title>Title</mat-card-title>
+        <mat-card-title>{{ fundraiser.title }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit
-          distinctio ad in iusto,
+          {{ fundraiser.story }}
         </p>
 
         <span class="color-gray text-small">Last donation 23m ago</span>
@@ -89,10 +93,13 @@
           [value]="20"
           color="primary"
         ></mat-progress-bar>
-        <p><strong>$23,243 raised </strong>of $100,000</p>
+        <p>
+          <strong>{{ fundraiser.totalRaised }}</strong> raised of
+          {{ fundraiser.goalAmount }}
+        </p>
       </mat-card-content>
     </mat-card>
-  </div>
+  </a>
 </div>
 
 <div style="background-color: #fbf8f6; padding: 20px">
@@ -179,7 +186,11 @@
       </div>
     </div>
   </div>
-  <a mat-raised-button ngClass.xs="btn-large" color="primary"
+  <a
+    routerLink="/create"
+    mat-raised-button
+    ngClass.xs="btn-large"
+    color="primary"
     >Start a GoFundMe
   </a>
 </div>

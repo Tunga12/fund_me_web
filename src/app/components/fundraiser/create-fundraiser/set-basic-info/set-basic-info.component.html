@@ -1,0 +1,64 @@
+<form  [formGroup]="form">
+<!-- <mat-form-field appearance="outline">
+        <mat-label>Country </mat-label>
+        <input
+          matInput
+          formControlName="country"
+          [(ngModel)]="fundraiser.country"
+          placeholder="Country"
+          type="text"
+          required
+        />
+      </mat-form-field> -->
+
+<mat-form-field appearance="outline">
+  <mat-label>Choose category of your fundraiser</mat-label>
+  <mat-select
+    formControlName="category"
+    [(ngModel)]="fundraiser.category"
+    required
+  >
+    <mat-option>Choose category</mat-option>
+    <mat-option *ngFor="let category of categories" [value]="category">{{
+      category.name
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>How much would you like to rise? </mat-label>
+  <input
+    matInput
+    formControlName="goalAmount"
+    [(ngModel)]="fundraiser.goalAmount"
+    class="matInput"
+    placeholder="Enter goal amount"
+    type="number"
+    required
+  />
+  <mat-icon matPrefix>monetization_on</mat-icon>
+  <span matSuffix>.00 USD</span>
+</mat-form-field>
+<p>
+  Keep in mind that transaction fees, including credit and debit charges, are
+  deducted from each donation.
+</p>
+<div id="note">
+  <p>After money raised, please make sure the person withdrawing has:</p>
+  <ul>
+    <li>A bank account</li>
+  </ul>
+</div>
+
+<button
+  [disabled]="!form.valid"
+  mat-raised-button
+  color="primary"
+  class="btn-large"
+  (click)="nextStep()"
+>
+  Next
+
+</button>
+</form
+>

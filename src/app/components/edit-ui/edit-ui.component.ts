@@ -20,6 +20,6 @@ export class EditUiComponent implements OnInit {
       .subscribe((close_result) => console.log(close_result));
   }
   backToDetailPage() {
-    this.router.navigateByUrl('/my-fundriser-detail');
+    this.router.navigateByUrl('/my-fundraiser-detail');
   }
 }

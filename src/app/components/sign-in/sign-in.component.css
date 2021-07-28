@@ -5,3 +5,9 @@ mat-card.mat-card {
 form {
   margin: 30px auto !important;
 }
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-weight: 600;
+}

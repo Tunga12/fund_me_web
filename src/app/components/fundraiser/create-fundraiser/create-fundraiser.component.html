@@ -1,0 +1,80 @@
+<mat-card
+  [ngStyle.xs]="{ width: '94%' }"
+  [ngStyle.sm]="{ width: '70%' }"
+  class="fundraiser-form"
+>
+  <mat-card-content>
+    <h4 class="progress-bar-sections-title heading-4">
+      Step {{ currentStep }} of 3
+    </h4>
+    <div class="progress-bar-sections-wrap">
+      <div
+        *ngFor="let item of numSequence(currentStep)"
+        class="
+          progress-bar-sections-section progress-bar-sections-section--complete
+        "
+      ></div>
+      <div
+        *ngFor="let item of numSequence(3 - currentStep)"
+        class="
+          progress-bar-sections-section progress-bar-sections-section--remaining
+        "
+      ></div>
+    </div>
+    <h2 class="bold">Let’s start with the basics</h2>
+    <form [formGroup]="form">
+      <span [ngSwitch]="currentStep">
+        <set-basic-info
+          *ngSwitchCase="1"
+          [fundraiser]="fundraiser"
+          [form]="form"
+          (next)="next($event)"
+        ></set-basic-info>
+
+        <set-fundraiser-media
+          *ngSwitchCase="2"
+          [fundraiser]="fundraiser"
+          [form]="form"
+          (next)="next($event)"
+        ></set-fundraiser-media>
+
+        <set-fundraiser-story
+          *ngSwitchCase="3"
+          [fundraiser]="fundraiser"
+          [form]="form"
+          (next)="submit($event)"
+        ></set-fundraiser-story>
+        <p *ngSwitchDefault></p>
+      </span>
+      <button
+        *ngIf="currentStep !== 1"
+        mat-stroked-button
+        class="btn-large"
+        (click)="previousStep()"
+      >
+        Back
+      </button>
+    </form>
+    <p *ngIf="currentStep === 1">
+      By continuing, you agree to the GoFundMe
+      <a
+        link
+        routerLink="/terms"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        terms</a
+      >
+      and acknowledge receipt of our
+      <a
+        link
+        routerLink="/privacy"
+        routerLinkActive="router-link-active"
+        color="accent"
+      >
+        privacy policy</a
+      >.
+    </p>
+  </mat-card-content>
+</mat-card>
+<p class="footer-logo"></p>

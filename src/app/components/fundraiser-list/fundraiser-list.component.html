@@ -1,0 +1,49 @@
+<div [ngStyle.gt-sm]="{ width: '80%', margin: '0px auto' }">
+  <nav fxLayout="column" class="nav-sticky">
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="start start"
+      style="width: 100%"
+    >
+      <h1 class="bold" fxFlexAlign="start start" style="margin-right: auto">
+        Your funrisers
+      </h1>
+      <button (click)="createFundraiser()" mat-raised-button color="primary">
+        Start a new fundraiser
+      </button>
+    </div>
+  </nav>
+  <div>
+    <div
+      fxLayout="row"
+      fxLayout.sm="column"
+      fxLayoutGap="32px"
+      fxLayoutAlign="start start"
+      class="items-row"
+    >
+      <mat-card
+        (click)="manageFundraiser()"
+        *ngFor="let item of [1, 2, 4, 8, 5]; let i = index"
+        [ngStyle.sm]="{ 'margin-bottom': '30px' }"
+      >
+        <div>
+          <img
+            matCardImage
+            src="/assets/images/step2.jpg"
+            [ngStyle.xs]="{ width: '100%', height: '200px !important' }"
+            [ngStyle.sm]="{ width: '100%', height: '200px' }"
+          />
+        </div>
+        <mat-card-header>
+          <mat-card-title>Title {{ i }}</mat-card-title>
+          <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <p style="text-align: center">Manage</p>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

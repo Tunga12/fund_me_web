@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://blog.angular-university.io/rxjs-error-handling/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/1.txt"></script><script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/1(1).txt"></script><script async="" src="./RxJs Error Handling_ Complete Practical Guide_files/universal.js.download"></script><script async="" src="./RxJs Error Handling_ Complete Practical Guide_files/analytics.js.download"></script><script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/moatframe.js.download"></script>
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>RxJs Error Handling: Complete Practical Guide</title>
+
+    <meta name="keywords" content="Angular Courses">
+    <meta name="google-site-verification" content="FPNDIbTBeXi2riUj6-HNMoSrQZ4aflgGc2SznztOLJw">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@AngularUniv">
+    <meta name="twitter:title" content="Angular University">
+    <meta name="twitter:image" content="https://angular-academy.s3.amazonaws.com/168%D1%85168_1.jpg">
+    <meta property="og:image" content="https://avatars3.githubusercontent.com/u/16628445?v=3&amp;s=200">
+
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="./RxJs Error Handling_ Complete Practical Guide_files/css">
+    <link rel="stylesheet" type="text/css" href="./RxJs Error Handling_ Complete Practical Guide_files/screen.css">
+
+    <link rel="icon" href="https://blog.angular-university.io/favicon.png" type="image/png">
+    <link rel="canonical" href="https://blog.angular-university.io/rxjs-error-handling/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:site_name" content="Angular University">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RxJs Error Handling: Complete Practical Guide">
+    <meta property="og:description" content="Error handling is an essential part of RxJs, as we will need it in just about any reactive program that we write.  Error handling in RxJS is likely not as well understood as other parts of the library, but it&#39;s actually quite simple to understand if we focus on understanding">
+    <meta property="og:url" content="https://blog.angular-university.io/rxjs-error-handling/">
+    <meta property="article:published_time" content="2018-07-16T22:00:00.000Z">
+    <meta property="article:modified_time" content="2020-12-17T10:44:18.000Z">
+    <meta property="article:publisher" content="https://www.facebook.com/angular.university">
+    <meta property="article:author" content="https://www.facebook.com/angular.university">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RxJs Error Handling: Complete Practical Guide">
+    <meta name="twitter:description" content="Error handling is an essential part of RxJs, as we will need it in just about any reactive program that we write.  Error handling in RxJS is likely not as well understood as other parts of the library, but it&#39;s actually quite simple to understand if we focus on understanding">
+    <meta name="twitter:url" content="https://blog.angular-university.io/rxjs-error-handling/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Angular University">
+    <meta name="twitter:site" content="@AngularUniv">
+    <meta name="twitter:creator" content="@AngularUniv">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Angular University",
+        "url": "https://blog.angular-university.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.angular-university.io/content/images/2020/12/main-page-logo-small-hat.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Angular University",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://blog.angular-university.io/content/images/2020/12/13125810_51c9_3.jpg",
+            "width": 200,
+            "height": 200
+        },
+        "url": "https://blog.angular-university.io/author/angular-university/",
+        "sameAs": [
+            "https://angular-university.io",
+            "https://www.facebook.com/angular.university",
+            "https://twitter.com/AngularUniv"
+        ]
+    },
+    "headline": "RxJs Error Handling: Complete Practical Guide",
+    "url": "https://blog.angular-university.io/rxjs-error-handling/",
+    "datePublished": "2018-07-16T22:00:00.000Z",
+    "dateModified": "2020-12-17T10:44:18.000Z",
+    "description": "Error handling is an essential part of RxJs, as we will need it in just about\nany reactive program that we write.\n\nError handling in RxJS is likely not as well understood as other parts of the\nlibrary, but it&#x27;s actually quite simple to understand if we focus on\nunderstanding first the Observable contract in general.\n\nIn this post, we are going to provide a complete guide containing the most\ncommon error handling strategies that you will need in order to cover most\npractical scenarios, starting w",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.angular-university.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.42">
+    <link rel="alternate" type="application/rss+xml" title="Angular University" href="https://blog.angular-university.io/rss/">
+    <meta name="google-site-verification" content="NybhFJjK9BKg34Ex6Hkc_nHg7q6wBTf5anXMWi530o4">
+<style type="text/css">
+.subscribe-button {
+  display: none !important;
+}
+</style>
+
+<script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/webforms.min.js.download"></script><script src="./RxJs Error Handling_ Complete Practical Guide_files/embed.js.download" data-timestamp="1627072742734"></script><style type="text/css">.at-icon{fill:#fff;border:0}.at-icon-wrapper{display:inline-block;overflow:hidden}a .at-icon-wrapper{cursor:pointer}.at-rounded,.at-rounded-element .at-icon-wrapper{border-radius:12%}.at-circular,.at-circular-element .at-icon-wrapper{border-radius:50%}.addthis_32x32_style .at-icon{width:2pc;height:2pc}.addthis_24x24_style .at-icon{width:24px;height:24px}.addthis_20x20_style .at-icon{width:20px;height:20px}.addthis_16x16_style .at-icon{width:1pc;height:1pc}#at16lb{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:1001;background-color:#000;opacity:.001}#at_complete,#at_error,#at_share,#at_success{position:static!important}.at15dn{display:none}#at15s,#at16p,#at16p form input,#at16p label,#at16p textarea,#at_share .at_item{font-family:arial,helvetica,tahoma,verdana,sans-serif!important;font-size:9pt!important;outline-style:none;outline-width:0;line-height:1em}* html #at15s.mmborder{position:absolute!important}#at15s.mmborder{position:fixed!important;width:250px!important}#at15s{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABtJREFUeNpiZGBgaGAgAjAxEAlGFVJHIUCAAQDcngCUgqGMqwAAAABJRU5ErkJggg==);float:none;line-height:1em;margin:0;overflow:visible;padding:5px;text-align:left;position:absolute}#at15s a,#at15s span{outline:0;direction:ltr;text-transform:none}#at15s .at-label{margin-left:5px}#at15s .at-icon-wrapper{width:1pc;height:1pc;vertical-align:middle}#at15s .at-icon{width:1pc;height:1pc}.at4-icon{display:inline-block;background-repeat:no-repeat;background-position:top left;margin:0;overflow:hidden;cursor:pointer}.addthis_16x16_style .at4-icon,.addthis_default_style .at4-icon,.at4-icon,.at-16x16{width:1pc;height:1pc;line-height:1pc;background-size:1pc!important}.addthis_32x32_style .at4-icon,.at-32x32{width:2pc;height:2pc;line-height:2pc;background-size:2pc!important}.addthis_24x24_style .at4-icon,.at-24x24{width:24px;height:24px;line-height:24px;background-size:24px!important}.addthis_20x20_style .at4-icon,.at-20x20{width:20px;height:20px;line-height:20px;background-size:20px!important}.at4-icon.circular,.circular .at4-icon,.circular.aticon{border-radius:50%}.at4-icon.rounded,.rounded .at4-icon{border-radius:4px}.at4-icon-left{float:left}#at15s .at4-icon{text-indent:20px;padding:0;overflow:visible;white-space:nowrap;background-size:1pc;width:1pc;height:1pc;background-position:top left;display:inline-block;line-height:1pc}.addthis_vertical_style .at4-icon,.at4-follow-container .at4-icon{margin-right:5px}html>body #at15s{width:250px!important}#at15s.atm{background:none!important;padding:0!important;width:10pc!important}#at15s_inner{background:#fff;border:1px solid #fff;margin:0}#at15s_head{position:relative;background:#f2f2f2;padding:4px;cursor:default;border-bottom:1px solid #e5e5e5}.at15s_head_success{background:#cafd99!important;border-bottom:1px solid #a9d582!important}.at15s_head_success a,.at15s_head_success span{color:#000!important;text-decoration:none}#at15s_brand,#at15sptx,#at16_brand{position:absolute}#at15s_brand{top:4px;right:4px}.at15s_brandx{right:20px!important}a#at15sptx{top:4px;right:4px;text-decoration:none;color:#4c4c4c;font-weight:700}#at15sptx:hover{text-decoration:underline}#at16_brand{top:5px;right:30px;cursor:default}#at_hover{padding:4px}#at_hover .at_item,#at_share .at_item{background:#fff!important;float:left!important;color:#4c4c4c!important}#at_share .at_item .at-icon-wrapper{margin-right:5px}#at_hover .at_bold{font-weight:700;color:#000!important}#at_hover .at_item{width:7pc!important;padding:2px 3px!important;margin:1px;text-decoration:none!important}#at_hover .at_item.athov,#at_hover .at_item:focus,#at_hover .at_item:hover{margin:0!important}#at_hover .at_item.athov,#at_hover .at_item:focus,#at_hover .at_item:hover,#at_share .at_item.athov,#at_share .at_item:hover{background:#f2f2f2!important;border:1px solid #e5e5e5;color:#000!important;text-decoration:none}.ipad #at_hover .at_item:focus{background:#fff!important;border:1px solid #fff}.at15t{display:block!important;height:1pc!important;line-height:1pc!important;padding-left:20px!important;background-position:0 0;text-align:left}.addthis_button,.at15t{cursor:pointer}.addthis_toolbox a.at300b,.addthis_toolbox a.at300m{width:auto}.addthis_toolbox a{margin-bottom:5px;line-height:initial}.addthis_toolbox.addthis_vertical_style{width:200px}.addthis_button_facebook_like .fb_iframe_widget{line-height:100%}.addthis_button_facebook_like iframe.fb_iframe_widget_lift{max-width:none}.addthis_toolbox a.addthis_button_counter,.addthis_toolbox a.addthis_button_facebook_like,.addthis_toolbox a.addthis_button_facebook_send,.addthis_toolbox a.addthis_button_facebook_share,.addthis_toolbox a.addthis_button_foursquare,.addthis_toolbox a.addthis_button_linkedin_counter,.addthis_toolbox a.addthis_button_pinterest_pinit,.addthis_toolbox a.addthis_button_tweet{display:inline-block}.addthis_toolbox span.addthis_follow_label{display:none}.addthis_toolbox.addthis_vertical_style span.addthis_follow_label{display:block;white-space:nowrap}.addthis_toolbox.addthis_vertical_style a{display:block}.addthis_toolbox.addthis_vertical_style.addthis_32x32_style a{line-height:2pc;height:2pc}.addthis_toolbox.addthis_vertical_style .at300bs{margin-right:4px;float:left}.addthis_toolbox.addthis_20x20_style span{line-height:20px}.addthis_toolbox.addthis_32x32_style span{line-height:2pc}.addthis_toolbox.addthis_pill_combo_style .addthis_button_compact .at15t_compact,.addthis_toolbox.addthis_pill_combo_style a{float:left}.addthis_toolbox.addthis_pill_combo_style a.addthis_button_tweet{margin-top:-2px}.addthis_toolbox.addthis_pill_combo_style .addthis_button_compact .at15t_compact{margin-right:4px}.addthis_default_style .addthis_separator{margin:0 5px;display:inline}div.atclear{clear:both}.addthis_default_style .addthis_separator,.addthis_default_style .at4-icon,.addthis_default_style .at300b,.addthis_default_style .at300bo,.addthis_default_style .at300bs,.addthis_default_style .at300m{float:left}.at300b img,.at300bo img{border:0}a.at300b .at4-icon,a.at300m .at4-icon{display:block}.addthis_default_style .at300b,.addthis_default_style .at300bo,.addthis_default_style .at300m{padding:0 2px}.at300b,.at300bo,.at300bs,.at300m{cursor:pointer}.addthis_button_facebook_like.at300b:hover,.addthis_button_facebook_like.at300bs:hover,.addthis_button_facebook_send.at300b:hover,.addthis_button_facebook_send.at300bs:hover{opacity:1}.addthis_20x20_style .at15t,.addthis_20x20_style .at300bs{overflow:hidden;display:block;height:20px!important;width:20px!important;line-height:20px!important}.addthis_32x32_style .at15t,.addthis_32x32_style .at300bs{overflow:hidden;display:block;height:2pc!important;width:2pc!important;line-height:2pc!important}.at300bs{overflow:hidden;display:block;background-position:0 0;height:1pc;width:1pc;line-height:1pc!important}.addthis_default_style .at15t_compact,.addthis_default_style .at15t_expanded{margin-right:4px}#at_share .at_item{width:123px!important;padding:4px;margin-right:2px;border:1px solid #fff}#at16p{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABtJREFUeNpiZGBgaGAgAjAxEAlGFVJHIUCAAQDcngCUgqGMqwAAAABJRU5ErkJggg==);z-index:10000001;position:absolute;top:50%;left:50%;width:300px;padding:10px;margin:0 auto;margin-top:-185px;margin-left:-155px;font-family:arial,helvetica,tahoma,verdana,sans-serif;font-size:9pt;color:#5e5e5e}#at_share{margin:0;padding:0}#at16pt{position:relative;background:#f2f2f2;height:13px;padding:5px 10px}#at16pt a,#at16pt h4{font-weight:700}#at16pt h4{display:inline;margin:0;padding:0;font-size:9pt;color:#4c4c4c;cursor:default}#at16pt a{position:absolute;top:5px;right:10px;color:#4c4c4c;text-decoration:none;padding:2px}#at15sptx:focus,#at16pt a:focus{outline:thin dotted}#at15s #at16pf a{top:1px}#_atssh{width:1px!important;height:1px!important;border:0!important}.atm{width:10pc!important;padding:0;margin:0;line-height:9pt;letter-spacing:normal;font-family:arial,helvetica,tahoma,verdana,sans-serif;font-size:9pt;color:#444;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABtJREFUeNpiZGBgaGAgAjAxEAlGFVJHIUCAAQDcngCUgqGMqwAAAABJRU5ErkJggg==);padding:4px}.atm-f{text-align:right;border-top:1px solid #ddd;padding:5px 8px}.atm-i{background:#fff;border:1px solid #d5d6d6;padding:0;margin:0;box-shadow:1px 1px 5px rgba(0,0,0,.15)}.atm-s{margin:0!important;padding:0!important}.atm-s a:focus{border:transparent;outline:0;transition:none}#at_hover.atm-s a,.atm-s a{display:block;text-decoration:none;padding:4px 10px;color:#235dab!important;font-weight:400;font-style:normal;transition:none}#at_hover.atm-s .at_bold{color:#235dab!important}#at_hover.atm-s a:hover,.atm-s a:hover{background:#2095f0;text-decoration:none;color:#fff!important}#at_hover.atm-s .at_bold{font-weight:700}#at_hover.atm-s a:hover .at_bold{color:#fff!important}.atm-s a .at-label{vertical-align:middle;margin-left:5px;direction:ltr}.at_PinItButton{display:block;width:40px;height:20px;padding:0;margin:0;background-image:url(//s7.addthis.com/static/t00/pinit00.png);background-repeat:no-repeat}.at_PinItButton:hover{background-position:0 -20px}.addthis_toolbox .addthis_button_pinterest_pinit{position:relative}.at-share-tbx-element .fb_iframe_widget span{vertical-align:baseline!important}#at16pf{height:auto;text-align:right;padding:4px 8px}.at-privacy-info{position:absolute;left:7px;bottom:7px;cursor:pointer;text-decoration:none;font-family:helvetica,arial,sans-serif;font-size:10px;line-height:9pt;letter-spacing:.2px;color:#666}.at-privacy-info:hover{color:#000}.body .wsb-social-share .wsb-social-share-button-vert{padding-top:0;padding-bottom:0}.body .wsb-social-share.addthis_counter_style .addthis_button_tweet.wsb-social-share-button{padding-top:40px}.body .wsb-social-share.addthis_counter_style .addthis_button_facebook_like.wsb-social-share-button{padding-top:21px}@media print{#at4-follow,#at4-share,#at4-thankyou,#at4-whatsnext,#at4m-mobile,#at15s,.at4,.at4-recommended{display:none!important}}@media screen and (max-width:400px){.at4win{width:100%}}@media screen and (max-height:700px) and (max-width:400px){.at4-thankyou-inner .at4-recommended-container{height:122px;overflow:hidden}.at4-thankyou-inner .at4-recommended .at4-recommended-item:first-child{border-bottom:1px solid #c5c5c5}}</style><style type="text/css">.at-branding-logo{font-family:helvetica,arial,sans-serif;text-decoration:none;font-size:10px;display:inline-block;margin:2px 0;letter-spacing:.2px}.at-branding-logo .at-branding-icon{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////+GlNUkcc1QAAAB1JREFUeNpiYIQDBjQmAwMmkwEM0JnY1WIxFyDAABGeAFEudiZsAAAAAElFTkSuQmCC")}.at-branding-logo .at-branding-icon,.at-branding-logo .at-privacy-icon{display:inline-block;height:10px;width:10px;margin-left:4px;margin-right:3px;margin-bottom:-1px;background-repeat:no-repeat}.at-branding-logo .at-privacy-icon{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKCAMAAABR24SMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhQTFRF8fr9ot/xXcfn2/P5AKva////////AKTWodjhjAAAAAd0Uk5T////////ABpLA0YAAAA6SURBVHjaJMzBDQAwCAJAQaj7b9xifV0kUKJ9ciWxlzWEWI5gMF65KUTv0VKkjVeTerqE/x7+9BVgAEXbAWI8QDcfAAAAAElFTkSuQmCC")}.at-branding-logo span{text-decoration:none}.at-branding-logo .at-branding-addthis,.at-branding-logo .at-branding-powered-by{color:#666}.at-branding-logo .at-branding-addthis:hover{color:#333}.at-cv-with-image .at-branding-addthis,.at-cv-with-image .at-branding-addthis:hover{color:#fff}a.at-branding-logo:visited{color:initial}.at-branding-info{display:inline-block;padding:0 5px;color:#666;border:1px solid #666;border-radius:50%;font-size:10px;line-height:9pt;opacity:.7;transition:all .3s ease;text-decoration:none}.at-branding-info span{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.at-branding-info:before{content:'i';font-family:Times New Roman}.at-branding-info:hover{color:#0780df;border-color:#0780df}</style><style id="fit-vids-style">.fluid-width-video-container{flex-grow: 1;width:100%;}.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/ml_jQuery.inputmask.bundle.min.js.download"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.e16bb81d3982e913e07bd7f31be71a6c.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.ee2555081038338ea4f41cbb3ea1bc17.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.106faac21c6c76e0298d1a260d46eaf3.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script async="" id="dsq_recs_scr" src="./RxJs Error Handling_ Complete Practical Guide_files/recommendations.js.download"></script><link rel="stylesheet" type="text/css" href="./RxJs Error Handling_ Complete Practical Guide_files/universal.css" media="all"><script type="text/javascript" async="" src="./RxJs Error Handling_ Complete Practical Guide_files/a2w7x9m0r8_popups.js.download"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/recommendations/styles/recommendations.eff219b98b7c4167b4b289065f36f391.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/common.bundle.72e35017d98ea7f210961b0d5c38444a.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/recommendations.bundle.37a289e2ed6acdf6cbf01e83d4fb3ce6.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"></head>
+<body class="post-template" style="">
+
+<div class="site-wrapper">
+
+    
+
+<header class="site-header">
+    <div class="outer site-nav-main angular-univ-nav">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://blog.angular-university.io/"><img src="./RxJs Error Handling_ Complete Practical Guide_files/main-page-logo-small-hat.png" alt="Angular University"></a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-blog"><a href="https://blog.angular-university.io/">Blog</a></li>
+    <li class="nav-courses"><a href="https://angular-university.io/my-courses?utm=blmc">Courses</a></li>
+    <li class="nav-ebooks"><a href="https://angular-university.io/my-ebooks?grpp=t">Ebooks</a></li>
+    <li class="nav-free-course"><a href="https://angular-university.io/course/getting-started-with-angular2?utm=blmfc">Free Course</a></li>
+    <li class="nav-newsletter"><a href="https://blog.angular-university.io/rxjs-error-handling/#">Newsletter</a></li>
+</ul>
+
+                    <span class="nav-post-title ">RxJs Error Handling: Complete Practical Guide</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-fb" href="https://www.facebook.com/angular.university" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z"></path></svg></a>
+                    <a class="social-link social-link-tw" href="https://twitter.com/AngularUniv" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://blog.angular-university.io/rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post no-image no-image">
+
+            <div class="angularuniv-logo-container">
+
+                <a href="https://angular-university.io/home" target="_blank">
+
+                    <img class="angularuniv-logo" src="./RxJs Error Handling_ Complete Practical Guide_files/angular-university-logo-and-letters.png">
+
+                </a>
+
+            </div>
+
+            <header class="post-full-header">
+
+
+                <h1 class="post-full-title">RxJs Error Handling: Complete Practical Guide</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="./RxJs Error Handling_ Complete Practical Guide_files/13125810_51c9_3.jpg" alt="Angular University">
+                                    <div class="author-info">
+                                        <div class="bio">
+                                            <h2>Angular University</h2>
+                                            <p>High-Quality Angular Courses</p>
+                                            <p><a href="https://blog.angular-university.io/author/angular-university/">More posts</a> by Angular University.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="https://blog.angular-university.io/author/angular-university/" class="author-avatar">
+                                    <img class="author-profile-image" src="./RxJs Error Handling_ Complete Practical Guide_files/13125810_51c9_3.jpg" alt="Angular University">
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="https://blog.angular-university.io/author/angular-university/">Angular University</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-12-17">17 Dec 2020</time>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <!--kg-card-begin: markdown--><p>Error handling is an essential part of RxJs, as we will need it in just about any reactive program that we write.</p>
+<p>Error handling in RxJS is likely not as well understood as other parts of the library, but it's actually quite simple to understand if we <em>focus on understanding first</em> the Observable contract in general.</p>
+<p>In this post, we are going to provide a complete guide containing the <strong>most common error handling strategies</strong> that you will need in order to cover most practical scenarios, starting with the basics (the Observable contract).</p>
+<h3 id="tableofcontents">Table Of Contents</h3>
+<p>In this post, we will cover the following topics:</p>
+<ul>
+<li>The Observable contract and Error Handling</li>
+<li>RxJs subscribe and error callbacks</li>
+<li>The catchError Operator</li>
+<li>The Catch and Replace Strategy</li>
+<li>throwError and the Catch and Rethrow Strategy</li>
+<li>Using catchError multiple times in an Observable chain</li>
+<li>The finalize Operator</li>
+<li>The Retry Strategy</li>
+<li>Then retryWhen Operator</li>
+<li>Creating a Notification Observable</li>
+<li>Immediate Retry Strategy</li>
+<li>Delayed Retry Strategy</li>
+<li>The delayWhen Operator</li>
+<li>The timer Observable creation function</li>
+<li>Running Github repository (with code samples)</li>
+<li>Conclusions</li>
+</ul>
+<p>So without further ado, let's get started with our RxJs Error Handling deep dive!</p>
+<h3 id="theobservablecontractanderrorhandling">The Observable Contract and Error Handling</h3>
+<p>In order to understand error handling in RxJs, we need to first understand that any given stream <em>can only error out once</em>. This is defined by the Observable contract, which says that a stream can emit zero or more values.</p>
+<p>The contract works that way because that is just how all the streams that we observe in our runtime work in practice. Network requests can fail, for example.</p>
+<p>A stream can also complete, which means that:</p>
+<ul>
+<li>the stream has ended its lifecycle without any error</li>
+<li>after completion, the stream will not emit any further values</li>
+</ul>
+<p>As an alternative to completion, a stream can also error out, which means that:</p>
+<ul>
+<li>the stream has ended its lifecycle with an error</li>
+<li>after the error is thrown, the stream will not emit any other values</li>
+</ul>
+<p>Notice that completion or error are mutually exclusive:</p>
+<ul>
+<li>if the stream completes, it cannot error out afterwards</li>
+<li>if the streams errors out, it cannot complete afterwards</li>
+</ul>
+<p>Notice also that there is no obligation for the stream to complete <em>or</em> error out, those two possibilities are optional. But only one of those two <em>can</em> occur, not both.</p>
+<p>This means that when one particular stream errors out, we cannot use it anymore, according to the Observable contract. You must be thinking at this point, how can we recover from an error then?</p>
+<h3 id="rxjssubscribeanderrorcallbacks">RxJs subscribe and error callbacks</h3>
+<p>To see the RxJs error handling behavior in action, let's create a stream and subscribe to it. Let's remember that the subscribe call takes three optional arguments:</p>
+<ul>
+<li>a success handler function, which is called each time that the stream emits a value</li>
+<li>an error handler function, that gets called only if an error occurs. This handler receives the error itself</li>
+<li>a completion handler function, that gets called only if the stream completes</li>
+</ul>
+ <script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js.download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-01-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-01-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-01-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-01-ts-LC2" class="blob-code blob-code-inner js-file-line">@<span class="pl-smi">Component</span><span class="pl-kos">(</span><span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-01-ts-LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">selector</span>: <span class="pl-s">'home'</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-01-ts-LC4" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">templateUrl</span>: <span class="pl-s">'./home.component.html'</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-01-ts-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-01-ts-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-smi">HomeComponent</span> <span class="pl-k">implements</span> <span class="pl-smi">OnInit</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-01-ts-LC7" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-01-ts-LC8" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">constructor</span><span class="pl-kos">(</span><span class="pl-k">private</span> <span class="pl-s1">http</span>: <span class="pl-smi">HttpClient</span><span class="pl-kos">)</span> <span class="pl-kos">{</span><span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-01-ts-LC9" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-01-ts-LC10" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">ngOnInit</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-01-ts-LC11" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-01-ts-LC12" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span> </td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-01-ts-LC13" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-01-ts-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">http$</span><span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-01-ts-LC15" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-01-ts-LC16" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-01-ts-LC17" class="blob-code blob-code-inner js-file-line">            <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-01-ts-LC18" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-01-ts-LC19" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-01-ts-LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-01-ts-LC21" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-01-ts-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-01-ts-LC22" class="blob-code blob-code-inner js-file-line">      </td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/01.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-01-ts">01.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+<h4 id="completionbehaviorexample">Completion Behavior Example</h4>
+<p>If the stream does <em>not</em> error out, then this is what we would see in the console:</p>
+<pre><code>HTTP response {payload: Array(9)}
+HTTP request completed.
+</code></pre>
+<p>As we can see, this HTTP stream emits only one value, and then it completes, which means that no errors occurred.</p>
+<p>But what happens if the stream throws an error instead? In that case, we will see the following in the console instead:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-1.png" alt="RxJs Error Handling console output">
+<p>As we can see, the stream emitted no value and it immediately errored out. After the error, no completion occurred.</p>
+<h4 id="limitationsofthesubscribeerrorhandler">Limitations of the subscribe error handler</h4>
+<p>Handling errors using the subscribe call is sometimes all that we need, but this error handling approach is limited. Using this approach, we cannot, for example, recover from the error or emit an alternative fallback value that replaces the value that we were expecting from the backend.</p>
+<p>Let's then learn a few operators that will allow us to implement some more advanced error handling strategies.</p>
+<h3 id="thecatcherroroperator">The catchError Operator</h3>
+<p>In synchronous programming, we have the option to wrap a block of code in a try clause, catch any error that it might throw with a catch block and then handle the error.</p>
+<p>Here is what the synchronous catch syntax looks like:</p>
+ <script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(1).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-02-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-02-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-02-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-02-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">try</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-02-ts-LC3" class="blob-code blob-code-inner js-file-line">   <span class="pl-c">// synchronous operation</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-02-ts-LC4" class="blob-code blob-code-inner js-file-line">   <span class="pl-k">const</span> <span class="pl-s1">httpResponse</span> <span class="pl-c1">=</span>  <span class="pl-en">getHttpResponseSync</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-02-ts-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-02-ts-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-k">catch</span><span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-02-ts-LC7" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// handle error</span></td>
+      </tr>
+      <tr>
+        <td id="file-02-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-02-ts-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/02.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-02-ts">02.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+
+<p>This mechanism is very powerful because we can handle in one place <em>any</em> error that happens inside the try/catch block.</p>
+<p>The problem is, in Javascript many operations are asynchronous, and an HTTP call is one such example where things happen asynchronously.</p>
+<p>RxJs provides us with something close to this functionality, via the RxJs catchError Operator.</p>
+<h4 id="howdoescatcherrorwork">How does catchError work?</h4>
+<p>As usual and like with any RxJs Operator, catchError is simply a function that takes in an input Observable, and outputs an Output Observable.</p>
+<p>With each call to catchError, we need to pass it a function which we will call the error handling function.</p>
+<p>The catchError operator takes as input an Observable that <em>might</em> error out, and starts emitting the values of the input Observable in its output Observable.</p>
+<p>If no error occurs, the output Observable produced by catchError works exactly the same way as the input Observable.</p>
+<h4 id="whathappenswhenanerroristhrown">What happens when an error is thrown?</h4>
+<p>However, if an error occurs, then the catchError logic is going to kick in. The catchError operator is going to take the error and pass it to the error handling function.</p>
+<p>That function is expected to return an Observable which is going to be a <em>replacement Observable</em> for the stream that just errored out.</p>
+<p>Let's remember that the input stream of catchError has errored out, so according to the Observable contract we cannot use it anymore.</p>
+<p>This replacement Observable is then going to be subscribed to and its values are going to be used <em>in place</em> of the errored out input Observable.</p>
+<h3 id="thecatchandreplacestrategy">The Catch and Replace Strategy</h3>
+<p>Let's give an example of how catchError can be used to provide a replacement Observable that emits fallback values:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(2).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-03-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-03-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-03-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-03-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-03-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-03-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-03-ts-LC5" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-03-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">of</span><span class="pl-kos">(</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-03-ts-LC7" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-03-ts-LC8" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-03-ts-LC9" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-03-ts-LC10" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-03-ts-LC11" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-03-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-03-ts-LC12" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/03.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-03-ts">03.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>Let's break down the implementation of the catch and replace strategy:</p>
+<ul>
+<li>we are passing to the catchError operator a function, which is the error handling function</li>
+<li>the error handling function is not called immediately, and in general, it's usually <em>not</em> called</li>
+<li><em>only</em> when an error occurs in the input Observable of catchError, will the error handling function be called</li>
+<li>if an error happens in the input stream, this function is then returning an Observable built using the <code>of([])</code> function</li>
+<li>the <code>of()</code> function builds an Observable that emits only one value (<code>[]</code>) and then it completes</li>
+<li>the error handling function returns the recovery Observable (<code>of([])</code>), that gets subscribed to by the catchError operator</li>
+<li>the values of the recovery Observable are then emitted as replacement values in the output Observable returned by catchError</li>
+</ul>
+<p>As the end result, the <code>http$</code> Observable <strong>will not error out</strong> anymore! Here is the result that we get in the console:</p>
+<pre><code>HTTP response []
+HTTP request completed.
+</code></pre>
+<p>As we can see, the error handling callback in <code>subscribe()</code> is not invoked anymore. Instead, here is what happens:</p>
+<ul>
+<li>the empty array value <code>[]</code> is emitted</li>
+<li>the <code>http$</code> Observable is then completed</li>
+</ul>
+<p>As we can see, the replacement Observable was used to provide a default fallback value (<code>[]</code>) to the subscribers of <code>http$</code>, despite the fact that the original Observable <em>did</em> error out.</p>
+<p>Notice that we could have also added some local error handling, before returning the replacement Observable!</p>
+<p>And this covers the Catch and Replace Strategy, now let's see how we can also use catchError to <em>rethrow</em> the error, instead of providing fallback values.</p>
+<h3 id="thecatchandrethrowstrategy">The Catch and Rethrow Strategy</h3>
+<p>Let's start by noticing that the replacement Observable provided via catchError can itself also error out, just like any other Observable.</p>
+<p>And if that happens, the error will be propagated to the subscribers of the output Observable of catchError.</p>
+<p>This error propagation behavior gives us a mechanism to rethrow the error caught by catchError, after handling the error locally. We can do so in the following way:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(3).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-04-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-04-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-04-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-04-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-04-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-04-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-04-ts-LC5" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-04-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-04-ts-LC7" class="blob-code blob-code-inner js-file-line">            <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'Handling error locally and rethrowing it...'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-04-ts-LC8" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-en">throwError</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-04-ts-LC9" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-04-ts-LC10" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-04-ts-LC11" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-04-ts-LC12" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-04-ts-LC13" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-04-ts-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-04-ts-LC15" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-04-ts-LC16" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-04-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-04-ts-LC17" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/04.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-04-ts">04.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<h4 id="catchandrethrowbreakdown">Catch and Rethrow breakdown</h4>
+<p>Let's break down step-by-step the implementation of the Catch and Rethrow Strategy:</p>
+<ul>
+<li>just like before, we are catching the error, and returning a replacement Observable</li>
+<li>but this time around, instead of providing a replacement output value like <code>[]</code>, we are now handling the error locally in the catchError function</li>
+<li>in this case, we are simply logging the error to the console, but we could instead add any local error handling logic that we want, such as for example showing an error message to the user</li>
+<li>We are then returning a replacement Observable that this time was created using throwError</li>
+<li>throwError creates an Observable that never emits any value. Instead, it errors out immediately using the same error caught by catchError</li>
+<li>this means that the output Observable of catchError will also error out with the exact same error thrown by the input of catchError</li>
+<li>this means that we have managed to successfully <em>rethrow</em> the error initially thrown by the input Observable of catchError to its output Observable</li>
+<li>the error can now be further handled by the rest of the Observable chain, if needed</li>
+</ul>
+<p>If we now run the code above, here is the result that we get in the console:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-2.png" alt="RxJs Error Handling console output">
+<p>As we can see, the same error was logged both in the catchError block and in the subscription error handler function, as expected.</p>
+<h3 id="usingcatcherrormultipletimesinanobservablechain">Using catchError multiple times in an Observable chain</h3>
+<p>Notice that we can use catchError multiple times at different points in the Observable chain if needed, and adopt different error strategies at each point in the chain.</p>
+<p>We can, for example, catch an error up in the Observable chain, handle it locally and rethrow it, and then further down in the Observable chain we can catch the same error again and this time provide a fallback value (instead of rethrowing):</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(4).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-05-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-05-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-05-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-05-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-05-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-05-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-05-ts-LC5" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-05-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">res</span><span class="pl-kos">[</span><span class="pl-s">'payload'</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-05-ts-LC7" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-05-ts-LC8" class="blob-code blob-code-inner js-file-line">            <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'caught mapping error and rethrowing'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-05-ts-LC9" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-en">throwError</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-05-ts-LC10" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-05-ts-LC11" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-05-ts-LC12" class="blob-code blob-code-inner js-file-line">            <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'caught rethrown error, providing fallback value'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-05-ts-LC13" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-en">of</span><span class="pl-kos">(</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-05-ts-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-05-ts-LC15" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-05-ts-LC16" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-05-ts-LC17" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-05-ts-LC18" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-05-ts-LC19" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-05-ts-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-05-ts-LC20" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/05.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-05-ts">05.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>If we run the code above, this is the output that we get in the console:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-3.png" alt="RxJs Map Operator marble diagram">
+<p>As we can see, the error was indeed rethrown initially, but it never reached the subscribe error handler function. Instead, the fallback <code>[]</code> value was emitted, as expected.</p>
+<h3 id="thefinalizeoperator">The Finalize Operator</h3>
+<p>Besides a catch block for handling errors, the synchronous Javascript syntax also provides a finally block that can be used to run code that we <em>always</em> want  executed.</p>
+<p>The finally block is typically used for releasing expensive resources, such as for example closing down network connections or releasing memory.</p>
+<p>Unlike the code in the catch block, the code in the finally block will get executed independently if an error is thrown or not:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(5).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-06-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-06-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-06-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-06-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">try</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-06-ts-LC3" class="blob-code blob-code-inner js-file-line">   <span class="pl-c">// synchronous operation</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-06-ts-LC4" class="blob-code blob-code-inner js-file-line">   <span class="pl-k">const</span> <span class="pl-s1">httpResponse</span> <span class="pl-c1">=</span>  <span class="pl-en">getHttpResponseSync</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-06-ts-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-06-ts-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-k">catch</span><span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-06-ts-LC7" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// handle error, only executed in case of error</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-06-ts-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-06-ts-LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-k">finally</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-06-ts-LC10" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// this will always get executed</span></td>
+      </tr>
+      <tr>
+        <td id="file-06-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-06-ts-LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/06.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-06-ts">06.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>RxJs provides us with an operator that has a similar behavior to the finally functionality, called the finalize Operator.</p>
+<blockquote>
+<p>Note: we cannot call it the finally operator instead, as finally is a reserved keyword in Javascript</p>
+</blockquote>
+<h4 id="finalizeoperatorexample">Finalize Operator Example</h4>
+<p>Just like the catchError operator, we can add multiple finalize calls at different places in the Observable chain if needed, in order to make sure that the multiple resources are correctly released:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(6).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-07-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-07-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-07-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-07-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-07-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-07-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-07-ts-LC5" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-07-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">res</span><span class="pl-kos">[</span><span class="pl-s">'payload'</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-07-ts-LC7" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-07-ts-LC8" class="blob-code blob-code-inner js-file-line">            <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'caught mapping error and rethrowing'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-07-ts-LC9" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-en">throwError</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-07-ts-LC10" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-07-ts-LC11" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">finalize</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">"first finalize() block executed"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-07-ts-LC12" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">catchError</span><span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-07-ts-LC13" class="blob-code blob-code-inner js-file-line">            <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'caught rethrown error, providing fallback value'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-07-ts-LC14" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-en">of</span><span class="pl-kos">(</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-07-ts-LC15" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-07-ts-LC16" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">finalize</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">"second finalize() block executed"</span><span class="pl-kos">)</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-07-ts-LC17" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-07-ts-LC18" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-07-ts-LC19" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-07-ts-LC20" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-07-ts-LC21" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-07-ts-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-07-ts-LC22" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/07.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-07-ts">07.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>Let's now run this code, and see how the multiple finalize blocks are being executed:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-4.png" alt="RxJs Error Handling console output">
+<p>Notice that the last finalize block is executed <em>after</em> the subscribe value handler and completion handler functions.</p>
+<h3 id="theretrystrategy">The Retry Strategy</h3>
+<p>As an alternative to rethrowing the error or providing fallback values, we can also simply <em>retry</em> to subscribe to the errored out Observable.</p>
+<p>Let's remember, once the stream errors out we cannot recover it, but nothing prevents us from subscribing <em>again</em> to the Observable from which the stream was derived from, and create another stream.</p>
+<p>Here is how this works:</p>
+<ul>
+<li>we are going to take the input Observable, and subscribe to it, which creates a new stream</li>
+<li>if that stream does <em>not</em> error out, we are going to let its values show up in the output</li>
+<li>but if the stream does error out, we are then going to subscribe <em>again</em> to the input Observable, and create a brand new stream</li>
+</ul>
+<h4 id="whentoretry">When to retry?</h4>
+<p>The big question here is, <em>when</em> are we going to subscribe again to the input Observable, and retry to execute the input stream?</p>
+<ul>
+<li>are we going to retry that immediately?</li>
+<li>are we going to wait for a small delay, hoping that the problem is solved and then try again?</li>
+<li>are we going to retry only a limited amount of times, and then error out the output stream?</li>
+</ul>
+<p>In order to answer these questions, we are going to need a second auxiliary Observable, which we are going to call the Notifier Observable. It's the Notifier<br>
+Observable that is going to determine <em>when</em> the retry attempt occurs.</p>
+<p>The Notifier Observable is going to be used by the retryWhen Operator, which is the heart of the Retry Strategy.</p>
+<h3 id="rxjsretrywhenoperatormarblediagram">RxJs retryWhen Operator Marble Diagram</h3>
+<p>To understand how the retryWhen Observable works, let's have a look at its marble diagram:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-5.png" alt="RxJs retryWhen Operator">
+<p>Notice that the Observable that is being re-tried is the 1-2 Observable in the second line from the top, and <em>not</em> the Observable in the first line.</p>
+<p>The Observable on the first line with values r-r is the Notification Observable, that is going to determine <em>when</em> a retry attempt should occur.</p>
+<h4 id="breakingdownhowretrywhenworks">Breaking down how retryWhen works</h4>
+<p>Let's break down what is going in this diagram:</p>
+<ul>
+<li>The Observable 1-2 gets subscribed to, and its values are reflected immediately in the output Observable returned by retryWhen</li>
+<li>even after the Observable 1-2 is completed, it can still be re-tried</li>
+<li>the notification Observable then emits a value <code>r</code>, way after the Observable 1-2 has completed</li>
+<li>The value emitted by the notification Observable (in this case <code>r</code>) could be <em>anything</em></li>
+<li>what matters is the moment when the value <code>r</code> got emitted, because that is what is going to trigger the 1-2 Observable to be retried</li>
+<li>the Observable 1-2 gets subscribed to again by retryWhen, and its values are again reflected in the output Observable of retryWhen</li>
+<li>The notification Observable is then going to emit again another <code>r</code> value, and the same thing occurs: the values of a newly subscribed 1-2 stream are going to start to get reflected in the output of retryWhen</li>
+<li>but then, the notification Observable eventually completes</li>
+<li>at that moment, the ongoing retry attempt of the 1-2 Observable is completed early as well, meaning that only the value 1 got emitted, but not 2</li>
+</ul>
+<p>As we can see, retryWhen simply retries the input Observable each time that the Notification Observable emits a value!</p>
+<p>Now that we understand how retryWhen works, let's see how we can create a Notification Observable.</p>
+<h3 id="creatinganotificationobservable">Creating a Notification Observable</h3>
+<p>We need to create the Notification Observable directly in the function passed to the retryWhen operator. This function takes as input argument an Errors Observable, that emits as values the errors of the input Observable.</p>
+<p>So by subscribing to this Errors Observable, we know exactly <em>when</em> an error occurs. Let's now see how we could implement an immediate retry strategy using the Errors Observable.</p>
+<h3 id="immediateretrystrategy">Immediate Retry Strategy</h3>
+<p>In order to retry the failed observable immediately after the error occurs, all we have to do is return the Errors Observable without any further changes.</p>
+<p>In this case, we are just piping the tap operator for logging purposes, so the Errors Observable remains unchanged:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(7).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-08-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-08-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-08-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-08-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-08-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-08-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span><span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-08-ts-LC5" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">tap</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">"HTTP request executed"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-08-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">Object</span><span class="pl-kos">.</span><span class="pl-en">values</span><span class="pl-kos">(</span><span class="pl-s1">res</span><span class="pl-kos">[</span><span class="pl-s">"payload"</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-08-ts-LC7" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">shareReplay</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-08-ts-LC8" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">retryWhen</span><span class="pl-kos">(</span><span class="pl-s1">errors</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-08-ts-LC9" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-s1">errors</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-08-ts-LC10" class="blob-code blob-code-inner js-file-line">                    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-08-ts-LC11" class="blob-code blob-code-inner js-file-line">                        <span class="pl-en">tap</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'retrying...'</span><span class="pl-kos">)</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-08-ts-LC12" class="blob-code blob-code-inner js-file-line">                    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-08-ts-LC13" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span> <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-08-ts-LC14" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-08-ts-LC15" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-08-ts-LC16" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-08-ts-LC17" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-08-ts-LC18" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-08-ts-LC19" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-08-ts-LC20" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-08-ts-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-08-ts-LC21" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/08.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-08-ts">08.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>Let's remember, the Observable that we are returning from the retryWhen function call <em>is</em> the Notification Observable!</p>
+<p>The value that it emits is not important, it's only important <em>when</em> the value gets emitted because that is what is going to trigger a retry attempt.</p>
+<h4 id="immediateretryconsoleoutput">Immediate Retry Console Output</h4>
+<p>If we now execute this program, we are going to find the following output in the console:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-6.png" alt="retryWhen console output">
+<p>As we can see, the HTTP request failed initially, but then a retry was attempted and the second time the request went through successfully.</p>
+<p>Let's now have a look at the delay between the two attempts, by inspecting the network log:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-7.png" alt="RxJs retryWhen network log">
+<p>As we can see, the second attempt was issued <em>immediately</em> after the error occurred, as expected.</p>
+<h3 id="delayedretrystrategy">Delayed Retry Strategy</h3>
+<p>Let's now implement an alternative error recovery strategy, where we wait for example for 2 seconds after the error occurs, before retrying.</p>
+<p>This strategy is useful for trying to recover from certain errors such as for example failed network requests caused by high server traffic.</p>
+<p>In those cases where the error is intermittent, we can simply retry the same request after a short delay, and the request might go through the second time without any problem.</p>
+<h3 id="thetimerobservablecreationfunction">The timer Observable creation function</h3>
+<p>To implement the Delayed Retry Strategy, we will need to create a Notification Observable whose values are emitted two seconds after each error occurrence.</p>
+<p>Let's then try to create a Notification Observable by using the timer creation function. This timer function is going to take a couple of arguments:</p>
+<ul>
+<li>an initial delay, before which no values will be emitted</li>
+<li>a periodic interval, in case we want to emit new values periodically</li>
+</ul>
+<p>Let's then have a look at the marble diagram for the timer function:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-8.png" alt="The timer Operator">
+<p>As we can see, the first value 0 will be emitted only after 3 seconds, and then we have a new value each second.</p>
+<p>Notice that the second argument is optional, meaning that if we leave it out our Observable is going to emit only one value (0) after 3 seconds and then complete.</p>
+<p>This Observable looks like its a good start for being able to delay our retry attempts, so let's see how we can combine it with the retryWhen and delayWhen operators.</p>
+<h3 id="thedelaywhenoperator">The delayWhen Operator</h3>
+<p>One important thing to bear in mind about the retryWhen Operator, is that the function that defines the Notification Observable is only called <em>once</em>.</p>
+<p>So we only get one chance to define our Notification Observable, that signals when the retry attempts should be done.</p>
+<p>We are going to define the Notification Observable by taking the Errors Observable and applying it the delayWhen Operator.</p>
+<p>Imagine that in this marble diagram, the source Observable a-b-c is the Errors Observable, that is emitting failed HTTP errors over time:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-9.png" alt="The timer Operator">
+<h4 id="delaywhenoperatorbreakdown">delayWhen Operator breakdown</h4>
+<p>Let's follow the diagram, and learn how the delayWhen Operator works:</p>
+<ul>
+<li>each value in the input Errors Observable is going to be delayed before showing up in the output Observable</li>
+<li>the delay <em>per each value</em> can be different, and is going to be created in a completely flexible way</li>
+<li>in order to determine the delay, we are going to call the function passed to delayWhen (called the duration selector function) per each value of the input Errors Observable</li>
+<li>that function is going to emit an Observable that is going to determine when the delay of each input value has elapsed</li>
+<li>each of the values a-b-c has its own duration selector Observable, that will eventually emit one value (that could be anything) and then complete</li>
+<li>when each of these duration selector Observables emits values, then the corresponding input value a-b-c is going to show up in the output of delayWhen</li>
+<li>notice that the value <code>b</code> shows up in the output <em>after</em> the value <code>c</code>, this is normal</li>
+<li>this is because the <code>b</code> duration selector Observable (the third horizontal line from the top) only emitted its value after the duration selector Observable of <code>c</code>, and that explains why <code>c</code> shows up in the output before <code>b</code></li>
+</ul>
+<h4 id="delayedretrystrategyimplementation">Delayed Retry Strategy implementation</h4>
+<p>Let's now put all this together and see how we can retry consecutively a failing HTTP request 2 seconds after each error occurs:</p>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/d699243fc450a85c2990d54b088c365a.js(8).download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/gist-embed-fec3781cf7686b910dd55b110aa63edf.css"><div id="gist90785364" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-09-ts" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-typescript  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-09-ts-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-09-ts-LC1" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-09-ts-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-s1">http$</span> <span class="pl-c1">=</span> <span class="pl-smi">this</span><span class="pl-kos">.</span><span class="pl-c1">http</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">&lt;</span><span class="pl-smi">Course</span><span class="pl-kos">[</span><span class="pl-kos">]</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-s">'/api/courses'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-09-ts-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-09-ts-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">http$</span><span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-09-ts-LC5" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">tap</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">"HTTP request executed"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-09-ts-LC6" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">Object</span><span class="pl-kos">.</span><span class="pl-en">values</span><span class="pl-kos">(</span><span class="pl-s1">res</span><span class="pl-kos">[</span><span class="pl-s">"payload"</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-09-ts-LC7" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">shareReplay</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-09-ts-LC8" class="blob-code blob-code-inner js-file-line">        <span class="pl-en">retryWhen</span><span class="pl-kos">(</span><span class="pl-s1">errors</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-09-ts-LC9" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">return</span> <span class="pl-s1">errors</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-09-ts-LC10" class="blob-code blob-code-inner js-file-line">                    <span class="pl-kos">.</span><span class="pl-en">pipe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-09-ts-LC11" class="blob-code blob-code-inner js-file-line">                        <span class="pl-en">delayWhen</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">timer</span><span class="pl-kos">(</span><span class="pl-c1">2000</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-09-ts-LC12" class="blob-code blob-code-inner js-file-line">                        <span class="pl-en">tap</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'retrying...'</span><span class="pl-kos">)</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-09-ts-LC13" class="blob-code blob-code-inner js-file-line">                    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-09-ts-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">}</span> <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-09-ts-LC15" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-09-ts-LC16" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">.</span><span class="pl-en">subscribe</span><span class="pl-kos">(</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-09-ts-LC17" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">res</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP response'</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-09-ts-LC18" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">err</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP Error'</span><span class="pl-kos">,</span> <span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-09-ts-LC19" class="blob-code blob-code-inner js-file-line">        <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'HTTP request completed.'</span><span class="pl-kos">)</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-09-ts-LC20" class="blob-code blob-code-inner js-file-line">    <span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-09-ts-LC21" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-09-ts-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-09-ts-LC22" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a/raw/7c657a2a645acf3de0b8e8fd8d9695e54ff192e5/09.ts" style="float:right">view raw</a>
+        <a href="https://gist.github.com/jhades/d699243fc450a85c2990d54b088c365a#file-09-ts">09.ts</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+ 
+<p>Let's break down what is going on here:</p>
+<ul>
+<li>let's remember that the function passed to retryWhen is only going to be called once</li>
+<li>we are returning in that function an Observable that will emit values whenever a retry is needed</li>
+<li>each time that there is an error, the delayWhen operator is going to create a duration selector Observable, by calling the timer function</li>
+<li>this duration selector Observable is going to emit the value 0 after 2 seconds, and then complete</li>
+<li>once that happens, the delayWhen Observable knows that the delay of a given input error has elapsed</li>
+<li>only once that delay elapses (2 seconds after the error occurred), the error shows up in the output of the notification Observable</li>
+<li>once a value gets emitted in the notification Observable, the retryWhen operator will then and only then execute a retry attempt</li>
+</ul>
+<h4 id="retrystrategyconsoleoutput">Retry Strategy Console Output</h4>
+<p>Let's now see what this looks like in the console! Here is an example of an HTTP request that was retried 5 times, as the first 4 times were in error:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-10.png" alt="The timer Operator">
+<p>And here is the network log for the same retry sequence:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/rxjs-error-handling-11.png" alt="The timer Operator">
+<p>As we can see, the retries only happened 2 seconds after the error occurred, as expected!</p>
+<p>And with this, we have completed our guided tour of some of the most commonly used  RxJs error handling strategies available, let's now wrap things up and provide some running sample code.</p>
+<h3 id="runninggithubrepositorywithcodesamples">Running Github repository (with code samples)</h3>
+<p>In order to try these multiple error handling strategies, it's important to have a working playground where you can try handling failing HTTP requests.</p>
+<p>This <a href="https://github.com/angular-university/rxjs-course/tree/1-operators-finished">playground</a> contains a small running application with a backend that can be used to simulate HTTP errors either randomly or systematically. Here is what the application looks like:</p>
+<img class="card card-strong" src="./RxJs Error Handling_ Complete Practical Guide_files/09-demo-app.png" alt="RxJs sample application">
+<h3 id="conclusions">Conclusions</h3>
+<p>As we have seen, understanding RxJs error handling is all about understanding the fundamentals of the Observable contract first.</p>
+<p>We need to keep in mind that any given stream can only error out <em>once</em>, and that is exclusive with stream completion; only one of the two things can happen.</p>
+<p>In order to recover from an error, the only way is to somehow generate a replacement stream as an alternative to the errored out stream, like it happens in the case of the catchError or retryWhen Operators.</p>
+<p>I hope that you have enjoyed this post, if you would like to learn a lot more about RxJs, we recommend checking the <a href="https://angular-university.io/course/rxjs-course">RxJs In Practice Course</a> course, where lots of useful patterns and operators are covered in much more detail.</p>
+<p class="remove-on-print"> Also, if you have some questions or comments please let me know in the comments below and I will get back to you.</p>
+<p class="remove-on-print">To get notified of upcoming posts on RxJs and other Angular topics, I invite you to subscribe to our newsletter:</p>
+<script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/n5z2c6.js.download"></script><link rel="stylesheet" href="./RxJs Error Handling_ Complete Practical Guide_files/css(1)">
+
+<style>
+
+	
+		
+
+	#mlb2-5193153,
+	#mlb2-5193153 *,
+	#mlb2-5193153 a:hover,
+	#mlb2-5193153 a:visited,
+	#mlb2-5193153 a:focus,
+	#mlb2-5193153 a:active {
+	    overflow:visible;
+	    position:static;
+	    background:none;
+	    border:none;
+	    bottom:auto;
+	    clear:none;
+	    cursor:default;
+	    float:none;
+	    letter-spacing:normal;
+	    line-height:normal;
+	    text-align:left;
+	    text-indent:0;
+	    text-transform:none;
+	    visibility:visible;
+	    white-space:normal;
+
+	    max-height:none;
+	    max-width:none;
+	    left:auto;
+	    min-height:0;
+	    min-width:0;
+	    right:auto;
+	    top:auto;
+	    width:auto;
+	    z-index:auto;
+
+	    text-shadow: none;
+	    box-shadow: none;
+	    outline: medium none;
+	}
+
+	#mlb2-5193153 a:hover {
+		cursor: pointer !important;
+	}
+
+	#mlb2-5193153 h4 {
+	    font-weight: normal;
+	}
+
+	#mlb2-5193153 .subscribe-form {
+	
+		padding: 20px;
+				width: 350px !important;
+				border: 2px solid #F6F6F6 !important;
+		background: #1976d2 none !important;
+		border-radius: 4px !important;
+		box-sizing: border-box !important;
+
+	
+	}
+
+	#mlb2-5193153 .ml-block-form {
+	
+		margin-bottom: 0px;
+	
+	}
+
+    #mlb2-5193153 .subscribe-form .form-section {
+    
+        margin-bottom: 20px;
+        width: 100%;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section.mb10 {
+    
+        margin-bottom: 10px;
+        float: left;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section.mb0 {
+    
+        margin-bottom: 0px;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section h4 {
+    
+        margin: 0px 0px 10px 0px !important;
+        padding: 0px !important;
+        color: #FFFFFF !important;
+        font-family: 'Open Sans', sans-serif !important;
+        font-size: 28px !important;
+        line-height: 100%;
+        text-align: left !important;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section p,
+    #mlb2-5193153 .subscribe-form .form-section li {
+    
+        line-height: 150%;
+        padding: 0px !important;
+        margin: 0px 0px 10px 0px;
+        color: #FFFFFF !important;
+        font-family: 'Open Sans', sans-serif !important;
+        font-size: 14px !important;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section a {
+    
+        font-size: 14px;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .confirmation_checkbox {
+    
+        line-height: 150%;
+        padding: 0px !important;
+        margin: 0px 0px 15px 0px !important;
+        color: #000000 !important;
+        font-family: 'Open Sans', sans-serif !important;
+        font-size: 12px !important;
+        font-weight: normal !important;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .confirmation_checkbox input[type="checkbox"] {
+    
+        display: inline-block;
+        margin-right: 5px !important;
+        opacity: 1;
+        -webkit-appearance: checkbox;
+        -moz-appearance: checkbox;
+        appearance: checkbox;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .form-group {
+    
+        margin-bottom: 15px;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .form-group label {
+    
+        float: left;
+        margin-bottom: 10px;
+        width: 100%;
+        line-height: 100%;
+        color: #FFFFFF !important;
+        font-family: 'Open Sans', sans-serif !important;
+        font-size: 14px !important;
+    
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .checkbox {
+        
+
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+        
+
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .checkbox label {
+
+    
+
+        color: #FFFFFF !important;
+        font-family: 'Open Sans', sans-serif !important;
+        font-size: 14px !important;
+    
+
+    }
+
+    #mlb2-5193153 .subscribe-form .form-section .checkbox input {
+
+    
+        margin: 0px 5px 0px 0px;
+    
+
+    }
+
+     #mlb2-5193153 .subscribe-form .form-section .checkbox input[type="checkbox"] {
+
+    
+      display: inline-block;
+      opacity: 1;
+      -webkit-appearance: checkbox;
+      -moz-appearance: checkbox;
+      appearance: checkbox;
+    
+
+    }
+
+
+    #mlb2-5193153.ml-subscribe-form .form-group .form-control {
+
+    
+
+        width: 100%;
+        font-size: 13px;
+        padding: 10px 10px;
+        height: auto;
+        font-family: Arial;
+        border-radius: 4px;
+        border: 1px solid #cccccc !important;
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
+    	-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	box-sizing: border-box;
+        clear: left;
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form button {
+
+    
+
+        border: none !important;
+        cursor: pointer !important;
+        width: 100% !important;
+        border-radius: 4px !important;
+        height: 40px !important;
+        background-color: #de1e18 !important;
+        color: #FFFFFF !important;
+        font-family: 'Arial', sans-serif !important;
+        font-size: 16px !important;
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        position: relative!important;
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form button.gradient-on {
+
+    
+
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+            background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+            background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form button.gradient-on:hover {
+
+    
+
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+            background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+            background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+            background: linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form button[disabled] {
+
+    
+
+            cursor: not-allowed!important;
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form .form-section.ml-error label {
+
+    
+
+        color: red!important;
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form .form-group.ml-error label {
+
+    
+
+        color: red!important;
+
+    
+
+    }
+
+    #mlb2-5193153.ml-subscribe-form .form-group.ml-error .form-control  {
+
+    
+
+        border-color: red!important;
+
+    
+
+    }
+    
+
+    
+    
+    
+
+    
+    @media (max-width: 768px) {
+
+	    #mlb2-5193153 {
+
+		    width: 100% !important;
+
+	    }
+
+	    #mlb2-5193153 form.ml-block-form,
+	    #mlb2-5193153.ml-subscribe-form .subscribe-form {
+
+			width: 100% !important;
+
+		}
+
+	}
+
+	
+  
+</style>
+
+
+
+<div id="mlb2-5193153" class="ml-subscribe-form ml-subscribe-form-5193153">
+  <div class="ml-vertical-align-center">
+    <div class="subscribe-form ml-block-success" style="display:none">
+        <div class="form-section">
+            <h4>Angular University</h4>
+            <p>Thank you! You have successfully subscribed to our newsletter.</p>
+    </div>
+  </div>
+  <form class="ml-block-form" action="https://static.mailerlite.com/webforms/submit/n5z2c6" data-id="432435" data-code="n5z2c6" method="POST" target="_blank">
+    <div class="subscribe-form">
+        <div class="form-section mb10">
+            <h4>Angular University</h4>
+                  <p>Watch 25% of all Angular Video Courses, get timely Angular News and PDFs:&nbsp;</p>
+          </div>
+        <div class="form-section">
+            <div class="form-group ml-field-email ml-validate-required ml-validate-email">
+                <input type="email" name="fields[email]" class="form-control" placeholder="Email*" value="" autocomplete="email" x-autocompletetype="email" spellcheck="false" autocapitalize="off" autocorrect="off" aria-invalid="false">
+      </div>
+          </div>
+
+    
+                            <input type="hidden" name="ml-submit" value="1" aria-invalid="false">
+        <button type="submit" class="primary gradient-on">
+    Subscribe &amp; Get Free Course
+    </button>
+    <button disabled="disabled" style="display: none;" type="button" class="loading gradient-on">
+    <img src="./RxJs Error Handling_ Complete Practical Guide_files/rolling@2x.gif" width="20" height="20" style="width: 20px; height: 20px;">
+    </button>
+      </div>
+  </form>
+  <script>
+    function ml_webform_success_5193153 () {
+               var $ = ml_jQuery || jQuery;
+
+        $('.ml-subscribe-form-5193153 .ml-block-success').show();
+        $('.ml-subscribe-form-5193153 .ml-block-form').hide();
+        };
+  </script>
+</div>
+</div>
+
+
+    
+<p>If you are just getting started learning Angular, have a look at the <a href="https://angular-university.io/course/getting-started-with-angular2">Angular for Beginners Course</a>:</p>
+<a class="suggestion-card" href="https://angular-university.io/course/getting-started-with-angular2">
+    <img src="./RxJs Error Handling_ Complete Practical Guide_files/angular2-for-beginners-small-v2.png">
+</a>
+<!--kg-card-end: markdown-->
+                </div>
+            </section>
+
+
+
+            <section class="post-full-comments">
+                <div id="disqus_recommendations" style="margin-bottom: 12px;"><iframe id="dsq-app6100" name="dsq-app6100" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./RxJs Error Handling_ Complete Practical Guide_files/saved_resource.html" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 0px !important; display: inline !important; box-sizing: border-box !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div><div id="disqus_thread" style="max-width: 710px; margin: 100px auto 0 auto"><iframe id="dsq-app8603" name="dsq-app8603" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./RxJs Error Handling_ Complete Practical Guide_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 0px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe><div dir="ltr" style="overflow: hidden;"><svg style="background: url(&quot;https://c.disquscdn.com/next/embed/assets/img/disqus-social-icon-dark.a621bea3e02c9fa04fd3965a3d6f424d.svg&quot;) center center / contain no-repeat; display: block; margin: auto; width: 80px; height: 80px;"></svg><p align="center">Disqus seems to be taking longer than usual. <a href="https://blog.angular-university.io/rxjs-error-handling/#" onclick="DISQUS.reset({reload: true}); return false;">Reload</a>?</p></div></div>
+            </section>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+                <article class="post-card post tag-angular-forms no-image no-image">
+
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="https://blog.angular-university.io/angular-custom-validators/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">Angular Forms</div>
+                <h2 class="post-card-title">Angular Custom Form Validators:  Complete Guide</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>All about custom form validators, including synchronous and asynchronous, field-level, form-level, for both template-driven and reactive forms.</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Angular University
+                    </div>
+            
+                    <a href="https://blog.angular-university.io/author/angular-university/" class="static-avatar">
+                        <img class="author-profile-image" src="./RxJs Error Handling_ Complete Practical Guide_files/13125810_51c9_3.jpg" alt="Angular University">
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="https://blog.angular-university.io/author/angular-university/">Angular University</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-02-04">4 Feb 2021</time> <span class="bull">•</span> 14 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-rxjs no-image no-image">
+
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="https://blog.angular-university.io/rxjs-higher-order-mapping/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">RxJs</div>
+                <h2 class="post-card-title">Comprehensive Guide to Higher-Order RxJs Mapping Operators: switchMap, mergeMap, concatMap (and exhaustMap)</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Some of the most commonly used RxJs operators that we find on a daily basis are the RxJs higher-order mapping operators: switchMap, mergeMap, concatMap and exhaustMap.  For example, most of the network calls in our program are going to be done using one of</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Angular University
+                    </div>
+            
+                    <a href="https://blog.angular-university.io/author/angular-university/" class="static-avatar">
+                        <img class="author-profile-image" src="./RxJs Error Handling_ Complete Practical Guide_files/13125810_51c9_3.jpg" alt="Angular University">
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="https://blog.angular-university.io/author/angular-university/">Angular University</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-12-17">17 Dec 2020</time> <span class="bull">•</span> 19 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+<script>
+
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//blogjhades.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+    <footer class="site-footer outer">
+        <div class="site-footer-content inner">
+            <section class="copyright"><a href="https://blog.angular-university.io/">Angular University</a> © 2021
+            </section>
+            <nav class="site-footer-nav">
+                <a href="https://blog.angular-university.io/">Latest Posts</a>
+                    <a href="https://www.facebook.com/angular.university" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com/AngularUniv" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://ghost.org/" target="_blank" rel="noopener">Ghost</a>
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/jquery-3.4.1.min.js.download" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+</script>
+<script src="./RxJs Error Handling_ Complete Practical Guide_files/casper.js.download"></script>
+
+<script>
+    // Parse the URL parameter
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Give the parameter a variable name
+    var action = getParameterByName('action');
+    var success = getParameterByName('success');
+
+    $(document).ready(function () {
+        if (action == 'subscribe' && (success === null || success === 'true')) {
+            $('body').addClass('subscribe-success');
+        }
+
+        if (action == 'subscribe' && success === 'false') {
+            $('body').addClass('subscribe-failure');
+        }
+
+        $('.subscribe-notification .subscribe-close-button').click(function () {
+            $('.subscribe-notification').addClass('close');
+        });
+
+        // Reset form on opening subscrion overlay
+        $('.subscribe-button').click(function () {
+            $('.subscribe-overlay form').removeClass();
+            $('.subscribe-email').val('');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // FitVids - startbyline-meta-content
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        //Casper.stickyNavTitle({
+        //    navSelector: '.site-nav-main',
+        //    titleSelector: '.post-full-title',
+        //    activeClass: 'nav-post-title-active'
+        //});
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+
+
+<!-- Social share buttons - Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="./RxJs Error Handling_ Complete Practical Guide_files/addthis_widget.js.download"></script><div id="_atssh" style="visibility: hidden; height: 1px; width: 1px; position: absolute; top: -9999px; z-index: 100000;"><iframe id="_atssh715" title="AddThis utility frame" src="./RxJs Error Handling_ Complete Practical Guide_files/sh.f48a1a04fe8dbf021b4cda1d.html" style="height: 1px; width: 1px; position: absolute; top: 0px; z-index: 100000; border: 0px; left: 0px;"></iframe></div><style id="service-icons-0"></style>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-78523867-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<!-- MailerLite Universal -->
+<script>
+  (function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+    var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+    f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+    var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+    _.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+
+  var ml_account = ml('accounts', '797205', 'a2w7x9m0r8', 'load');
+</script>
+<!-- End MailerLite Universal -->
+
+
+
+<!-- Show popup on click event -->
+<script>
+  var ml_webform_4111039 = ml_account('webforms', '4111039', 'd0t5k0', 'load');
+  ml_webform_4111039('animation', 'fadeIn');
+
+    var menuBtn = document.getElementsByClassName('nav-newsletter');
+
+    if (menuBtn && menuBtn.length > 0) {
+        menuBtn[0].addEventListener('click', function (event) {
+            event.preventDefault();
+          ml_webform_4111039('show');
+        });
+
+    }
+
+
+</script>
+<!-- End show popup -->
+
+<script>
+/*
+    // look for Youtube placeholder and replace with video
+    if (document.querySelector && document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            var youTubePlayList = "https://www.youtube.com/embed/fnH573xJ2Eo?list=PLOa5YIicjJ-UE-tDU5s2wCGg5wbSGjN6g&t=0s";
+
+            var playlist = document.querySelector('#playlist-placeholder');
+
+            if (playlist) {
+                playlist.innerHTML = '<iframe style="margin: 0 auto 40px auto" width="560" height="315" src="' + youTubePlayList + '" frameborder="0" allowfullscreen></iframe>';
+            }
+
+        });
+    }
+*/
+</script>
+
+
+
+<iframe __idm_frm__="323" style="display: none;" src="./RxJs Error Handling_ Complete Practical Guide_files/saved_resource(2).html"></iframe><div id="ml-webforms-popup-4111039-overlay" class="ml-webforms-popup-overlay" style="position: fixed; display: none;"></div><iframe id="ml-webforms-popup-4111039" show-overlay="true" title="MailerLite Form" src="./RxJs Error Handling_ Complete Practical Guide_files/page.html" frameborder="0" animation="fadeIn" style="position: fixed; inset: auto 0px -100% -100%; visibility: hidden; opacity: 0; margin: 0px; width: 100%; max-width: 100%; height: 657px; max-height: 100%; z-index: 2147483640; display: block;" class=""></iframe><iframe __idm_frm__="326" style="display: none;" src="./RxJs Error Handling_ Complete Practical Guide_files/saved_resource(3).html"></iframe></body></html>

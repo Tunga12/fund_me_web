@@ -1,9 +1,7 @@
-
 <mat-card
   fxLayout="column"
   [ngStyle.gt-sm]="{ width: '30%', margin: '30px auto' }"
   [ngStyle.sm]="{ width: '40%', margin: '30px auto' }"
-
   fxLayoutGap="10px"
 >
   <mat-card-title>
@@ -14,7 +12,9 @@
   </div>
 
   <mat-card-content>
-    <form>
+    <form [formGroup]="form"
+          (ngSubmit)="signIn()"
+    >
       <button mat-button class="btn-large facebook-btn">
         <mat-icon>facebook</mat-icon> Continue with Facebook
       </button>
@@ -28,9 +28,11 @@
         <mat-label> Email Address </mat-label>
         <input
           matInput
+          formControlName="email"
           class="matInput"
           placeholder="Email address"
           type="email"
+          [(ngModel)]="email"
           email
         />
         <mat-icon matSuffix></mat-icon>
@@ -38,19 +40,32 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" />
+        <input
+          matInput
+          formControlName="password"
+          [(ngModel)]="password"
+          [type]="hidePassword ? 'password' : 'text'"
+        />
         <button
           mat-icon-button
           matSuffix
-          (click)="hide = !hide"
+          (click)="hidePassword = !hidePassword"
           [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
+          [attr.aria-pressed]="hidePassword"
         >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
         </button>
       </mat-form-field>
-
-      <button mat-raised-button color="primary" class="btn-large" type="submit">
+      <p class="error-message">{{ logInMessage }}</p>
+      <button
+        mat-raised-button
+        [disabled]="!form.valid"
+        color="primary"
+        class="btn-large"
+        type="submit"
+      >
         Sign in to GoFundMe
       </button>
     </form>
@@ -58,13 +73,8 @@
   <div>
     <mat-divider mat-inset></mat-divider>
   </div>
-    <a
-      link
-      routerLink="sign-up"
-      routerLinkActive="router-link-active"
-      color="accent"
-    >
-      Forgot password?</a
-    >
+  <a link routerLinkActive="router-link-active" color="accent">
+    Forgot password?</a
+  >
 </mat-card>
 <p class="footer-logo"></p>

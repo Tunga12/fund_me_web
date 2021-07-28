@@ -1,0 +1,11 @@
+.add-media {
+    border: 2px dashed #adadad;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 96%;
+    min-height: 250px;
+}
+
+
+

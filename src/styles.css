@@ -14,8 +14,6 @@ body {
   background-color: #fff;
 }
 
-
-
 .nav-fixed {
   background-color: rgb(255, 255, 255);
   position: static;
@@ -28,7 +26,6 @@ body {
   padding: 0.5rem 8rem;
   position: relative;
 }
-
 
 .nav-link {
   font-size: 14px;
@@ -109,7 +106,7 @@ p.footer-logo {
   height: 40px;
 }
 
-mat-card.fundriser-form {
+mat-card.fundraiser-form {
   background-color: transparent !important;
   box-shadow: none !important;
   width: 40%;

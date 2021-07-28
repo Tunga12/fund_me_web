@@ -26,7 +26,7 @@ export class DonateComponent implements OnInit {
     });
   }
   ngOnInit(): void {}
-  backToFundriser() {
+  backToFundraiser() {
     this.router.navigateByUrl('/donate');
   }
   sliderChange(slider: MatSlider) {

@@ -1,0 +1,34 @@
+<form [formGroup]="form">
+  <input
+    type="file"
+    name="image"
+    accept="image/jpeg,image/png,image/gif, image/bmp"
+    formControlName="image"
+    [(ngModel)]="fundraiser.image"
+    (change)="onImageChoosen($event)"
+  />
+
+ <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; width:500px">  <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
+
+  <div class="or-divider">
+    <p class="bar"></p>
+    <p style="font-weight: 600">or</p>
+    <p class="bar"></p>
+  </div>
+  <p>Add a yotube video link</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Yotube video link </mat-label>
+    <!-- <label for="amount">How much would yyou like to rise?</label> -->
+    <input matInput placeholder="Enter goal amount" link />
+    <mat-icon matPrefix>link&nbsp;</mat-icon>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    [disabled]="!form.valid"
+    color="primary"
+    (click)="nextStep()"
+    class="btn-large"
+  >
+    Next
+  </button>
+</form>

@@ -9,8 +9,8 @@
       mat-button
       [matMenuTriggerFor]="discover"
       #discovermenuTrigger="matMenuTrigger"
-      (onMenuClose)="toggleDiscoverCaret()"
-      (onMenuOpen)="toggleDiscoverCaret()"
+      (onMenuClose)="discoverCaret = !discoverCaret"
+      (onMenuOpen)="discoverCaret = !discoverCaret"
       class="nav-link mat-button"
     >
       Discover
@@ -18,7 +18,7 @@
     </a>
 
     <mat-menu #discover="matMenu">
-      <button mat-menu-item>Fundrisers</button>
+      <button mat-menu-item>Fundraisers</button>
       <button mat-menu-item>Success stories</button>
       <button mat-menu-item>Trending topic</button>
     </mat-menu>
@@ -29,26 +29,20 @@
       mat-button
       [matMenuTriggerFor]="fundrise"
       #funndrisemenuTrigger="matMenuTrigger"
-      (onMenuClose)="toggleFundriseCaret()"
-      (onMenuOpen)="toggleFundriseCaret()"
+      (onMenuClose)="fundriseCaret = !fundriseCaret"
+      (onMenuOpen)="fundriseCaret = !fundriseCaret"
       class="nav-link mat-button"
     >
       <mat-menu #fundrise="matMenu">
-        <a mat-menu-item routerLink="'/medical'" class="mat-menu-item">
-          Medical
+        <a
+          *ngFor="let category of categories"
+          mat-menu-item
+          routerLink="/{{ category.name }}"
+          class="mat-menu-item"
+        >
+          {{ category.name }}
         </a>
-        <a mat-menu-item routerLink="'/memorial'" class="mat-menu-item">
-          Memorial
-        </a>
-        <a mat-menu-item routerLink="'/non-profit'" class="mat-menu-item">
-          Non profit
-        </a>
-        <a mat-menu-item routerLink="'/emergency'" class="mat-menu-item">
-          Emergency
-        </a>
-        <a mat-menu-item routerLink="'/edcation'" class="mat-menu-item">
-          Education
-        </a>
+
         <mat-divider></mat-divider>
         <a mat-menu-item routerLink="'/see-all'">See all</a>
       </mat-menu>
@@ -59,10 +53,9 @@
 
   <!-- LOGO -->
   <!-- <img src="/assets/images/logo.jpg" height="70%" width="10%" /> -->
-
   <div>
-    <a mat-button routerLink='/my-fundrisers' class="nav-link mat-button">
-      Your fundrisers
+    <a mat-button routerLink="/my-fundraisers" class="nav-link mat-button">
+      Your fundraisers
     </a>
 
     <!-- USER account MENU -->
@@ -70,42 +63,34 @@
       mat-button
       [matMenuTriggerFor]="account"
       #funndrisemenuTrigger="matMenuTrigger"
-      (onMenuClose)="toggleAccountCaret()"
-      (onMenuOpen)="toggleAccountCaret()"
+      (onMenuClose)="accountCaret = !accountCaret"
+      (onMenuOpen)="accountCaret = !accountCaret"
       class="nav-link mat-button"
     >
       <mat-menu #account="matMenu">
-        <a 
-        (click)="myFundrisers()"
-        mat-menu-item routerLink="/my-fundrisers" class="mat-menu-item">
-          Your fundrisers
+        <a mat-menu-item routerLink="/my-fundraisers" class="mat-menu-item">
+          Your fundraisers
         </a>
-        <a mat-menu-item routerLink="'/my-donations'" class="mat-menu-item">
+        <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
           Donations you've made
         </a>
-        <a mat-menu-item routerLink="'/account-setting'" class="mat-menu-item">
+        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
           Account settings
         </a>
-        <a
-        (click)="newFundriser()"
-        mat-menu-item routerLink="'/create'" class="mat-menu-item">
-          Start a new fundriser
+        <a mat-menu-item routerLink="/create" class="mat-menu-item">
+          Start a new fundraiser
         </a>
-        <a mat-menu-item routerLink="'/help'" class="mat-menu-item">
+        <a mat-menu-item routerLink="/help" class="mat-menu-item">
           Help center
         </a>
         <mat-divider></mat-divider>
-        <a mat-menu-item routerLink="'/sign-in'">Sign out</a>
+        <a mat-menu-item routerLink="/sign-in">Sign out</a>
       </mat-menu>
-      Getachew
+      {{ currentUser?.firstName }}
       <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
 
-    <button
-      mat-icon-button
-      fxShow="true"
-      fxHide.gt-sm
-    >
+    <button mat-icon-button fxShow="true" fxHide.gt-sm>
       <mat-icon>menu</mat-icon>
     </button>
   </div>

@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Title of your fundraiser </mat-label>
+    <input
+      matInput
+      formControlName="title"
+      [(ngModel)]="fundraiser.title"
+      placeholder="Title of your fundriser"
+      type="text"
+      required
+    />
+  </mat-form-field>
+
+  <story-text-area [form]="form" [fundraiser]="fundraiser"></story-text-area>
+  <button
+    [disabled]="!form.valid"
+    mat-raised-button
+    color="primary"
+    (click)="nextStep()"
+    class="btn-large"
+  >
+    Complete fundraiser
+  </button>
+</form>
