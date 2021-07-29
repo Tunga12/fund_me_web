@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../../shared/share-dialog/share-dialog.component';
 import { PostAnUpdateComponent } from '../../post-an-update/post-an-update.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 
 @Component({
   selector: 'app-detail',
@@ -10,9 +12,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-fundraiser-detail.component.css'],
 })
 export class MyFundraiserDetailComponent implements OnInit {
+  fundraiserId: string = '';
+  fundraiser!: Fundraiser;
   tabs = [1, 2, 3];
-  constructor(private dialog: MatDialog, private router: Router) {}
-  ngOnInit(): void {}
+  constructor(
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private fundraiserServ: FundraiserService
+  ) {}
+
+  ngOnInit(): void {
+    // get the id parameter from router
+    this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') ?? ''; 
+    this.getFundriser();
+  }
+
+  // get fundriser using id
+  getFundriser() {
+    this.fundraiserServ
+      .getFundraiser(this.fundraiserId)
+      .subscribe((fundraiser) => {
+        this.fundraiser = fundraiser;        
+      });
+  }
 
   openUpdateDialog() {
     this.dialog
@@ -34,18 +56,8 @@ export class MyFundraiserDetailComponent implements OnInit {
         // console.log(this.updates);
       });
   }
-  goToWithdrawalPage() {
-    this.router.navigateByUrl('/withdrawal');
-  }
 
-  goBack() {
-    this.router.navigateByUrl('/my-fundraisers');
-  }
 
-  goToDetailPage() {
-    this.router.navigateByUrl('/fundraiser-detail');
-  }
-  goToEditPage() {
-    this.router.navigateByUrl('/edit');
-  }
+
+  
 }

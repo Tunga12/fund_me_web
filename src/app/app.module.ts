@@ -56,6 +56,9 @@ import { SetFundraiserGoalComponent } from './components/fundraiser/create-fundr
 import { SetBasicInfoComponent } from './components/fundraiser/create-fundraiser/set-basic-info/set-basic-info.component';
 import { SetFundraiserStoryComponent }  from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { OverviewComponent } from './components/edit-ui/overview/overview.component';
+import { DeleteDialogComponent } from './components/edit-ui/overview/delete-dialog/delete-dialog.component';
+import { StoryComponent } from './components/edit-ui/story/story.component';
 
 const customConfig = {};
 @NgModule({
@@ -99,6 +102,9 @@ const customConfig = {};
     UpdatesTabContentComponent,
     NotificationComponent,
     PageNotFoundComponent,
+    OverviewComponent,
+    DeleteDialogComponent,
+    StoryComponent,
   ],
   entryComponents: [],
   imports: [

@@ -9,8 +9,7 @@
   <header>
     <h1 fxHide.xs class="bold">{{ fundraiser?.title }}</h1>
   </header>
-  <div fxLayout="row" fxLayoutAlign="space-around start"
-   fxFlex.md="98">
+  <div fxLayout="row" fxLayoutAlign="space-around start" fxFlex.md="98">
     <div
       fxLayout="column"
       fxLayoutGap="20px"
@@ -365,7 +364,7 @@
               <span class="bold"
                 >{{ donation.userId.firstName | titlecase }}
                 {{ donation.userId.lastName | titlecase }} donated
-                <strong>$30</strong></span
+                <strong>${{ donation.amount }}</strong></span
               >
               <p>{{ donation.comment }} <a>Read more</a></p>
             </div>
@@ -387,7 +386,7 @@
     </div>
 
     <!-- Card on the right side -->
-    
+
     <mat-card fxHide.lt-md>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
         <div>
@@ -398,7 +397,7 @@
             style="margin-bottom: -15px"
           >
             <h2>
-              <span class="bold">${{fundraiser?.totalRaised}} </span>
+              <span class="bold">${{ fundraiser?.totalRaised }} </span>
               <sub class="text-small color-gray"
                 >raised of ${{ fundraiser?.goalAmount }} goal</sub
               >
@@ -438,7 +437,7 @@
 
         <!-- Show this div if donations have made to this fundraiser -->
         <div
-          *ngIf="fundraiser?.donations?.length!==0"
+          *ngIf="fundraiser?.donations?.length !== 0"
           fxLayout="column"
           fxLayoutGap="20px"
         >

@@ -68,7 +68,7 @@ const ROUTES = [
     component: WithdrwalComponent,
   },
   {
-    path: 'donate',
+    path: 'donate/:id',
     component: DonateComponent,
   },
   {

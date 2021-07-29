@@ -1,7 +1,8 @@
 export interface Notification {
-  id?: string;
+  _id?: string;
   userIds?: string[];
   fundraiser: string;
-  type: string;
+  notificationType: string;
   content: string;
+  title: string;
 }

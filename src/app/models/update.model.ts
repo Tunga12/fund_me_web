@@ -4,5 +4,5 @@ export interface Update {
   userId?: User;
   image: string;
   content: string;
-  dateCreated: string;
+  dateCreated?: string;
 }

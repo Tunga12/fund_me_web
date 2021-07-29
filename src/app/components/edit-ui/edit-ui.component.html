@@ -1,4 +1,4 @@
-<header>
+<header fxHide.lt-md>
   <div
     [ngStyle.lt-md]="{ width: '98%' }"
     [ngStyle.md]="{ width: '80%', margin: '20px auto' }"
@@ -18,12 +18,11 @@
       <img
         matCardImage
         [ngStyle.xs]="{ width: '100%', height: '200px' }"
-        src="\assets\images\step2.jpg"
+        [src]="fundraiser.image"
       />
       <div>
         <h2 style="padding: 0px !important; margin: 0px">Edit & Settings</h2>
-        <!--TODO-->
-        <p>Fundraiser title</p>
+        <p> {{ fundraiser.title }} </p>
       </div>
     </div>
   </div>
@@ -53,181 +52,8 @@
       [ngStyle.lt-md]="{ width: '100%', margin: '30px auto' }"
       class="tab-content"
     >
-      <div
-        fxLayout="row"
-        fxLayout.lt-md="column"
-        fxLayoutAlign="space-between center"
-        fxLayoutGap="10px"
-      >
-        <mat-form-field appearance="outline">
-          <mat-label>Title </mat-label>
-          <input
-            matInput
-            class="matInput"
-            placeholder="Title of your campign"
-            type="text"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label> Goal </mat-label>
-          <input matInput class="matInput" placeholder="goal" type="number" />
-          <span matPrefix> <mat-icon>$</mat-icon> </span>
-        </mat-form-field>
-      </div>
-
-      <div
-        fxLayout="row"
-        fxLayout.lt-md="column"
-        fxLayoutAlign="space-between center"
-        fxLayoutGap="10px"
-      >
-        <mat-form-field appearance="outline">
-          <mat-label> Category </mat-label>
-          <mat-select placeholder="Select category">
-            <mat-option [value]=""></mat-option>
-            <mat-option [value]="">Category 1</mat-option>
-            <mat-option [value]="">Category 1</mat-option>
-            <mat-option [value]="">Category 1</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label> Zip code </mat-label>
-          <input matInput class="matInput" placeholder="goal" type="text" />
-        </mat-form-field>
-      </div>
-
-      <p class="bold">Campign link</p>
-      <mat-divider></mat-divider>
-      <h3>gofundme.com/f/sbdsbd</h3>
-      <p>
-        This link can only be changed once. Changing your link does not break
-        your previous link
-      </p>
-
-      <mat-form-field appearance="outline">
-        <mat-label> Campign link </mat-label>
-        <input
-          matInput
-          class="matInput"
-          #link
-          placeholder="goal"
-          value="hfdjfhd"
-          type="text"
-        />
-        <mat-hint
-          ><h5 class="bold">preview: www.gofundme.com/{{ link.value }}</h5>
-        </mat-hint>
-        <mat-sufix matSuffix> {{ 45 - link.value.length }} </mat-sufix>
-      </mat-form-field>
-
-      <!-- TEAM SETTINGS -->
-      <div class="setting">
-        <h2 class="bold">Team Settings</h2>
-        <p></p>
-        <mat-form-field appearance="outline">
-          <mat-label> Team Name </mat-label>
-          <input
-            matInput
-            class="matInput"
-            #teamName
-            placeholder="goal"
-            value="hfdjfhd"
-            type="text"
-          />
-          <mat-sufix matSuffix>
-            {{ 45 - teamName.value.length }}
-          </mat-sufix>
-        </mat-form-field>
-
-        <label for="show-amount"
-          >Show the amount each team member has raised publicly
-        </label>
-        <mat-checkbox id="show-amount" value="" color="primary"></mat-checkbox>
-
-        <!-- TODO add photo button -->
-
-        <!-- TODO add  delete action-->
-        <button class="delete-btn" mat-button>Delete Team</button>
-      </div>
-
-      <!-- FUNDRISER SETTINGS -->
-      <div class="setting">
-        <h2 class="bold">Fundraiser Settings</h2>
-
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
-          <div style="width: 100%">
-            <label for="allow-comment">
-              Allow donors to leave comments on my fundraiser
-            </label>
-            <mat-checkbox
-              id="allow-comment"
-              value=""
-              color="primary"
-            ></mat-checkbox>
-            <mat-divider></mat-divider>
-          </div>
-
-          <div style="width: 100%">
-            <label for="allow-donations">
-              Allow donations to my fundraiser
-            </label>
-            <mat-checkbox
-              id="allow-donations"
-              value=""
-              color="primary"
-            ></mat-checkbox>
-            <mat-divider></mat-divider>
-          </div>
-          <div>
-            <label for="allow-search">
-              Allow my fundraiser to appear in search results
-            </label>
-            <mat-checkbox
-              id="allow-search"
-              value=""
-              color="primary"
-            ></mat-checkbox>
-            <div class="info-text">
-              <span
-                >Your fundraiser will appear in GoFundMe search results and
-                other online search engines. (If this is turned off, people will
-                still be able to view your fundraiser if they have the
-                link)</span
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="save">
-          <!-- TODO add save actions -->
-          <button
-            color="primary"
-            mat-raised-button
-            class="btn-large"
-            style="width: 50% !important"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-      <div class="setting">
-        <div>
-          <h2 class="bold">Delete my fundraiser</h2>
-          <div class="info-text">
-            <span>
-              You will no longer have access to this fundraiser after deleting.
-              If you received donations, your donors will still be able to view
-              a summary.
-            </span>
-          </div>
-        </div>
-        <!-- TODO add  delete action-->
-        <button class="delete-btn bold" mat-button>Delete Fundraiser</button>
-      </div>
-    </div>
-
+    <overview [fundraiser]="fundraiser"></overview>
+     </div>
     <div *ngIf="index === 1" class="tab-content">
       <div style="width: 100%">
         <youtube-video-player> </youtube-video-player>
@@ -246,7 +72,7 @@
     </div>
 
     <div *ngIf="index === 2" class="tab-content">
-      <story-text-area></story-text-area>
+        <story [fundraiser]="fundraiser"></story>
     </div>
 
     <div

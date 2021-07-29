@@ -15,29 +15,49 @@
     <mat-divider></mat-divider>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="15px"
+  >
     <img
       class="fundraiser-img"
-      src="/assets/images/step2.jpg"
-      [ngStyle.xs]="{ width: '100% !important' }"
+      [src]="fundraiser?.image"
+      [ngStyle.xs]="{ width: '100%', height: '150px' }"
     />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
-      <p>You're supporting <strong>Mahamed funeral costs</strong></p>
+      <p>
+        You're supporting <strong>{{ fundraiser?.title }}</strong>
+      </p>
       <span class="color-gray text-small">
-        Your donation will benefit <strong>Anwar Ugas</strong>
+        Your donation will benefit
+        <strong>
+          {{ fundraiser?.beneficiary?.firstName | titlecase }}
+          {{ fundraiser?.beneficiary?.lastName | titlecase }}
+        </strong>
       </span>
     </div>
   </div>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-    <form [formGroup]="form" style="width: 60%" [ngStyle.xs]="{ width: '98%' }">
+  <div
+    fxLayout="row"
+    fxLayout.xs="column-reverse"
+    fxLayoutAlign="space-between start"
+  >
+    <form
+      [formGroup]="form"
+      (ngSubmit)="donate()"
+      style="width: 60%"
+      [ngStyle.xs]="{ width: '98%' }"
+    >
       <h2 class="bold">Enter your donation</h2>
       <mat-form-field appearance="outline">
         <mat-label>Donation amount</mat-label>
         <input
           class="bold"
           matInput
-          [(ngModel)]="donation_amount"
+          [(ngModel)]="donation.amount"
           formControlName="donation_amount"
           type="number"
           required
@@ -47,94 +67,116 @@
           <mat-icon class="mat-18">attach_money</mat-icon>
         </span>
       </mat-form-field>
-      <!-- Tip amount -->
-      <h3 class="bold">Tip amount</h3>
-      <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
-        <mat-form-field appearance="outline">
-          <mat-label>Tip amount</mat-label>
-          <input matInput formControlName="tip_amount" type="text" />
-          <span matPrefix>
-            <mat-icon class="mat-18">attach_money</mat-icon>
-          </span>
-        </mat-form-field>
 
-        <button mat-stroked-button (click)="changeTipType()">
-          Back to default
-        </button>
+      <!-- Tip amount -->
+      <div>
+        <h3 class="bold">Tip amount</h3>
+        <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
+          <mat-form-field appearance="outline">
+            <mat-label>Tip amount</mat-label>
+            <input matInput formControlName="tip_amount" type="text" />
+            <span matPrefix>
+              <mat-icon class="mat-18">attach_money</mat-icon>
+            </span>
+          </mat-form-field>
+
+          <button mat-stroked-button (click)="changeTipType()">
+            Back to default
+          </button>
+        </div>
+
+        <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
+          <!-- Add a tooltip here -->
+          <mat-slider
+            color="primary"
+            step="1"
+            value="5"
+            min="5"
+            #slider
+            tickInterval="1"
+            (change)="sliderChange(slider)"
+          ></mat-slider>
+          <button
+            mat-stroked-button
+            (click)="changeTipType()"
+            style="margin-top: -10px; margin-bottom: 20px"
+          >
+            Enter custom tip
+          </button>
+        </div>
       </div>
 
-      <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
-        <!-- Add a tooltip here -->
-        <mat-slider
-          color="primary"
-          step="1"
-          value="5"
-          #slider
-          (change)="sliderChange(slider)"
-          tickInterval="1"
-        ></mat-slider>
-        <button mat-stroked-button (click)="changeTipType()">
-          Enter custom tip
-        </button>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Comment</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="donation.comment"
+            formControlName="comment"
+            type="text"
+          ></textarea>
+        </mat-form-field>
       </div>
       <div>
         <mat-checkbox
           formControlName="anonymous"
-          (change)="changeAnonymity()"
           [indeterminate]="false"
           color="primary"
         >
           Don't display my name publicly on the campaign.
         </mat-checkbox>
       </div>
-      <button
-        fxHide.lt-sm
-        mat-raised-button
-        color="primary"
-        style="width: 60%; margin: 20px auto"
-      >
+      <div
+       color="warn" >{{ erorrMessage }}</div>
+      <button mat-raised-button color="primary" class="btn-large" type="submit">
         Donate now
       </button>
     </form>
 
-    <mat-card [ngStyle.xs]="{ width: '90%', 'box-shadow': 'none' }">
+    <mat-card [ngStyle.xs]="{ width: '80%' }">
       <mat-card-content>
         <h2 class="bold">Your donation</h2>
         <div
-          class="color-gray"
-          fxLayout="row"
-          fxLayoutAlign="space-between start"
+          fxLayout="column"
+          fxLayout.xs="row"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px"
         >
-          <p>Your donation</p>
-          <p>${{ donation_amount }}</p>
-        </div>
+          <div
+            class="color-gray"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutAlign="space-between start"
+          >
+            <p>Your donation</p>
+            <!-- <p class="bold"> ${{ donation_amount }}</p> -->
+          </div>
 
-        <div
-          class="color-gray"
-          fxLayout="row"
-          fxLayoutAlign="space-between start"
-        >
-          <p>GOFundMe tip</p>
-          <p>${{ tip_amount }}</p>
-        </div>
-        <div>
-          <mat-divider></mat-divider>
-        </div>
-        <p></p>
-        <div fxLayout="row" fxLayoutAlign="space-between start">
-          <p>Total due today</p>
-          <p>{{ donation_amount + tip_amount }}</p>
+          <div
+            class="color-gray"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutAlign="space-between start"
+          >
+            <p>GOFundMe tip</p>
+            <!-- <p class="bold">${{ tip_amount }}</p> -->
+          </div>
+          <div>
+            <mat-divider></mat-divider>
+          </div>
+          <p></p>
+          <div
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutAlign="space-between start"
+            class="bold"
+          >
+            <p>Total</p>
+            <!-- <p >{{ donation_amount + tip_amount }}</p> -->
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
     <!-- Donate now button -->
-    <button
-      fxHide.gt-xs
-      mat-raised-button
-      color="primary"
-      style="width: 60%; margin: 20px auto"
-    >
-      Donate now
-    </button>
   </div>
 </div>

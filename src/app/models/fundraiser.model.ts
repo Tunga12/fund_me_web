@@ -6,6 +6,7 @@ import { User } from './user.model';
 import { Update } from './update.model';
 
 export interface Fundraiser {
+  __v?: any;
   _id?: string;
   title: string;
   image: string;

@@ -1,28 +1,4 @@
 
-mat-checkbox.mat-checkbox {
-  float: right;
-}
-.delete-btn {
-  color: rgb(206, 6, 6);
-  text-decoration: underline;
-  padding-left: 5px;
-}
-.fudriser-setting-checkbox {
-  margin: 20px 0px;
-}
-.setting {
-  margin: 40px 0px;
-}
-.save {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.info-text {
-  color: #999 !important;
-  width: 70%;
-}
 .tab-content {
   margin: 50px 100px;
 }

@@ -9,7 +9,7 @@
   <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
     <button
       mat-stroked-button
-      (click)="goBack()"
+      routerLink="/my-fundraisers"
       class="bold"
       style="margin: 20px 0px"
     >
@@ -35,18 +35,18 @@
           [ngStyle.xs]="{ height: '150px', width: '100%' }"
         />
         <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-          <h2 class="bold">Fundraiser name</h2>
+          <h2 class="bold">{{fundraiser.title}}</h2>
           <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
             <a
               fxLayout="row"
               fxLayoutAlign="start center"
-              (click)="goToEditPage()"
+              [routerLink]="['/edit', fundraiser._id]"
               ><mat-icon> edit </mat-icon> <span>Edit & Settings</span></a
             >
             <a
               fxLayout="row"
               fxLayoutAlign="start center"
-              (click)="goToDetailPage()"
+              [routerLink]="['/fundraiser-detail', fundraiser._id]"
               ><mat-icon>visibility </mat-icon> <span>View fundraiser</span>
             </a>
           </div>
@@ -55,7 +55,7 @@
             [value]="20"
             color="primary"
           ></mat-progress-bar>
-          <p>Total raised: $20</p>
+          <p>Total raised: ${{fundraiser.totalRaised}}</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@
           <span class="text-md">Update</span>
         </a>
         <a
-          (click)="goToWithdrawalPage()"
+          routerLink="/withdrawal"
           fxLayout="column"
           fxLayoutAlign="start center"
           fxLayoutGap="10px"
@@ -126,7 +126,7 @@
 
       <!-- Updates tab -->
       <div class="tab-content" *ngIf="index === 2">
-        <updates-tab-content></updates-tab-content>
+        <updates-tab-content [fundraiser]="fundraiser" ></updates-tab-content>
       </div>
     </mat-tab>
   </mat-tab-group>

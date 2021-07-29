@@ -1,12 +1,14 @@
 <!-- If no updates made yet show no updates made -->
-<!-- <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
-<h3>Keep your supporters up to date on your fundraisers!</h3>
-<button (click)="openUpdateDialog()" mat-raised-button color="primary">
-  Post an update
-</button> -->
+<div *ngIf="!fundraiser.updates?.length">
+  <h3 class="tab-content-header">You haven’t posted an update yet.</h3>
+  <h3>Keep your supporters up to date on your fundraisers!</h3>
+  <button (click)="openUpdateDialog()" mat-raised-button color="primary">
+    Post an update
+  </button>
+</div>
 
 <!-- If there are updates show them -->
-<div>
+<div *ngIf="fundraiser.updates?.length">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <p class="bold">Updates</p>
     <button
@@ -19,7 +21,7 @@
     </button>
   </div>
   <div
-    *ngFor="let update of updates"
+    *ngFor="let update of fundraiser.updates"
     fxLayout="column"
     fxLayoutAlign="start start"
     fxLayoutGap="20px"
@@ -28,7 +30,10 @@
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <div class="avatar-contain">GT</div>
-        <strong>Getacew Tebikew</strong>
+        <strong
+          >{{ update.userId?.firstName | titlecase }}
+          {{ update.userId?.lastName | titlecase }}
+        </strong>
       </div>
       <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
         >more_vert</mat-icon
@@ -50,9 +55,9 @@
       fxLayoutAlign="start start"
       fxLayoutGap="30px"
     >
-      <img [src]="update.imageUrl" alt="" />
+      <img [src]="update.image" alt="" />
       <p>
-        {{ update.updateText }}
+        {{ update.content }}
       </p>
     </div>
     <p class="text-small color-gray">This was shared with your donors</p>

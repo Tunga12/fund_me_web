@@ -52,9 +52,26 @@ export class FundraiserService {
 
   //Edit a fundraiser by id
   editFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
+   let fundraiserId = fundraiser._id;
+    // remove the _id element :not needed for update
+    delete fundraiser._id;
+    delete fundraiser.__v;
+
+    // update the fundraiser  since we only need id of the category
+    let customFundraiser = {
+      ...fundraiser,
+      category: fundraiser.category?._id,
+      beneficiary: fundraiser.beneficiary?._id,
+    };
     return this.http.put<Fundraiser>(
-      `${environment.BASE_URL}/fundraisers/${fundraiser._id}`,
-      fundraiser
+      `${environment.BASE_URL}/fundraisers/${fundraiserId}`,
+      customFundraiser
     );
+  }
+
+  // delete funraiser by id
+  deleteFundraiser(fundraiserId: string):Observable<string>{
+    return this.http.delete<string>(
+      `${environment.BASE_URL}/fundraisers/${fundraiserId}`);
   }
 }

@@ -8,11 +8,11 @@
     <form [formGroup]="form">
       <mat-form-field appearance="outline">
         <textarea
-          formControlName="story"
+          formControlName="content"
           matInput
           required
           placeholder="Share your news"
-          [(ngModel)]="story"
+          [(ngModel)]="update.content"
         ></textarea>
       </mat-form-field>
       <!-- TODO -->
@@ -64,7 +64,7 @@
       <!-- TODO -->
       <button
         mat-raised-button
-        [mat-dialog-close]="{ imageUrl: '', updateText: story }"
+        [mat-dialog-close]="update"
         type="submit"
         color="primary"
         class="btn-large"

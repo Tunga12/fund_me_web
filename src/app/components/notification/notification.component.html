@@ -1,20 +1,26 @@
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+<div fxLayout="column"
+ fxLayoutAlign="start start"
+  fxLayoutGap="20px">
   <div
+  *ngFor="let notification of notifications"
     fxLayout="column"
     class="notification"
     fxLayoutAlign="start start"
     fxLayoutGap="0px"
+    [ngStyle.xs]="{ width:'90%'}"
   >
     <h3 class="time">JUST NOW</h3>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
       <img matCardAvatar src="/assets/images/me.jpg" alt="" />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Deleniti labore quasi
-        dolore ad dignis simos ipsam nesciunt quae dolores sunt iste, obcaecati
-        quam ut! Maxime error quis, pariatur atque inventore incidunt. Rerum
-        dolores nihil dolor accusantium ad veritatis,...<a>Read more</a>
-      </p>
+      <div>
+        <h2 class="bold">{{ notification.title }}</h2>
+        <p>
+          {{ notification.content }}
+       ,...<a>Read more</a>
+       <!-- TODO custom pipe for more and less-->
+        </p>
+      </div>
     </div>
+    <button mat-button color="warn" class="actions" (click)="deleteNotifcation(notification)"><mat-icon>delete</mat-icon></button>
   </div>
 </div>

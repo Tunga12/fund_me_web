@@ -18,15 +18,14 @@ export class SetBasicInfoComponent implements OnInit, OnDestroy {
   @Input() form!: FormGroup;
   @Output() next = new EventEmitter();
 
-  categories?: Category[];
+  categories!: Category[];
   categorySub?: Subscription;
 
+  constructor(private categoryService: CategoryService) {}
 
-  constructor(private categoryService: CategoryService) {
+  ngOnInit(): void {
     this.getCategories();
   }
-
-  ngOnInit(): void {}
 
   // get categories
   getCategories() {
@@ -38,11 +37,10 @@ export class SetBasicInfoComponent implements OnInit, OnDestroy {
   }
 
   nextStep() {
-    this.next.emit(this.fundraiser)
+    this.next.emit(this.fundraiser);
   }
 
   ngOnDestroy(): void {
     if (this.categorySub) this.categorySub.unsubscribe();
   }
-
 }
