@@ -1,57 +1,73 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an-update.component';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateService } from './../../../../services/update/update.service';
+import { Subscription } from 'rxjs';
+import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an-update.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Update } from './../../../../models/update.model';
 import { ActivatedRoute } from '@angular/router';
-import { Update } from 'src/app/models/update.model';
 
 @Component({
   selector: 'updates-tab-content',
   templateUrl: './updates-tab-content.component.html',
   styleUrls: ['./updates-tab-content.component.css'],
 })
-export class UpdatesTabContentComponent implements OnInit {
-  fundraiserId = '';
+export class UpdatesTabContentComponent implements OnInit, OnDestroy {
+  // fundraiserId = '';
   @Input() fundraiser!: Fundraiser;
-  update!: Update;
+
+  @Output() update = new EventEmitter();
+  updateSub?: Subscription;
 
   constructor(
-    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private updateService: UpdateService,
-    private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) {}
   ngOnInit(): void {
-    // get the id parameter from router
-    this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
   }
 
-  // post update
-  postUpdate() {
-    this.updateService.addUpdateToFundraiser(this.fundraiserId, this.update).subscribe(
-      update => {
-        this.update = update;
-        // console.log("fend",this.update);
-        // console.log("b-end",update);
-      }
-    );
+  //  opendialog for update
+  openEditDialog(update: Update) {
+    delete update._id;
+    this.dialog.open(PostAnUpdateComponent, {
+      data: { mode: 'Edit', update: update, },
+    });
   }
 
   openUpdateDialog() {
-    this.dialog
-      .open(PostAnUpdateComponent,this.update)
-      .afterClosed()
-      .subscribe((close_result) => {
-        this.update = { ...close_result };
-        // console.log("update",this.update);
-        // console.log("close result",close_result);
-        this.postUpdate();
-        this.fundraiser.updates?.push(this.update);
+    this.update.emit();
+  }
+
+  // delete an update from a fundraiser
+  deleteUpdate(update: any) {
+    this.snackBar
+      .open('Do you want to delete this update', 'Delete')
+      .onAction()
+      .subscribe(() => {
+        console.log('Deleteing...', update);
+        this.updateSub = this.updateService.deleteUpdate(update).subscribe(
+          () => {
+            this.snackBar.open('Update deleted successfuly!');
+            let index = this.fundraiser.updates?.indexOf(update);
+            this.fundraiser.updates?.splice(index ?? -1, 1);
+          },
+          (error) => {
+            console.log(error.error);
+          }
+        );
       });
   }
-  
-  deleteUpdate(update: any) {
-    // let index = this.updates.indexOf(update);
-    // this.updates.splice(index, 1);
+
+  ngOnDestroy() {
+    this.updateSub?.unsubscribe();
   }
 }

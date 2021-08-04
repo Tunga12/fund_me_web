@@ -13,13 +13,15 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    req = req.clone({
-      setHeaders: {
-        'X-Auth-Token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGZjNmUyNTIwZjZiZDAwMTVkOTc3NTkiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjI3NDkyNjczfQ._t397Lv4ksmeEPs4nA5UABkEE-SjtmEeXpktrUYkZt8',
-      },
-      setParams: {},
-    });
+    let token = localStorage.getItem('X-Auth-Token');
+    if (token) {
+      // console.log(token);
+      req = req.clone({
+        setHeaders: {
+          'X-Auth-Token': token,
+        },
+      });
+    }
     return next.handle(req);
   }
 }

@@ -4,14 +4,27 @@
     <input
       matInput
       formControlName="title"
-      [(ngModel)]="fundraiser.title"
       placeholder="Title of your fundriser"
       type="text"
       required
     />
   </mat-form-field>
 
-  <story-text-area [form]="form" [fundraiser]="fundraiser"></story-text-area>
+  <story-text-area [form]="form"></story-text-area>
+  <mat-error *ngIf="title?.touched && title?.errors?.required"
+    >Title is required.</mat-error
+  >
+  <mat-error *ngIf="title?.touched && title?.errors?.max"
+    >TItle must be mximum {{ title?.errors?.max.max }} charaters.</mat-error
+  >
+  <mat-error *ngIf="story?.touched && story?.errors?.required"
+    >Story is required.</mat-error
+  >
+  <mat-error *ngIf="story?.touched && story?.errors?.minlength"
+    >Story should be {{ story?.errors?.minlength.requiredLength }} characters
+    minimum.</mat-error
+  >
+
   <button
     [disabled]="!form.valid"
     mat-raised-button

@@ -27,6 +27,8 @@ import { PersonalInfoComponent } from './components/withdrwal/personal-info/pers
 import { PersonalInfoSummaryComponent } from './components/withdrwal/personal-info-summary/personal-info-summary.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { TimeagoModule } from 'ngx-timeago';
+
 import { BeneficiaryFormComponent } from './components/withdrwal/beneficiary-form/beneficiary-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -54,13 +56,13 @@ import { HttpErrorsInterceptor } from './interceptors/http-errors.interceptor';
 import { HttpHeaderInterceptor } from './interceptors/http-headers.interceptor';
 import { SetFundraiserGoalComponent } from './components/fundraiser/create-fundraiser/set-fundraiser-goal/set-fundraiser-goal.component';
 import { SetBasicInfoComponent } from './components/fundraiser/create-fundraiser/set-basic-info/set-basic-info.component';
-import { SetFundraiserStoryComponent }  from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
+import { SetFundraiserStoryComponent } from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { OverviewComponent } from './components/edit-ui/overview/overview.component';
-import { DeleteDialogComponent } from './components/edit-ui/overview/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from './components/shared/delete-dialog/delete-dialog.component';
 import { StoryComponent } from './components/edit-ui/story/story.component';
+import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.directive';
 
-const customConfig = {};
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,10 +107,11 @@ const customConfig = {};
     OverviewComponent,
     DeleteDialogComponent,
     StoryComponent,
+    ResponsiveColumnsDirective,
   ],
   entryComponents: [],
   imports: [
-  YouTubePlayerModule,
+    YouTubePlayerModule,
     BrowserModule,
     BrowserAnimationsModule,
     MyMaterialModule,
@@ -120,7 +123,9 @@ const customConfig = {};
     ShareIconsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TimeagoModule.forRoot(),
   ],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

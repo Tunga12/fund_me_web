@@ -32,7 +32,6 @@
           class="matInput"
           placeholder="Email address"
           type="email"
-          [(ngModel)]="email"
           email
         />
         <mat-icon matSuffix></mat-icon>
@@ -43,25 +42,23 @@
         <input
           matInput
           formControlName="password"
-          [(ngModel)]="password"
           [type]="hidePassword ? 'password' : 'text'"
+          (change)="change()"
         />
-        <button
-          mat-icon-button
-          matSuffix
+
+          <mat-icon matSuffix
           (click)="hidePassword = !hidePassword"
           [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hidePassword"
-        >
-          <mat-icon>{{
+          [attr.aria-pressed]="hidePassword">{{
             hidePassword ? "visibility_off" : "visibility"
           }}</mat-icon>
-        </button>
       </mat-form-field>
-      <p class="error-message">{{ logInMessage }}</p>
+      <p *ngIf="logInMessage" class="error-message">{{ logInMessage }}</p>
+      <!-- <mat-error *ngIf="form.touched && form.invalid"> Please enter your email and password </mat-error> -->
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" ></mat-progress-bar>
       <button
         mat-raised-button
-        [disabled]="!form.valid"
+        [disabled]="!form.valid || loading"
         color="primary"
         class="btn-large"
         type="submit"

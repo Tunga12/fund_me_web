@@ -52,9 +52,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
       .getCurrentUser()
       .subscribe((user) => {
         this.currentUser = user;
-
         localStorage.setItem('userId', this.currentUser?._id || '');
-
+        // sessionStorage.setItem('user',this.currentUser);
         console.log(this.currentUser);
       });
   }

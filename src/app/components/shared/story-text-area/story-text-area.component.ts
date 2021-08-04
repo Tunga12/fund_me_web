@@ -16,24 +16,23 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class StoryTextAreaComponent implements OnInit, OnDestroy {
-  @Input() fundraiser!: Fundraiser;
   @Input() form!: FormGroup;
   editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
     ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
+    [ 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['align_left', 'align_center'],
   ];
 
   constructor() {
     this.editor = new Editor();
   }
 
- 
+
   ngOnInit(): void {
     // this.editor = new Editor();
   }

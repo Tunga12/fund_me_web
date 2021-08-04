@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { HttpClient } from '@angular/common/http';
-import { environment } from './../../../../../environments/environment';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ImageService } from './../../../../services/image/image.service';
 
 @Component({
   selector: 'set-fundraiser-media',
@@ -12,41 +11,49 @@ import { environment } from './../../../../../environments/environment';
 })
 export class SetFundraiserMediaComponent implements OnInit {
   imageSrc!: string;
-
+  errorMessage = '';
+  loading = false;
   @Input()
   fundraiser!: Fundraiser;
-  @Input() form!: FormGroup;
+  form!: FormGroup;
   @Output() next = new EventEmitter();
+  constructor(
+    private imageService: ImageService,
+    private formBuilder: FormBuilder
+  ) {}
 
-  constructor(private router: Router, private httpClient: HttpClient) {}
+  ngOnInit(): void {
 
-  ngOnInit(): void {}
+    this.form = this.formBuilder.group({
+      image: [''],
+    });
+  }
   nextStep() {
-    this.next.emit(this.fundraiser);
-
     console.log(this.form.value);
-    this.httpClient
-      .post(`${environment.BASE_URL}/image`, this.form.value)
-      .subscribe((res) => {
-        console.log(res);
-        alert('Uploaded Successfully.');
-      });
+    console.log(this.fundraiser);
+
+    // this.fundraiser = { ...this.fundraiser, ...this.form.value }
+    console.log(this.fundraiser);
+    this.next.emit(this.fundraiser);
   }
 
   onImageChoosen(event: any) {
-    const reader = new FileReader();
+    this.loading = true;
+    var file = event.target.files[0];
+    const formData: FormData = new FormData();
+    formData.append('image', file, file.name);
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.imageSrc = reader.result as string;
-
-        this.form.patchValue({
-          fileSource: reader.result,
-        });
-      };
-    }
+    this.imageService.upload(formData).subscribe(
+      (response) => {
+        this.imageSrc = response;
+        this.fundraiser.image = response;
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error.error);
+        this.errorMessage = error.error;
+        this.loading = false;
+      }
+    );
   }
 }

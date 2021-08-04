@@ -5,9 +5,9 @@ import { Category } from 'src/app/models/category.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { CategoryService } from './../../../services/category/category.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'overview',
@@ -28,8 +28,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
     private fundraiserService: FundraiserService,
-
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public dialogRef: MatDialogRef<DeleteDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -57,12 +59,36 @@ export class OverviewComponent implements OnInit, OnDestroy {
       });
   }
 
+  // delete current fundraiser
+  deleteFundraiser() {
+    let fundId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.fundraiserSub = this.fundraiserService
+      .deleteFundraiser(this.fundraiser._id ?? fundId ?? '')
+      .subscribe(
+        (message) => {
+          console.log(message);
+          this.dialogRef.close();
+          this.router.navigateByUrl(
+            `/my-fundraisers/${this.fundraiser.organizer?._id}`
+          );
+        },
+        (err) => {
+          console.log('error occured');
+          this.router.navigateByUrl(
+            `/my-fundraisers/${this.fundraiser.organizer?._id}`
+          );
+          this.dialogRef.close();
+        }
+      );
+  }
+
   // open delete connfirmation dialog
   openDeleteDialog() {
-    this.dialog.open(DeleteDialogComponent, { data: this.fundraiser });
+    this.dialog.open(DeleteDialogComponent);
   }
 
   ngOnDestroy(): void {
-    if (this.categorySub) this.categorySub.unsubscribe();
+    this.categorySub?.unsubscribe();
+    this.fundraiserSub?.unsubscribe();
   }
 }

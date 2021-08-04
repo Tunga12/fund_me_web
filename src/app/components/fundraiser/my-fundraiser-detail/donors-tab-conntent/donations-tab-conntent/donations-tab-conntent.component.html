@@ -1,4 +1,4 @@
-<div fxHide class="tab-content">
+<div *ngIf="fundraiser.donations?.length === 0" class="tab-content">
   <h3 style="font-weight: 600 !important">
     Your fundraiser has no donations yet.
   </h3>
@@ -6,61 +6,15 @@
     Donations will show up here. Start by sharing your fundraiser with friends
     and family.
   </h3>
-  <button
-    mat-raised-button
-    color="primary"
-    color="primary"
-    (click)="openShareDialog()"
-  >
+  <button mat-raised-button color="primary" (click)="openShareDialog()">
     Share fundraiser
   </button>
 </div>
 
-<!-- <div class="table-container">
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    Date Column
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let donation">{{ donation.date }}</td>
-    </ng-container>
-
-    Name Column
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let donation">{{ donation.name }}</td>
-    </ng-container>
-
-    Email
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-      <td mat-cell *matCellDef="let donation">{{ donation.email }}</td>
-    </ng-container>
-
-    Amount Column
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-      <td mat-cell *matCellDef="let donation">{{ donation.amount }}</td>
-    </ng-container>
-
-    Option Column
-    <ng-container matColumnDef="option">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef=""><mat-icon class="mat-18">more_vert</mat-icon></td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-  ></mat-paginator>
-</div> -->
-
 <!-- Donations section -->
-<div class="donations">
+<div *ngIf="fundraiser.donations?.length !== 0" class="donations">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-    <h2 class="bold">Doantions(135)</h2>
+    <h2 class="bold">Doantions({{ fundraiser.donations?.length }})</h2>
     <button
       mat-raised-button
       color="primary"
@@ -73,32 +27,38 @@
   <div>
     <mat-divider></mat-divider>
   </div>
-  <div *ngFor="let item of [1, 2, 3, 4]; let last = last">
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="20px"
+
+  <mat-list>
+    <mat-list-item
+      *ngFor="let donation of fundraiser.donations; let last = last"
       style="margin: 20px 0px"
     >
-      <img
-        src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-      />
-      <div fxLayout="column" fxLayoutAlign="start start">
-        <span class="bold">Donor Name donated <strong>$30</strong></span>
-        <p>
-          Dear Katie I’m so sad to hear about your diagnose and wish you all the
-          best and hope you can fight this terrible disease. I don’t know you at
-          all, and we have never been in contact. but I have been looping for
-          half a year now, and I’m <a>Read more</a>
-        </p>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <img
+          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+        />
+        <div fxLayout="column" fxLayoutAlign="center start">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between start"
+            fxLayoutGap="30px"
+          >
+            <span
+              >Donor {{ donation?.userId?.firstName | titlecase }}
+              {{ donation?.userId?.lastName | titlecase }}
+              <strong>${{ donation.amount }}</strong></span
+            >
+            <span> {{ donation.date | timeago }} </span>
+          </div>
+          <p>
+            {{ donation.comment }}
+            <a>Read more</a>
+          </p>
+        </div>
       </div>
-    </div>
-    <div>
       <mat-divider></mat-divider>
-    </div>
-    <button *ngIf="last" mat-stroked-button color="primary" class="btn-outline">
-      Show more
-    </button>
-  </div>
-</div>
-<!--End of Comment section -->
+      <!-- <button *ngIf="last" mat-stroked-button color="primary" class="btn-outline">
+        Show more
+      </button> -->
+    </mat-list-item>    
+  </mat-list>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Fundraiser } from './../../../../models/fundraiser.model';
 
 @Component({
   selector: 'donors-tab-conntent',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DonorsTabConntentComponent implements OnInit {
 
+  @Input() fundraiser!: Fundraiser;
   constructor() { }
 
   ngOnInit(): void {

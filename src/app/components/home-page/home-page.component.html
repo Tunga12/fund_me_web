@@ -42,16 +42,17 @@
       Fundraising for the people and causes you care about
     </h2>
     <h1 class="color-gray">Get Started Today.</h1>
-    <button
-      routerLink="/create"
+
+    <!-- TODO : some logic here -->
+    <a
+      (click)="createPage()"
       ngClass.lt-md="btn-large"
       mat-raised-button
       color="primary"
       class="start-gofundme-btn"
     >
       Start a GoFundMe
-    </button>
-
+    </a>
     <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
       <mat-icon class="mat-18">play_circle_outline</mat-icon>
       See how GoFundMe works
@@ -67,39 +68,57 @@
   [ngStyle.lt-md]="{ width: '98%', margin: '0px auto' }"
 >
   <h2 class="bold">Top fundraisers</h2>
-  <a   
-  fxLayout="row wrap"
-  fxLayoutAlign="start start"
-  fxLayoutGap="20px"
-    fxFlex.md="31"
-    fxFlex.lt-md="45"
-  >
-    <mat-card
-     *ngFor="let fundraiser of fundraisers"
-    [routerLink]="['/fundraiser-detail', fundraiser._id]"
-    >
-      <img matCardImage [src]="fundraiser.image" />
-      <mat-card-header>
-        <mat-card-title>{{ fundraiser.title }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          {{ fundraiser.story }}
-        </p>
+  <div *ngIf="loading">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>
 
-        <span class="color-gray text-small">Last donation 23m ago</span>
-        <mat-progress-bar
-          mode="determinate"
-          [value]="20"
-          color="primary"
-        ></mat-progress-bar>
-        <p>
-          <strong>{{ fundraiser.totalRaised }}</strong> raised of
-          {{ fundraiser.goalAmount }}
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </a>
+  <p class="text-error">{{ errorMessage }}</p>
+  <mat-grid-list
+    [responsiveColumns]="{xs: 2, sm: 3,md: 3,lg: 6,xl: 8}"
+    [gutterSize]="'10px'"
+  >
+    <mat-grid-tile
+      *ngFor="let fundraiser of fundraisers"
+      [colspan]="1"
+      [rowspan]="1"
+    >
+      <mat-card
+        [routerLink]="['/fundraiser-detail', fundraiser._id]"
+        fxFlex.xs="98"
+      >
+        <div class="mat-image-container">
+          <img [src]="fundraiser.image" />
+        </div>
+        <mat-card-content
+          fxLayout="column"
+          fxLayoutAlign="start start"
+          [ngStyle.xs]="{ height: '130px' }"
+        >
+          <strong>{{ fundraiser.title }}</strong>
+          <span
+            *ngIf="(fundraiser?.donations)!.length > 0"
+            class="color-gray text-small"
+          >
+            Last donation {{ (fundraiser?.donations)![0].date | timeago }}
+          </span>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="percentage(fundraiser)"
+            color="primary"
+          ></mat-progress-bar>
+          <p>
+            <strong>{{ fundraiser.totalRaised }}</strong> raised of
+            {{ fundraiser.goalAmount }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
 
 <div style="background-color: #fbf8f6; padding: 20px">

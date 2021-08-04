@@ -1,4 +1,13 @@
+ <div *ngIf="loading">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>
 <div
+*ngIf="!loading"
   fxLayout="column"
   fxLayoutAlign="start start"
   fxLayoutGap="20px"
@@ -74,7 +83,11 @@
         <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
           <mat-form-field appearance="outline">
             <mat-label>Tip amount</mat-label>
-            <input matInput formControlName="tip_amount" type="text" />
+            <input
+             matInput
+             [(ngModel)]="donation.tip"
+             formControlName="tip_amount"
+             type="number" />
             <span matPrefix>
               <mat-icon class="mat-18">attach_money</mat-icon>
             </span>
@@ -90,8 +103,8 @@
           <mat-slider
             color="primary"
             step="1"
-            value="5"
-            min="5"
+            value="donation.tip"
+            min="0"
             #slider
             tickInterval="1"
             (change)="sliderChange(slider)"
@@ -99,7 +112,6 @@
           <button
             mat-stroked-button
             (click)="changeTipType()"
-            style="margin-top: -10px; margin-bottom: 20px"
           >
             Enter custom tip
           </button>
@@ -127,19 +139,19 @@
         </mat-checkbox>
       </div>
       <div
-       color="warn" >{{ erorrMessage }}</div>
+       class="text-error" >{{ erorrMessage }}</div>
       <button mat-raised-button color="primary" class="btn-large" type="submit">
         Donate now
       </button>
     </form>
 
-    <mat-card [ngStyle.xs]="{ width: '80%' }">
+    <mat-card [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>
         <h2 class="bold">Your donation</h2>
         <div
           fxLayout="column"
           fxLayout.xs="row"
-          fxLayoutAlign="center center"
+          fxLayoutAlign="space-between center"
           fxLayoutGap="10px"
         >
           <div
@@ -149,7 +161,7 @@
             fxLayoutAlign="space-between start"
           >
             <p>Your donation</p>
-            <!-- <p class="bold"> ${{ donation_amount }}</p> -->
+            <p class="bold"> ${{ donation.amount }}</p>
           </div>
 
           <div
@@ -159,7 +171,7 @@
             fxLayoutAlign="space-between start"
           >
             <p>GOFundMe tip</p>
-            <!-- <p class="bold">${{ tip_amount }}</p> -->
+            <p class="bold">${{ donation.tip }} </p>
           </div>
           <div>
             <mat-divider></mat-divider>
@@ -171,8 +183,8 @@
             fxLayoutAlign="space-between start"
             class="bold"
           >
-            <p>Total</p>
-            <!-- <p >{{ donation_amount + tip_amount }}</p> -->
+            <p>Total <span fxHide.xs> due today </span></p>
+            <p >{{ donation.amount + donation.tip }}</p>
           </div>
         </div>
       </mat-card-content>

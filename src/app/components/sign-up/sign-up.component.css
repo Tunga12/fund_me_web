@@ -5,3 +5,7 @@ mat-card.mat-card{
 form {
   margin: 30px auto !important;
 }
+
+mat-icon.mat-icon{
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fundraiser-list',
@@ -9,18 +10,19 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
   styleUrls: ['./fundraiser-list.component.css'],
 })
 export class FundraiserListComponent implements OnInit {
-  userId = "";
+  loading = true;
+  userId = '';
   myFundraisers: Fundraiser[] = [];
+
+  fundraiserSUb?: Subscription;
+  errorMessage: string='';
+
   constructor(
     private router: Router,
     private fundraiserServ: FundraiserService,
-    private activatedRoute:ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    // first get user id
-    this.getUserId();
-
     // then get fundraisers
     this.getMyFundraisers();
   }
@@ -29,24 +31,29 @@ export class FundraiserListComponent implements OnInit {
     this.router.navigateByUrl('/my-fundraiser-detail');
   }
 
-  getUserId() {
-   this.userId= this.activatedRoute.snapshot.paramMap.get('userId')??"";
-    console.log(this.userId);
-    
-  }
 
   // get fundraisers of current user
   getMyFundraisers() {
-    this.fundraiserServ.getMyFundraisers(this.userId).subscribe(
-      fundraisers => {
-        this.myFundraisers = fundraisers.fundraisers;
-        console.log(this.myFundraisers);
-        
-      }
-    )
+    this.fundraiserSUb = this.fundraiserServ
+      .getMyFundraisers()
+      .subscribe(
+        (fundraisers) => {
+          this.loading = false;
+          this.myFundraisers = fundraisers.fundraisers;
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error.error);
+          this.errorMessage = error.status===404?"You don't have any fundraiser yet.":"Unable to load your fundraisers";
+
+        }
+      );
   }
 
   createFundraiser() {
     this.router.navigateByUrl('/create');
+  }
+  ngOnDestroy(): void {
+    this.fundraiserSUb?.unsubscribe();
   }
 }

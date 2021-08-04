@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LocationService } from './../../../services/location/location.service';
 import { Fundraiser } from './../../../models/fundraiser.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
 
 @Component({
@@ -13,15 +13,12 @@ import { FundraiserService } from './../../../services/fundraiser/fundraiser.ser
 })
 export class CreateFundraiserComponent implements OnInit, OnDestroy {
   currentStep = 1; // keep trrack of steps
-
   fundraiser: Fundraiser;
   // location info
   locationSub?: Subscription;
-
   // fundraiser subscription
   fundraiserSub?: Subscription;
-
-  form: FormGroup;
+  errorMessage="";
 
   constructor(
     private locationServ: LocationService,
@@ -42,14 +39,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
       },
     };
 
-    // create the form
-    this.form = this.formBuilder.group({
-      goalAmount: [null],
-      category: [null],
-      title: [null],
-      story: [null],
-      image: [null],
-    });
+   
   }
 
   ngOnInit(): void {
@@ -58,7 +48,6 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
 
   // subit the form to create teh fundraiser
   submit(fundraiser: Fundraiser) {
-    fundraiser = this.fundraiser;
     // get the current user id from local storage
     let userId = localStorage.getItem('userId');
     // post fundraiser
@@ -67,7 +56,11 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
       .subscribe((fund) => {
         console.log(fund);
         this.router.navigateByUrl(`/my-fundraisers/${userId}`);
-      });
+      },
+        (error) => {
+          this.errorMessage = error.error;
+    } 
+    );
   }
 
   // get current location of the user in terms of latitude and longitude
@@ -93,8 +86,12 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
     if (this.currentStep < 3) {
       this.currentStep += 1;
     }
+    this.fundraiser = fundraiser;
     console.log(this.currentStep, fundraiser);
   }
+
+
+  
 
   ngOnDestroy(): void {
     if (this.fundraiserSub) this.fundraiserSub.unsubscribe();

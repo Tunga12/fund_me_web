@@ -1,3 +1,11 @@
+<div *ngIf="loading" >
+  <mat-progress-spinner mode="indeterminate" [value]="100"
+   color="primary"  class="loading-spinner"></mat-progress-spinner>
+</div>
+
+<div
+ *ngIf="!loading">
+
 <header fxHide.lt-md>
   <div
     [ngStyle.lt-md]="{ width: '98%' }"
@@ -107,3 +115,4 @@
     </div>
   </mat-tab>
 </mat-tab-group>
+</div>

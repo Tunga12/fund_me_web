@@ -4,7 +4,6 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { FundraiserService } from './../../services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
-import { Donation } from './../../models/donation.model';
 import { MatSlider } from '@angular/material/slider';
 import { DonationService } from './../../services/donation/donation.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,7 +14,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./donate.component.css'],
 })
 export class DonateComponent implements OnInit, OnDestroy {
-  erorrMessage = "";
+  loading = true; // to show/hide loading spinner
+  erorrMessage = '';
   form!: FormGroup;
   fundraiser?: Fundraiser;
   fundraiserId = '';
@@ -55,19 +55,21 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   // make donation to a fundriser
   donate() {
+    this.loading = true;
     console.log(this.donation);
     console.log(this.fundraiser?._id);
     this.donationSub = this.donationService
       .createDonation(this.fundraiserId, this.donation)
-      .subscribe(() => {
-        this.router.navigateByUrl(`/fundraiser-detail/${this.fundraiserId}`)
-      },
-        (error: HttpErrorResponse)=>{
+      .subscribe(
+        () => {
+          this.router.navigateByUrl(`/fundraiser-detail/${this.fundraiserId}`);
+          this.loading = false;
+        },
+        (error: HttpErrorResponse) => {
           this.erorrMessage = error.error;
+          this.loading = false;
         }
-      
-      
-    );
+      );
   }
 
   // get fundraiser to be donated for
@@ -81,12 +83,19 @@ export class DonateComponent implements OnInit, OnDestroy {
         // update member id of the fundriser to orignizers id
         this.donation.memberId = this.fundraiser?.beneficiary?._id || '';
         console.log('ogzr', this.fundraiser?.beneficiary?._id);
+
+        this.loading = false;
+        () => {
+          // TODO handle error
+          this.loading = false;
+        };
       });
   }
 
   // assign slider value to tip amount
   sliderChange(slider: MatSlider) {
-    this.donation.tip = slider.value as number;
+    let value = slider.value as number;
+    this.donation.tip = value>5?value:5;
   }
 
   backToFundraiser() {

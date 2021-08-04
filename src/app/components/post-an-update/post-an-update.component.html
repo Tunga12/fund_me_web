@@ -1,29 +1,35 @@
 <div>
   <div mat-dialog-title>
-    <h4 matDialogTitle style="display: inline">Post an update</h4>
+    <h4 matDialogTitle style="display: inline">{{ mode }} an update</h4>
     <span mat-dialog-close class="close-dialog">X</span>
   </div>
   <mat-divider></mat-divider>
   <mat-dialog-content>
-    <form [formGroup]="form">
+    <form [formGroup]="form"
+    (ngSubmit)="mode==='Edit'?editUpdate():postUpdate()"
+    >
       <mat-form-field appearance="outline">
         <textarea
           formControlName="content"
           matInput
           required
-          placeholder="Share your news"
-          [(ngModel)]="update.content"
+          placeholder="Share your news here"
         ></textarea>
       </mat-form-field>
       <!-- TODO -->
-      <button
+      <input
+        (change)="uploadImage($event)"
+        type="file"
         color="primary"
         mat-stroked-button
-        (click)="openAddPhotoOrVedioDialog()"
-      >
-        Add a photo or video
-      </button>
-      <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
+        value=" Add a photo or video"
+      />
+      <img *ngIf="update" [src]="update.image" alt="" width="100%" height="200px" />
+      <!-- (click)="openAddPhotoOrVedioDialog()" -->
+      <!-- > -->
+
+      <!-- </button> -->
+      <!-- <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
       <mat-divider></mat-divider>
       <div class="media">
         <p>
@@ -60,16 +66,14 @@
           >
         </p>
         <mat-divider></mat-divider>
-      </div>
-      <!-- TODO -->
+      </div> -->
       <button
         mat-raised-button
-        [mat-dialog-close]="update"
         type="submit"
         color="primary"
         class="btn-large"
       >
-        Post an update
+        {{ mode }} an update
       </button>
     </form>
   </mat-dialog-content>

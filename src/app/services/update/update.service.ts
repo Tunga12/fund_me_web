@@ -22,8 +22,20 @@ export class UpdateService {
   }
 
   // edit update
-  // TODO
+  editUpdate(update: Update): Observable<Update> {
+    return this.http.put<Update>(
+      `${environment.BASE_URL}/updates/${update._id}`,
+      update
+    );
+  }
 
   // delete update
-  // TODO
+  deleteUpdate(update: Update) {
+    return this.http.delete<any>(
+      `${environment.BASE_URL}/updates/${update._id}`,
+      {
+      //  responseType:'string' 
+      }
+    );
+  }
 }

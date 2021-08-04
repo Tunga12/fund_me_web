@@ -1,45 +1,7 @@
 <div class="tab-content">
   <div fxLayout="column">
-  <div fxLayout="column" fxLayoutGap="0px">
-    <div
-      mat-dialog-title
-      fxLayout="row"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="30px"
-    >
-      <h2 class="bold" matDialogTitle>All donations</h2>
-      <div fxLayout="row" fxLayoutGap="20px">
-        <button
-          mat-stroked-button
-          style="border-radius: 20px"
-        >
-          <mat-icon class="mat-18">sort</mat-icon>
-          Top <span fxHide.lt-md>donations</span>
-        </button>
-      </div>
-    </div>
+    <h1 class="bold">Donor stastics here</h1>
   </div>
-  <mat-divider></mat-divider>
-  <mat-list>
-    <mat-list-item
-      *ngFor="let item of [1, 4, 5, 6, 8]"
-      style="margin: 20px 0px"
-    >
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <img
-          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-        />
-        <div fxLayout="column" fxLayoutAlign="center start">
-          <span>Donor Name</span>
-          <span> <strong>$8548</strong> • 18d ago </span>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
-</div>
-
-
 
   <mat-tab-group [disableRipple]="false">
     <mat-tab
@@ -48,7 +10,7 @@
       *ngFor="let tab of [0, 1]; let index = index"
     >
       <div *ngIf="index === 0">
-        <donations-tab-conntent></donations-tab-conntent>
+        <donations-tab-conntent [fundraiser]="fundraiser"></donations-tab-conntent>
       </div>
 
       <div class="tab-content" *ngIf="index === 1">

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
@@ -11,15 +11,30 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // sign in using email and password
-  signIn(email: string, password: string): Observable<boolean> {
-    return this.http.post<boolean>(`${environment.BASE_URL}/auth`, {
-      email,
-      password,
-    });
+  signIn(emailAndPassword:{email: string,pasword:string}): Observable<HttpResponse<any>> {
+    localStorage.clear();
+    return this.http.post<any>(
+      `${environment.BASE_URL}/auth`,
+      emailAndPassword,
+      { observe: 'response' }
+    );
   }
 
   // signup or register user
-  signUp(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.BASE_URL}/users`, user);
+  signUp(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<User>(`${environment.BASE_URL}/users`, user, {
+      observe: 'response',
+    });
+  }
+
+  logOut() {
+    localStorage.clear();
+  }
+
+  isLoggedIn(): boolean {
+    return (
+      localStorage.getItem('userId') !== null &&
+      localStorage.getItem('x-auth-token') !== null
+    );
   }
 }

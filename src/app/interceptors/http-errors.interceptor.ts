@@ -18,6 +18,8 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       retry(3),
       catchError((err: Error) => {
+        console.log(req.headers.get('X-Auth-Token'));
+
         console.log(err);
         return throwError(err);
       })

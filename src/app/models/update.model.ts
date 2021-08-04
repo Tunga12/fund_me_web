@@ -1,6 +1,6 @@
 import { User } from './user.model';
 export interface Update {
-  id?: string;
+  _id?: string;
   userId?: User;
   image: string;
   content: string;

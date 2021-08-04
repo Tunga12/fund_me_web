@@ -22,8 +22,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const imports = [
+  MatSnackBarModule,
+  MatProgressSpinnerModule,
   MatSidenavModule,
   MatPaginatorModule,
   MatSortModule,
@@ -57,5 +61,5 @@ const exports = imports;
   exports: exports,
 })
 export class MyMaterialModule {
-  
+
 }

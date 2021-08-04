@@ -29,23 +29,32 @@
   >
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <div class="avatar-contain">GT</div>
-        <strong
-          >{{ update.userId?.firstName | titlecase }}
-          {{ update.userId?.lastName | titlecase }}
-        </strong>
+        <div class="avatar-contain">
+          {{ update.userId?.firstName?.charAt(0) | titlecase }}
+          {{ update.userId?.lastName?.charAt(0) | titlecase }}
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
+          <strong
+            >{{ update.userId?.firstName | titlecase }}
+            {{ update.userId?.lastName | titlecase }}
+          </strong>
+          <span class="text-small color-gray">
+            {{ update.dateCreated | timeago }}
+          </span>
+        </div>
       </div>
       <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
         >more_vert</mat-icon
       >
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Edit update</button>
+        <button mat-menu-item (click)="openEditDialog(update)">
+          Edit update
+        </button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="deleteUpdate(update)">
           Delete update
         </button>
       </mat-menu>
-
       <!-- <mat-icon class="mat-18">more_vert</mat-icon> -->
     </div>
 
@@ -55,7 +64,7 @@
       fxLayoutAlign="start start"
       fxLayoutGap="30px"
     >
-      <img [src]="update.image" alt="" />
+      <img *ngIf="update.image" [src]="update.image" fxFlex.xs="100" />
       <p>
         {{ update.content }}
       </p>

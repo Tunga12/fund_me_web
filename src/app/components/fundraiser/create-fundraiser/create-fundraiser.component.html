@@ -22,26 +22,21 @@
       ></div>
     </div>
     <h2 class="bold">Let’s start with the basics</h2>
-    <form [formGroup]="form">
+    <form>
       <span [ngSwitch]="currentStep">
         <set-basic-info
+        [fundraiser]="fundraiser"
           *ngSwitchCase="1"
-          [fundraiser]="fundraiser"
-          [form]="form"
           (next)="next($event)"
         ></set-basic-info>
-
         <set-fundraiser-media
           *ngSwitchCase="2"
           [fundraiser]="fundraiser"
-          [form]="form"
           (next)="next($event)"
         ></set-fundraiser-media>
-
         <set-fundraiser-story
           *ngSwitchCase="3"
           [fundraiser]="fundraiser"
-          [form]="form"
           (next)="submit($event)"
         ></set-fundraiser-story>
         <p *ngSwitchDefault></p>
@@ -54,6 +49,9 @@
       >
         Back
       </button>
+      <mat-error *ngIf="errorMessage"
+    > {{ errorMessage }}</mat-error
+  >
     </form>
     <p *ngIf="currentStep === 1">
       By continuing, you agree to the GoFundMe

@@ -1,42 +1,54 @@
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  ></mat-progress-spinner>
+</div>
 <div
+  *ngIf="!loading"
   fxLayout="column"
   fxLayoutAlign="start center"
   fxLayoutGap="30px"
-  style="width: 80%; margin: 30px auto"
   style="width: 80%; margin: 30px auto"
   [ngStyle.lt-md]="{ width: '96%', margin: '30px auto' }"
 >
   <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
     <button
-      mat-stroked-button
+      fxHide.gt-sm
+      mat-button
       routerLink="/my-fundraisers"
       class="bold"
       style="margin: 20px 0px"
     >
       <mat-icon class="mat-18"> arrow_back_ios </mat-icon> Back
     </button>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="30px"
-      style="width: 98%"
-    >
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
       <div
         fxLayout="row"
         fxLayout.lt-sm="column"
         fxLayoutAlign="space-between start"
         fxLayoutGap="20px"
+        fxFlex="60"
+        fxFlex.xs="100"
       >
         <img
-          src="/assets/images/step2.jpg"
+          [src]="fundraiser.image"
           height="126px"
           width="176px"
           alt=""
           [ngStyle.xs]="{ height: '150px', width: '100%' }"
+          fxFlex.xs="100"
         />
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-          <h2 class="bold">{{fundraiser.title}}</h2>
-          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
+        <div
+          fxLayout="column"
+          fxLayoutAlign="start start"
+          fxLayoutGap="10px"
+          fxFlex.xs="100"
+        >
+          <h2 class="bold">{{ fundraiser.title }}</h2>
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
             <a
               fxLayout="row"
               fxLayoutAlign="start center"
@@ -55,7 +67,7 @@
             [value]="20"
             color="primary"
           ></mat-progress-bar>
-          <p>Total raised: ${{fundraiser.totalRaised}}</p>
+          <p>Total raised: ${{ fundraiser.totalRaised }}</p>
         </div>
       </div>
 
@@ -64,6 +76,7 @@
         fxHide.lt-md
         fxLayoutAlign="end center"
         fxLayoutGap="20px"
+        fxFlex="40"
       >
         <a
           (click)="openShareDialog()"
@@ -116,7 +129,7 @@
       *ngFor="let tab of tabs; let index = index"
     >
       <div *ngIf="index === 0">
-        <donors-tab-conntent></donors-tab-conntent>
+        <donors-tab-conntent [fundraiser]="fundraiser"></donors-tab-conntent>
       </div>
 
       <!-- Team tab -->
@@ -126,7 +139,10 @@
 
       <!-- Updates tab -->
       <div class="tab-content" *ngIf="index === 2">
-        <updates-tab-content [fundraiser]="fundraiser" ></updates-tab-content>
+        <updates-tab-content
+          [fundraiser]="fundraiser"
+          (update)="openUpdateDialog()"
+        ></updates-tab-content>
       </div>
     </mat-tab>
   </mat-tab-group>

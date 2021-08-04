@@ -3,7 +3,7 @@ export interface Donation
 {
   id?: string;
   userId: User;
-  date?: string;
+  date?: Date;
   comment: string;
   amount: number;
   tip: number;

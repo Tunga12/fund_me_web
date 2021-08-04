@@ -1,7 +1,7 @@
 import { Output, OnDestroy } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
@@ -13,17 +13,22 @@ import { CategoryService } from 'src/app/services/category/category.service';
   styleUrls: ['./set-basic-info.component.css'],
 })
 export class SetBasicInfoComponent implements OnInit, OnDestroy {
-  @Input()
-  fundraiser!: Fundraiser;
-  @Input() form!: FormGroup;
+  @Input() fundraiser!: Fundraiser;
+  form!: FormGroup;
   @Output() next = new EventEmitter();
-
   categories!: Category[];
   categorySub?: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      category: [undefined, [Validators.required]],
+      goalAmount: [undefined, [Validators.required, Validators.min(50)]],
+    });
     this.getCategories();
   }
 
@@ -36,11 +41,25 @@ export class SetBasicInfoComponent implements OnInit, OnDestroy {
       });
   }
 
+  get goalAmount(): AbstractControl | null
+{
+    return this.form.get('goalAmount');
+}
+
+  
+  get category(): AbstractControl | null
+{
+    return this.form.get('category');
+  }
+  
   nextStep() {
+    this.fundraiser = { ...this.fundraiser, ...this.form.value };
     this.next.emit(this.fundraiser);
   }
 
+  // getters for form controls
+
   ngOnDestroy(): void {
-    if (this.categorySub) this.categorySub.unsubscribe();
+    this.categorySub?.unsubscribe();
   }
 }

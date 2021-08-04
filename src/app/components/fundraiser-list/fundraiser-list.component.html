@@ -14,18 +14,36 @@
       </button>
     </div>
   </nav>
-  <div>
+
+  <div *ngIf="loading">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>
+
+  <p class="text-error">{{ errorMessage }}</p>
+
+  <div *ngIf="!loading">
+     <p *ngIf="myFundraisers?.length === 0 && !errorMessage">
+    You have no fundraisers yet
+  </p>
+
     <div
       fxLayout="row"
-      fxLayout.sm="column"
       fxLayoutGap="32px"
       fxLayoutAlign="start start"
       class="items-row"
+      fxLayoutAlign.xs="center center"
     >
       <mat-card
-        [routerLink]="['/edit',fundraiser._id]"
+        [routerLink]="['/my-fundraiser-detail', fundraiser._id]"
         *ngFor="let fundraiser of myFundraisers; let i = index"
         [ngStyle.sm]="{ 'margin-bottom': '30px' }"
+        fxFlex="30"
+        fxFlex.xs="40"
       >
         <div>
           <img

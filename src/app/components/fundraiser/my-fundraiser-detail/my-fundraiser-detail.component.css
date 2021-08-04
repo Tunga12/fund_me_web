@@ -1,13 +1,9 @@
-.tab-content {
-  text-align: center;
-  margin: 50px auto;
-}
-
 .tab-content-header {
   font-weight: 600 !important;
 }
-img {
-  border-radius: 4px;
+
+mat-tab-group.mat-tab-group{
+  width: 100%;
 }
 
 a {
@@ -48,4 +44,9 @@ mat-icon.mat-icon {
 
 div{
   width: 100%;
+}
+
+.tab-content {
+  text-align: center;
+  margin: 50px auto;
 }

@@ -54,7 +54,11 @@
   <!-- LOGO -->
   <!-- <img src="/assets/images/logo.jpg" height="70%" width="10%" /> -->
   <div>
-    <a mat-button routerLink="/my-fundraisers" class="nav-link mat-button">
+    <a
+      mat-button
+      [routerLink]="['my-fundraisers', currentUser?._id]"
+      class="nav-link mat-button"
+    >
       Your fundraisers
     </a>
 
@@ -68,7 +72,11 @@
       class="nav-link mat-button"
     >
       <mat-menu #account="matMenu">
-        <a mat-menu-item routerLink="/my-fundraisers" class="mat-menu-item">
+        <a
+          mat-menu-item
+          [routerLink]="['my-fundraisers', currentUser?._id]"
+          class="mat-menu-item"
+        >
           Your fundraisers
         </a>
         <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">

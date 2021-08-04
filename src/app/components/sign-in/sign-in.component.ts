@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'sign-in-page',
@@ -11,46 +12,70 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit, OnDestroy {
+  loading = false;
   logInSub?: Subscription;
   logInMessage?: string;
   // TODO
-  // these are for testing
-  email = 'email@gmail.com';
-  password = 'password';
 
   hidePassword = true; // to toggle visiblity of password
   logInSuccessfull = false; // to know the login status
-  form: FormGroup;
+  form!: FormGroup;
 
   constructor(
     private authServ: AuthService,
-    formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.form = formBuilder.group({
+
+  }
+
+  ngOnInit(): void {
+    // clear the localStorage
+    localStorage.clear();
+    // build the form
+     this.form = this.formBuilder.group({
       email: [, [Validators.required()]],
       password: [, [Validators.required()]],
     });
   }
 
-  ngOnInit(): void {}
-
   signIn() {
-    this.logInSub = this.authServ
-      .signIn(this.email, this.password)
-      .subscribe((result: boolean) => {
-        this.logInSuccessfull = result;
+    this.loading = true;
+    this.logInSub = this.authServ.signIn(this.form.value).subscribe(
+      (result: HttpResponse<any>) => {
+        this.logInSuccessfull = result.body || false;
+        let token = result.headers.get('X-Auth-Token');
+        if (token) {
+          localStorage.setItem('X-Auth-Token', token);
+        }
         if (this.logInSuccessfull) {
-          // TODO : add the user object to the route as router argument
           this.router.navigateByUrl('/home-page');
         }
-      });
-    this.logInMessage = 'Incorrect email or Password';
+        this.loading = false;
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.password?.setValue('');
+        this.logInMessage = 'Incorrect email or Password';
+        console.log(error.message);
+      }
+    );
   }
+
+  change() {
+    this.logInMessage= '';
+ }
+
+public get email() : AbstractControl|null {
+  return this.form.get('email');
+}
+
+public get password() : AbstractControl|null {
+  return this.form.get('password');
+}
 
   // what to do when the component destroys
   ngOnDestroy(): void {
-    // unsubscribe from the login subscription if exists;
-    if (this.logInSub) this.logInSub.unsubscribe();
+    this.logInSub?.unsubscribe();
   }
 }

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./edit-ui.component.css'],
 })
 export class EditUiComponent implements OnInit, OnDestroy {
+  loading = true;
   fundraiserId: string = '';
   fundraiser!: Fundraiser;
   tabs = [1, 2, 3, 4];
@@ -35,6 +36,9 @@ export class EditUiComponent implements OnInit, OnDestroy {
       .getFundraiser(this.fundraiserId)
       .subscribe((fundraiser) => {
         this.fundraiser = fundraiser;
+        this.loading = false;
+        console.log(this.fundraiser);
+
       });
   }
 

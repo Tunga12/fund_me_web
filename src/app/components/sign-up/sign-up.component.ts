@@ -1,10 +1,17 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+  Validators,
+} from '@angular/forms';
 import { User } from './../../models/user.model';
-import { Validators } from 'ngx-editor';
 import { AuthService } from './../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.validator.directive';
+import { ValueMatchesValidatorService } from './../../validators/value-matches-validator.service';
 
 @Component({
   selector: 'sign-up',
@@ -12,49 +19,116 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnDestroy {
+  loading = false;
+  errorMessage = '';
   hidePassword = true; // to toggle the visiblity of password
+  hideConfirmPassword = true; // to toggle the visiblity of confirmPassword
   signUpSecussful = false; // to know the succefullness of sign up and show and hide spinner
-  user: User;
-
   form: FormGroup;
-
   // subsctiption
   private signUpSub?: Subscription;
+
+  // validate the existance of whitesaces in our input
+  whiteSpaceValidator = new WhiteSpaceValidatorDirective();
 
   constructor(
     private authServ: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private passwordMatches: ValueMatchesValidatorService
   ) {
-    // initialize the user object with empty fields
-    this.user = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    };
-
     // create the form
     this.form = this.formBuilder.group({
-      firstName: [,],
-      lastName: [,],
-      email: [Validators.required()],
-      password: [Validators.required()],
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+          this.whiteSpaceValidator,
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+          this.whiteSpaceValidator,
+        ],
+      ],
+      email: [
+        '',
+        [Validators.required, Validators.email, this.whiteSpaceValidator],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:{\\}\\[\\]\\|\\+\\-\\=\\_\\)\\(\\)\\`\\/\\\\\\]])[A-Za-z0-9d$@].{7,}'
+          ),
+          this.whiteSpaceValidator,
+        ],
+      ],
+
+      confirmPassword: ['', [Validators.required]],
     });
   }
 
   signUp() {
-    this.signUpSub = this.authServ
-      .signUp(this.user)
-      .subscribe((user_result) => {
+    this.loading = true;
+    delete this.form.value['confirmPassword'];
+    this.signUpSub = this.authServ.signUp(this.form.value).subscribe(
+      (result) => {
+        let token = result.headers.get('x-auth-token');
+        if (token) {
+          localStorage.setItem('x-auth-token', token);
+          localStorage.setItem('userId', (result.body as User)._id ?? '');
+        }
+        this.loading = false;
+
         // TODO
-        this.router.navigate(['/home-page',{user:user_result}]);
-        console.log(user_result);
-      });
+        this.router.navigate(['/home-page']);
+      },
+      (error: HttpErrorResponse) => {
+        this.errorMessage = error.error;
+        this.loading = false;
+      }
+    );
+  }
+
+  /** getters for controls */
+  public get firstName(): AbstractControl | null {
+    return this.form.get('firstName');
+  }
+
+  public get lastName(): AbstractControl | null {
+    return this.form.get('lastName');
+  }
+
+  public get email(): AbstractControl | null {
+    return this.form.get('email');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.form.get('password');
+  }
+  public get confirmPassword(): AbstractControl | null {
+    return this.form.get('confirmPassword');
+  }
+
+  onPasswordChange() {
+    if (this.confirmPassword?.value == this.password?.value) {
+      this.confirmPassword?.setErrors(null);
+    } else {
+      this.confirmPassword?.setErrors({ mismatch: true });
+    }
   }
 
   ngOnDestroy(): void {
     // unsubscrib from the subscription
-    if (this.signUpSub) this.signUpSub.unsubscribe();
+    this.signUpSub?.unsubscribe();
   }
 }
