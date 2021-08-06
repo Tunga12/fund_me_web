@@ -1,9 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CategoryService } from './../../services/category/category.service';
 import { Category } from 'src/app/models/category.model';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth/auth.service';
 
 @Component({
   selector: 'nav-bar',
@@ -18,6 +26,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   fundriseCaret = true;
   accountCaret = true;
 
+  searchword = '';
   // list of all categories
   categories: Category[] = [];
 
@@ -29,7 +38,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private categoryService: CategoryService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +48,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.getCurrentUser();
   }
 
+  search(keyword: string) {
+    console.log('Searching');
+    this.router.navigate(['/s'], { queryParams : { q: keyword } });
+  }
   // get all categories from the service and assign to our list 'categories'
   getCategories() {
     this.categorySub = this.categoryService

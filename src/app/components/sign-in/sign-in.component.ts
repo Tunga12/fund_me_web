@@ -44,12 +44,13 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.logInSub = this.authServ.signIn(this.form.value).subscribe(
       (result: HttpResponse<any>) => {
         this.logInSuccessfull = result.body || false;
-        let token = result.headers.get('X-Auth-Token');
+        let token = result.headers.get('x-auth-token');
         if (token) {
-          localStorage.setItem('X-Auth-Token', token);
+          localStorage.setItem('x-auth-token', token);
         }
         if (this.logInSuccessfull) {
           this.router.navigateByUrl('/home-page');
+          // location.reload();
         }
         this.loading = false;
       },

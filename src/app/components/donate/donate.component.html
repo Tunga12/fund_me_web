@@ -1,13 +1,13 @@
- <div *ngIf="loading">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="100"
-      color="primary"
-      class="loading-spinner"
-    ></mat-progress-spinner>
-  </div>
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  ></mat-progress-spinner>
+</div>
 <div
-*ngIf="!loading"
+  *ngIf="!loading"
   fxLayout="column"
   fxLayoutAlign="start start"
   fxLayoutGap="20px"
@@ -61,88 +61,112 @@
       [ngStyle.xs]="{ width: '98%' }"
     >
       <h2 class="bold">Enter your donation</h2>
-      <mat-form-field appearance="outline">
-        <mat-label>Donation amount</mat-label>
-        <input
-          class="bold"
-          matInput
-          [(ngModel)]="donation.amount"
-          formControlName="donation_amount"
-          type="number"
-          required
-          placeholder="Donation amount"
-        />
-        <span matPrefix>
-          <mat-icon class="mat-18">attach_money</mat-icon>
-        </span>
-      </mat-form-field>
-
-      <!-- Tip amount -->
-      <div>
-        <h3 class="bold">Tip amount</h3>
-        <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <div>
           <mat-form-field appearance="outline">
-            <mat-label>Tip amount</mat-label>
+            <mat-label>Donation amount</mat-label>
             <input
-             matInput
-             [(ngModel)]="donation.tip"
-             formControlName="tip_amount"
-             type="number" />
+              class="bold"
+              matInput
+              formControlName="amount"
+              type="number"
+              required
+              placeholder="Donation amount"
+            />
             <span matPrefix>
               <mat-icon class="mat-18">attach_money</mat-icon>
             </span>
           </mat-form-field>
-
-          <button mat-stroked-button (click)="changeTipType()">
-            Back to default
-          </button>
-        </div>
-
-        <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
-          <!-- Add a tooltip here -->
-          <mat-slider
-            color="primary"
-            step="1"
-            value="donation.tip"
-            min="0"
-            #slider
-            tickInterval="1"
-            (change)="sliderChange(slider)"
-          ></mat-slider>
-          <button
-            mat-stroked-button
-            (click)="changeTipType()"
+          <mat-error *ngIf="amount?.touched && amount?.errors?.required"
+            >Please enter amount you want to donate</mat-error
           >
-            Enter custom tip
-          </button>
         </div>
-      </div>
 
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Comment</mat-label>
-          <textarea
-            matInput
-            [(ngModel)]="donation.comment"
-            formControlName="comment"
-            type="text"
-          ></textarea>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-checkbox
-          formControlName="anonymous"
-          [indeterminate]="false"
+        <!-- Tip amount -->
+        <div>
+          <h3 class="bold">Tip amount</h3>
+          <div
+            *ngIf="custom_tip"
+            fxLayout="column"
+            fxLayoutAlign="start center"
+          >
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Tip amount</mat-label>
+                <input matInput formControlName="tip" type="number" />
+                <span matPrefix>
+                  <mat-icon class="mat-18">attach_money</mat-icon>
+                </span>
+              </mat-form-field>
+
+              <mat-error *ngIf="tip?.touched && tip?.errors?.min"
+                >Tip should be {{ tip?.errors?.min.min }}% minimum</mat-error
+              >
+              <mat-error *ngIf="tip?.touched && tip?.errors?.required"
+                >Please enter tip to gofundme.</mat-error
+              >
+            </div>
+
+            <button mat-stroked-button (click)="changeTipType()">
+              Back to default
+            </button>
+          </div>
+
+          <div
+            *ngIf="!custom_tip"
+            fxLayout="column"
+            fxLayoutAlign="start center"
+          >
+            <!-- Add a tooltip here -->
+            <mat-slider
+              color="primary"
+              step="1"
+              value="donation.tip"
+              min="1"
+              tickInterval="1"
+              [thumbLabel]="true"
+              [value]="tip!.value"
+              (change)="sliderChange($event)"
+              [displayWith]="percentSymbol()"
+            ></mat-slider>
+            <button mat-stroked-button (click)="changeTipType()">
+              Enter custom tip
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Comment</mat-label>
+            <textarea matInput formControlName="comment" type="text"></textarea>
+          </mat-form-field>
+          <mat-error *ngIf="comment?.touched && comment?.errors?.minlength"
+            >Tip should be
+            {{ comment?.errors?.minlength.requiredLength }} characters
+            minimum</mat-error
+          >
+        </div>
+        <!-- <div>
+          <mat-checkbox
+            formControlName="anonymous"
+            [indeterminate]="false"
+            color="primary"
+          >
+            Don't display my name publicly on the campaign.
+          </mat-checkbox>
+        </div> -->
+
+        <div class="text-error">{{ erorrMessage }}</div>
+        <button
+          [disabled]="form.invalid"
+          mat-raised-button
           color="primary"
+          class="btn-large"
+          type="submit"
         >
-          Don't display my name publicly on the campaign.
-        </mat-checkbox>
+          Donate now
+        </button>
       </div>
-      <div
-       class="text-error" >{{ erorrMessage }}</div>
-      <button mat-raised-button color="primary" class="btn-large" type="submit">
-        Donate now
-      </button>
     </form>
 
     <mat-card [ngStyle.xs]="{ width: '90%' }">
@@ -161,7 +185,7 @@
             fxLayoutAlign="space-between start"
           >
             <p>Your donation</p>
-            <p class="bold"> ${{ donation.amount }}</p>
+            <p class="bold">${{ amount!.value }}</p>
           </div>
 
           <div
@@ -171,7 +195,7 @@
             fxLayoutAlign="space-between start"
           >
             <p>GOFundMe tip</p>
-            <p class="bold">${{ donation.tip }} </p>
+            <p class="bold">${{ tip_percentage }}</p>
           </div>
           <div>
             <mat-divider></mat-divider>
@@ -184,7 +208,7 @@
             class="bold"
           >
             <p>Total <span fxHide.xs> due today </span></p>
-            <p >{{ donation.amount + donation.tip }}</p>
+            <p>{{ amount!.value + tip_percentage }}</p>
           </div>
         </div>
       </mat-card-content>

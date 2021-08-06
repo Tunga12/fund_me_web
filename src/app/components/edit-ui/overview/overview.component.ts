@@ -5,9 +5,10 @@ import { Category } from 'src/app/models/category.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { CategoryService } from './../../../services/category/category.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'overview',
@@ -23,15 +24,16 @@ export class OverviewComponent implements OnInit, OnDestroy {
   categorySub?: Subscription;
 
   fundraiserSub?: Subscription;
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
     private fundraiserService: FundraiserService,
     private dialog: MatDialog,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    public dialogRef: MatDialogRef<DeleteDialogComponent>
+    private snackbarService: SnackbarService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +49,26 @@ export class OverviewComponent implements OnInit, OnDestroy {
   editFundraiser() {
     this.fundraiserSub = this.fundraiserService
       .editFundraiser(this.fundraiser)
-      .subscribe((fundraiser) => (this.fundraiser = fundraiser));
+      .subscribe(
+        (fundraiser) => {
+          this.fundraiser = fundraiser;
+
+          this.snackbar.open(
+            'Edit completed sccessfly',
+            'close',
+            this.snackbarService.getConfig()
+          );
+        },
+        (error) => {
+          this.snackbar.open(
+            error.error,
+            'close',
+            this.snackbarService.getConfig()
+          );
+          console.log(error.error);
+          this.errorMessage = error.error;
+        }
+      );
   }
 
   // get categories
@@ -59,32 +80,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
       });
   }
 
-  // delete current fundraiser
-  deleteFundraiser() {
-    let fundId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.fundraiserSub = this.fundraiserService
-      .deleteFundraiser(this.fundraiser._id ?? fundId ?? '')
-      .subscribe(
-        (message) => {
-          console.log(message);
-          this.dialogRef.close();
-          this.router.navigateByUrl(
-            `/my-fundraisers/${this.fundraiser.organizer?._id}`
-          );
-        },
-        (err) => {
-          console.log('error occured');
-          this.router.navigateByUrl(
-            `/my-fundraisers/${this.fundraiser.organizer?._id}`
-          );
-          this.dialogRef.close();
-        }
-      );
-  }
-
   // open delete connfirmation dialog
   openDeleteDialog() {
-    this.dialog.open(DeleteDialogComponent);
+    this.dialog.open(DeleteDialogComponent, { data: this.fundraiser });
   }
 
   ngOnDestroy(): void {

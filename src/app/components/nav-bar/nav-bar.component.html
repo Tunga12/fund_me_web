@@ -4,6 +4,9 @@
   fxLayoutAlign="space-between center"
 >
   <div>
+    <!-- searcc field -->
+    <input matInput #key type="text" (keyup.enter)="search(key.value)" />
+
     <!-- First menu -->
     <a
       mat-button
@@ -55,6 +58,15 @@
   <!-- <img src="/assets/images/logo.jpg" height="70%" width="10%" /> -->
   <div>
     <a
+      *ngIf="!authService.isLoggedIn()"
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/sign-in']"
+    >
+      Sign in
+    </a>
+    <a
+      *ngIf="authService.isLoggedIn()"
       mat-button
       [routerLink]="['my-fundraisers', currentUser?._id]"
       class="nav-link mat-button"
@@ -64,6 +76,7 @@
 
     <!-- USER account MENU -->
     <a
+      *ngIf="authService.isLoggedIn()"
       mat-button
       [matMenuTriggerFor]="account"
       #funndrisemenuTrigger="matMenuTrigger"
@@ -79,6 +92,11 @@
         >
           Your fundraisers
         </a>
+
+        <a mat-menu-item [routerLink]="['notification']" class="mat-menu-item">
+          Notifications
+        </a>
+
         <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
           Donations you've made
         </a>
@@ -92,7 +110,9 @@
           Help center
         </a>
         <mat-divider></mat-divider>
-        <a mat-menu-item routerLink="/sign-in">Sign out</a>
+        <a mat-menu-item routerLink="/sign-in" (click)="authService.logOut()"
+          >Sign out</a
+        >
       </mat-menu>
       {{ currentUser?.firstName }}
       <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>

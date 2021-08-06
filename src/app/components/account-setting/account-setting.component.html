@@ -1,0 +1,108 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  style="margin: 30px auto"
+  fxFlex.gt-sm="50"
+  fxFlex.sm="60"
+  fxFlex.lt-sm="90"
+>
+  <h2 class="bold">Acount settings</h2>
+  <form [formGroup]="form" (ngSubmit)="$event.preventDefault()">
+    <div
+      style="width: 100%"
+      fxLayout="row"
+      fxLayoutAlign="space-between start"
+      fxLayoutGap="10px"
+    >
+      <mat-form-field floatPlaceholder="auto" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          type="text"
+          placeholder="First name"
+        />
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="auto" appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          type="text"
+          placeholder="Last name"
+        />
+      </mat-form-field>
+    </div>
+    <mat-form-field floatPlaceholder="auto" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email"
+        type="email"
+        placeholder="youremail@example.com"
+      />
+    </mat-form-field>
+
+    <!-- start: Error display -->
+    <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
+      >Please enter your first name
+    </mat-error>
+    <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
+      >First name must be
+      {{ firstName?.errors?.minlength.requiredLength }} minimun.
+    </mat-error>
+
+    <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
+      >First name cannot include whitespaces.
+    </mat-error>
+
+    <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
+      >Please enter your last name
+    </mat-error>
+    <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
+      >Last name must be
+      {{ lastName?.errors?.minlength.requiredLength }} minimun.
+    </mat-error>
+
+    <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
+      >Last name cannot include whitespaces.
+    </mat-error>
+
+    <mat-error *ngIf="email?.touched && email?.errors?.email"
+      >Please enter a valid email.
+    </mat-error>
+    <mat-error *ngIf="email?.touched && email?.errors?.required"
+      >Please enter a your email.
+    </mat-error>
+
+    <mat-error>{{ errorMessage }}</mat-error>
+    <!--end: Error display -->
+
+    <button mat-stroked-button color="primary" (click)="changePasswordDialog()">
+      Update your password
+    </button>
+    <div><mat-divider></mat-divider></div>
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between start"
+      fxLayoutGap="30px"
+    >
+      <p>
+        Deleting your account will remove all of your activity and campaigns,
+        and you will no longer be able to sign in with this account.
+      </p>
+      <button color="warn" mat-button>Delete Account</button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <button
+        type="submit"
+        color="primary"
+        [disabled]="form.invalid || !form.touched"
+        mat-raised-button
+        (click)="save()"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>

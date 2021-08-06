@@ -1,0 +1,54 @@
+<div fxFlex.gt-xs="80" fxFlex.lt-xs="98" class="container">
+  <div *ngIf="loading">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>
+  <p class="text-error">{{ errorMessage }}</p>
+  <h2 *ngIf="searchedFundarisers.length === 0">No matchs found</h2>
+  <mat-grid-list
+    *ngIf="searchedFundarisers.length > 0"
+    [responsiveColumns]="{ xs: 2, sm: 3, md: 3, lg: 6, xl: 8 }"
+    [gutterSize]="'10px'"
+  >
+    <mat-grid-tile
+      *ngFor="let fundraiser of searchedFundarisers"
+      [colspan]="1"
+      [rowspan]="1"
+    >
+      <mat-card
+        [routerLink]="['/fundraiser-detail', fundraiser._id]"
+        fxFlex.xs="98"
+      >
+        <div class="mat-image-container">
+          <img [src]="fundraiser.image" />
+        </div>
+        <mat-card-content
+          fxLayout="column"
+          fxLayoutAlign="start start"
+          [ngStyle.xs]="{ height: '130px' }"
+        >
+          <strong>{{ fundraiser.title }}</strong>
+          <span
+            *ngIf="(fundraiser?.donations)!.length > 0"
+            class="color-gray text-small"
+          >
+            Last donation {{ (fundraiser?.donations)![0].date | timeago }}
+          </span>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="percentage(fundraiser)"
+            color="primary"
+          ></mat-progress-bar>
+          <p>
+            <strong>{{ fundraiser.totalRaised }}</strong> raised of
+            {{ fundraiser.goalAmount }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

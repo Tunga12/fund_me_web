@@ -34,7 +34,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationComponent } from './components/notification/notification.component';
 import {
   HTTP_INTERCEPTORS,
-  HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
 import { DonateComponent } from './components/donate/donate.component';
@@ -42,7 +41,6 @@ import { CreateFundraiserComponent } from './components/fundraiser/create-fundra
 import { SetFundraiserMediaComponent } from './components/fundraiser/create-fundraiser/set-fundraiser-media/set-fundraiser-media.component';
 import { DoantionsComponent } from './components/fundraiser/fudraiser-detail-public/doantions/doantions.component';
 import { FudraiserDetailPublicComponent } from './components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
-import { TopDoantionsComponent } from './components/fundraiser/fudraiser-detail-public/top-doantions/top-doantions.component';
 import { BannerComponent } from './components/fundraiser/my-fundraiser-detail/banner/banner.component';
 import { DonationsTabConntentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-conntent/donations-tab-conntent.component';
 import { DonorsTabConntentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donors-tab-conntent.component';
@@ -59,9 +57,13 @@ import { SetBasicInfoComponent } from './components/fundraiser/create-fundraiser
 import { SetFundraiserStoryComponent } from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { OverviewComponent } from './components/edit-ui/overview/overview.component';
-import { DeleteDialogComponent } from './components/shared/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from './components/edit-ui/overview/delete-dialog/delete-dialog.component';
 import { StoryComponent } from './components/edit-ui/story/story.component';
 import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.directive';
+import { AccountSettingComponent } from './components/account-setting/account-setting.component';
+import { PasswordResetComponent } from './components/account-setting/password-reset/password-reset.component';
+import { SearchComponent } from './components/search/search.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,6 @@ import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.dir
     FudraiserDetailPublicComponent,
     DonateComponent,
     DoantionsComponent,
-    TopDoantionsComponent,
     BannerComponent,
     DonationsTabConntentComponent,
     InvitedContactsTabContentComponent,
@@ -108,6 +109,9 @@ import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.dir
     DeleteDialogComponent,
     StoryComponent,
     ResponsiveColumnsDirective,
+    AccountSettingComponent,
+    PasswordResetComponent,
+    SearchComponent,
   ],
   entryComponents: [],
   imports: [
@@ -127,6 +131,10 @@ import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.dir
   ],
 
   providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorsInterceptor,

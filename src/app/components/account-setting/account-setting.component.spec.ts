@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopDoantionsComponent } from './top-doantions.component';
+import { AccountSettingComponent } from './account-setting.component';
 
-describe('TopDoantionsComponent', () => {
-  let component: TopDoantionsComponent;
-  let fixture: ComponentFixture<TopDoantionsComponent>;
+describe('AccountSettingComponent', () => {
+  let component: AccountSettingComponent;
+  let fixture: ComponentFixture<AccountSettingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TopDoantionsComponent ]
+      declarations: [ AccountSettingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopDoantionsComponent);
+    fixture = TestBed.createComponent(AccountSettingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

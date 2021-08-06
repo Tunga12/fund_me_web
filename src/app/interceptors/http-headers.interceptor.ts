@@ -13,12 +13,12 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let token = localStorage.getItem('X-Auth-Token');
+    let token = localStorage.getItem('x-auth-token');
     if (token) {
       // console.log(token);
       req = req.clone({
         setHeaders: {
-          'X-Auth-Token': token,
+          'x-auth-token': token,
         },
       });
     }

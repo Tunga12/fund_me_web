@@ -1,13 +1,21 @@
-<div fxLayout="column"
- fxLayoutAlign="start start"
-  fxLayoutGap="20px">
+<div
+  fxLayout="column"
+  fxFlex.gt-xs="80"
+  fxFlex.lt-sm="90"
+  fxLayoutAlign="start start"
+  fxLayoutGap="20px"
+  style="margin: 20px auto"
+>
+  <h2 class="bold">
+    <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
+    Notifications
+  </h2>
   <div
-  *ngFor="let notification of notifications"
+    *ngFor="let notification of notifications"
     fxLayout="column"
     class="notification"
     fxLayoutAlign="start start"
     fxLayoutGap="0px"
-    [ngStyle.xs]="{ width:'90%'}"
   >
     <h3 class="time">JUST NOW</h3>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
@@ -16,11 +24,18 @@
         <h2 class="bold">{{ notification.title }}</h2>
         <p>
           {{ notification.content }}
-       ,...<a>Read more</a>
-       <!-- TODO custom pipe for more and less-->
+          ,...<a>Read more</a>
+          <!-- TODO custom pipe for more and less-->
         </p>
       </div>
     </div>
-    <button mat-button color="warn" class="actions" (click)="deleteNotifcation(notification)"><mat-icon>delete</mat-icon></button>
+    <button
+      mat-button
+      color="warn"
+      class="actions"
+      (click)="deleteNotifcation(notification)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </div>

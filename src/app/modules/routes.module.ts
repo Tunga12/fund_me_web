@@ -17,6 +17,9 @@ import { FundraiserListComponent } from '../components/fundraiser-list/fundraise
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { MyFundraiserDetailComponent } from '../components/fundraiser/my-fundraiser-detail/my-fundraiser-detail.component';
 import { FudraiserDetailPublicComponent } from '../components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
+import { AccountSettingComponent } from '../components/account-setting/account-setting.component';
+import { SearchComponent } from '../components/search/search.component';
+import { AuthGuard } from '../services/auth-guard/auth-guard.service';
 
 const ROUTES = [
   {
@@ -30,6 +33,7 @@ const ROUTES = [
   {
     path: 'create',
     component: CreateFundraiserComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'home-page',
@@ -38,6 +42,7 @@ const ROUTES = [
   {
     path: 'my-fundraiser-detail/:id',
     component: MyFundraiserDetailComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'fundraiser-detail/:id',
@@ -46,6 +51,7 @@ const ROUTES = [
   {
     path: 'edit/:id',
     component: EditUiComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'share',
@@ -54,32 +60,47 @@ const ROUTES = [
   {
     path: 'withdrawal/personal-info',
     component: PersonalInfoComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'withdrawal/beneficiary-form',
     component: BeneficiaryFormComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'withdrawal/personal-info-summary',
     component: PersonalInfoSummaryComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'withdrawal',
     component: WithdrwalComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'donate/:id',
     component: DonateComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'notification',
     component: NotificationComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'my-fundraisers/:userId',
     component: FundraiserListComponent,
+    canActivate: [AuthGuard],
   },
-
+  {
+    path: 'account-setting',
+    component: AccountSettingComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 's',
+    component: SearchComponent,
+  },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' }, // redirect to `home page`
   { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
 ];

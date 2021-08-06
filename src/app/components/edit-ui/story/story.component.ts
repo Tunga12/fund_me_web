@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'story',
@@ -14,10 +16,13 @@ export class StoryComponent implements OnInit, OnDestroy {
   form!: FormGroup;
 
   fundraiserSub?: Subscription;
+  errorMessage: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private fundraiserService: FundraiserService
+    private fundraiserService: FundraiserService,
+    private snackbarService: SnackbarService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -32,8 +37,22 @@ export class StoryComponent implements OnInit, OnDestroy {
       .editFundraiser(this.fundraiser)
       .subscribe((fundraiser) => {
         this.fundraiser = fundraiser;
-        // console.log(this.fundraiser);
-      });
+        this.snackbar.open(
+          'Edit completed sccessfly',
+          'close',
+          this.snackbarService.getConfig()
+        );
+      },
+        (error) => {
+          this.snackbar.open(
+            error.error,
+            'close',
+            this.snackbarService.getConfig()
+          );
+          console.log(error.error);
+          this.errorMessage = error.error;
+        }
+      );
   }
   ngOnDestroy() {
     this.fundraiserSub?.unsubscribe();

@@ -9,15 +9,15 @@
       fxLayoutAlign="space-between start"
       fxLayoutGap="30px"
     >
-      <h2 class="bold" matDialogTitle>All donations</h2>
+      <h2 class="bold" matDialogTitle>{{ type }} donations</h2>
       <div fxLayout="row" fxLayoutGap="20px">
         <button
           mat-stroked-button
-          (click)="topDonations()"
+          (click)="getDonations()"
           style="border-radius: 20px"
         >
-          <mat-icon class="mat-18">sort</mat-icon>
-          Top <span fxHide.lt-md>donations</span>
+          <mat-icon *ngIf="type === 'All'" class="mat-18">sort</mat-icon>
+          {{ topButtonLabel }} <span fxHide.lt-md>donations</span>
         </button>
         <span mat-dialog-close class="close-dialog">
           <mat-icon class="mat-18">close</mat-icon>
@@ -26,7 +26,7 @@
     </div>
     <button
       mat-raised-button
-      (click)="donate()"
+      (click)="gotoDonatePage()"
       class="styled-button donate btn-large"
     >
       <mat-icon>attach_money</mat-icon> Donate now
@@ -34,17 +34,25 @@
   </div>
   <mat-divider></mat-divider>
   <mat-list>
-    <mat-list-item
-      *ngFor="let item of [1, 4, 5, 6, 8]"
-      style="margin: 20px 0px"
-    >
+    <mat-list-item *ngFor="let donation of donations" style="margin: 20px 0px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
         <img
           src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
         />
         <div fxLayout="column" fxLayoutAlign="center start">
-          <span>Donor Name</span>
-          <span> <strong>$8548</strong> • 18d ago </span>
+          <div
+            fxLayout="row wrap"
+            fxLayoutAlign="start start"
+            fxLayoutGap="10px"
+          >
+            <span>{{ donation.userId.firstName | titlecase }}</span>
+            <span>{{ donation.userId.lastName | titlecase }}</span>
+          </div>
+          <span>
+            <strong>{{ donation.amount }} </strong> •{{
+              donation.date | timeago
+            }}
+          </span>
         </div>
       </div>
       <mat-divider></mat-divider>

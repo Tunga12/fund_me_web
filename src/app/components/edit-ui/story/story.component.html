@@ -1,9 +1,11 @@
 <form
- [formGroup]="form"
- (ngSubmit)="editStory()"
- fxLayout="column" 
- fxLayoutAlign="center center">
+  [formGroup]="form"
+  (ngSubmit)="editStory()"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
   <story-text-area [form]="form"></story-text-area>
+  <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
   <button
     mat-raised-button
     color="primary"

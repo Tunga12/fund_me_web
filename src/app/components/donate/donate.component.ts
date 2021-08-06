@@ -1,13 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { FundraiserService } from './../../services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
-import { MatSlider } from '@angular/material/slider';
 import { DonationService } from './../../services/donation/donation.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
@@ -24,12 +27,6 @@ export class DonateComponent implements OnInit, OnDestroy {
   fundraiserSub?: Subscription;
   donationSub?: Subscription;
 
-  donation = {
-    comment: '',
-    amount: 0,
-    tip: 5,
-    memberId: '',
-  };
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -40,10 +37,10 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      donation_amount: [],
-      tip_amount: [],
-      anonymous: [],
-      comment: [],
+      amount: [undefined, [Validators.required]],
+      tip: [10, [Validators.required, Validators.min(10)]],
+      // anonymous: [],
+      comment: ['', [Validators.required, Validators.minLength(5)]],
     });
 
     // get the Id f the fundraiser from the route
@@ -53,13 +50,37 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.getFundraiser();
   }
 
+  public get amount(): AbstractControl | null {
+    return this.form.get('amount');
+  }
+  public get tip(): AbstractControl | null {
+    return this.form.get('tip');
+  }
+  public get comment(): AbstractControl | null {
+    return this.form.get('comment');
+  }
+
+  // set  tip
+  set tip(amount) {
+    this.form.patchValue({ tip: amount });
+  }
+
+  get tip_percentage(): number {
+    return (this.amount?.value * this.tip?.value) / 100;
+  }
+
+  percentSymbol() {
+    return (number: number) => number + '%';
+  }
+
   // make donation to a fundriser
   donate() {
     this.loading = true;
-    console.log(this.donation);
-    console.log(this.fundraiser?._id);
     this.donationSub = this.donationService
-      .createDonation(this.fundraiserId, this.donation)
+      .createDonation(this.fundraiserId, {
+        ...this.form.value,
+        memberId: this.fundraiser?.organizer?._id,
+      })
       .subscribe(
         () => {
           this.router.navigateByUrl(`/fundraiser-detail/${this.fundraiserId}`);
@@ -76,30 +97,31 @@ export class DonateComponent implements OnInit, OnDestroy {
   getFundraiser() {
     this.fundraiserSub = this.fundraiserService
       .getFundraiser(this.fundraiserId)
-      .subscribe((fund) => {
-        this.fundraiser = fund;
-        this.donation.memberId = this.fundraiser?.beneficiary?._id || '';
-        // TODO :this is for testingg purpose only
-        // update member id of the fundriser to orignizers id
-        this.donation.memberId = this.fundraiser?.beneficiary?._id || '';
-        console.log('ogzr', this.fundraiser?.beneficiary?._id);
-
-        this.loading = false;
-        () => {
+      .subscribe(
+        (fund) => {
+          this.fundraiser = fund;
+          this.loading = false;
+        },
+        (eror) => {
           // TODO handle error
           this.loading = false;
-        };
-      });
+          this.erorrMessage = eror.error;
+        }
+      );
   }
 
-  // assign slider value to tip amount
-  sliderChange(slider: MatSlider) {
-    let value = slider.value as number;
-    this.donation.tip = value>5?value:5;
+  // assign slider value or custom tip to tip amount
+  sliderChange(event: any) {
+    if (event.value < 10) {
+      setTimeout(() => {
+        event.source.value = 10;
+        this.tip = event.value > 10 ? event.value : 10;
+      });
+    }
   }
 
   backToFundraiser() {
-    this.router.navigateByUrl('/donate');
+    this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
   }
 
   changeTipType() {

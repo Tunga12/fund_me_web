@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
 import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an-update.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Update } from './../../../../models/update.model';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'updates-tab-content',
@@ -21,9 +20,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./updates-tab-content.component.css'],
 })
 export class UpdatesTabContentComponent implements OnInit, OnDestroy {
+  timeout = 2000;
   // fundraiserId = '';
   @Input() fundraiser!: Fundraiser;
-
   @Output() update = new EventEmitter();
   updateSub?: Subscription;
 
@@ -33,13 +32,13 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {}
   ngOnInit(): void {
+    console.log(this.fundraiser.updates);
   }
 
   //  opendialog for update
   openEditDialog(update: Update) {
-    delete update._id;
     this.dialog.open(PostAnUpdateComponent, {
-      data: { mode: 'Edit', update: update, },
+      data: { mode: 'Edit', update: update, fundraiser: this.fundraiser },
     });
   }
 
@@ -49,22 +48,22 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
 
   // delete an update from a fundraiser
   deleteUpdate(update: any) {
-    this.snackBar
-      .open('Do you want to delete this update', 'Delete')
-      .onAction()
-      .subscribe(() => {
-        console.log('Deleteing...', update);
         this.updateSub = this.updateService.deleteUpdate(update).subscribe(
           () => {
-            this.snackBar.open('Update deleted successfuly!');
-            let index = this.fundraiser.updates?.indexOf(update);
-            this.fundraiser.updates?.splice(index ?? -1, 1);
+            this.snackBar.open('Update deleted successfuly!', 'Close',{
+              verticalPosition: 'top', // 'top' | 'bottom'
+              horizontalPosition: 'end', //'start' | 'center' | 'end' | 'left' | 'right'
+              panelClass: ['red-snackbar'],
+              duration: this.timeout,
+            });
+            let index = this.fundraiser.updates!.indexOf(update);
+            this.fundraiser.updates?.splice(index, 1);
           },
           (error) => {
             console.log(error.error);
+            this.snackBar.open(error.error, 'Close');
           }
         );
-      });
   }
 
   ngOnDestroy() {

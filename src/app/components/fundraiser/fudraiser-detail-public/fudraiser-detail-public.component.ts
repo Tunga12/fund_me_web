@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ShareDialogComponent } from '../../shared/share-dialog/share-dialog.component';
 import { DoantionsComponent } from './doantions/doantions.component';
-import { DonateComponent } from './../../donate/donate.component';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
 import { Donation } from 'src/app/models/donation.model';
@@ -48,7 +47,7 @@ export class FudraiserDetailPublicComponent implements OnInit {
         this.getFirstDonation();
         this.getTopDonation();
         this.getRecentDonation();
-         this.percentage=this.fundraiserServ.getPercentage(this.fundraiser);
+        this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(this.fundraiser);
       },
       (error) => {
@@ -79,8 +78,6 @@ export class FudraiserDetailPublicComponent implements OnInit {
     );
   }
 
-
-
   share() {
     this.dialog
       .open(ShareDialogComponent, { data: { id: 1 } })
@@ -89,17 +86,11 @@ export class FudraiserDetailPublicComponent implements OnInit {
   }
 
   // open all donations dialog
-  allDonations() {
+  donations(type: string) {
     this.dialog
-      .open(DoantionsComponent, { data: { id: 1 } })
-      .afterClosed()
-      .subscribe((close_result) => console.log(close_result));
-  }
-
-  // open top donations dialog
-  topDonations() {
-    this.dialog
-      .open(DonateComponent, { data: { id: 1 } })
+      .open(DoantionsComponent, {
+        data: { type: type, fundraiser: this.fundraiser },
+      })
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }

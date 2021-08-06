@@ -1,118 +1,123 @@
-<div *ngIf="loading" >
-  <mat-progress-spinner mode="indeterminate" [value]="100"
-   color="primary"  class="loading-spinner"></mat-progress-spinner>
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  ></mat-progress-spinner>
 </div>
 
-<div
- *ngIf="!loading">
-
-<header fxHide.lt-md>
-  <div
-    [ngStyle.lt-md]="{ width: '98%' }"
-    [ngStyle.md]="{ width: '80%', margin: '20px auto' }"
-  >
-    <div class="back-btn">
-      <button
-        (click)="backToDetailPage()"
-        mat-raised-button
-        class="bold"
-        style="margin: 20px 0px"
-      >
-        <mat-icon class="mat-18">arrow_back_ios</mat-icon> Back
-      </button>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-      <!-- TODO -->
-      <img
-        matCardImage
-        [ngStyle.xs]="{ width: '100%', height: '200px' }"
-        [src]="fundraiser.image"
-      />
-      <div>
-        <h2 style="padding: 0px !important; margin: 0px">Edit & Settings</h2>
-        <p> {{ fundraiser.title }} </p>
-      </div>
-    </div>
-  </div>
-</header>
-
-<mat-tab-group
-  [disableRipple]="false"
-  [style.backgroundColor]="'#fff'"
-  style="margin: 40px auto !important; width: 80%; padding: auto"
-  [ngStyle.lt-md]="{ width: '98%', margin: '40px auto' }"
-  mat-align-tabs="start"
->
-  <mat-tab
-    label="{{
-      index === 0
-        ? 'Overview'
-        : index === 1
-        ? 'Photo'
-        : index === 2
-        ? 'Story'
-        : 'Notification'
-    }}"
-    *ngFor="let tab of tabs; let index = index"
-  >
+<div *ngIf="!loading">
+  <header fxHide.lt-md>
     <div
-      *ngIf="index === 0"
-      [ngStyle.lt-md]="{ width: '100%', margin: '30px auto' }"
-      class="tab-content"
+      [ngStyle.lt-md]="{ width: '98%' }"
+      [ngStyle.md]="{ width: '80%', margin: '20px auto' }"
     >
-    <overview [fundraiser]="fundraiser"></overview>
-     </div>
-    <div *ngIf="index === 1" class="tab-content">
-      <div style="width: 100%">
-        <youtube-video-player> </youtube-video-player>
+      <div class="back-btn">
+        <button
+          (click)="backToDetailPage()"
+          mat-raised-button
+          class="bold"
+          style="margin: 20px 0px"
+        >
+          <mat-icon class="mat-18">arrow_back_ios</mat-icon> Back
+        </button>
       </div>
-      <div>
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+        <!-- TODO -->
+        <img
+          matCardImage
+          [ngStyle.xs]="{ width: '100%', height: '200px' }"
+          [src]="fundraiser.image"
+        />
+        <div>
+          <h2 style="padding: 0px !important; margin: 0px">Edit & Settings</h2>
+          <p>{{ fundraiser.title }}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <mat-tab-group
+    [disableRipple]="false"
+    [style.backgroundColor]="'#fff'"
+    style="margin: 40px auto !important; width: 80%; padding: auto"
+    [ngStyle.lt-md]="{ width: '98%', margin: '40px auto' }"
+    mat-align-tabs="start"
+  >
+    <mat-tab
+      label="{{
+        index === 0
+          ? 'Overview'
+          : index === 1
+          ? 'Photo'
+          : index === 2
+          ? 'Story'
+          : 'Notification'
+      }}"
+      *ngFor="let tab of tabs; let index = index"
+    >
+      <div
+        *ngIf="index === 0"
+        [ngStyle.lt-md]="{ width: '100%', margin: '30px auto' }"
+        class="tab-content"
+      >
+        <overview [fundraiser]="fundraiser"></overview>
+      </div>
+      <div *ngIf="index === 1" class="tab-content">
+        <div style="width: 100%">
+          <img [src]="fundraiser.image" />
+        </div>
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+        <div>
+          <input type="file" (change)="uploadImage($event)" />
+          <button
+            mat-raised-button
+            color="primary"
+            class="btn-primary btn-large"
+            style="width: 30% !important"
+            (click)="editFundraiser()"
+          >
+            Save change
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="index === 2" class="tab-content">
+        <story [fundraiser]="fundraiser"></story>
+      </div>
+
+      <div
+        *ngIf="index === 3"
+        [ngStyle.xs]="{ width: '100%', margin: '30px auto' }"
+        class="tab-content radio"
+      >
+        <p
+          style="width: 50%; text-align: justify"
+          [ngStyle.lt-md]="{ width: '100%' }"
+        >
+          Choose how you would like to receive emails when others donate or
+          comment on your fundraiser.
+        </p>
+        <mat-radio-group>
+          <mat-radio-button color="primary" value="yes" style="display: block">
+            Send me an email for every donation or comment
+          </mat-radio-button>
+          <mat-radio-button color="primary" value="no" style="display: block">
+            Send me a daily highlight of donations and
+            comments</mat-radio-button
+          >
+        </mat-radio-group>
         <button
           mat-raised-button
           color="primary"
           (click)="openAddPhotoOrVedioDialog()"
-          class="btn-primary btn-large"
+          class="btn-large"
           style="width: 30% !important"
         >
-          Change
+          Save changes
         </button>
       </div>
-    </div>
-
-    <div *ngIf="index === 2" class="tab-content">
-        <story [fundraiser]="fundraiser"></story>
-    </div>
-
-    <div
-      *ngIf="index === 3"
-      [ngStyle.xs]="{ width: '100%', margin: '30px auto' }"
-      class="tab-content radio"
-    >
-      <p
-        style="width: 50%; text-align: justify"
-        [ngStyle.lt-md]="{ width: '100%' }"
-      >
-        Choose how you would like to receive emails when others donate or
-        comment on your fundraiser.
-      </p>
-      <mat-radio-group>
-        <mat-radio-button color="primary" value="yes" style="display: block">
-          Send me an email for every donation or comment
-        </mat-radio-button>
-        <mat-radio-button color="primary" value="no" style="display: block">
-          Send me a daily highlight of donations and comments</mat-radio-button
-        >
-      </mat-radio-group>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="openAddPhotoOrVedioDialog()"
-        class="btn-large"
-        style="width: 30% !important"
-      >
-        Save changes
-      </button>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 </div>

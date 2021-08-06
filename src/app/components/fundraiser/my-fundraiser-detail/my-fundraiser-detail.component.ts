@@ -43,7 +43,7 @@ export class MyFundraiserDetailComponent implements OnInit {
   //  opendialog for update
   openUpdateDialog() {
     this.dialog.open(PostAnUpdateComponent, {
-      data: { mode: 'Post', update: this.update, fundId: this.fundraiserId },
+      data: { mode: 'Post', update: this.update, fundraiser: this.fundraiser },
     });
   }
 

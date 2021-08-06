@@ -32,9 +32,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return (
-      localStorage.getItem('userId') !== null &&
-      localStorage.getItem('x-auth-token') !== null
-    );
+    return localStorage.getItem('x-auth-token') !== null
   }
 }

@@ -5,19 +5,15 @@
 <mat-divider></mat-divider>
 <mat-dialog-content>
   <!-- <h1>Search by email</h1> -->
-  <form (submit)="$event.preventDefault()"
-  [formGroup]="form"
-  >
+  <form [formGroup]="form" (ngSubmit)="addEmail()">
     <mat-form-field appearance="outline">
       <input
         matInput
         #emailInput
         formControlName="email"
         type="link"
-        required
-        [(ngModel)]="email"
         placeholder="Search by email"
-        (keyup.enter)="addEmail(emailInput.value); emailInput.value = ''"
+        (keyup.enter)="email?.valid ? addEmail() : ''; emailInput.value = ''"
       />
       <span matPrefix><mat-icon>search</mat-icon></span>
     </mat-form-field>
@@ -66,8 +62,26 @@
     <p>
       <a (click)="openImportContactsDialog()"> Import your email contacts</a>
     </p>
+    <mat-error *ngIf="email?.touched && email?.errors?.required"
+      >Please enter email of the invitee
+    </mat-error>
+    <mat-error *ngIf="email?.touched && email?.errors?.email"
+      >Please enter valid email
+    </mat-error>
+    <mat-error *ngIf="email?.touched && email?.errors?.minlength"
+      >Email should be {{ email?.errors?.minlength.requiredLength }}
+    </mat-error>
+
+    <mat-error *ngIf="errorMessage"> {{ errorMessage }} </mat-error>
     <p>
-      <button mat-raised-button  [mat-dialog-close]="emails" color="primary" class="btn-large">Next</button>
+      <button
+        [disabled]="form.invalid"
+        mat-raised-button
+        color="primary"
+        class="btn-large"
+      >
+        Add member
+      </button>
     </p>
   </form>
 </mat-dialog-content>

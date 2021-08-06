@@ -1,14 +1,11 @@
 <h1 matDialogTitle>Are you sure to delete</h1>
-
-<mat-dialog-content>
-  {{ message }}
-</mat-dialog-content>
+  <p>Fundraiser: {{fundraiser?.title}}</p>
 
 <mat-dialog-actions fxLayoutAlign="space-around center">
   <button mat-button matDialogClose mat-dialog-close="data">
     Cancel
   </button>
-  <button mat-raised-button (click)="delete()" color="warn">
+  <button mat-raised-button (click)="deleteFundraiser()" color="warn">
     Delete
   </button>
 </mat-dialog-actions>

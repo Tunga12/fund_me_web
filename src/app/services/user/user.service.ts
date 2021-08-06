@@ -19,4 +19,17 @@ export class UserService {
       `${environment.BASE_URL}/users/me`
     );
   }
+  // update currently logged in user
+  updateCurrentUser(user: User): Observable<User>{
+    return this.http.put<User>(
+      `${environment.BASE_URL}/users/me`,user
+    );
+  }
+
+  // delete currently logged in user
+  deleteCurrentUser(): Observable<User>{
+    return this.http.delete<User>(
+      `${environment.BASE_URL}/users/me`
+    );
+  }
 }

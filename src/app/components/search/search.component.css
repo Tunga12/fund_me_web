@@ -1,0 +1,33 @@
+mat-card.mat-card {
+  width: 94%;
+  margin-bottom: 30px;
+  cursor: pointer;
+  padding: 0px;
+  z-index: 100;
+  overflow: hidden;
+  height: 100%;
+}
+
+.container {
+  margin: 20px auto;
+}
+
+mat-card-content.mat-card-content {
+  padding: 6px;
+  height: 100px;
+}
+
+.mat-image-container {
+  background: #f8f8f8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  border: none;
+  width: 100%;
+  height: 10.4375rem;
+}
+.mat-image-container > img {
+  width: 100%;
+  height: 100%;
+}

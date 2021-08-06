@@ -5,6 +5,7 @@ import { HomeFundraiser } from 'src/app/models/home-fundraiser.model';
 import { environment } from 'src/environments/environment';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Donation } from 'src/app/models/donation.model';
+import { TeamMember } from './../../models/team-memeber.model';
 
 @Injectable({
   providedIn: 'root',
@@ -54,10 +55,12 @@ export class FundraiserService {
     // remove the _id element :not needed for update
     delete fundraiser._id;
     delete fundraiser.__v;
+    delete fundraiser.beneficiary;
     // update the fundraiser  since we only need id of the category
     let customFundraiser = {
       ...fundraiser,
-      category: fundraiser.category?._id
+      category: fundraiser.category?._id,
+      organizer: fundraiser.organizer?._id,
     };
     return this.http.put<Fundraiser>(
       `${environment.BASE_URL}/fundraisers/${fundraiserId}`,
@@ -73,6 +76,16 @@ export class FundraiserService {
   }
 
   /*non http sevices */
+
+  //to know if a fundraiser has a team or not
+  hasTeam(fundraiser: Fundraiser): boolean {
+    let team = fundraiser
+      .teams?.map((member: TeamMember) => {
+      // member.s
+    });
+    return true;
+  }
+
   //  get percentage of total raised to goalAmount of this fundraiserr
   getPercentage(fundraiser: Fundraiser): number {
     if (fundraiser!.goalAmount! > 0)

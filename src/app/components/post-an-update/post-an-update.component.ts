@@ -1,15 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { AddPhotoVideoDialogComponent } from './add-photo-video-dialog/add-photo-video-dialog.component';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Update } from './../../models/update.model';
 import { ImageService } from './../../services/image/image.service';
 import { UpdateService } from 'src/app/services/update/update.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-post-an-update',
@@ -24,12 +27,15 @@ export class PostAnUpdateComponent implements OnInit {
   errorMessage = '';
   mode = '';
   updateSub?: Subscription;
-  fundraiserId: any;
+  fundraiser!: Fundraiser;
+
 
   constructor(
     private imageService: ImageService,
     private updateService: UpdateService,
     private dialogRef: MatDialogRef<PostAnUpdateComponent>,
+    private snackbarService: SnackbarService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -39,6 +45,7 @@ export class PostAnUpdateComponent implements OnInit {
         Validators.required,
         Validators.minLength(5),
       ]),
+      image: new FormControl(this.imageSrc, [Validators.required]),
     });
 
     console.log(this.data);
@@ -46,11 +53,10 @@ export class PostAnUpdateComponent implements OnInit {
       this.data?.update !== undefined
         ? this.data?.update
         : { content: '', image: '' };
-    console.log(this.update);
-
     this.mode = this.data.mode;
+    // if the dialoge is in edit mode update the fields with available values
     this.mode === 'Edit' ? this.form.patchValue(this.update!) : '';
-    this.fundraiserId = this.data.fundId;
+    this.fundraiser = this.data.fundraiser;
   }
 
   // upload the image chosen by the user
@@ -76,38 +82,72 @@ export class PostAnUpdateComponent implements OnInit {
 
   // post update
   postUpdate() {
-    delete this.update._id;
+    this.update.content = this.form.controls['content'].value;
     this.updateService
-      .addUpdateToFundraiser(this.fundraiserId, {
-        ...this.update,
-        ...this.form.value,
-      })
+      .addUpdateToFundraiser(this.fundraiser._id!, this.update)
       .subscribe(
         (update) => {
           // update = update;
+          this.fundraiser.updates?.push(update);
           console.log(update);
           this.dialogRef.close();
-          location.reload();
+          this.snackBar.open(
+            'Update added successfuly!',
+            'Close',
+            this.snackbarService.getConfig()
+          );
         },
         (error) => {
           console.log(error);
+          this.snackBar.open(
+            error.error,
+            'Close',
+
+            this.snackbarService.getConfig()
+          );
         }
       );
   }
 
   // edit this update
-  editUpdate() {
-    this.updateSub = this.updateService
-      .editUpdate({ ...this.update, ...this.form.value })
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.dialogRef.close();
-        },
-        (error) => {
-          console.log(error.error);
-        }
-      );
+  editUpdate(update: Update) {
+    let content = this.form.controls['content'].value;
+    update.image = this.update.image;
+    update.content = content;
+
+    let newUpdate = update;
+    let id = update._id;
+    delete update._id; // _id is not allowed for submission
+
+    this.updateSub = this.updateService.editUpdate(id!, update).subscribe(
+      (response) => {
+        console.log(response);
+        this.dialogRef.close();
+        let index = this.fundraiser.updates?.indexOf(update);
+        this.fundraiser.updates?.splice(index!, 1, newUpdate);
+        this.snackBar.open(
+          'Update Edited successfuly!',
+          'Close',
+          this.snackbarService.getConfig()
+        );
+      },
+      (error) => {
+        console.log(error.error);
+        this.snackBar.open(
+          error.error,
+          'Close',
+          this.snackbarService.getConfig()
+        );
+      }
+    );
+  }
+
+  public get content(): AbstractControl | null {
+    return this.form.get('content');
+  }
+
+  public get image(): AbstractControl | null {
+    return this.form.get('image');
   }
 
   // openAddPhotoOrVedioDialog() {
@@ -116,4 +156,7 @@ export class PostAnUpdateComponent implements OnInit {
   //     .afterClosed()
   //     .subscribe((close_result) => console.log(close_result));
   // }
+}
+function snackConfig(arg0: string, arg1: string, snackConfig: any) {
+  throw new Error('Function not implemented.');
 }

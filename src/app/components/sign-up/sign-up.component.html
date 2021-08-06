@@ -82,7 +82,7 @@
           <input
             matInput
             formControlName="confirmPassword"
-            [type]="hidePassword ? 'password' : 'text'"
+            [type]="hideConfirmPassword ? 'password' : 'text'"
             [pattern]="password?.value"
             (change)="onPasswordChange()"
           />
@@ -92,61 +92,67 @@
             (click)="hideConfirmPassword = !hideConfirmPassword"
             [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hidePassword"
-            >{{ hideConfirmPassword ? "visibility_off" : "visibility" }}</mat-icon
+            >{{
+              hideConfirmPassword ? "visibility_off" : "visibility"
+            }}</mat-icon
           >
         </mat-form-field>
       </div>
       <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
       <mat-error>{{ errorMessage }}</mat-error>
-      <mat-error *ngIf="firstName?.errors?.minlength"
+      <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
+        >Please enter your last name
+      </mat-error>
+      <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
+        >Please enter your last name
+      </mat-error>
+      <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
         >First name must be
         {{ firstName?.errors?.minlength.requiredLength }} minimun.
       </mat-error>
 
-      <mat-error *ngIf="lastName?.errors?.minlength"
+      <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
         >Last name must be
         {{ lastName?.errors?.minlength.requiredLength }} minimun.
       </mat-error>
 
-      <mat-error *ngIf="firstName?.errors?.maxlength"
+      <mat-error *ngIf="firstName?.touched && firstName?.errors?.maxlength"
         >First name must be
         {{ firstName?.errors?.maxlength.requiredLength }} minimun.
       </mat-error>
 
-      <mat-error *ngIf="lastName?.errors?.maxlength"
+      <mat-error *ngIf="lastName?.touched && lastName?.errors?.maxlength"
         >Last name must be
         {{ lastName?.errors?.maxlength.requiredLength }} maximun.
       </mat-error>
 
-      <mat-error *ngIf="password?.errors?.minlength"
+      <mat-error *ngIf="password?.touched && password?.errors?.minlength"
         >Password length must be minimum
         {{ password?.errors?.minlength.requiredLength }} .
       </mat-error>
 
-      <mat-error *ngIf="firstName?.errors?.whiteSpace"
+      <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
         >First name cannot include whitespaces.
       </mat-error>
 
-      <mat-error *ngIf="lastName?.errors?.whiteSpace"
+      <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
         >Last name cannot include whitespaces.
       </mat-error>
 
-      <mat-error *ngIf="email?.errors?.whiteSpace"
-        >Email cannot include whitespaces.
-      </mat-error>
-      <mat-error *ngIf="email?.errors?.email"
+      <mat-error *ngIf="email?.touched && email?.errors?.email"
         >Please enter a valid email.
       </mat-error>
-
-      <mat-error *ngIf="password?.errors?.whiteSpace"
-        >Password cannot include whitespaces.
+      <mat-error *ngIf="email?.touched && email?.errors?.required"
+        >Please enter your email
       </mat-error>
 
-      <mat-error *ngIf="password?.errors?.pattern">
+      <mat-error *ngIf="password?.touched && password?.errors?.pattern">
         Password must contain atleast 1 special character and 1 number.
       </mat-error>
-      <mat-error *ngIf="confirmPassword?.errors?.mismatch">
+      <mat-error
+        *ngIf="confirmPassword?.touched && confirmPassword?.errors?.mismatch"
+      >
         Password and confirm password doesn't match
       </mat-error>
       <button

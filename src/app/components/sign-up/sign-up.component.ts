@@ -11,7 +11,6 @@ import { AuthService } from './../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.validator.directive';
-import { ValueMatchesValidatorService } from './../../validators/value-matches-validator.service';
 
 @Component({
   selector: 'sign-up',
@@ -34,8 +33,7 @@ export class SignUpComponent implements OnDestroy {
   constructor(
     private authServ: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder,
-    private passwordMatches: ValueMatchesValidatorService
+    private formBuilder: FormBuilder
   ) {
     // create the form
     this.form = this.formBuilder.group({
@@ -57,10 +55,7 @@ export class SignUpComponent implements OnDestroy {
           this.whiteSpaceValidator,
         ],
       ],
-      email: [
-        '',
-        [Validators.required, Validators.email, this.whiteSpaceValidator],
-      ],
+      email: ['', [Validators.required, Validators.email]],
       password: [
         '',
         [
@@ -69,7 +64,6 @@ export class SignUpComponent implements OnDestroy {
           Validators.pattern(
             '(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:{\\}\\[\\]\\|\\+\\-\\=\\_\\)\\(\\)\\`\\/\\\\\\]])[A-Za-z0-9d$@].{7,}'
           ),
-          this.whiteSpaceValidator,
         ],
       ],
 

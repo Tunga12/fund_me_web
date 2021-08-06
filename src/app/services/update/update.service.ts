@@ -22,19 +22,19 @@ export class UpdateService {
   }
 
   // edit update
-  editUpdate(update: Update): Observable<Update> {
+  editUpdate(id: string,update: Update): Observable<Update> {
     return this.http.put<Update>(
-      `${environment.BASE_URL}/updates/${update._id}`,
+      `${environment.BASE_URL}/updates/${id}`,
       update
     );
   }
 
   // delete update
   deleteUpdate(update: Update) {
-    return this.http.delete<any>(
+    return this.http.delete(
       `${environment.BASE_URL}/updates/${update._id}`,
       {
-      //  responseType:'string' 
+       responseType:'text'
       }
     );
   }

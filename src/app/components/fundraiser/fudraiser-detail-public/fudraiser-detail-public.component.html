@@ -1,7 +1,7 @@
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"
-    [value]="100"
+    [value]="percentage"
     color="primary"
     class="loading-spinner"
   ></mat-progress-spinner>
@@ -13,19 +13,17 @@
   fxFlex="86"
   [ngStyle]="{ margin: '20px auto' }"
   fxFlex.xs="100"
-  [ngStyle.xs]="{ margin: '20px auto' }"
+  fxLayoutAlign.xs="start center"
 >
-  <header>
-    <h1 fxHide.xs class="bold">{{ fundraiser?.title }}</h1>
-  </header>
+  <h1 fxHide.xs class="bold">{{ fundraiser?.title }}</h1>
   <div fxLayout="row" fxLayoutAlign="space-around start" fxFlex.md="98">
     <div
       fxLayout="column"
       fxLayoutGap="20px"
       fxLayoutAlign="start end"
-      fxFlex="66"
-      [ngStyle]="{ 'padding-right': '20px' }"
-      fxFlex.lt-md="100"
+      fxFlex.gt-xs="66"
+      fxFlex.xs="98"
+      [ngStyle.gt-xs]="{ 'padding-right': '20px' }"
     >
       <div>
         <img
@@ -53,7 +51,7 @@
         <mat-progress-bar color="primary" value="percentage">
         </mat-progress-bar>
         <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-          <a fxLayout="column" (click)="allDonations()">
+          <a fxLayout="column" (click)="donations('All')">
             <span class="bold">{{ fundraiser?.donations?.length }}k</span
             ><mat-hint>donors</mat-hint>
           </a>
@@ -187,10 +185,18 @@
           </div>
 
           <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-            <button mat-raised-button (click)="allDonations()" color="primary">
+            <button
+              mat-raised-button
+              (click)="donations('All')"
+              color="primary"
+            >
               See all
             </button>
-            <button mat-stroked-button (click)="topDonations()" color="primary">
+            <button
+              mat-stroked-button
+              (click)="donations('Top')"
+              color="primary"
+            >
               <mat-icon class="mat-18"> favorite_border </mat-icon>
               See top donations
             </button>
@@ -243,7 +249,11 @@
         </div>
 
         <!-- Fudrising team section -->
-        <div fxLayout="column" fxLayoutGap="20px">
+        <div
+          *ngIf="fundraiser?.teams?.length! > 0"
+          fxLayout="column"
+          fxLayoutGap="20px"
+        >
           <div>
             <h2 class="bold">
               Fundrising team: Team
@@ -303,8 +313,7 @@
         <!-- end of fundrising team section -->
 
         <!-- Organiser and beneficiary section -->
-        <!-- this will be shown if there is no fundrising team -->
-        <div>
+        <div *ngIf="fundraiser?.beneficiary">
           <div>
             <h2 class="bold">Organizer and beneficiary</h2>
             <mat-divider> </mat-divider>
@@ -549,10 +558,18 @@
             </div>
           </fxLayout>
           <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-            <button mat-raised-button (click)="allDonations()" color="primary">
+            <button
+              mat-raised-button
+              (click)="donations('All')"
+              color="primary"
+            >
               See all
             </button>
-            <button mat-stroked-button (click)="topDonations()" color="primary">
+            <button
+              mat-stroked-button
+              (click)="donations('Top')"
+              color="primary"
+            >
               <mat-icon class="mat-18"> favorite_border </mat-icon>
               See top donations
             </button>
