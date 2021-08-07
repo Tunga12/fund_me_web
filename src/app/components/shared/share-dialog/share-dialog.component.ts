@@ -7,18 +7,18 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./share-dialog.component.css'],
 })
 export class ShareDialogComponent implements OnInit {
-  items = [
-    { link: '', text: 'Facebook', icon: 'facebook' },
-    { link: '', text: 'Copy link', icon: 'link' },
-    { link: '', text: 'Twitter', icon: 'twitter' },
-    { link: '', text: 'Instagram', icon: 'mes' },
-    { link: '', text: 'Email', icon: 'email' },
-    { link: '', text: 'Text message', icon: 'message' },
-    { link: '', text: 'Telegram', icon: 'send' },
-    { link: '', text: 'Print poster', icon: 'facebook' },
-  ];
+  // items = [
+  //   { link: '', text: 'Facebook', icon: 'facebook' },
+  //   { link: '', text: 'Copy link', icon: 'link' },
+  //   { link: '', text: 'Twitter', icon: 'twitter' },
+  //   { link: '', text: 'Instagram', icon: 'mes' },
+  //   { link: '', text: 'Email', icon: 'email' },
+  //   { link: '', text: 'Text message', icon: 'message' },
+  //   { link: '', text: 'Telegram', icon: 'send' },
+  //   { link: '', text: 'Print poster', icon: 'facebook' },
+  // ];
 
-  show = 11;
+  // show = 11;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any) {
     console.log('Data', data);

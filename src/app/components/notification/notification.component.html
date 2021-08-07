@@ -10,14 +10,26 @@
     <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
     Notifications
   </h2>
-  <div
+  <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
+
+  <div *ngIf="loading" fxFlexAlign="center">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>
+  <a
+    [routerLink]="['/fundraiser-detail', notification.target]"
+    routerLinkActive="router-link-active"
     *ngFor="let notification of notifications"
     fxLayout="column"
     class="notification"
     fxLayoutAlign="start start"
     fxLayoutGap="0px"
   >
-    <h3 class="time">JUST NOW</h3>
+    <h3 class="time">{{ notification.date | timeago }}</h3>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
       <img matCardAvatar src="/assets/images/me.jpg" alt="" />
       <div>
@@ -37,5 +49,5 @@
     >
       <mat-icon>delete</mat-icon>
     </button>
-  </div>
+  </a>
 </div>

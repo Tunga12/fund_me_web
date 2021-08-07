@@ -1,6 +1,13 @@
 <div class="tab-content">
   <div fxLayout="column">
     <h1 class="bold">Donor stastics here</h1>
+    <!-- <mat-progress-spinner
+    mode="determinate"
+    [value]="10"
+    color="primary"
+    class="loading-spinner"
+[strokeWidth]="10"
+  ></mat-progress-spinner> -->
   </div>
 
   <mat-tab-group [disableRipple]="false">
@@ -10,7 +17,9 @@
       *ngFor="let tab of [0, 1]; let index = index"
     >
       <div *ngIf="index === 0">
-        <donations-tab-conntent [fundraiser]="fundraiser"></donations-tab-conntent>
+        <donations-tab-conntent
+          [fundraiser]="fundraiser"
+        ></donations-tab-conntent>
       </div>
 
       <div class="tab-content" *ngIf="index === 1">

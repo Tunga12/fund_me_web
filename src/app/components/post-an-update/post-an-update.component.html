@@ -18,8 +18,8 @@
       </mat-form-field>
       <!-- TODO -->
       <label for="id">Add a photo </label>
-      <div class="{drag-drop-box}" cdkDrag>
-        <input
+
+      <input
           id="image"
           (change)="uploadImage($event)"
           type="file"
@@ -27,7 +27,7 @@
           formControlName="image"
           value=" Add a photo or video"
         />
-      </div>
+
       <img *ngIf="update" [src]="update.image" />
 
       <mat-error *ngIf="content?.touched && content?.errors?.required">

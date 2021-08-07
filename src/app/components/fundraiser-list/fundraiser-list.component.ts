@@ -15,11 +15,11 @@ export class FundraiserListComponent implements OnInit {
   myFundraisers: Fundraiser[] = [];
 
   fundraiserSUb?: Subscription;
-  errorMessage: string='';
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
-    private fundraiserServ: FundraiserService,
+    private fundraiserServ: FundraiserService
   ) {}
 
   ngOnInit(): void {
@@ -31,23 +31,26 @@ export class FundraiserListComponent implements OnInit {
     this.router.navigateByUrl('/my-fundraiser-detail');
   }
 
+  percentage(fund: Fundraiser): number {
+    return this.fundraiserServ.getPercentage(fund);
+  }
 
   // get fundraisers of current user
   getMyFundraisers() {
-    this.fundraiserSUb = this.fundraiserServ
-      .getMyFundraisers()
-      .subscribe(
-        (fundraisers) => {
-          this.loading = false;
-          this.myFundraisers = fundraisers.fundraisers;
-        },
-        (error) => {
-          this.loading = false;
-          console.log(error.error);
-          this.errorMessage = error.status===404?"You don't have any fundraiser yet.":"Unable to load your fundraisers";
-
-        }
-      );
+    this.fundraiserSUb = this.fundraiserServ.getMyFundraisers().subscribe(
+      (fundraisers) => {
+        this.loading = false;
+        this.myFundraisers = fundraisers.fundraisers;
+      },
+      (error) => {
+        this.loading = false;
+        console.log(error.error);
+        this.errorMessage =
+          error.status === 404
+            ? "You don't have any fundraiser yet."
+            : 'Unable to load your fundraisers';
+      }
+    );
   }
 
   createFundraiser() {

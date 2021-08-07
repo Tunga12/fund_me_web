@@ -40,7 +40,9 @@ export class DonateComponent implements OnInit, OnDestroy {
       amount: [undefined, [Validators.required]],
       tip: [10, [Validators.required, Validators.min(10)]],
       // anonymous: [],
-      comment: ['', [Validators.required, Validators.minLength(5)]],
+      comment: [
+        '', //[Validators.required, Validators.minLength(5)]
+      ],
     });
 
     // get the Id f the fundraiser from the route

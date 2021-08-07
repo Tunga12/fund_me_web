@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from './../../services/notification/notification.service';
 import { Subscription } from 'rxjs';
 import { Notification } from './../../models/notification.model';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from './../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-notification',
@@ -14,8 +15,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   notifications!: Notification[];
 
   notificatonSub?: Subscription;
-  errorMessage: any;
-  constructor(private notificationService: NotificationService) {}
+  errorMessage? = '';
+  constructor(
+    private notificationService: NotificationService,
+    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.getNotifications();
@@ -29,8 +34,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
         console.log(notifications);
         this.loading = false;
       },
-      (error) => {
-        this.errorMessage = error.error;
+      () => {
+        this.loading = false;
+        this.errorMessage = 'Unable to get notifications';
       }
     );
   }
@@ -41,9 +47,14 @@ export class NotificationComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.notifications.splice(index, 1);
+          this.snackBar.open(
+            'Notification deleted',
+            'close',
+            this.snackbarService.getConfig()
+          );
         },
         (error) => {
-          this.errorMessage = error.error;
+          this.errorMessage = 'Unable to delete notifications';
         }
       );
   }

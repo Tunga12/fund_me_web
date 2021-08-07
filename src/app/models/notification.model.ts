@@ -5,4 +5,6 @@ export interface Notification {
   notificationType: string;
   content: string;
   title: string;
+  date: string;
+  target: string;
 }

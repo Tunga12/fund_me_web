@@ -27,41 +27,50 @@
   <p class="text-error">{{ errorMessage }}</p>
 
   <div *ngIf="!loading">
-     <p *ngIf="myFundraisers?.length === 0 && !errorMessage">
-    You have no fundraisers yet
-  </p>
-
-    <div
-      fxLayout="row"
-      fxLayoutGap="32px"
-      fxLayoutAlign="start start"
-      class="items-row"
-      fxLayoutAlign.xs="center center"
+    <p *ngIf="myFundraisers?.length === 0 && !errorMessage">
+      You have no fundraisers yet
+    </p>
+    <mat-grid-list
+      *ngIf="myFundraisers.length > 0"
+      [responsiveColumns]="{ xs: 2, sm: 3, md: 3, lg: 6, xl: 8 }"
+      [gutterSize]="'10px'"
     >
-      <mat-card
-        [routerLink]="['/my-fundraiser-detail', fundraiser._id]"
-        *ngFor="let fundraiser of myFundraisers; let i = index"
-        [ngStyle.sm]="{ 'margin-bottom': '30px' }"
-        fxFlex="30"
-        fxFlex.xs="40"
+      <mat-grid-tile
+        *ngFor="let fundraiser of myFundraisers"
+        [colspan]="1"
+        [rowspan]="1"
       >
-        <div>
-          <img
-            matCardImage
-            [src]="fundraiser.image"
-            [ngStyle.xs]="{ width: '100%', height: '200px !important' }"
-            [ngStyle.sm]="{ width: '100%', height: '200px' }"
-          />
-        </div>
-        <mat-card-header>
-          <mat-card-title> {{ fundraiser.title }} </mat-card-title>
-          <mat-card-subtitle>{{ fundraiser.dateCreated }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-actions>
-          <p style="text-align: center">Manage</p>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+        <mat-card
+          [routerLink]="['/my-fundraiser-detail', fundraiser._id]"
+          fxFlex.xs="98"
+        >
+          <div class="mat-image-container">
+            <img [src]="fundraiser.image" />
+          </div>
+          <mat-card-content
+            fxLayout="column"
+            fxLayoutAlign="start start"
+            [ngStyle.xs]="{ height: '130px' }"
+          >
+            <strong>{{ fundraiser.title }}</strong>
+            <span
+              *ngIf="(fundraiser?.donations)!.length > 0"
+              class="color-gray text-small"
+            >
+              Last donation {{ (fundraiser?.donations)![0].date | timeago }}
+            </span>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="percentage(fundraiser)"
+              color="primary"
+            ></mat-progress-bar>
+            <p>
+              <strong>{{ fundraiser.totalRaised }}</strong> raised of
+              {{ fundraiser.goalAmount }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
 </div>
