@@ -32,7 +32,7 @@
   </mat-form-field> -->
   <button
     mat-raised-button
-    [disabled]="!form.valid"
+    [disabled]="!form.valid || loading"
     color="primary"
     (click)="nextStep()"
     class="btn-large"

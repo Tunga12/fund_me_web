@@ -25,7 +25,7 @@ export class SetFundraiserMediaComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      image: [''],
+      image: ['',Validators.required],
     });
   }
   nextStep() {

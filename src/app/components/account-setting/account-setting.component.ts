@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { Title } from '@angular/platform-browser';
+import { SnackbarService } from './../../services/snackbar/snackbar.service';
+import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 
 @Component({
   selector: 'app-account-setting',
@@ -21,17 +23,12 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./account-setting.component.css'],
 })
 export class AccountSettingComponent implements OnInit, OnDestroy {
+  loading = false;
   changePassword = false;
   form!: FormGroup;
   errorMessage = '';
   user!: User;
   userSub?: Subscription;
-
-  snackBarConfig: MatSnackBarConfig = {
-    verticalPosition: 'top', // 'top' | 'bottom'
-    horizontalPosition: 'end', //'start' | 'center' | 'end' | 'left' | 'right'
-    duration: 2000,
-  };
 
   // validate the existance of whitesaces in our input
   whiteSpaceValidator = new WhiteSpaceValidatorDirective();
@@ -42,11 +39,12 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog,
-   private title:Title
+    private title: Title,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
-    this.title.setTitle("Account setting");
+    this.title.setTitle('Account setting');
     this.form = this.formBuilder.group({
       firstName: [
         '',
@@ -65,18 +63,29 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
+      ],
     });
     this.getCurrentUser();
   }
 
   // get the currently logged in user
   getCurrentUser() {
+    this.loading = true;
     this.userSub = this.userService.getCurrentUser().subscribe(
       (user) => {
         this.user = user;
         this.form.patchValue(user);
+        this.loading = false;
       },
       (error) => {
+        this.loading = false;
         console.log(error.error);
         this.errorMessage = error.error;
       }
@@ -85,54 +94,56 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
 
   // save the changes=>update
   save() {
-    let updatedUser = { ...this.user, ...this.form.value };
+    this.loading = true;
+    let updatedUser = this.form.value;
     this.userSub = this.userService.updateCurrentUser(updatedUser).subscribe(
       (user) => {
         this.user = user;
         this.form.patchValue(this.user);
+        this.loading = false;
         this.snackBar.open(
           'Update saved seccuessfully',
           'close',
-          this.snackBarConfig
+          this.snackbarService.getConfig()
         );
       },
       (error) => {
+        this.loading = false;
         console.log(error.error);
         this.errorMessage = error.error;
-        this.snackBar.open(this.errorMessage, 'close', this.snackBarConfig);
-      }
-    );
-  }
-
-  // deletes teh currently logged in user
-  deleteCurrentUser() {
-    this.userSub = this.userService.deleteCurrentUser().subscribe(
-      (user) => {
-        console.log(user);
-        localStorage.clear();
-        this.router.navigate(['/home-page']);
-      },
-      (error) => {
-        console.log(error.error);
-        this.errorMessage = error.error;
-        this.snackBar.open(this.errorMessage, 'close', this.snackBarConfig);
+        this.snackBar.open(
+          this.errorMessage,
+          'close',
+          this.snackbarService.getConfig()
+        );
       }
     );
   }
 
   // opens the chane password dialog
-  changePasswordDialog() {
+  openChangePasswordDialog() {
     this.dialog.open(PasswordResetComponent);
+  }
+
+  //open delete account dialog
+  openDeleteAccountDialog() {
+    this.dialog.open(DeleteAccountDialogComponent);
   }
 
   public get email(): AbstractControl {
     return this.form.get('email')!;
   }
+
   public get firstName(): AbstractControl {
     return this.form.get('firstName')!;
   }
+
   public get lastName(): AbstractControl {
     return this.form.get('lastName')!;
+  }
+
+  public get phone(): AbstractControl {
+    return this.form.get('phoneNumber')!;
   }
 
   ngOnDestroy(): void {

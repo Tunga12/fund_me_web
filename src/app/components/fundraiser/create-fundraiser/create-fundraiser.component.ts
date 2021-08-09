@@ -46,6 +46,9 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
 
   // subit the form to create teh fundraiser
   submit(fundraiser: Fundraiser) {
+    if (!fundraiser.image) {
+      delete fundraiser.image;
+    }
     // post fundraiser
     this.fundraiserSub = this.fundraiserServ
       .createFundraiser(fundraiser)

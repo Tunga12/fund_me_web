@@ -76,6 +76,18 @@ export class FundraiserService {
   }
 
   /*non http sevices */
+  getNumberOfComments(fundraiser: Fundraiser):number {
+    let comments = fundraiser.donations?.filter((donation) => {
+      if (donation.comment?.trim()) {
+        return true;
+      }
+      return false;
+    }
+    );
+    console.log(comments);
+
+    return comments?.length||0;
+  }
 
   //to know if a fundraiser has a team (accepted mambers)
   hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {

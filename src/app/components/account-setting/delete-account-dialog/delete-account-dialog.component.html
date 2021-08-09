@@ -1,0 +1,24 @@
+<h1 matDialogTitle>
+  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+    <h2 class="bold">Are you sure?</h2>
+    <button mat-button mat-dialog-close>
+      <mat-icon class="mat-18">close</mat-icon>
+    </button>
+  </div>
+</h1>
+<mat-divider></mat-divider>
+
+<mat-dialog-content>
+  <p class="bold">
+    Deleting your account will remove all your activity and campaigns from
+    GoFundMe
+  </p>
+</mat-dialog-content>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<mat-error>{{ errorMessage }}</mat-error>
+
+<mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-around start">
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button color="warn" (click)="deleteCurrentUser()">Delete</button>
+</mat-dialog-actions>

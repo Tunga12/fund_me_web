@@ -25,7 +25,7 @@
     <form>
       <span [ngSwitch]="currentStep">
         <set-basic-info
-        [fundraiser]="fundraiser"
+          [fundraiser]="fundraiser"
           *ngSwitchCase="1"
           (next)="next($event)"
         ></set-basic-info>
@@ -41,6 +41,8 @@
         ></set-fundraiser-story>
         <p *ngSwitchDefault></p>
       </span>
+
+      <mat-error *ngIf="errorMessage"> {{ errorMessage }}</mat-error>
       <button
         *ngIf="currentStep !== 1"
         mat-stroked-button
@@ -49,9 +51,6 @@
       >
         Back
       </button>
-      <mat-error *ngIf="errorMessage"
-    > {{ errorMessage }}</mat-error
-  >
     </form>
     <p *ngIf="currentStep === 1">
       By continuing, you agree to the GoFundMe

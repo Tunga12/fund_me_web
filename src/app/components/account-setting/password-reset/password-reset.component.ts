@@ -1,20 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
   AbstractControl,
+  FormBuilder,
+  FormGroup,
   Validators,
 } from '@angular/forms';
+import { UserService } from 'src/app/services/user/user.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { AuthService } from './../../../services/auth/auth.service';
+import { User } from 'src/app/models/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from './../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.css'],
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordResetComponent implements OnInit, OnDestroy {
+  loading = false;
   form!: FormGroup;
   errorMessage = '';
-  constructor(private formBuilder: FormBuilder) {}
+
+  userSub?: Subscription;
+  authSub?: Subscription;
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
+    private dialogRef: MatDialogRef<PasswordResetComponent>
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -29,11 +47,65 @@ export class PasswordResetComponent implements OnInit {
           ),
         ],
       ],
-      confirmPassword: [Validators.required],
+      confirmPassword: ['', [Validators.required]],
     });
   }
 
-  changePassword() {}
+  // change password
+  changePassword() {
+    this.loading = true;
+    let currentUser: User;
+    this.userSub = this.userService.getCurrentUser().subscribe(
+      (user) => {
+        currentUser = user;
+
+        this.authSub = this.authService
+          .signIn({
+            email: user.email,
+            password: this.password.value,
+          })
+          .subscribe(
+            () => {
+              this.updateUser(user);
+            },
+            () => {
+              this.loading = false;
+              this.errorMessage = 'Incorrect password';
+            }
+          );
+      },
+      (error) => {
+        this.loading = false;
+        this.errorMessage = error.error;
+      }
+    );
+  }
+
+  // update user to change password
+  updateUser(user: User) {
+    delete user._id;
+    delete user.__v;
+    this.userService
+      .updateCurrentUser({
+        ...user,
+        password: this.newPassword.value,
+      })
+      .subscribe(
+        () => {
+          this.loading = false;
+          this.dialogRef.close();
+          this.snackBar.open(
+            'Password changed succesfully',
+            'Close',
+            this.snackbarService.getConfig()
+          );
+        },
+        (error) => {
+          this.loading = false;
+          this.errorMessage = error.error;
+        }
+      );
+  }
 
   public get password(): AbstractControl {
     return this.form.get('password')!;
@@ -45,5 +117,10 @@ export class PasswordResetComponent implements OnInit {
 
   public get confirmPassword(): AbstractControl {
     return this.form.get('confirmPassword')!;
+  }
+
+  ngOnDestroy(): void {
+    this.authSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 }

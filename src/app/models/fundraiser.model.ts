@@ -9,7 +9,7 @@ export interface Fundraiser {
   __v?: any;
   _id?: string;
   title: string;
-  image: string;
+  image?: string;
   goalAmount?: number;
   category?: Category;
   story: string;

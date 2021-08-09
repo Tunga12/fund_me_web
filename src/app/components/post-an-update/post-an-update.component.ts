@@ -10,7 +10,7 @@ import { Update } from './../../models/update.model';
 import { ImageService } from './../../services/image/image.service';
 import { UpdateService } from 'src/app/services/update/update.service';
 import { Subscription } from 'rxjs';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 

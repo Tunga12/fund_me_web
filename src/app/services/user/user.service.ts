@@ -5,31 +5,24 @@ import { User } from 'src/app/models/user.model';
 import { environment } from './../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
-  constructor(
-    private http:HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   // get currently logged in user
-  getCurrentUser(): Observable<User>{
-    return this.http.get<User>(
-      `${environment.BASE_URL}/users/me`
-    );
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${environment.BASE_URL}/users/me`);
   }
   // update currently logged in user
-  updateCurrentUser(user: User): Observable<User>{
-    return this.http.put<User>(
-      `${environment.BASE_URL}/users/me`,user
-    );
+  updateCurrentUser(user: User): Observable<User> {
+    return this.http.put<User>(`${environment.BASE_URL}/users/me`, user);
   }
 
   // delete currently logged in user
-  deleteCurrentUser(): Observable<User>{
-    return this.http.delete<User>(
-      `${environment.BASE_URL}/users/me`
-    );
+  deleteCurrentUser() {
+    return this.http.delete(`${environment.BASE_URL}/users/me`, {
+      responseType: 'text',
+    });
   }
 }

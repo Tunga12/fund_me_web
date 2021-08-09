@@ -64,6 +64,11 @@ export class FudraiserDetailPublicComponent implements OnInit {
     );
   }
 
+  // get the number of comments of thos fundraiser
+  getNumberOfComments() {
+    return this.fundraiserServ.getNumberOfComments(this.fundraiser!);
+  }
+
   // get the first donation of this fundraiser
   getFirstDonation() {
     this.firstDonation = this.fundraiserServ.getFirstDonation(

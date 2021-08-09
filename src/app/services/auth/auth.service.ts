@@ -11,8 +11,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // sign in using email and password
-  signIn(emailAndPassword:{email: string,pasword:string}): Observable<HttpResponse<any>> {
-    localStorage.clear();
+  signIn(emailAndPassword: {
+    email: string;
+    password: string;
+  }): Observable<HttpResponse<any>> {
     return this.http.post<any>(
       `${environment.BASE_URL}/auth`,
       emailAndPassword,
@@ -32,6 +34,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('x-auth-token') !== null
+    return localStorage.getItem('x-auth-token') !== null;
   }
 }

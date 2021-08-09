@@ -61,6 +61,7 @@ import { AccountSettingComponent } from './components/account-setting/account-se
 import { PasswordResetComponent } from './components/account-setting/password-reset/password-reset.component';
 import { SearchComponent } from './components/search/search.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from './components/account-setting/delete-account-dialog/delete-account-dialog.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { MatDialogRef } from '@angular/material/dialog';
     AccountSettingComponent,
     PasswordResetComponent,
     SearchComponent,
+    DeleteAccountDialogComponent,
   ],
   entryComponents: [],
   imports: [

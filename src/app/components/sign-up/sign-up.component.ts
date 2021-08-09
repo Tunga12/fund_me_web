@@ -61,6 +61,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
+      ],
       password: [
         '',
         [
@@ -109,6 +117,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public get email(): AbstractControl | null {
     return this.form.get('email');
+  }
+  public get phone(): AbstractControl | null {
+    return this.form.get('phoneNumber');
   }
 
   public get password(): AbstractControl | null {

@@ -7,7 +7,18 @@
   fxFlex.lt-sm="90"
 >
   <h2 class="bold">Acount settings</h2>
-  <form [formGroup]="form" (ngSubmit)="$event.preventDefault()">
+  <mat-progress-spinner
+    *ngIf="loading"
+    fxFlexAlign="center center"
+    mode="indeterminate"
+    color="primary"
+  ></mat-progress-spinner>
+  <form
+    *ngIf="!loading"
+    [formGroup]="form"
+    (ngSubmit)="$event.preventDefault()"
+  >
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <div
       style="width: 100%"
       fxLayout="row"
@@ -15,7 +26,7 @@
       fxLayoutGap="10px"
     >
       <mat-form-field floatPlaceholder="auto" appearance="outline">
-        <mat-label>First name</mat-label>
+        <mat-label>First name *</mat-label>
         <input
           matInput
           formControlName="firstName"
@@ -35,7 +46,7 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field floatPlaceholder="auto" appearance="outline">
-        <mat-label>Last name</mat-label>
+        <mat-label>Last name *</mat-label>
         <input
           matInput
           formControlName="lastName"
@@ -55,27 +66,62 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <mat-form-field floatPlaceholder="auto" appearance="outline">
-      <mat-label>Email</mat-label>
-      <input
-        matInput
-        formControlName="email"
-        type="email"
-        placeholder="youremail@example.com"
-      />
-      <mat-error *ngIf="email?.touched && email?.errors?.email"
-        >Please enter a valid email.
-      </mat-error>
-      <mat-error *ngIf="email?.touched && email?.errors?.required"
-        >Please enter a your email.
-      </mat-error>
-    </mat-form-field>
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="space-between start"
+      fxLayoutGap="10px"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label> Email Address *</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email address"
+          type="email"
+          email
+        />
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-error *ngIf="email?.touched && email?.errors?.email"
+          >Please enter a valid email.
+        </mat-error>
+        <mat-error *ngIf="email?.touched && email?.errors?.required"
+          >Please enter your email
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> Phone number *</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          placeholder="Phone number"
+          type="tel"
+        />
+        <mat-icon matPrefix>phone</mat-icon>
+        <mat-error
+          *ngIf="
+            phone?.touched &&
+            (phone?.errors?.minlength || phone?.errors?.maxlength)
+          "
+          >Phone number must be
+          {{ phone?.errors?.minlength.requiredLength }} digits.
+        </mat-error>
+        <mat-error *ngIf="phone?.touched && phone?.errors?.required"
+          >Please enter your phone number
+        </mat-error>
+      </mat-form-field>
+    </div>
 
     <!-- start: Error display -->
     <mat-error>{{ errorMessage }}</mat-error>
     <!--end: Error display -->
 
-    <button mat-stroked-button color="primary" (click)="changePasswordDialog()">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="openChangePasswordDialog()"
+    >
       Update your password
     </button>
     <div><mat-divider></mat-divider></div>
@@ -88,13 +134,15 @@
         Deleting your account will remove all of your activity and campaigns,
         and you will no longer be able to sign in with this account.
       </p>
-      <button color="warn" mat-button>Delete Account</button>
+      <button color="warn" mat-button (click)="openDeleteAccountDialog()">
+        Delete Account
+      </button>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
       <button
         type="submit"
         color="primary"
-        [disabled]="form.invalid || !form.touched"
+        [disabled]="form.invalid || !form.dirty || loading"
         mat-raised-button
         (click)="save()"
       >

@@ -366,12 +366,13 @@
 
       <!-- Comment section -->
       <div>
-        <h2 class="bold">Comments({{ fundraiser?.donations?.length }})</h2>
+        <h2 class="bold">Comments({{ getNumberOfComments() }})</h2>
         <div>
           <mat-divider></mat-divider>
         </div>
         <div *ngFor="let donation of fundraiser?.donations; let last = last">
           <div
+            *ngIf="donation?.comment"
             fxLayout="row"
             fxLayoutAlign="start start"
             fxLayoutGap="20px"

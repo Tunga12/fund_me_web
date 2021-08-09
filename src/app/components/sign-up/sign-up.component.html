@@ -1,9 +1,4 @@
-<mat-card
-  fxLayout="column"
-  fxFlex.gt-sm="50"
-  fxFlex.lt-sm="100"
-  fxFlex.sm="60"
->
+<mat-card fxLayout="column" fxFlex.gt-sm="50" fxFlex.lt-sm="100" fxFlex.sm="60">
   <!-- Title of an Card -->
   <mat-card-title>
     <h1 class="headline">Sign up</h1>
@@ -77,23 +72,48 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label> Email Address *</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          placeholder="Email address"
-          type="email"
-          email
-        />
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="email?.touched && email?.errors?.email"
-          >Please enter a valid email.
-        </mat-error>
-        <mat-error *ngIf="email?.touched && email?.errors?.required"
-          >Please enter your email
-        </mat-error>
-      </mat-form-field>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label> Email Address *</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email address"
+            type="email"
+            email
+          />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="email?.touched && email?.errors?.email"
+            >Please enter a valid email.
+          </mat-error>
+          <mat-error *ngIf="email?.touched && email?.errors?.required"
+            >Please enter your email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label> Phone number *</mat-label>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Phone number"
+            type="tel"
+          />
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-error *ngIf="phone?.touched && (phone?.errors?.minlength || phone?.errors?.maxlength)"
+            >Phone number must be
+            {{ phone?.errors?.minlength.requiredLength }} digits.
+          </mat-error>
+          <mat-error *ngIf="phone?.touched && phone?.errors?.required"
+            >Please enter your phone number
+          </mat-error>
+        </mat-form-field>
+      </div>
 
       <div
         fxLayout="row"
