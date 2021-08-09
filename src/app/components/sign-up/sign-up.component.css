@@ -1,11 +1,11 @@
-mat-card.mat-card{
+mat-card.mat-card {
   align-items: center;
 }
 
 form {
-  margin: 30px auto !important;
+  margin: 20px auto !important;
 }
 
-mat-icon.mat-icon{
+mat-icon.mat-icon {
   cursor: pointer;
 }

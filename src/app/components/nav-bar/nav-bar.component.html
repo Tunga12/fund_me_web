@@ -5,7 +5,13 @@
 >
   <div>
     <!-- searcc field -->
-    <input matInput #key type="text"  placeholder='Search fundraisers' (keyup.enter)="search(key.value)" />
+    <input
+      matInput
+      #key
+      type="text"
+      placeholder="Search fundraisers"
+      (keyup.enter)="search(key.value)"
+    />
     <!-- First menu -->
     <a
       mat-button
@@ -29,13 +35,13 @@
  -->
     <a
       mat-button
-      [matMenuTriggerFor]="fundrise"
+      [matMenuTriggerFor]="fundraise"
       #funndrisemenuTrigger="matMenuTrigger"
-      (onMenuClose)="fundriseCaret = !fundriseCaret"
-      (onMenuOpen)="fundriseCaret = !fundriseCaret"
+      (onMenuClose)="fundraiseCaret = !fundraiseCaret"
+      (onMenuOpen)="fundraiseCaret = !fundraiseCaret"
       class="nav-link mat-button"
     >
-      <mat-menu #fundrise="matMenu">
+      <mat-menu #fundraise="matMenu">
         <a
           *ngFor="let category of categories"
           mat-menu-item
@@ -48,8 +54,8 @@
         <mat-divider></mat-divider>
         <a mat-menu-item routerLink="'/see-all'">See all</a>
       </mat-menu>
-      Fundrise for
-      <mat-icon>{{ fundriseCaret ? "expand_more" : "expand_less" }}</mat-icon>
+      Fundraise for
+      <mat-icon>{{ fundraiseCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
   </div>
 
@@ -67,7 +73,7 @@
     <a
       *ngIf="authService.isLoggedIn()"
       mat-button
-      [routerLink]="['my-fundraisers', currentUser?._id]"
+      [routerLink]="['my-fundraisers']"
       class="nav-link mat-button"
     >
       Your fundraisers
@@ -84,15 +90,7 @@
       class="nav-link mat-button"
     >
       <mat-menu #account="matMenu">
-        <a
-          mat-menu-item
-          [routerLink]="['my-fundraisers', currentUser?._id]"
-          class="mat-menu-item"
-        >
-          Your fundraisers
-        </a>
-
-        <a mat-menu-item [routerLink]="['notification']" class="mat-menu-item">
+        <a mat-menu-item routerLink="/m-notification" class="mat-menu-item">
           Notifications
         </a>
 
@@ -105,9 +103,9 @@
         <a mat-menu-item routerLink="/create" class="mat-menu-item">
           Start a new fundraiser
         </a>
-        <a mat-menu-item routerLink="/help" class="mat-menu-item">
+        <!-- <a mat-menu-item routerLink="/help" class="mat-menu-item">
           Help center
-        </a>
+        </a> -->
         <mat-divider></mat-divider>
         <a mat-menu-item routerLink="/sign-in" (click)="authService.logOut()"
           >Sign out</a

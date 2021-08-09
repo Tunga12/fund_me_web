@@ -88,7 +88,7 @@ const ROUTES = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'my-fundraisers/:userId',
+    path: 'my-fundraisers',
     component: FundraiserListComponent,
     canActivate: [AuthGuard],
   },

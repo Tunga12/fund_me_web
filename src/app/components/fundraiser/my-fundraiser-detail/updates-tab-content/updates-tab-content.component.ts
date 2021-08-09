@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an-update.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Update } from './../../../../models/update.model';
+import { Title } from '@angular/platform-browser';
+import { SnackbarService } from './../../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'updates-tab-content',
@@ -20,8 +22,6 @@ import { Update } from './../../../../models/update.model';
   styleUrls: ['./updates-tab-content.component.css'],
 })
 export class UpdatesTabContentComponent implements OnInit, OnDestroy {
-  timeout = 2000;
-  // fundraiserId = '';
   @Input() fundraiser!: Fundraiser;
   @Output() update = new EventEmitter();
   updateSub?: Subscription;
@@ -29,10 +29,13 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
   constructor(
     private snackBar: MatSnackBar,
     private updateService: UpdateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarServ:SnackbarService,
+    private docTitle: Title
   ) {}
+
   ngOnInit(): void {
-    console.log(this.fundraiser.updates);
+    this.docTitle.setTitle('Manage updates');
   }
 
   //  opendialog for update
@@ -50,18 +53,17 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
   deleteUpdate(update: any) {
         this.updateSub = this.updateService.deleteUpdate(update).subscribe(
           () => {
-            this.snackBar.open('Update deleted successfuly!', 'Close',{
-              verticalPosition: 'top', // 'top' | 'bottom'
-              horizontalPosition: 'end', //'start' | 'center' | 'end' | 'left' | 'right'
-              panelClass: ['red-snackbar'],
-              duration: this.timeout,
-            });
+            this.snackBar.open('Update deleted successfuly!', 'Close',this.snackbarServ.getConfig());
             let index = this.fundraiser.updates!.indexOf(update);
             this.fundraiser.updates?.splice(index, 1);
           },
           (error) => {
             console.log(error.error);
-            this.snackBar.open(error.error, 'Close');
+            this.snackBar.open(
+              error.error,
+              'Close',
+              this.snackbarServ.getConfig()
+            );
           }
         );
   }

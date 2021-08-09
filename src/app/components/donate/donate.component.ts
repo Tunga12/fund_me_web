@@ -11,6 +11,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
 import { DonationService } from './../../services/donation/donation.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
@@ -32,10 +33,12 @@ export class DonateComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
-    private donationService: DonationService
+    private donationService: DonationService,
+    private title:Title
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle("Donate");
     this.form = this.formBuilder.group({
       amount: [undefined, [Validators.required]],
       tip: [10, [Validators.required, Validators.min(10)]],

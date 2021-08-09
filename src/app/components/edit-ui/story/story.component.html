@@ -4,8 +4,15 @@
   fxLayout="column"
   fxLayoutAlign="center center"
 >
-  <story-text-area [form]="form"></story-text-area>
+  <story-text-area  fxFlex="100" [form]="form"></story-text-area>
   <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+    <mat-error *ngIf="story?.touched && story?.errors?.required"
+    >Story is required.</mat-error
+  >
+  <mat-error *ngIf="story?.touched && story?.errors?.minlength"
+    >Story should be {{ story?.errors?.minlength.requiredLength }} characters
+    minimum.</mat-error
+  >
   <button
     mat-raised-button
     color="primary"

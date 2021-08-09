@@ -16,27 +16,35 @@
           placeholder="Share your news here"
         ></textarea>
       </mat-form-field>
-      <!-- TODO -->
       <label for="id">Add a photo </label>
 
       <input
-          id="image"
-          (change)="uploadImage($event)"
-          type="file"
-          color="primary"
-          formControlName="image"
-          value=" Add a photo or video"
-        />
+        id="image"
+        (change)="uploadImage($event)"
+        type="file"
+        color="primary"
+        formControlName="image"
+        value=" Add a photo or video"
+      />
 
       <img *ngIf="update" [src]="update.image" />
+
+      <mat-progress-bar
+        *ngIf="loading"
+        mode="indeterminate"
+        fxFlexAlign="center"
+      ></mat-progress-bar>
 
       <mat-error *ngIf="content?.touched && content?.errors?.required">
         Please write content for your update.
       </mat-error>
-
-      <mat-error *ngIf="image?.errors?.required">
-        Please choose an image for your update.
+      <mat-error *ngIf="errorMessage">
+        {{ errorMessage }}
       </mat-error>
+
+      <!-- <mat-error *ngIf="image?.errors?.required">
+        Please choose an image for your update.
+      </mat-error> -->
 
       <mat-error *ngIf="content?.touched && content?.errors?.minlength">
         Content of an update should be
@@ -85,7 +93,7 @@
         <mat-divider></mat-divider>
       </div> -->
       <button
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || loading"
         mat-raised-button
         type="submit"
         color="primary"

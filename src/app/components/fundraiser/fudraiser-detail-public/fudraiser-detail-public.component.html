@@ -250,16 +250,17 @@
 
         <!-- Fudrising team section -->
         <div
-          *ngIf="fundraiser?.teams?.length! > 0"
+          *ngIf="hasAcceptedTeamMembers()"
           fxLayout="column"
           fxLayoutGap="20px"
         >
           <div>
             <h2 class="bold">
               Fundrising team: Team
-              {{ fundraiser?.organizer?.firstName | titlecase }}({{
+              {{ fundraiser?.organizer?.firstName | titlecase }}
+              <!-- ({{
                 1 + fundraiser!.teams!.length
-              }})
+              }}) -->
             </h2>
             <div>
               <mat-divider></mat-divider>
@@ -295,14 +296,14 @@
             fxLayoutGap="30px"
           >
             <div fxFlex="25" *ngFor="let member of fundraiser?.teams">
-              <div fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
+              <div *ngIf="member.status!=='pending'" fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
                 <img
                   src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
                 />
                 <div fxLayout="column">
                   <span class="bold"
-                    >{{ member.userId.firstName | titlecase }}
-                    {{ member.userId.lastName | titlecase }}
+                    >{{ member.id.userId.firstName | titlecase }}
+                    {{ member.id.userId.lastName | titlecase }}
                   </span>
                   <span class="text-small">team member</span>
                 </div>

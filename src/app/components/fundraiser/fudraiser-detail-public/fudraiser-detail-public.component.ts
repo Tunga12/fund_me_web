@@ -6,6 +6,7 @@ import { DoantionsComponent } from './doantions/doantions.component';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
 import { Donation } from 'src/app/models/donation.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-fudraiser-detail-public',
@@ -26,10 +27,12 @@ export class FudraiserDetailPublicComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private fundraiserServ: FundraiserService
+    private fundraiserServ: FundraiserService,
+    private docTitle: Title
   ) {}
 
   ngOnInit(): void {
+    this.docTitle.setTitle('fundraiser detail');
     // get the id parameter from router
     this.activatedRoute.paramMap.subscribe((params) => {
       this.fundraiserId = params.get('id') ?? '';
@@ -49,6 +52,9 @@ export class FudraiserDetailPublicComponent implements OnInit {
         this.getRecentDonation();
         this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(this.fundraiser);
+        console.log(
+          this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser)
+        );
       },
       (error) => {
         this.loading = false;
@@ -63,6 +69,11 @@ export class FudraiserDetailPublicComponent implements OnInit {
     this.firstDonation = this.fundraiserServ.getFirstDonation(
       this.fundraiser?.donations!
     );
+  }
+
+  // checks if this fundraiser has team members that have a status not 'pending'
+  hasAcceptedTeamMembers(): boolean {
+    return this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser!);
   }
 
   // get top donation of this fundraiser

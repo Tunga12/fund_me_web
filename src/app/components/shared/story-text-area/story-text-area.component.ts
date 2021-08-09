@@ -21,11 +21,8 @@ export class StoryTextAreaComponent implements OnInit, OnDestroy {
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
-    ['code', 'blockquote'],
     [ 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center'],
+    ['text_color'],
   ];
 
   constructor() {

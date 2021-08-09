@@ -1,59 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="editFundraiser()">
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="10px"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Title </mat-label>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Title of your campign"
+        type="text"
+      />
+      <mat-error *ngIf="title?.touched && title?.errors?.required"
+        >Title is required.</mat-error
+      >
+      <mat-error *ngIf="title?.touched && title?.errors?.max"
+        >TItle must be maximum {{ title?.errors?.max.max }} charaters.</mat-error
+      >
+    </mat-form-field>
 
-<form
-[formGroup]="form"
-(ngSubmit)="editFundraiser()"
->
-<div
-  fxLayout="row"
-  fxLayout.lt-md="column"
-  fxLayoutAlign="space-between center"
-  fxLayoutGap="10px"
->
+    <mat-form-field appearance="outline">
+      <mat-label> Goal </mat-label>
+      <input
+        matInput
+        formControlName="goalAmount"
+        placeholder="goal"
+        type="number"
+      />
+      <mat-icon matPrefix>monetization_on</mat-icon>
+      <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
+        Fundraiser goal is required
+      </mat-error>
+      <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
+        The minimun allowed goal is {{ goalAmount?.errors?.min.min | currency }}
+      </mat-error>
+    </mat-form-field>
+  </div>
 
-<mat-form-field appearance="outline">
-  <mat-label>Title </mat-label>
-  <input
-    matInput
-    [(ngModel)]="fundraiser.title"
-    formControlName="title"
-    placeholder="Title of your campign"
-    type="text"
-    required
-  />
-</mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Choose category of your fundraiser</mat-label>
+    <mat-select formControlName="category" [(value)]="fundraiser.category">
+      <mat-option>Choose category</mat-option>
+      <mat-option *ngFor="let category of categories" [value]="category">{{
+        category.name
+      }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="category?.touched && category?.errors?.required">
+      Category is required
+    </mat-error>
+  </mat-form-field>
 
-<mat-form-field appearance="outline">
-  <mat-label> Goal </mat-label>
-  <input
-  matInput
-  [(ngModel)]="fundraiser.goalAmount"
-  formControlName="goal"
-  placeholder="goal"
-  type="number"
-    required
-   />
-  <mat-icon matPrefix>monetization_on</mat-icon>
-</mat-form-field>
-</div>
-
-
-<mat-form-field appearance="outline">
-<mat-label>Choose category of your fundraiser</mat-label>
-<mat-select
-  formControlName="category"
-  [(ngModel)]="fundraiser.category"
-  required
-  [(value)]="fundraiser.category"
->
-  <mat-option>Choose category</mat-option>
-  <mat-option *ngFor="let category of categories" [value]="category">{{
-    category.name
-  }}</mat-option>
-</mat-select>
-</mat-form-field>
-
-
-<p class="bold">Campign link</p>
+  <!-- <p class="bold">Campign link</p>
 <mat-divider></mat-divider>
 <h3>gofundme.com/f/sbdsbd</h3>
 <p>
@@ -75,10 +74,10 @@ previous link
   ><h5 class="bold">preview: www.gofundme.com/{{ link.value }}</h5>
 </mat-hint>
 <mat-sufix matSuffix> {{ 45 - link.value.length }} </mat-sufix>
-</mat-form-field>
+</mat-form-field> -->
 
-<!-- TEAM SETTINGS -->
-<div class="setting">
+  <!-- TEAM SETTINGS -->
+  <!-- <div class="setting">
 <h2 class="bold">Team Settings</h2>
 <p></p>
 <mat-form-field appearance="outline">
@@ -100,15 +99,11 @@ previous link
   >Show the amount each team member has raised publicly
 </label>
 <mat-checkbox id="show-amount" value="" color="primary"></mat-checkbox>
-
-<!-- TODO add photo button -->
-
-<!-- TODO add  delete action-->
 <button class="delete-btn" mat-button>Delete Team</button>
 </div>
-
-<!-- FUNDRISER SETTINGS -->
-<div class="setting">
+-->
+  <!-- FUNDRISER SETTINGS -->
+  <!-- <div class="setting">
 <h2 class="bold">Fundraiser Settings</h2>
 
 <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
@@ -142,19 +137,20 @@ previous link
       >
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="save">
-  <button
-    color="primary"
-    mat-raised-button
-    class="btn-large"
-    style="width: 50% !important"
-  >
-    Save
-  </button>
-</div>
-</div>
+  <div class="save">
+    <button
+      [disabled]="form.invalid || form.touched || loading"
+      color="primary"
+      mat-raised-button
+      class="btn-large"
+      style="width: 50% !important"
+    >
+      Save
+    </button>
+    <!-- </div> -->
+  </div>
 </form>
 
 <div class="setting">
@@ -167,5 +163,7 @@ previous link
       </span>
     </div>
   </div>
-  <button class="delete-btn bold" (click)="openDeleteDialog()" mat-button>Delete Fundraiser</button>
+  <button class="delete-btn bold" (click)="openDeleteDialog()" mat-button>
+    Delete Fundraiser
+  </button>
 </div>

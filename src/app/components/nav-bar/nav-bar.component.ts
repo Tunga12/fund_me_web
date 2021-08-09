@@ -23,7 +23,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   //to toggle the carets upward and downward based on
   // the close and open state of dropdowns
   discoverCaret = true;
-  fundriseCaret = true;
+  fundraiseCaret = true;
   accountCaret = true;
 
   searchword = '';
@@ -40,7 +40,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private userService: UserService,
     private router: Router,
-    public authService: AuthService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   search(keyword: string) {
     console.log('Searching');
-    this.router.navigate(['/s'], { queryParams : { q: keyword } });
+    this.router.navigate(['/s'], { queryParams: { q: keyword } });
   }
   // get all categories from the service and assign to our list 'categories'
   getCategories() {

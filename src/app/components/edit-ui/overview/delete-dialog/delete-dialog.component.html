@@ -1,11 +1,15 @@
 <h1 matDialogTitle>Are you sure to delete</h1>
-  <p>Fundraiser: {{fundraiser?.title}}</p>
-
+<p>Fundraiser: {{ fundraiser?.title }}</p>
+<mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions fxLayoutAlign="space-around center">
-  <button mat-button matDialogClose mat-dialog-close="data">
-    Cancel
-  </button>
-  <button mat-raised-button (click)="deleteFundraiser()" color="warn">
+  <button mat-button matDialogClose mat-dialog-close="data">Cancel</button>
+  <button
+    [disabled]="loading"
+    mat-raised-button
+    (click)="deleteFundraiser()"
+    color="warn"
+  >
     Delete
   </button>
 </mat-dialog-actions>

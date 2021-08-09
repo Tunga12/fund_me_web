@@ -6,8 +6,14 @@
     class="loading-spinner"
   ></mat-progress-spinner>
 </div>
+
+<div>
+  <mat-error *ngIf="errorMessage" fxFlexAlign="center">
+    {{ errorMessage }}
+  </mat-error>
+</div>
 <div
-  *ngIf="!loading"
+  *ngIf="fundraiser"
   fxLayout="column"
   fxLayoutAlign="start center"
   fxLayoutGap="30px"
@@ -37,8 +43,6 @@
           [src]="fundraiser.image"
           height="126px"
           width="176px"
-          alt=""
-          [ngStyle.xs]="{ height: '150px', width: '100%' }"
           fxFlex.xs="100"
         />
         <div
@@ -64,7 +68,7 @@
           </div>
           <mat-progress-bar
             mode="determinate"
-            [value]="20"
+            [value]="percentage"
             color="primary"
           ></mat-progress-bar>
           <p>Total raised: ${{ fundraiser.totalRaised }}</p>

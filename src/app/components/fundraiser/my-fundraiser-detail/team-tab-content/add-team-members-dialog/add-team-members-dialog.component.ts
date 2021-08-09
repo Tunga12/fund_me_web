@@ -1,14 +1,14 @@
 import { Component, Inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ImportContactsDialogComponent } from './../import-contacts-dialog/import-contacts-dialog.component';
+import { ImportContactsDialogComponent } from '../../../../teams/import-contacts-dialog/import-contacts-dialog.component';
 import {
   FormGroup,
   FormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { TeamService } from './../../../services/team/team.service';
-import { Fundraiser } from './../../../models/fundraiser.model';
+import { TeamService } from '../../../../../services/team/team.service';
+import { Fundraiser } from '../../../../../models/fundraiser.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,17 +17,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./add-team-members-dialog.component.css'],
 })
 export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
-  emails: string[] = [];
+  // emails: string[] = [];
   fundraiser!: Fundraiser;
   form: FormGroup;
 
   teamSub?: Subscription;
   errorMessage = '';
-
+  loading = false;
   constructor(
     private dialog: MatDialog,
     private teamSevice: TeamService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [
@@ -48,18 +48,22 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   }
 
   addEmail() {
+    this.loading = true;
     let email = this.form.value['email'];
     console.log(email);
-
     this.teamSub = this.teamSevice
-    .addMember(email, this.fundraiser._id!)
-    .subscribe(
-      (team) => {
+      .addMember(email, this.fundraiser._id!)
+      .subscribe(
+        (team) => {
+        this.loading = false;
+        // console.log(team);
+        // let index = this.emails.indexOf(email);
+        // if (index < 0) this.emails.push(email);
         console.log(team);
-        let index = this.emails.indexOf(email);
-        if (index < 0) this.emails.push(email);
+        
         },
         (error) => {
+        this.loading = false;
           console.log(error.error);
           this.errorMessage = error.error;
         }
@@ -67,8 +71,8 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   }
 
   removeEmail(email: string) {
-    let index = this.emails.indexOf(email);
-    this.emails.splice(index, 1);
+    // let index = this.emails.indexOf(email);
+    // this.emails.splice(index, 1);
   }
 
   openImportContactsDialog() {

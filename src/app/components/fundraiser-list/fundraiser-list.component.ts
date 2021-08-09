@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'fundraiser-list',
@@ -19,10 +20,13 @@ export class FundraiserListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fundraiserServ: FundraiserService
+    private fundraiserServ: FundraiserService,
+    private docTitle: Title
   ) {}
 
   ngOnInit(): void {
+    this.docTitle.setTitle('My fundaisers');
+
     // then get fundraisers
     this.getMyFundraisers();
   }

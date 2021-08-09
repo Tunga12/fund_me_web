@@ -7,6 +7,9 @@
         category.name
       }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="category?.touched && category?.errors?.required">
+      Category is required
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -20,6 +23,12 @@
     />
     <mat-icon matPrefix>monetization_on</mat-icon>
     <span matSuffix>.00 USD</span>
+    <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
+      Fundraiser goal is required
+    </mat-error>
+    <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
+      The minimun allowed goal is {{ goalAmount?.errors?.min.min | currency }}
+    </mat-error>
   </mat-form-field>
   <p>
     Keep in mind that transaction fees, including credit and debit charges, are
@@ -31,15 +40,6 @@
       <li>A bank account</li>
     </ul>
   </div>
-  <mat-error *ngIf="category?.touched && category?.errors?.required">
-    Category is required
-  </mat-error>
-  <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
-    Fundraiser goal is required
-  </mat-error>
-  <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-    The minimun allowed goal is {{ goalAmount?.errors?.min.min|currency }}
-  </mat-error>
 
   <button
     [disabled]="!form.valid"

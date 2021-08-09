@@ -1,8 +1,8 @@
 <mat-card
   fxLayout="column"
-  [ngStyle.gt-sm]="{ width: '50%', margin: '30px auto' }"
-  [ngStyle.sm]="{ width: '60%', margin: '30px auto' }"
-  fxLayoutGap="10px"
+  fxFlex.gt-sm="50"
+  fxFlex.lt-sm="100"
+  fxFlex.sm="60"
 >
   <!-- Title of an Card -->
   <mat-card-title>
@@ -29,6 +29,23 @@
             type="text"
           />
           <mat-icon matSuffix></mat-icon>
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
+            >Please enter your first name
+          </mat-error>
+
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
+            >First name must be
+            {{ firstName?.errors?.minlength.requiredLength }} minimun.
+          </mat-error>
+
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.maxlength"
+            >First name must be
+            {{ firstName?.errors?.maxlength.requiredLength }} minimun.
+          </mat-error>
+
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
+            >First name cannot include whitespaces.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -40,6 +57,23 @@
             type="text"
           />
           <mat-icon matSuffix></mat-icon>
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
+            >Please enter your last name
+          </mat-error>
+
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
+            >Last name must be
+            {{ lastName?.errors?.minlength.requiredLength }} minimun.
+          </mat-error>
+
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.maxlength"
+            >Last name must be
+            {{ lastName?.errors?.maxlength.requiredLength }} maximun.
+          </mat-error>
+
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
+            >Last name cannot include whitespaces.
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -52,8 +86,15 @@
           type="email"
           email
         />
-        <mat-icon matSuffix></mat-icon>
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-error *ngIf="email?.touched && email?.errors?.email"
+          >Please enter a valid email.
+        </mat-error>
+        <mat-error *ngIf="email?.touched && email?.errors?.required"
+          >Please enter your email
+        </mat-error>
       </mat-form-field>
+
       <div
         fxLayout="row"
         fxLayout.lt-md="column"
@@ -75,6 +116,18 @@
             [attr.aria-pressed]="hidePassword"
             >{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon
           >
+          <mat-error *ngIf="password?.touched && password?.errors?.minlength"
+            >Password length must be minimum
+            {{ password?.errors?.minlength.requiredLength }} .
+          </mat-error>
+
+          <mat-error *ngIf="password?.touched && password?.errors?.required"
+            >Please enter your password
+          </mat-error>
+
+          <mat-error *ngIf="password?.touched && password?.errors?.pattern">
+            Password must contain atleast 1 special character and 1 number.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -96,65 +149,26 @@
               hideConfirmPassword ? "visibility_off" : "visibility"
             }}</mat-icon
           >
+          <mat-error
+            *ngIf="
+              confirmPassword?.touched && confirmPassword?.errors?.mismatch
+            "
+          >
+            Password and confirm password doesn't match
+          </mat-error>
+
+          <mat-error
+            *ngIf="
+              confirmPassword?.touched && confirmPassword?.errors?.required
+            "
+            >Please confirm your password
+          </mat-error>
         </mat-form-field>
       </div>
       <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
       <mat-error>{{ errorMessage }}</mat-error>
-      <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
-        >Please enter your last name
-      </mat-error>
-      <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
-        >Please enter your last name
-      </mat-error>
-      <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
-        >First name must be
-        {{ firstName?.errors?.minlength.requiredLength }} minimun.
-      </mat-error>
 
-      <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
-        >Last name must be
-        {{ lastName?.errors?.minlength.requiredLength }} minimun.
-      </mat-error>
-
-      <mat-error *ngIf="firstName?.touched && firstName?.errors?.maxlength"
-        >First name must be
-        {{ firstName?.errors?.maxlength.requiredLength }} minimun.
-      </mat-error>
-
-      <mat-error *ngIf="lastName?.touched && lastName?.errors?.maxlength"
-        >Last name must be
-        {{ lastName?.errors?.maxlength.requiredLength }} maximun.
-      </mat-error>
-
-      <mat-error *ngIf="password?.touched && password?.errors?.minlength"
-        >Password length must be minimum
-        {{ password?.errors?.minlength.requiredLength }} .
-      </mat-error>
-
-      <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
-        >First name cannot include whitespaces.
-      </mat-error>
-
-      <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
-        >Last name cannot include whitespaces.
-      </mat-error>
-
-      <mat-error *ngIf="email?.touched && email?.errors?.email"
-        >Please enter a valid email.
-      </mat-error>
-      <mat-error *ngIf="email?.touched && email?.errors?.required"
-        >Please enter your email
-      </mat-error>
-
-      <mat-error *ngIf="password?.touched && password?.errors?.pattern">
-        Password must contain atleast 1 special character and 1 number.
-      </mat-error>
-      <mat-error
-        *ngIf="confirmPassword?.touched && confirmPassword?.errors?.mismatch"
-      >
-        Password and confirm password doesn't match
-      </mat-error>
       <button
         mat-raised-button
         [disabled]="!form.valid || loading"
@@ -169,7 +183,7 @@
   <div>
     <mat-divider mat-inset></mat-divider>
   </div>
-  <p>
+  <mat-card-footer>
     GoFundMe's fee is 5% from each donation you receive. The payment processor
     fee is 2.9% + $0.30 per donation. By continuing, you agree to the GoFundMe
     <a
@@ -190,7 +204,7 @@
       privacy</a
     >
     policy.
-  </p>
+  </mat-card-footer>
 </mat-card>
 
 <p class="footer-logo"></p>

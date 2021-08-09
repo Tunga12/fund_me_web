@@ -15,7 +15,7 @@ import { AddYoutubeVideoDialogComponent } from './components/post-an-update/add-
 import { PostAnUpdateComponent } from './components/post-an-update/post-an-update.component';
 import { ShareDialogComponent } from './components/shared/share-dialog/share-dialog.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { AddTeamMembersDialogComponent } from './components/teams/add-team-members-dialog/add-team-members-dialog.component';
+import { AddTeamMembersDialogComponent } from './components/fundraiser/my-fundraiser-detail/team-tab-content/add-team-members-dialog/add-team-members-dialog.component';
 import { ImportContactsDialogComponent } from './components/teams/import-contacts-dialog/import-contacts-dialog.component';
 import { YoutubeVideoPlayerComponent } from './components/shared/youtube-video-player/youtube-video-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
@@ -32,10 +32,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { BeneficiaryFormComponent } from './components/withdrwal/beneficiary-form/beneficiary-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationComponent } from './components/notification/notification.component';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DonateComponent } from './components/donate/donate.component';
 import { CreateFundraiserComponent } from './components/fundraiser/create-fundraiser/create-fundraiser.component';
 import { SetFundraiserMediaComponent } from './components/fundraiser/create-fundraiser/set-fundraiser-media/set-fundraiser-media.component';

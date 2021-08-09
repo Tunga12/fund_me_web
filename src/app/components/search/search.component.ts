@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
@@ -26,9 +27,13 @@ export class SearchComponent implements OnInit {
     private fundraiserService: FundraiserService,
     private router: Router,
     private activatedRoute: ActivatedRoute
+,
+    private docTitle: Title
   ) {}
 
   ngOnInit(): void {
+    this.docTitle.setTitle('Search');
+
     this.activatedRoute.queryParamMap.subscribe(
       (param) => {
         this.param = param.get('q') || '';

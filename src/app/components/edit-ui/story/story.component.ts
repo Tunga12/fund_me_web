@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
@@ -22,27 +23,34 @@ export class StoryComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private fundraiserService: FundraiserService,
     private snackbarService: SnackbarService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private docTitle: Title
   ) {}
 
   ngOnInit(): void {
+    this.docTitle.setTitle('Edit story');
     this.form = this.formBuilder.group({
-      story: [],
+      story: ['', [Validators.required, Validators.minLength(20)]],
     });
+  }
+
+  public get story(): AbstractControl | null {
+    return this.form.get('story');
   }
 
   // post edit
   editStory() {
     this.fundraiserSub = this.fundraiserService
       .editFundraiser(this.fundraiser)
-      .subscribe((fundraiser) => {
-        this.fundraiser = fundraiser;
-        this.snackbar.open(
-          'Edit completed sccessfly',
-          'close',
-          this.snackbarService.getConfig()
-        );
-      },
+      .subscribe(
+        (fundraiser) => {
+          this.fundraiser = fundraiser;
+          this.snackbar.open(
+            'Edit completed sccessfly',
+            'close',
+            this.snackbarService.getConfig()
+          );
+        },
         (error) => {
           this.snackbar.open(
             error.error,

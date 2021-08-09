@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ImageService } from 'src/app/services/image/image.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-ui',
@@ -31,10 +32,12 @@ export class EditUiComponent implements OnInit, OnDestroy {
     private imageService: ImageService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private docTitle: Title
   ) {}
 
   ngOnInit(): void {
+    this.docTitle.setTitle('Edit fundraiser');
     // get the id parameter from router
     this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
     this.getFundriser();
@@ -87,11 +90,12 @@ export class EditUiComponent implements OnInit, OnDestroy {
       (response: string) => {
         this.fundraiser.image = response;
         this.loading = false;
-        // this.snackbar.open(
-        //   'Edit completed sccessfly',
-        //   'close',
-        //   this.snackbarService.getConfig()
-        // );
+        this.editFundraiser();
+        this.snackbar.open(
+          'Photo changed sccessfly',
+          'close',
+          this.snackbarService.getConfig()
+        );
       },
       (error) => {
         this.snackbar.open(

@@ -27,7 +27,7 @@ export class FundraiserService {
       isPublished: true,
       category: fundraiser.category?._id,
     };
-    console.log('cusome', customFundraiser), console.log('orginal', fundraiser);
+    // console.log('cusome', customFundraiser), console.log('orginal', fundraiser);
 
     return this.http.post<Fundraiser>(
       `${environment.BASE_URL}/fundraisers`,
@@ -77,15 +77,23 @@ export class FundraiserService {
 
   /*non http sevices */
 
-  //to know if a fundraiser has a team or not
-  hasTeam(fundraiser: Fundraiser): boolean {
-    let team = fundraiser
-      .teams?.map((member: TeamMember) => {
-      // member.s
+  //to know if a fundraiser has a team (accepted mambers)
+  hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {
+    let team = fundraiser.teams?.filter((member: TeamMember) => {
+      if (member.status !== 'pending') return true;
+      return false;
     });
-    return true;
+    return team?.length! > 0;
   }
 
+  //to know if a fundraiser has a team (accepted mambers)
+  hasPendingTeamMembers(fundraiser: Fundraiser): boolean {
+    let team = fundraiser.teams?.filter((member: TeamMember) => {
+      if (member.status === 'pending') return true;
+      return false;
+    });
+    return team?.length! > 0;
+  }
   //  get percentage of total raised to goalAmount of this fundraiserr
   getPercentage(fundraiser: Fundraiser): number {
     if (fundraiser!.goalAmount! > 0)

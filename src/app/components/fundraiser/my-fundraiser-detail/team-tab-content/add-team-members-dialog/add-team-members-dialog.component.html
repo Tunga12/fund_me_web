@@ -15,9 +15,18 @@
         placeholder="Search by email"
         (keyup.enter)="email?.valid ? addEmail() : ''; emailInput.value = ''"
       />
-      <span matPrefix><mat-icon>search</mat-icon></span>
+      <!-- <span matPrefix><mat-icon>search</mat-icon></span> -->
+      <mat-error *ngIf="email?.touched && email?.errors?.required"
+        >Please enter email of the invitee
+      </mat-error>
+      <mat-error *ngIf="email?.touched && email?.errors?.email"
+        >Please enter valid email
+      </mat-error>
+      <mat-error *ngIf="email?.touched && email?.errors?.minlength"
+        >Email should be {{ email?.errors?.minlength.requiredLength }}
+      </mat-error>
     </mat-form-field>
-    <mat-list dense>
+    <!-- <mat-list dense>
       <mat-list-item
         *ngIf="emailInput.value.trim()"
         style="margin-bottom: 10px"
@@ -58,24 +67,15 @@
         ></mat-checkbox>
         <mat-divider></mat-divider>
       </mat-list-item>
-    </mat-list>
+    </mat-list> -->
     <p>
       <a (click)="openImportContactsDialog()"> Import your email contacts</a>
     </p>
-    <mat-error *ngIf="email?.touched && email?.errors?.required"
-      >Please enter email of the invitee
-    </mat-error>
-    <mat-error *ngIf="email?.touched && email?.errors?.email"
-      >Please enter valid email
-    </mat-error>
-    <mat-error *ngIf="email?.touched && email?.errors?.minlength"
-      >Email should be {{ email?.errors?.minlength.requiredLength }}
-    </mat-error>
-
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" [value]="100" color="primary"></mat-progress-bar>
     <mat-error *ngIf="errorMessage"> {{ errorMessage }} </mat-error>
     <p>
       <button
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || loading"
         mat-raised-button
         color="primary"
         class="btn-large"

@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { Validators } from 'ngx-editor';
+import {
+  FormGroup,
+  FormBuilder,
+  AbstractControl,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'sign-in-page',
@@ -25,17 +30,17 @@ export class SignInComponent implements OnInit, OnDestroy {
     private authServ: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {
-
-  }
+  ,
+    private docTitle: Title
+  ) {}
 
   ngOnInit(): void {
-    // clear the localStorage
-    localStorage.clear();
+    this.docTitle.setTitle('Sign in');
+
     // build the form
-     this.form = this.formBuilder.group({
-      email: [, [Validators.required()]],
-      password: [, [Validators.required()]],
+    this.form = this.formBuilder.group({
+      email: [, [Validators.required, Validators.email]],
+      password: [, [Validators.required]],
     });
   }
 
@@ -64,16 +69,16 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   change() {
-    this.logInMessage= '';
- }
+    this.logInMessage = '';
+  }
 
-public get email() : AbstractControl|null {
-  return this.form.get('email');
-}
+  public get email(): AbstractControl | null {
+    return this.form.get('email');
+  }
 
-public get password() : AbstractControl|null {
-  return this.form.get('password');
-}
+  public get password(): AbstractControl | null {
+    return this.form.get('password');
+  }
 
   // what to do when the component destroys
   ngOnDestroy(): void {

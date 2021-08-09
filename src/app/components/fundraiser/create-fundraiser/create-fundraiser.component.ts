@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LocationService } from './../../../services/location/location.service';
 import { Fundraiser } from './../../../models/fundraiser.model';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'create-fundraiser',
@@ -13,19 +13,22 @@ import { FundraiserService } from './../../../services/fundraiser/fundraiser.ser
 })
 export class CreateFundraiserComponent implements OnInit, OnDestroy {
   currentStep = 1; // keep trrack of steps
-  fundraiser: Fundraiser;
+  fundraiser!: Fundraiser;
   // location info
   locationSub?: Subscription;
   // fundraiser subscription
   fundraiserSub?: Subscription;
-  errorMessage="";
+  errorMessage = '';
 
   constructor(
     private locationServ: LocationService,
-    private formBuilder: FormBuilder,
     private fundraiserServ: FundraiserService,
-    private router: Router
-  ) {
+    private router: Router,
+    private docTitle: Title
+  ) {}
+
+  ngOnInit(): void {
+    this.docTitle.setTitle('Create campign');
     // initialise the fundriser with empty fields
     this.fundraiser = {
       goalAmount: undefined,
@@ -38,29 +41,23 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
         longitude: 0,
       },
     };
-
-   
-  }
-
-  ngOnInit(): void {
     this.getCurrentLocation();
   }
 
   // subit the form to create teh fundraiser
   submit(fundraiser: Fundraiser) {
-    // get the current user id from local storage
-    let userId = localStorage.getItem('userId');
     // post fundraiser
     this.fundraiserSub = this.fundraiserServ
       .createFundraiser(fundraiser)
-      .subscribe((fund) => {
-        console.log(fund);
-        this.router.navigateByUrl(`/my-fundraisers/${userId}`);
-      },
+      .subscribe(
+        (fund) => {
+          console.log(fund);
+          this.router.navigateByUrl(`/my-fundraisers`);
+        },
         (error) => {
           this.errorMessage = error.error;
-    } 
-    );
+        }
+      );
   }
 
   // get current location of the user in terms of latitude and longitude
@@ -89,9 +86,6 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
     this.fundraiser = fundraiser;
     console.log(this.currentStep, fundraiser);
   }
-
-
-  
 
   ngOnDestroy(): void {
     if (this.fundraiserSub) this.fundraiserSub.unsubscribe();

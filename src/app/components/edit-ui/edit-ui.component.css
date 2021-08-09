@@ -11,10 +11,10 @@ mat-radio-button.mat-radio-button {
   margin: 13px;
 }
 
-img {
+img.title {
   /* margin-right: -2rem !important; */
-  max-width: 56px !important;
-  max-height: 40px !important;
+  max-width: 100px !important;
+  max-height: 80px !important;
 }
 
 

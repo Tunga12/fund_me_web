@@ -23,12 +23,10 @@ export class PostAnUpdateComponent implements OnInit {
   loading = false;
   update: Update = { content: '', image: '' };
   form!: FormGroup;
-  imageSrc = '';
   errorMessage = '';
   mode = '';
   updateSub?: Subscription;
   fundraiser!: Fundraiser;
-
 
   constructor(
     private imageService: ImageService,
@@ -45,7 +43,7 @@ export class PostAnUpdateComponent implements OnInit {
         Validators.required,
         Validators.minLength(5),
       ]),
-      image: new FormControl(this.imageSrc, [Validators.required]),
+      image: new FormControl(this.update.image),
     });
 
     console.log(this.data);
@@ -68,9 +66,9 @@ export class PostAnUpdateComponent implements OnInit {
 
     this.imageService.upload(formData).subscribe(
       (response) => {
-        this.imageSrc = response;
-        this.update.image = response;
+        // this.imageSrc = response;
         this.loading = false;
+        this.update.image = response;
       },
       (error) => {
         console.log(error.error);
@@ -82,11 +80,16 @@ export class PostAnUpdateComponent implements OnInit {
 
   // post update
   postUpdate() {
+    this.loading = true;
     this.update.content = this.form.controls['content'].value;
+    if (this.update.image === '') {
+      delete this.update.image;
+    }
     this.updateService
       .addUpdateToFundraiser(this.fundraiser._id!, this.update)
       .subscribe(
         (update) => {
+          this.loading = false;
           // update = update;
           this.fundraiser.updates?.push(update);
           console.log(update);
@@ -98,11 +101,11 @@ export class PostAnUpdateComponent implements OnInit {
           );
         },
         (error) => {
+          this.loading = false;
           console.log(error);
           this.snackBar.open(
             error.error,
             'Close',
-
             this.snackbarService.getConfig()
           );
         }
@@ -111,17 +114,17 @@ export class PostAnUpdateComponent implements OnInit {
 
   // edit this update
   editUpdate(update: Update) {
+    this.loading = true;
     let content = this.form.controls['content'].value;
     update.image = this.update.image;
     update.content = content;
-
     let newUpdate = update;
     let id = update._id;
     delete update._id; // _id is not allowed for submission
 
     this.updateSub = this.updateService.editUpdate(id!, update).subscribe(
       (response) => {
-        console.log(response);
+        this.loading = false;
         this.dialogRef.close();
         let index = this.fundraiser.updates?.indexOf(update);
         this.fundraiser.updates?.splice(index!, 1, newUpdate);
@@ -133,6 +136,8 @@ export class PostAnUpdateComponent implements OnInit {
       },
       (error) => {
         console.log(error.error);
+        this.loading = false;
+
         this.snackBar.open(
           error.error,
           'Close',
@@ -156,7 +161,4 @@ export class PostAnUpdateComponent implements OnInit {
   //     .afterClosed()
   //     .subscribe((close_result) => console.log(close_result));
   // }
-}
-function snackConfig(arg0: string, arg1: string, snackConfig: any) {
-  throw new Error('Function not implemented.');
 }

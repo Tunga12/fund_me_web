@@ -8,15 +8,16 @@
       type="text"
       required
     />
+
+    <mat-error *ngIf="title?.touched && title?.errors?.required"
+      >Title is required.</mat-error
+    >
+    <mat-error *ngIf="title?.touched && title?.errors?.max"
+      >TItle must be mximum {{ title?.errors?.max.max }} charaters.</mat-error
+    >
   </mat-form-field>
 
   <story-text-area [form]="form"></story-text-area>
-  <mat-error *ngIf="title?.touched && title?.errors?.required"
-    >Title is required.</mat-error
-  >
-  <mat-error *ngIf="title?.touched && title?.errors?.max"
-    >TItle must be mximum {{ title?.errors?.max.max }} charaters.</mat-error
-  >
   <mat-error *ngIf="story?.touched && story?.errors?.required"
     >Story is required.</mat-error
   >

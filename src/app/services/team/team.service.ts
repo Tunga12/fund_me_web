@@ -11,10 +11,10 @@ export class TeamService {
   constructor(private httpClient: HttpClient) {}
 
   // add a team member
-  addMember(emals: string, fundraiserId: string): Observable<TeamMember> {
+  addMember(emal: string, fundraiserId: string): Observable<TeamMember> {
     return this.httpClient.post<TeamMember>(
       `${environment.BASE_URL}/members/${fundraiserId}`,
-      emals
+      emal
     );
   }
 }

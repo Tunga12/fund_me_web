@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-setting',
@@ -32,17 +33,20 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
     duration: 2000,
   };
 
+  // validate the existance of whitesaces in our input
+  whiteSpaceValidator = new WhiteSpaceValidatorDirective();
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+   private title:Title
   ) {}
-  // validate the existance of whitesaces in our input
-  whiteSpaceValidator = new WhiteSpaceValidatorDirective();
 
   ngOnInit(): void {
+    this.title.setTitle("Account setting");
     this.form = this.formBuilder.group({
       firstName: [
         '',

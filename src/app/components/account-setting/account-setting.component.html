@@ -22,6 +22,17 @@
           type="text"
           placeholder="First name"
         />
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
+          >Please enter your first name
+        </mat-error>
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
+          >First name must be
+          {{ firstName?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
+          >First name cannot include whitespaces.
+        </mat-error>
       </mat-form-field>
       <mat-form-field floatPlaceholder="auto" appearance="outline">
         <mat-label>Last name</mat-label>
@@ -31,6 +42,17 @@
           type="text"
           placeholder="Last name"
         />
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
+          >Please enter your last name
+        </mat-error>
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
+          >Last name must be
+          {{ lastName?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
+          >Last name cannot include whitespaces.
+        </mat-error>
       </mat-form-field>
     </div>
     <mat-form-field floatPlaceholder="auto" appearance="outline">
@@ -41,40 +63,15 @@
         type="email"
         placeholder="youremail@example.com"
       />
+      <mat-error *ngIf="email?.touched && email?.errors?.email"
+        >Please enter a valid email.
+      </mat-error>
+      <mat-error *ngIf="email?.touched && email?.errors?.required"
+        >Please enter a your email.
+      </mat-error>
     </mat-form-field>
 
     <!-- start: Error display -->
-    <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
-      >Please enter your first name
-    </mat-error>
-    <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
-      >First name must be
-      {{ firstName?.errors?.minlength.requiredLength }} minimun.
-    </mat-error>
-
-    <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
-      >First name cannot include whitespaces.
-    </mat-error>
-
-    <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
-      >Please enter your last name
-    </mat-error>
-    <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
-      >Last name must be
-      {{ lastName?.errors?.minlength.requiredLength }} minimun.
-    </mat-error>
-
-    <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
-      >Last name cannot include whitespaces.
-    </mat-error>
-
-    <mat-error *ngIf="email?.touched && email?.errors?.email"
-      >Please enter a valid email.
-    </mat-error>
-    <mat-error *ngIf="email?.touched && email?.errors?.required"
-      >Please enter a your email.
-    </mat-error>
-
     <mat-error>{{ errorMessage }}</mat-error>
     <!--end: Error display -->
 

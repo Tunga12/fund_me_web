@@ -4,7 +4,6 @@ import {
   Input,
   OnInit,
   Output,
-  OnDestroy,
 } from '@angular/core';
 import {
   FormGroup,
@@ -12,7 +11,6 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 
 @Component({

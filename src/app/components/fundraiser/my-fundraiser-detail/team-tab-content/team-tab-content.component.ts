@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTeamMembersDialogComponent } from 'src/app/components/teams/add-team-members-dialog/add-team-members-dialog.component';
+import { AddTeamMembersDialogComponent } from 'src/app/components/fundraiser/my-fundraiser-detail/team-tab-content/add-team-members-dialog/add-team-members-dialog.component';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { TeamService } from './../../../../services/team/team.service';
+import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { TeamMember } from 'src/app/models/team-memeber.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'team-tab-content',
@@ -11,19 +14,29 @@ import { TeamService } from './../../../../services/team/team.service';
 })
 export class TeamTabContentComponent implements OnInit {
   @Input() fundraiser!: Fundraiser;
-  emails: string[] = [];
   constructor(
     private dialog: MatDialog,
-  ) { }
+    private fundraiserService: FundraiserService,
+    private docTitle: Title
+  ) {}
 
-  ngOnInit(): void {}
-  openAddTeamMembersDialog() {
-    this.dialog
-      .open(AddTeamMembersDialogComponent, { data: this.fundraiser });
+  ngOnInit(): void {
+    this.docTitle.setTitle('Manage teams');
   }
 
-  deleteInvitation(email: string) {
-    let index = this.emails.indexOf(email);
-    this.emails.splice(index, 1);
+  hasAcceptedTeamMembers(): boolean {
+    return this.fundraiserService.hasAcceptedTeamMembers(this.fundraiser!);
+  }
+
+  hasPendingTeamMembers(): boolean {
+    return this.fundraiserService.hasPendingTeamMembers(this.fundraiser!);
+  }
+  openAddTeamMembersDialog() {
+    this.dialog.open(AddTeamMembersDialogComponent, { data: this.fundraiser });
+  }
+
+  deleteInvitation(team: TeamMember) {
+    let index = this.fundraiser?.teams!.indexOf(team);
+    this.fundraiser?.teams!.splice(index, 1);
   }
 }

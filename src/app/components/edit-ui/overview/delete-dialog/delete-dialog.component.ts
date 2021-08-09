@@ -1,17 +1,10 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -19,7 +12,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./delete-dialog.component.css'],
 })
 export class DeleteDialogComponent implements OnInit, OnDestroy {
-
+  loading = false; //to show a loading indiacater
+  errorMessage = '';
   fundraiserSub?: Subscription;
   fundraiser!: Fundraiser;
   constructor(
@@ -28,35 +22,31 @@ export class DeleteDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Fundraiser
-  ) {
-    console.log('constructor', this.data);
-  }
+  ) {  }
+
+
   ngOnInit(): void {
     this.fundraiser = this.data;
   }
 
-  // delete() {
-  //   this.deleteEvent.emit();
-  // }
-  // delete current fundraiser
   deleteFundraiser() {
+    this.errorMessage = '';
+    this.loading = true;
     let fundId = this.activatedRoute.snapshot.paramMap.get('id');
     this.fundraiserSub = this.fundraiserService
       .deleteFundraiser(this.fundraiser._id ?? fundId ?? '')
       .subscribe(
-        (message) => {
-          console.log(message);
+        () => {
+          this.loading = false;
           this.dialogRef.close();
           this.router.navigateByUrl(
             `/my-fundraisers/${this.fundraiser.organizer?._id}`
           );
         },
-        (err) => {
-          console.log('error occured');
-          this.router.navigateByUrl(
-            `/my-fundraisers/${this.fundraiser.organizer?._id}`
-          );
-          this.dialogRef.close();
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+          this.errorMessage = error.error;
+          // this.dialogRef.close();
         }
       );
   }

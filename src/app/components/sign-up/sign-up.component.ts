@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -11,19 +11,20 @@ import { AuthService } from './../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.validator.directive';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent implements OnDestroy {
+export class SignUpComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
   hidePassword = true; // to toggle the visiblity of password
   hideConfirmPassword = true; // to toggle the visiblity of confirmPassword
   signUpSecussful = false; // to know the succefullness of sign up and show and hide spinner
-  form: FormGroup;
+  form!: FormGroup;
   // subsctiption
   private signUpSub?: Subscription;
 
@@ -33,8 +34,12 @@ export class SignUpComponent implements OnDestroy {
   constructor(
     private authServ: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) {
+    private formBuilder: FormBuilder,
+    private docTitle: Title
+  ) {}
+
+  ngOnInit(): void {
+    this.docTitle.setTitle('Sign up');
     // create the form
     this.form = this.formBuilder.group({
       firstName: [
