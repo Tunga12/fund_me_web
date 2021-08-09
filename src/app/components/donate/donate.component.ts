@@ -39,6 +39,7 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.title.setTitle("Donate");
+
     this.form = this.formBuilder.group({
       amount: [undefined, [Validators.required]],
       tip: [10, [Validators.required, Validators.min(10)]],
@@ -46,6 +47,7 @@ export class DonateComponent implements OnInit, OnDestroy {
       comment: [
         '', //[Validators.required, Validators.minLength(5)]
       ],
+      isAnonymous:[]
     });
 
     // get the Id f the fundraiser from the route
@@ -81,6 +83,8 @@ export class DonateComponent implements OnInit, OnDestroy {
   // make donation to a fundriser
   donate() {
     this.loading = true;
+    console.log(this.form.value);
+    
     this.donationSub = this.donationService
       .createDonation(this.fundraiserId, {
         ...this.form.value,

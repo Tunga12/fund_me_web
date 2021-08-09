@@ -44,8 +44,11 @@
             fxLayoutGap="30px"
           >
             <span
-              >Donor {{ donation?.userId?.firstName | titlecase }}
-              {{ donation?.userId?.lastName | titlecase }}
+              ><span *ngIf="donation?.isAnonymous">Anonymous</span>
+              <span *ngIf="!donation?.isAnonymous">{{
+                donation?.userId?.firstName! + " " + donation?.userId?.lastName
+                  | titlecase
+              }}</span>
               <strong>${{ donation.amount }}</strong></span
             >
             <span> {{ donation.date | timeago }} </span>
@@ -60,5 +63,6 @@
       <!-- <button *ngIf="last" mat-stroked-button color="primary" class="btn-outline">
         Show more
       </button> -->
-    </mat-list-item>    
+    </mat-list-item>
   </mat-list>
+</div>

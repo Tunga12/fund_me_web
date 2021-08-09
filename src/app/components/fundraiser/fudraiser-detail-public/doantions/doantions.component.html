@@ -45,8 +45,11 @@
             fxLayoutAlign="start start"
             fxLayoutGap="10px"
           >
-            <span>{{ donation.userId.firstName | titlecase }}</span>
-            <span>{{ donation.userId.lastName | titlecase }}</span>
+            <span *ngIf="donation?.isAnonymous">Anonymous</span>
+            <span *ngIf="!donation?.isAnonymous">{{
+              donation?.userId?.firstName! + " " + donation?.userId?.lastName
+                | titlecase
+            }}</span>
           </div>
           <span>
             <strong>{{ donation.amount }} </strong> •{{

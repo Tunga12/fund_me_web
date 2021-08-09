@@ -98,7 +98,6 @@
                   <mat-icon class="mat-18">attach_money</mat-icon>
                 </span>
               </mat-form-field>
-
               <mat-error *ngIf="tip?.touched && tip?.errors?.min"
                 >Tip should be {{ tip?.errors?.min.min }}% minimum</mat-error
               >
@@ -147,15 +146,15 @@
             minimum</mat-error
           >
         </div>
-        <!-- <div>
+        <div>
           <mat-checkbox
-            formControlName="anonymous"
+            formControlName="isAnonymous"
             [indeterminate]="false"
             color="primary"
           >
             Don't display my name publicly on the campaign.
           </mat-checkbox>
-        </div> -->
+        </div>
 
         <div class="text-error">{{ erorrMessage }}</div>
         <button

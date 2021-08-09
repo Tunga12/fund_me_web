@@ -296,14 +296,18 @@
             fxLayoutGap="30px"
           >
             <div fxFlex="25" *ngFor="let member of fundraiser?.teams">
-              <div *ngIf="member.status!=='pending'" fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
+              <div
+                *ngIf="member.status !== 'pending'"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                style="margin: 20px 0px"
+              >
                 <img
                   src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
                 />
                 <div fxLayout="column">
                   <span class="bold"
-                    >{{ member.id.userId.firstName | titlecase }}
-                    {{ member.id.userId.lastName | titlecase }}
+                    >{{ member.id.userId.firstName+' '+ member.id.userId.lastName | titlecase }}
                   </span>
                   <span class="text-small">team member</span>
                 </div>
@@ -382,9 +386,13 @@
               src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
             />
             <div fxLayout="column">
-              <span class="bold"
-                >{{ donation.userId.firstName | titlecase }}
-                {{ donation.userId.lastName | titlecase }} donated
+              <span class="bold">
+                <span *ngIf="donation.isAnonymous">Anonymous</span>
+                <span *ngIf="!donation.isAnonymous">{{
+                  donation.userId.firstName+' ' + donation.userId.lastName
+                    | titlecase
+                }}</span>
+                donated
                 <strong>${{ donation.amount }}</strong></span
               >
               <p>{{ donation.comment }} <a>Read more</a></p>
@@ -488,10 +496,12 @@
                   fxLayoutAlign="space-between start"
                   fxLayoutGap="30px"
                 >
-                  <span
-                    >{{ recentDonation?.userId?.firstName | titlecase }}
-                    {{ recentDonation?.userId?.lastName | titlecase }}</span
-                  >
+    
+                  <span *ngIf="recentDonation?.isAnonymous">Anonymous</span>
+                  <span *ngIf="!recentDonation?.isAnonymous">{{
+                    recentDonation?.userId?.firstName! +' '+
+                      recentDonation?.userId?.lastName | titlecase
+                  }}</span>
                   <span class="text-small color-gray">
                     {{ recentDonation?.date | timeago }}
                   </span>
@@ -517,10 +527,11 @@
                   fxLayoutAlign="space-between start"
                   fxLayoutGap="30px"
                 >
-                  <span
-                    >{{ topDonation?.userId?.firstName | titlecase }}
-                    {{ topDonation?.userId?.lastName | titlecase }}</span
-                  >
+                  <span *ngIf="topDonation?.isAnonymous">Anonymous</span>
+                  <span *ngIf="!topDonation?.isAnonymous">{{
+                    topDonation?.userId?.firstName!+' ' +
+                      topDonation?.userId?.lastName | titlecase
+                  }}</span>
                   <span class="text-small color-gray">
                     {{ topDonation?.date | timeago }}
                   </span>
@@ -545,10 +556,11 @@
                 fxLayoutAlign="space-between start"
                 fxLayoutGap="30px"
               >
-                <span
-                  >{{ firstDonation?.userId?.firstName | titlecase }}
-                  {{ firstDonation?.userId?.lastName | titlecase }}</span
-                >
+                <span *ngIf="firstDonation?.isAnonymous">Anonymous</span>
+                <span *ngIf="!firstDonation?.isAnonymous">{{
+                  firstDonation?.userId?.firstName! +' '+
+                    firstDonation?.userId?.lastName | titlecase
+                }}</span>
                 <span class="text-small color-gray">
                   {{ firstDonation?.date | timeago }}
                 </span>

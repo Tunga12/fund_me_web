@@ -84,7 +84,6 @@ export class FundraiserService {
       return false;
     }
     );
-    console.log(comments);
 
     return comments?.length||0;
   }

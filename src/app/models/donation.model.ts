@@ -7,4 +7,5 @@ export interface Donation
   comment?: string;
   amount: number;
   tip: number;
+  isAnonymous?: boolean;
 }
