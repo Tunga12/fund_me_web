@@ -25,10 +25,25 @@ export class NotificationService {
     );
   }
 
+  // read notificaton
+  readNotification(notification: Notification) {
+    return this.http.put(
+      `${environment.BASE_URL}/notifications/${notification._id}`,
+      {}
+    );
+  }
+
+  // check the read and unread status of a notification
+  isRead(notification: Notification): boolean {
+    let userId = localStorage.getItem('userId') || '';
+    return notification.viewed!.indexOf(userId) >= 0;
+  }
+
   // delete a fundraiser given a user id and notification id
-  deleteNotification(notification: Notification): Observable<boolean> {
-    return this.http.delete<boolean>(
-      `${environment.BASE_URL}/notifications/${notification._id}`
+  deleteNotification(notification: Notification) {
+    return this.http.delete(
+      `${environment.BASE_URL}/notifications/${notification._id}`,
+      { responseType: 'text' }
     );
   }
 }

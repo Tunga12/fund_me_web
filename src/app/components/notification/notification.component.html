@@ -1,53 +1,86 @@
-<div
-  fxLayout="column"
-  fxFlex.gt-xs="80"
-  fxFlex.lt-sm="90"
-  fxLayoutAlign="start start"
-  fxLayoutGap="20px"
-  style="margin: 20px auto"
->
-  <h2 class="bold">
-    <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
-    Notifications
-  </h2>
-  <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
-
-  <div *ngIf="loading" fxFlexAlign="center">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="100"
-      color="primary"
-      class="loading-spinner"
-    ></mat-progress-spinner>
-  </div>
-  <a
-    [routerLink]="['/fundraiser-detail', notification.target]"
-    routerLinkActive="router-link-active"
-    *ngFor="let notification of notifications"
+<main fxLayout="column">
+  <nav>
+    <nav-bar></nav-bar>
+  </nav>
+  <div
     fxLayout="column"
-    class="notification"
+    fxFlex.gt-xs="80"
+    fxFlex.lt-sm="90"
     fxLayoutAlign="start start"
-    fxLayoutGap="0px"
+    fxLayoutGap="20px"
+    style="margin: 20px auto"
   >
-    <h3 class="time">{{ notification.date | timeago }}</h3>
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-      <img matCardAvatar src="/assets/images/me.jpg" alt="" />
-      <div>
-        <h2 class="bold">{{ notification.title }}</h2>
-        <p>
-          {{ notification.content }}
-          ,...<a>Read more</a>
-          <!-- TODO custom pipe for more and less-->
-        </p>
-      </div>
+    <h2 class="bold">
+      <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
+      Notifications
+    </h2>
+    <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
+
+    <div *ngIf="loading" fxFlexAlign="center">
+      <mat-progress-spinner
+        mode="indeterminate"
+        [value]="100"
+        color="primary"
+        class="loading-spinner"
+      ></mat-progress-spinner>
     </div>
-    <button
-      mat-button
-      color="warn"
-      class="actions"
-      (click)="deleteNotifcation(notification)"
+    <div
+      *ngFor="let notification of notifications"
+      (click)="markAsRead(notification)"
+      fxLayout="column"
+      class="notification"
+      [class.unread]="!notificationService.isRead(notification)"
+      [class.read]="notificationService.isRead(notification)"
+      fxLayoutAlign="start start"
+      fxLayoutGap="0px"
     >
-      <mat-icon>delete</mat-icon>
-    </button>
-  </a>
-</div>
+      <h3 class="time">{{ notification.date | timeago }}</h3>
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+        <img matCardAvatar src="/assets/images/me.jpg" alt="" />
+        <div>
+          <h2 class="bold">{{ notification.title }}</h2>
+          <p>
+            {{ notification.content }}
+          </p>
+          <a [routerLink]="['/fundraiser-detail', notification.target]"
+            >See Fundraiser</a
+          >
+          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+          <ng-container
+            *ngIf="notification?.notificationType === 'Team Member'"
+          >
+            <div
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              fxLayoutGap="30px"
+            >
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="acceptInvitation(notification)"
+              >
+                Accept
+              </button>
+
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="declineInvitation(notification)"
+              >
+                Decline
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <button
+        mat-button
+        color="warn"
+        class="actions"
+        (click)="deleteNotifcation(notification)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</main>

@@ -59,21 +59,14 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
       (user) => {
         currentUser = user;
 
-        this.authSub = this.authService
-          .signIn({
-            email: user.email,
-            password: this.password.value,
-          })
-          .subscribe(
-            () => {
-              this.updateUser(user);
-            },
-            () => {
-              this.loading = false;
-              this.errorMessage = 'Incorrect password';
-            }
-          );
+        if (user.password === this.password.value) {
+          this.updateUser(user);
+        } else {
+          this.loading = false;
+          this.errorMessage = 'Incorrect password';
+        }
       },
+
       (error) => {
         this.loading = false;
         this.errorMessage = error.error;

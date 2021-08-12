@@ -1,3 +1,28 @@
+
+<mat-toolbar
+  [classList]="'bg-white'"
+  fxLayout="row wrap"
+  fxLayoutAlign="space-between center"
+>
+  <!-- LOGO -->
+      <img [routerLink]="['/']" routerLinkActive="router-link-active" 
+        src="/assets/images/logo.jpg"
+        height="70%"
+        fxFlex.xs="20"
+        fxFlex.gt-xs="10"
+      />
+   <div>
+    <a
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/sign-up']"
+    >
+      Sign up
+    </a>    
+  </div>
+</mat-toolbar>
+
+
 <mat-card
   fxLayout="column"
   [ngStyle.gt-sm]="{ width: '30%', margin: '30px auto' }"

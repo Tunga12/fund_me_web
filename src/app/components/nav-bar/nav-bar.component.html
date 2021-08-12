@@ -4,7 +4,7 @@
   fxLayoutAlign="space-between center"
 >
   <div>
-    <!-- searcc field -->
+    <!-- search field -->
     <input
       matInput
       #key
@@ -14,6 +14,7 @@
     />
     <!-- First menu -->
     <a
+      fxHide.lt-md
       mat-button
       [matMenuTriggerFor]="discover"
       #discovermenuTrigger="matMenuTrigger"
@@ -24,7 +25,6 @@
       Discover
       <mat-icon>{{ discoverCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
-
     <mat-menu #discover="matMenu">
       <button mat-menu-item>Fundraisers</button>
       <button mat-menu-item>Success stories</button>
@@ -34,6 +34,7 @@
     SECOND MENU
  -->
     <a
+      fxHide.lt-md
       mat-button
       [matMenuTriggerFor]="fundraise"
       #funndrisemenuTrigger="matMenuTrigger"
@@ -41,81 +42,116 @@
       (onMenuOpen)="fundraiseCaret = !fundraiseCaret"
       class="nav-link mat-button"
     >
-      <mat-menu #fundraise="matMenu">
-        <a
-          *ngFor="let category of categories"
-          mat-menu-item
-          routerLink="/{{ category.name }}"
-          class="mat-menu-item"
-        >
-          {{ category.name }}
-        </a>
-
-        <mat-divider></mat-divider>
-        <a mat-menu-item routerLink="'/see-all'">See all</a>
-      </mat-menu>
       Fundraise for
       <mat-icon>{{ fundraiseCaret ? "expand_more" : "expand_less" }}</mat-icon>
     </a>
+
+    <mat-menu #fundraise="matMenu">
+      <a
+        *ngFor="let category of categories"
+        mat-menu-item
+        routerLink="/{{ category.name }}"
+        class="mat-menu-item"
+      >
+        {{ category.name }}
+      </a>
+
+      <mat-divider></mat-divider>
+      <a mat-menu-item routerLink="'/see-all'">See all</a>
+    </mat-menu>
   </div>
 
   <!-- LOGO -->
   <!-- <img src="/assets/images/logo.jpg" height="70%" width="10%" /> -->
   <div>
-    <a
-      *ngIf="!authService.isLoggedIn()"
-      mat-raised-button
-      color="primary"
-      [routerLink]="['/sign-in']"
-    >
+    <a mat-button *ngIf="!authService.isLoggedIn()" [routerLink]="['/sign-in']">
       Sign in
     </a>
     <a
+      *ngIf="!authService.isLoggedIn()"
+      mat-stroked-button
+      color="primary"
+      [routerLink]="['/create']"
+    >
+      Start a GoFundMe
+    </a>
+
+    <a
+      fxHide.lt-md
       *ngIf="authService.isLoggedIn()"
       mat-button
-      [routerLink]="['my-fundraisers']"
+      [routerLink]="['/my-fundraisers']"
       class="nav-link mat-button"
     >
       Your fundraisers
     </a>
-
     <!-- USER account MENU -->
     <a
       *ngIf="authService.isLoggedIn()"
+      fxHide.lt-md
       mat-button
       [matMenuTriggerFor]="account"
-      #funndrisemenuTrigger="matMenuTrigger"
       (onMenuClose)="accountCaret = !accountCaret"
       (onMenuOpen)="accountCaret = !accountCaret"
       class="nav-link mat-button"
     >
-      <mat-menu #account="matMenu">
-        <a mat-menu-item routerLink="/m-notification" class="mat-menu-item">
-          Notifications
-        </a>
-
-        <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
-          Donations you've made
-        </a>
-        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
-          Account settings
-        </a>
-        <a mat-menu-item routerLink="/create" class="mat-menu-item">
-          Start a new fundraiser
-        </a>
-        <!-- <a mat-menu-item routerLink="/help" class="mat-menu-item">
-          Help center
-        </a> -->
-        <mat-divider></mat-divider>
-        <a mat-menu-item routerLink="/sign-in" (click)="authService.logOut()"
-          >Sign out</a
-        >
-      </mat-menu>
-      {{ currentUser?.firstName }}
-      <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="3px"
+      >
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+          <div class="avatar-contain">
+            {{ currentUser?.firstName?.charAt(0) | titlecase }}
+            {{ currentUser?.lastName?.charAt(0) | titlecase }}
+          </div>
+          <span>
+            {{ currentUser?.firstName }}
+          </span>
+        </div>
+        <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
+      </div>
     </a>
+    <mat-menu #account="matMenu">
+      <a mat-menu-item routerLink="/notification" class="mat-menu-item">
+        Notifications
+      </a>
+      <a
+        fxHide.gt-sm
+        *ngIf="authService.isLoggedIn()"
+        mat-button
+        [routerLink]="['my-fundraisers']"
+        class="nav-link mat-button"
+      >
+        Your fundraisers
+      </a>
+      <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
+        Donations you've made
+      </a>
+      <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+        Account settings
+      </a>
+      <a mat-menu-item routerLink="/create" class="mat-menu-item">
+        Start a new fundraiser
+      </a>
 
-    <button mat-icon-button fxShow="true" fxHide.gt-sm>
+      <mat-divider></mat-divider>
+      <a
+        mat-menu-item
+        fxLayoutAlign="center"
+        routerLink="/sign-in"
+        (click)="authService.logOut()"
+        >Sign out</a
+      >
+    </mat-menu>
+
+    <button
+      *ngIf="authService.isLoggedIn()"
+      [matMenuTriggerFor]="account"
+      mat-icon-button
+      fxShow="true"
+      fxHide.gt-sm
+    >
       <mat-icon>menu</mat-icon>
     </button>
   </div>

@@ -33,7 +33,7 @@ body {
 }
 
 .nav-link {
-  font-size: 14px;
+  /* font-size: 14px; */
   font-weight: 300;
 }
 
@@ -60,7 +60,7 @@ a {
   font-weight: 900;
 }
 
-image {
+img {
   border-radius: 4px;
 }
 
@@ -195,9 +195,9 @@ textarea {
 
 /* to contain name shortcuts */
 div.avatar-contain {
-  width: 2.8rem !important;
-  height: 2.5rem !important;
-  line-height: 2.5rem;
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 2rem;
   color: #ddd;
   font-size: 0.875rem;
   border-radius: 50%;

@@ -1,3 +1,5 @@
+<nav><nav-bar></nav-bar></nav>
+
 <div [ngStyle.gt-sm]="{ width: '80%', margin: '0px auto' }">
   <nav fxLayout="column" class="nav-sticky">
     <div
@@ -52,22 +54,17 @@
             fxLayoutAlign="start start"
             [ngStyle.xs]="{ height: '130px' }"
           >
-            <strong>{{ fundraiser.title }}</strong>
-            <span
-              *ngIf="(fundraiser?.donations)!.length > 0"
-              class="color-gray text-small"
+            <div
+              fxLayout="column"
+              fxLayoutAlign="space-between center"
+              fxLayoutGap="20px"
             >
-              Last donation {{ (fundraiser?.donations)![0].date | timeago }}
-            </span>
-            <mat-progress-bar
-              mode="determinate"
-              [value]="percentage(fundraiser)"
-              color="primary"
-            ></mat-progress-bar>
-            <p>
-              <strong>{{ fundraiser.totalRaised }}</strong> raised of
-              {{ fundraiser.goalAmount }}
-            </p>
+              <strong>{{ fundraiser.title }}</strong>
+              <div>
+                <mat-divider></mat-divider>
+              </div>
+              <p fxFlexAlign="center">Manage</p>
+            </div>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

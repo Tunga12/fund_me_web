@@ -4,6 +4,10 @@ import { Subscription } from 'rxjs';
 import { Notification } from './../../models/notification.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from './../../services/snackbar/snackbar.service';
+import { TeamService } from './../../services/team/team.service';
+import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { TeamMember } from 'src/app/models/team-memeber.model';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-notification',
@@ -13,13 +17,21 @@ import { SnackbarService } from './../../services/snackbar/snackbar.service';
 export class NotificationComponent implements OnInit, OnDestroy {
   loading = false;
   notifications!: Notification[];
+  errorMessage? = '';
+
+  acceptanceStatusLoading = false;
 
   notificatonSub?: Subscription;
-  errorMessage? = '';
+  teamSub?: Subscription;
+  fundraiserSub?: Subscription;
+  userId = localStorage.getItem('userId')!;
+
   constructor(
-    private notificationService: NotificationService,
     private snackBar: MatSnackBar,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private teamService: TeamService,
+    private fundraiserService: FundraiserService,
+    public notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +52,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  // checks if the user has already responded to this invitation or not
+  responded(notificatin: Notification): boolean {
+    let responded = false;
+    let filtered: TeamMember[] | undefined = [];
+    this.fundraiserSub = this.fundraiserService
+      .getFundraiser(notificatin.target)
+      .subscribe((fund) => {
+        // console.log(fund);
+      });
+    return responded;
+  }
+
   deleteNotifcation(notification: Notification) {
     let index = this.notifications.indexOf(notification);
     this.notificatonSub = this.notificationService
@@ -54,12 +79,58 @@ export class NotificationComponent implements OnInit, OnDestroy {
           );
         },
         (error) => {
-          this.errorMessage = 'Unable to delete notifications';
+          console.log(error.error);
+          this.errorMessage = 'Unable to delete notification';
+        }
+      );
+  }
+
+  // accept team membership invitation
+  acceptInvitation(notifiacation: Notification) {
+    this.teamSub = this.teamService
+      .acceptInvitation(notifiacation.target)
+      .subscribe(
+        () => {
+          this.markAsRead(notifiacation);
+        },
+        () => {
+          this.errorMessage = 'Unable to accept, please try later';
+        }
+      );
+  }
+
+  // mark notification as read
+  markAsRead(notifiacation: Notification) {
+    this.notificatonSub = this.notificationService
+      .readNotification(notifiacation)
+      .subscribe(
+        () => {
+          notifiacation.viewed?.push(this.userId);
+        },
+        (error) => {
+          this.errorMessage = error.error;
+          console.log(error.error);
+        }
+      );
+  }
+
+  // decline team membership invitation
+  declineInvitation(notifiacation: Notification) {
+    this.teamSub = this.teamService
+      .declineInvitation(notifiacation.target)
+      .subscribe(
+        () => {
+          this.markAsRead(notifiacation);
+        },
+        () => {
+          this.errorMessage = 'Unable to delcline, please try later';
         }
       );
   }
 
   ngOnDestroy() {
     this.notificatonSub?.unsubscribe();
+    this.teamSub?.unsubscribe();
+    this.fundraiserSub?.unsubscribe();
   }
 }

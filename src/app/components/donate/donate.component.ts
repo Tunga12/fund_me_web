@@ -34,11 +34,11 @@ export class DonateComponent implements OnInit, OnDestroy {
     private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
     private donationService: DonationService,
-    private title:Title
+    private title: Title
   ) {}
 
   ngOnInit(): void {
-    this.title.setTitle("Donate");
+    this.title.setTitle('Donate');
 
     this.form = this.formBuilder.group({
       amount: [undefined, [Validators.required]],
@@ -47,7 +47,8 @@ export class DonateComponent implements OnInit, OnDestroy {
       comment: [
         '', //[Validators.required, Validators.minLength(5)]
       ],
-      isAnonymous:[]
+      isAnonymous: [],
+      memberId: ['', []],
     });
 
     // get the Id f the fundraiser from the route
@@ -60,11 +61,17 @@ export class DonateComponent implements OnInit, OnDestroy {
   public get amount(): AbstractControl | null {
     return this.form.get('amount');
   }
+
   public get tip(): AbstractControl | null {
     return this.form.get('tip');
   }
+
   public get comment(): AbstractControl | null {
     return this.form.get('comment');
+  }
+
+  public get memberId(): AbstractControl | null {
+    return this.form.get('memberId');
   }
 
   // set  tip
@@ -84,12 +91,15 @@ export class DonateComponent implements OnInit, OnDestroy {
   donate() {
     this.loading = true;
     console.log(this.form.value);
-    
+    // clean up
+    if (this.memberId!.value === '') {
+      delete this.form.controls['memberId'];
+    }
+
     this.donationSub = this.donationService
-      .createDonation(this.fundraiserId, {
-        ...this.form.value,
-        memberId: this.fundraiser?.organizer?._id,
-      })
+      .createDonation(this.fundraiserId,
+        this.form.value,
+      )
       .subscribe(
         () => {
           this.router.navigateByUrl(`/fundraiser-detail/${this.fundraiserId}`);

@@ -43,6 +43,8 @@ export class MyFundraiserDetailComponent implements OnInit {
         this.fundraiser = fundraiser;
         this.loading = false;
         this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
+        console.log(fundraiser);
+
       },
       (error) => {
         console.log(error);

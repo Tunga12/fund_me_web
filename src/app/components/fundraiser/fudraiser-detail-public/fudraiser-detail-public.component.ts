@@ -27,8 +27,8 @@ export class FudraiserDetailPublicComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private fundraiserServ: FundraiserService,
-    private docTitle: Title
+    private docTitle: Title,
+    public fundraiserServ: FundraiserService,
   ) {}
 
   ngOnInit(): void {

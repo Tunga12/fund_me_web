@@ -12,16 +12,16 @@ import { TeamMember } from './../../models/team-memeber.model';
 })
 export class FundraiserService {
   constructor(private http: HttpClient) {}
-  // get first page
-  getFundraisers(): Observable<HomeFundraiser> {
+
+  // get fundraisers by page
+  getFundraisers(page: number): Observable<HomeFundraiser> {
     return this.http.get<HomeFundraiser>(
-      `${environment.BASE_URL}/fundraisers/popular`
+      `${environment.BASE_URL}/fundraisers/popular/?page=${page}`
     );
   }
 
   // create fundiser
   createFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
-    //  TODO
     let customFundraiser = {
       ...fundraiser,
       isPublished: true,
@@ -75,17 +75,21 @@ export class FundraiserService {
     );
   }
 
+  // search fundraiser by title
+  search(title: string, page: number) :Observable<HomeFundraiser>{
+    return this.http.get<HomeFundraiser>(`${environment.BASE_URL}/fundraisers/title/${title}?page=${page}`);
+}
+
   /*non http sevices */
-  getNumberOfComments(fundraiser: Fundraiser):number {
+  getNumberOfComments(fundraiser: Fundraiser): number {
     let comments = fundraiser.donations?.filter((donation) => {
       if (donation.comment?.trim()) {
         return true;
       }
       return false;
-    }
-    );
+    });
 
-    return comments?.length||0;
+    return comments?.length || 0;
   }
 
   //to know if a fundraiser has a team (accepted mambers)
@@ -95,6 +99,15 @@ export class FundraiserService {
       return false;
     });
     return team?.length! > 0;
+  }
+
+  // get the number of team members of a fundraiser
+  getNumberOfAcceptedTeamMembers(fundraiser: Fundraiser): number {
+    let team = fundraiser.teams?.filter((member: TeamMember) => {
+      if (member.status !== 'pending') return true;
+      return false;
+    });
+    return team?.length!;
   }
 
   //to know if a fundraiser has a team (accepted mambers)

@@ -6,6 +6,9 @@ import { TeamService } from './../../../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { TeamMember } from 'src/app/models/team-memeber.model';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'team-tab-content',
@@ -14,10 +17,14 @@ import { Title } from '@angular/platform-browser';
 })
 export class TeamTabContentComponent implements OnInit {
   @Input() fundraiser!: Fundraiser;
+  teamSub?: Subscription;
   constructor(
     private dialog: MatDialog,
     private fundraiserService: FundraiserService,
-    private docTitle: Title
+    private teamService: TeamService,
+    private docTitle: Title,
+    private snackBar: MatSnackBar,
+    private snackbarServ: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -38,5 +45,24 @@ export class TeamTabContentComponent implements OnInit {
   deleteInvitation(team: TeamMember) {
     let index = this.fundraiser?.teams!.indexOf(team);
     this.fundraiser?.teams!.splice(index, 1);
+    this.teamSub = this.teamService.deleteMember(team).subscribe(
+      () => {
+        this.snackBar.open(
+          'Team deleted',
+          'close',
+          this.snackbarServ.getConfig()
+        );
+      },
+      (err) => {
+        console.log(err.error);
+        
+        this.fundraiser.teams?.push(team);
+        this.snackBar.open(
+          'Unable to delete',
+          'close',
+          this.snackbarServ.getConfig()
+        );
+      }
+    );
   }
 }

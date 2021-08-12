@@ -45,11 +45,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getCategories();
-    this.getCurrentUser();
+    if (this.authService.isLoggedIn()) {
+      this.getCurrentUser();
+    }
   }
 
   search(keyword: string) {
-    console.log('Searching');
     this.router.navigate(['/s'], { queryParams: { q: keyword } });
   }
   // get all categories from the service and assign to our list 'categories'

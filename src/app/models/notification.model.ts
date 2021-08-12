@@ -1,6 +1,7 @@
 export interface Notification {
   _id?: string;
-  userIds?: string[];
+  recipients?: string[];
+  viewed?: string[];
   fundraiser: string;
   notificationType: string;
   content: string;

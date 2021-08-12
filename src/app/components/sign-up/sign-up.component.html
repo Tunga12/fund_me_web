@@ -1,6 +1,34 @@
-<mat-card fxLayout="column" fxFlex.gt-sm="50" fxFlex.lt-sm="100" fxFlex.sm="60">
-  <!-- Title of an Card -->
-  <mat-card-title>
+<nav>
+  <mat-toolbar
+    [classList]="'bg-white'"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between center"
+  >
+    <!-- LOGO -->
+    <img
+      [routerLink]="['/']"
+      routerLinkActive="router-link-active"
+      src="/assets/images/logo.jpg"
+      height="70%"
+      fxFlex.xs="20"
+      fxFlex.gt-xs="10"
+    />
+
+    <div>
+      <a mat-raised-button color="primary" [routerLink]="['/sign-in']">
+        Sign in
+      </a>
+    </div>
+  </mat-toolbar>
+</nav>
+
+<mat-card
+  [ngStyle.gt-sm]="{ width: '50%' }"
+  [ngStyle.sm]="{ width: '60%' }"
+  [ngStyle.lt-sm]="{ width: '85%' }"
+  [ngStyle]="{ margin: '30px auto' }"
+>
+  <mat-card-title fxLayoutAlign="center">
     <h1 class="headline">Sign up</h1>
   </mat-card-title>
   <div>
@@ -105,9 +133,9 @@
             type="tel"
           />
           <mat-icon matPrefix>phone</mat-icon>
-          <mat-error *ngIf="phone?.touched && (phone?.errors?.minlength || phone?.errors?.maxlength)"
+          <mat-error *ngIf="phone?.touched && phone?.errors?.minlength"
             >Phone number must be
-            {{ phone?.errors?.minlength.requiredLength }} digits.
+            {{ phone?.errors?.minlength?.requiredLength }} digits.
           </mat-error>
           <mat-error *ngIf="phone?.touched && phone?.errors?.required"
             >Please enter your phone number

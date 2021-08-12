@@ -1,3 +1,4 @@
+<nav><nav-bar></nav-bar></nav>
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"
@@ -127,7 +128,7 @@
   <banner></banner>
 
   <!-- main area -->
-  <mat-tab-group [disableRipple]="false">
+  <mat-tab-group mat-align-tabs="start" [disableRipple]="false">
     <mat-tab
       label="{{ index === 0 ? 'Donors' : index === 1 ? 'Team' : 'Updates' }}"
       *ngFor="let tab of tabs; let index = index"

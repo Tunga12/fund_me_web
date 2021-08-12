@@ -29,6 +29,7 @@ export class FundraiserListComponent implements OnInit {
 
     // then get fundraisers
     this.getMyFundraisers();
+
   }
 
   manageFundraiser() {

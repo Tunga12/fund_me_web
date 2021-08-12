@@ -1,11 +1,16 @@
 .notification {
-  margin: 10px auto;
-  padding: 20px;
-  width: 70%;
-  background-color: rgb(186, 247, 247);
+  margin: 0px auto;
+  padding: 10px;
+  width: 90%;
   opacity: 1;
   text-align: justify;
   border-radius: 10px;
+}
+.unread {
+  background-color: rgb(186, 247, 247);
+}
+.read {
+  background-color: rgb(223, 219, 219);
 }
 
 img {
@@ -15,6 +20,7 @@ img {
   border-radius: 1rem;
 }
 
-.time, .actions {
+.time,
+.actions {
   margin-left: auto;
 }

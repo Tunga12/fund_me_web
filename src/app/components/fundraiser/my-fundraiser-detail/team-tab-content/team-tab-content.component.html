@@ -2,7 +2,7 @@
   <a *ngIf="hasAcceptedTeamMembers()" (click)="openAddTeamMembersDialog()"
     ><mat-icon class="mat-18">add_circle_outline</mat-icon> Add team member</a
   >
-  <a [routerLink]="['/edit',fundraiser?._id]">
+  <a [routerLink]="['/edit', fundraiser?._id]">
     <mat-icon> settings </mat-icon>
     Team settings</a
   >
@@ -45,8 +45,10 @@
         <div fxLayout="column">
           <span class="bold">
             {{
-            team.id.userId.firstName + " " + team.id.userId.lastName | titlecase
-          }}</span>
+              team.id.userId.firstName + " " + team.id.userId.lastName
+                | titlecase
+            }}</span
+          >
           <span class="text-small">team member</span>
         </div>
       </div>
@@ -82,12 +84,12 @@
         {{ team.id.userId.email }}
       </p>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
-        <a href=""> Resend request</a>
+        <!-- <a href=""> Resend request</a> -->
         <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
-          >more_vert</mat-icon
-        >
+        >more_vert</mat-icon>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Contact invitee</button>
+          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item
+            >Contact invitee</a>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="deleteInvitation(team)">
             Delete invitation
