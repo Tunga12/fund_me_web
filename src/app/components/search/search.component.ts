@@ -75,11 +75,6 @@ export class SearchComponent implements OnInit {
     return this.fundraiserService.getPercentage(fund);
   }
 
-  // // goto create page
-  // createPage() {
-  //   this.router.navigateByUrl('/create');
-  // }
-
   // unsubscribe if from all subscriptions
   ngOnDestroy(): void {
     if (this.fundraiserSub) this.fundraiserSub.unsubscribe();

@@ -1,27 +1,24 @@
-
 <mat-toolbar
   [classList]="'bg-white'"
   fxLayout="row wrap"
   fxLayoutAlign="space-between center"
 >
   <!-- LOGO -->
-      <img [routerLink]="['/']" routerLinkActive="router-link-active" 
-        src="/assets/images/logo.jpg"
-        height="70%"
-        fxFlex.xs="20"
-        fxFlex.gt-xs="10"
-      />
-   <div>
-    <a
-      mat-raised-button
-      color="primary"
-      [routerLink]="['/sign-up']"
-    >
+  <img
+    [routerLink]="['/']"
+    routerLinkActive="router-link-active"
+    src="/assets/images/logo.jpg"
+    ngStyle.xs="{height:'30%'}"
+    ngStyle.gt-xs="{height:'40%'}"
+    fxFlex.xs="20"
+    fxFlex.gt-xs="10"
+  />
+  <div>
+    <a mat-raised-button color="primary" [routerLink]="['/sign-up']">
       Sign up
-    </a>    
+    </a>
   </div>
 </mat-toolbar>
-
 
 <mat-card
   fxLayout="column"
@@ -37,11 +34,7 @@
   </div>
 
   <mat-card-content>
-    <form
-    [formGroup]="form"
-    (ngSubmit)="signIn()"
-     fxLayout.lt-sm="100"
-     >
+    <form [formGroup]="form" (ngSubmit)="signIn()">
       <button mat-button class="btn-large facebook-btn">
         <mat-icon>facebook</mat-icon> Continue with Facebook
       </button>

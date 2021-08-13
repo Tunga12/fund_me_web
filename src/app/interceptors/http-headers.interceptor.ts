@@ -21,6 +21,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
           'x-auth-token': token,
         },
       });
+
     }
     return next.handle(req);
   }

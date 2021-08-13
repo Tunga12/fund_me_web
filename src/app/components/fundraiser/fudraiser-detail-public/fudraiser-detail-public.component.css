@@ -48,3 +48,19 @@ div {
 p {
   text-align: justify;
 }
+
+.team-fund-label {
+  color: #c5912c;
+  font-weight: 900;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.logo {
+  cursor: pointer;
+}
+main {
+  margin: 0px auto;
+}

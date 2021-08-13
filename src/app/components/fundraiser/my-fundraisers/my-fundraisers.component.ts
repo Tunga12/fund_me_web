@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { Subscription } from 'rxjs';
+import { HomeFundraiser } from './../../../models/home-fundraiser.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 
 @Component({
-  selector: 'fundraiser-list',
-  templateUrl: './fundraiser-list.component.html',
-  styleUrls: ['./fundraiser-list.component.css'],
+  selector: 'app-my-fundraisers',
+  templateUrl: './my-fundraisers.component.html',
+  styleUrls: ['./my-fundraisers.component.css']
 })
-export class FundraiserListComponent implements OnInit {
+export class MyFundraisersComponent implements OnInit {
+  tabLinks=['organizer', 'team-member','beneficiary'];
   loading = true;
-  userId = '';
   myFundraisers: Fundraiser[] = [];
 
   fundraiserSUb?: Subscription;
@@ -26,42 +28,39 @@ export class FundraiserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.docTitle.setTitle('My fundaisers');
-
     // then get fundraisers
     this.getMyFundraisers();
-
   }
 
   manageFundraiser() {
     this.router.navigateByUrl('/my-fundraiser-detail');
   }
 
-  percentage(fund: Fundraiser): number {
-    return this.fundraiserServ.getPercentage(fund);
-  }
-
   // get fundraisers of current user
   getMyFundraisers() {
     this.fundraiserSUb = this.fundraiserServ.getMyFundraisers().subscribe(
-      (fundraisers) => {
+      (fundraisersPage:HomeFundraiser) => {
         this.loading = false;
-        this.myFundraisers = fundraisers.fundraisers;
+        this.myFundraisers = fundraisersPage.fundraisers;
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
         this.loading = false;
         console.log(error.error);
         this.errorMessage =
           error.status === 404
             ? "You don't have any fundraiser yet."
-            : 'Unable to load your fundraisers';
+            : 'Unable to load your fundraisers, please try later';
       }
     );
-  }
-
-  createFundraiser() {
-    this.router.navigateByUrl('/create');
   }
   ngOnDestroy(): void {
     this.fundraiserSUb?.unsubscribe();
   }
+  
+
+
+    createFundraiser() {
+      this.router.navigateByUrl('/create');
+    }
 }
+

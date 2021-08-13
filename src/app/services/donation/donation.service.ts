@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Donation } from './../../models/donation.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DonationService {
-
-  constructor(
-    private httpClient:HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) { }
 
   // create donation
-  createDonation(fundraiseId: string, donation: Donation) {
+  createDonation(fundraiseId: string, donation: Donation): Observable<HttpResponse<any>> {
     if (donation.comment?.trim() === '') {
       delete donation.comment;
     }
-    return this.httpClient.post(`${environment.BASE_URL}/donations/${fundraiseId}`,donation);
+    return this.httpClient.post(
+      `${environment.BASE_URL}/donation/pay/${fundraiseId}`,
+      donation,
+      { observe: 'response',responseType:'text'}    
+    );
   }
 }

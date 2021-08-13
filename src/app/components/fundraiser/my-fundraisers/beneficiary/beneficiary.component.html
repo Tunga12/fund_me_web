@@ -1,0 +1,10 @@
+<h3 *ngIf="myFundraisers.length>0">Campigns you are beneficiary of</h3>
+<h3 *ngIf="myFundraisers.length ===0 && !loading">You have no fundraisers <a  routerLink="/create">Create now</a> </h3>
+
+<div *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+</div>
+<p class="text-error">{{ errorMessage }}</p>
+<my-fund-list [fundraisers]="myFundraisers">
+</my-fund-list>

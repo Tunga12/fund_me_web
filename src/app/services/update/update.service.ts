@@ -16,15 +16,15 @@ export class UpdateService {
     update: Update
   ): Observable<Update> {
     return this.http.post<Update>(
-      `${environment.BASE_URL}/updates/${fundraiserId}`,
+      `${environment.BASE_URL}/api/updates/${fundraiserId}`,
       update
     );
   }
 
   // edit update
-  editUpdate(id: string,update: Update): Observable<Update> {
+  editUpdate(id: string, update: Update): Observable<Update> {
     return this.http.put<Update>(
-      `${environment.BASE_URL}/updates/${id}`,
+      `${environment.BASE_URL}/api/updates/${id}`,
       update
     );
   }
@@ -32,9 +32,9 @@ export class UpdateService {
   // delete update
   deleteUpdate(update: Update) {
     return this.http.delete(
-      `${environment.BASE_URL}/updates/${update._id}`,
+      `${environment.BASE_URL}/api/updates/${update._id}`,
       {
-       responseType:'text'
+        responseType: 'text',
       }
     );
   }

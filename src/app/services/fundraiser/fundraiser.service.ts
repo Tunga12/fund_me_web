@@ -16,7 +16,7 @@ export class FundraiserService {
   // get fundraisers by page
   getFundraisers(page: number): Observable<HomeFundraiser> {
     return this.http.get<HomeFundraiser>(
-      `${environment.BASE_URL}/fundraisers/popular/?page=${page}`
+      `${environment.BASE_URL}/api/fundraisers/popular/?page=${page}`
     );
   }
 
@@ -30,7 +30,7 @@ export class FundraiserService {
     // console.log('cusome', customFundraiser), console.log('orginal', fundraiser);
 
     return this.http.post<Fundraiser>(
-      `${environment.BASE_URL}/fundraisers`,
+      `${environment.BASE_URL}/api/fundraisers`,
       customFundraiser
     );
   }
@@ -38,14 +38,21 @@ export class FundraiserService {
   //get a single fundraiser by id
   getFundraiser(fudriserId: string): Observable<Fundraiser> {
     return this.http.get<Fundraiser>(
-      `${environment.BASE_URL}/fundraisers/${fudriserId}`
+      `${environment.BASE_URL}/api/fundraisers/${fudriserId}`
     );
   }
 
   // get fundraisers of current user
   getMyFundraisers(): Observable<HomeFundraiser> {
     return this.http.get<HomeFundraiser>(
-      `${environment.BASE_URL}/fundraisers/user`
+      `${environment.BASE_URL}/api/fundraisers/user`
+    );
+  }
+
+  // get team fundraisers of current user
+  getMemeberFundraisers(): Observable<HomeFundraiser> {
+    return this.http.get<HomeFundraiser>(
+      `${environment.BASE_URL}/api/fundraisers/member`
     );
   }
 
@@ -63,7 +70,7 @@ export class FundraiserService {
       organizer: fundraiser.organizer?._id,
     };
     return this.http.put<Fundraiser>(
-      `${environment.BASE_URL}/fundraisers/${fundraiserId}`,
+      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
       customFundraiser
     );
   }
@@ -71,14 +78,16 @@ export class FundraiserService {
   // delete funraiser by id
   deleteFundraiser(fundraiserId: string): Observable<string> {
     return this.http.delete<string>(
-      `${environment.BASE_URL}/fundraisers/${fundraiserId}`
+      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`
     );
   }
 
   // search fundraiser by title
-  search(title: string, page: number) :Observable<HomeFundraiser>{
-    return this.http.get<HomeFundraiser>(`${environment.BASE_URL}/fundraisers/title/${title}?page=${page}`);
-}
+  search(title: string, page: number): Observable<HomeFundraiser> {
+    return this.http.get<HomeFundraiser>(
+      `${environment.BASE_URL}/api/fundraisers/title/${title}?page=${page}`
+    );
+  }
 
   /*non http sevices */
   getNumberOfComments(fundraiser: Fundraiser): number {
@@ -99,6 +108,24 @@ export class FundraiserService {
       return false;
     });
     return team?.length! > 0;
+  }
+
+  //to know if a user has a has donated to a fundraiser
+  hasDonated(fundraiser: Fundraiser, userId: string): boolean {
+    let donation = fundraiser.donations?.find((donation: Donation) => {
+      if (donation.userId._id === userId) return true;
+      return false;
+    });
+    return donation ? true : false;
+  }
+
+  // get the donation amount of a user to a fundraiser
+  myDonation(fundraiser: Fundraiser, userId: string): number {
+    let donation = fundraiser.donations?.find((donation: Donation) => {
+      if (donation.userId._id === userId) return true;
+      return false;
+    });
+    return donation ? donation.amount : 0;
   }
 
   // get the number of team members of a fundraiser

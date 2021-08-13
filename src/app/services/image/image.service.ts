@@ -9,7 +9,7 @@ export class ImageService {
   constructor(private httpClient: HttpClient) {}
 
   upload(formData: FormData) {
-    return this.httpClient.post(`${environment.BASE_URL}/image`, formData, {
+    return this.httpClient.post(`${environment.BASE_URL}/api/image`, formData, {
       responseType: 'text',
     });
   }

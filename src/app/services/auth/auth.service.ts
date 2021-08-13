@@ -16,7 +16,7 @@ export class AuthService {
     password: string;
   }): Observable<HttpResponse<any>> {
     return this.http.post<any>(
-      `${environment.BASE_URL}/auth`,
+      `${environment.BASE_URL}/api/auth`,
       emailAndPassword,
       { observe: 'response' }
     );
@@ -24,7 +24,7 @@ export class AuthService {
 
   // signup or register user
   signUp(user: User): Observable<HttpResponse<User>> {
-    return this.http.post<User>(`${environment.BASE_URL}/users`, user, {
+    return this.http.post<User>(`${environment.BASE_URL}/api/users`, user, {
       observe: 'response',
     });
   }

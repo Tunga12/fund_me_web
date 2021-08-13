@@ -1,364 +1,574 @@
-<main fxLayout="column">
-  <nav><nav-bar></nav-bar></nav>
-  <div *ngIf="loading">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="percentage"
-      color="primary"
-      class="loading-spinner"
+<main
+ fxFlex.lt-md="100"
+  fxFlex="88">
+  <nav>
+    <nav-bar *ngIf="authService.isLoggedIn()"> </nav-bar>
+    <mat-toolbar
+      *ngIf="!authService.isLoggedIn()"
+      [classList]="'bg-white'"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
     >
-    </mat-progress-spinner>
-  </div>
-
-  <p class="text-errorr bold">{{ errorMessage }}</p>
-
-  <div
-    *ngIf="!loading"
-    fxLayout="column"
-    fxFlex="86"
-    [ngStyle]="{ margin: '20px auto' }"
-    fxFlex.sm="100"
-    fxLayoutAlign.xs="start center"
-  >
-    <h1 fxHide.sm class="bold">{{ fundraiser?.title }}</h1>
-    <div fxLayout="row" fxLayoutAlign="space-around start" fxFlex.md="98">
+      <img
+        class="logo"
+        [routerLink]="['/']"
+        src="/assets/images/logo.jpg"
+        ngStyle.xs="{height:'30%'}"
+        ngStyle.gt-xs="{height:'40%'}"
+        fxFlex.xs="20"
+        fxFlex.gt-xs="10"
+      />
       <div
-        fxLayout="column"
-        fxLayoutGap="20px"
-        fxLayoutAlign="start end"
-        fxFlex.gt-xs="66"
-        fxFlex.xs="98"
-        [ngStyle.gt-sm]="{ 'padding-right': '20px' }"
+        fxHide.lt-sm
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxLayoutGap="5px"
       >
-        <div>
-          <img
-            class="fundraiser-img"
-            [src]="fundraiser?.image"
-            alt="fundraiser image"
-          />
-        </div>
-
-        <div fxHide.md fxLayout.xs="column">
-          <h1 class="bold">{{ fundraiser?.title }}</h1>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="2px"
-            style="margin-bottom: -15px"
-          >
-            <h2>
-              <span class="bold"
-                >{{ fundraiser?.totalRaised | currency }}
-              </span>
-              <sub class="text-small color-gray"
-                >raised of {{ fundraiser?.goalAmount | currency }}goal</sub
-              >
-            </h2>
-          </div>
-          <mat-progress-bar color="primary" value="percentage">
-          </mat-progress-bar>
-          <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-            <a fxLayout="column" (click)="donations('All')">
-              <span class="bold">{{ fundraiser?.donations?.length }}k</span
-              ><mat-hint>donors</mat-hint>
-            </a>
-
-            <span fxLayout="column">
-              <span class="bold">{{ fundraiser?.totalShareCount }}k</span>
-              <mat-hint>shares</mat-hint>
-            </span>
-            <span fxLayout="column">
-              <span class="bold">{{ fundraiser?.likeCount }}k</span>
-              <mat-hint>followers</mat-hint>
-            </span>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayoutAlign="space-between center"
-            style="position: sticky; top: 0"
-          >
-            <button
-              fxFlex="40"
-              mat-raised-button
-              (click)="share()"
-              class="styled-button share btn-small"
-            >
-              <mat-icon>ios_share</mat-icon> Share
-            </button>
-            <button
-              fxFlex="40"
-              mat-raised-button
-              [routerLink]="['/donate', fundraiser?._id]"
-              class="styled-button donate btn-small"
-            >
-              <mat-icon>attach_money</mat-icon> Donate now
-            </button>
-          </div>
-        </div>
-
-        <!-- Fundraiser info -->
-        <div
-          fxLayout="column"
-          fxLayoutAlign="space-around start"
-          fxLayoutGap="20px"
-          fxFlex="90"
-          fxFlex.lt-md="98"
+        <a mat-button [routerLink]="['/create']" class="nav-link">
+          Start a GoFundMe
+        </a>
+        <mat-divider fxShow.gt-xs vertical style="height: 30px"></mat-divider>
+        <a mat-button [routerLink]="['/sign-in']" class="nav-link"> Sign in </a>
+        <a mat-button (click)="share()" class="styled-button share"> Share </a>
+        <a mat-button [routerLink]="['/create']" class="styled-button donate">
+          Donate
+        </a>
+      </div>
+      <div
+        fxHide.gt-xs
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxLayoutGap="20px"
+      >
+        <mat-icon (click)="share()" class="mat-18">ios_share</mat-icon>
+        <mat-icon mat-icon-button [matMenuTriggerFor]="menuRef" class="mat-18"
+          >menu</mat-icon
         >
-          <div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-              <!-- organiser image or icon -->
-              <img matCardAvatar src="/assets/images/step2.jpg" />
-              <!-- <mat-icon color="primary"> volunteer_activism </mat-icon> -->
-              <p>
-                {{
-                  fundraiser?.organizer?.firstName +
-                    " " +
-                    fundraiser?.organizer?.lastName | titlecase
-                }}
-                are organizing this fundraiser
-              </p>
-            </div>
-            <mat-divider></mat-divider>
-          </div>
-          <div>
-            <p>
-              {{ fundraiser?.dateCreated | timeago }} |
-              <a href="">{{ fundraiser?.category?.name }}</a>
-            </p>
-            <mat-divider></mat-divider>
-          </div>
+      </div>
 
-          <!-- story section -->
-          <section>
-            <div [innerHTML]="fundraiser?.story"></div>
-          </section>
+      <mat-menu #menuRef="matMenu" [overlapTrigger]="false">
+        <a mat-menu-item routerLink="/sign-in">Sign in</a>
+        <a mat-menu-item routerLink="/create">Start a GoFundMe</a>
+        <a mat-menu-item (click)="share()"> Share </a>
+        <a mat-menu-item [routerLink]="['/donate', fundraiser?._id]">
+          Donate
+        </a>
+      </mat-menu>
+    </mat-toolbar>
+  </nav>
+  <main fxLayout="column">
+    <div fxFlex="80" fxFlex.lt-sm="90" fxFlex="80">
+      <div *ngIf="loading">
+        <mat-progress-spinner
+          mode="indeterminate"
+          [value]="percentage"
+          color="primary"
+          class="loading-spinner"
+        >
+        </mat-progress-spinner>
+      </div>
+
+      <p class="text-errorr bold">{{ errorMessage }}</p>
+
+      <div
+        *ngIf="!loading"
+        fxLayout="column"
+        fxFlex.sm="100"
+        fxFlex="86"
+        [ngStyle]="{ margin: '20px auto' }"
+        fxLayoutAlign.xs="start center"
+      >
+        <h1 fxHide.lt-sm class="bold">{{ fundraiser?.title }}</h1>
+        <div fxLayout="row" fxLayoutAlign="space-around start" fxFlex.md="98">
           <div
-            *ngIf="fundraiser?.donations?.length !== 0"
             fxLayout="column"
             fxLayoutGap="20px"
+            fxLayoutAlign="start end"
+            fxFlex.gt-xs="66"
+            fxFlex.xs="98"
+            [ngStyle.gt-sm]="{ 'padding-right': '20px' }"
           >
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <mat-icon class="mat-18 bg-purple-avatar">trending_up</mat-icon>
-                <strong
-                  >{{ fundraiser?.donations?.length }} people just
-                  donated</strong
-                >
-              </div>
-              <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <img
-                  src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-                />
-                <div fxLayout="column">
-                  <div
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between start"
-                    fxLayoutGap="30px"
-                  >
-                    <span *ngIf="recentDonation?.isAnonymous">Anonymous</span>
-                    <span *ngIf="!recentDonation?.isAnonymous">{{
-                      recentDonation?.userId?.firstName! +
-                        " " +
-                        recentDonation?.userId?.lastName | titlecase
-                    }}</span>
-                    <span class="text-small color-gray">
-                      {{ recentDonation?.date | timeago }}
-                    </span>
-                  </div>
-                  <div fxLayout="row wrap" fxLayoutGap="20px">
-                    <strong>{{ recentDonation?.amount | currency }}</strong>
-                    <a>Recent donation </a>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <img
-                  src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-                />
-                <div fxLayout="column">
-                  <div
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between start"
-                    fxLayoutGap="30px"
-                  >
-                    <span *ngIf="topDonation?.isAnonymous">Anonymous</span>
-                    <span *ngIf="!topDonation?.isAnonymous">{{
-                      topDonation?.userId?.firstName! +
-                        " " +
-                        topDonation?.userId?.lastName | titlecase
-                    }}</span>
-                    <span class="text-small color-gray">
-                      {{ topDonation?.date | timeago }}
-                    </span>
-                  </div>
-                  <div fxLayout="row wrap" fxLayoutGap="20px">
-                    <strong>{{ topDonation?.amount | currency }}</strong>
-                    <a href="">Top donation </a>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
+            <div>
               <img
-                src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                class="fundraiser-img"
+                [src]="fundraiser?.image"
+                alt="fundraiser image"
               />
-              <div fxLayout="column">
-                <div
-                  fxLayout="row wrap"
-                  fxLayoutAlign="space-between start"
-                  fxLayoutGap="30px"
-                >
-                  <span *ngIf="firstDonation?.isAnonymous">Anonymous</span>
-                  <span *ngIf="!firstDonation?.isAnonymous">{{
-                    firstDonation?.userId?.firstName! +
-                      " " +
-                      firstDonation?.userId?.lastName | titlecase
-                  }}</span>
-                  <span class="text-small color-gray">
-                    {{ firstDonation?.date | timeago }}
-                  </span>
-                </div>
-                <div fxLayout="row wrap" fxLayoutGap="20px">
-                  <strong>{{ firstDonation?.amount | currency }}</strong>
-                  <a href="">First donation </a>
-                </div>
-              </div>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-              <button
-                mat-raised-button
-                (click)="donations('All')"
-                color="primary"
-              >
-                See all
-              </button>
-              <button
-                mat-stroked-button
-                (click)="donations('Top')"
-                color="primary"
-              >
-                <mat-icon class="mat-18"> favorite_border </mat-icon>
-                See top donations
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <h2 class="bold">Updates({{ fundraiser?.updates?.length }})</h2>
-              <mat-divider></mat-divider>
-            </div>
-            <div *ngFor="let update of fundraiser?.updates; let last = last">
-              <p>
-                <Strong>{{ update.dateCreated | timeago }}</Strong>
-                <span class="text-small color-gray">
-                  by
-                  {{
-                    update.userId?.firstName + " " + update.userId?.lastName
-                      | titlecase
-                  }}, Organizer</span
-                >
-              </p>
-              <p>{{ update.content }}</p>
-              <div *ngIf="!last">
-                <mat-divider></mat-divider>
-              </div>
-            </div>
-
-            <!-- TODO -->
-            <a href="">See older updates</a>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayoutAlign="space-between center"
-            style="position: sticky; top: 0"
-          >
-            <button
-              fxFlex="40"
-              mat-raised-button
-              (click)="share()"
-              class="styled-button share btn-small"
-            >
-              <mat-icon>ios_share</mat-icon> Share
-            </button>
-            <button
-              fxFlex="40"
-              mat-raised-button
-              [routerLink]="['/donate', fundraiser?._id]"
-              class="styled-button donate btn-small"
-            >
-              <mat-icon>attach_money</mat-icon> Donate now
-            </button>
-          </div>
-
-          <!-- Fudrising team section -->
-          <div
-            *ngIf="hasAcceptedTeamMembers()"
-            fxLayout="column"
-            fxLayoutGap="20px"
-          >
-            <div>
-              <h2 class="bold">
-                Fundrising team: Team
-                {{ fundraiser?.organizer?.firstName | titlecase }}
-                <!-- ({{
-                1 + fundraiser!.teams!.length
-              }}) -->
-              </h2>
-              <div>
-                <mat-divider></mat-divider>
-              </div>
-            </div>
-            <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <div fxHide.md fxLayout.xs="column">
+              <h1 class="bold">{{ fundraiser?.title }}</h1>
               <div
                 fxLayout="row"
-                fxLayoutAlign="start start"
-                fxLayoutGap="20px"
-                style="width: fit-content"
+                fxLayoutAlign="start center"
+                fxLayoutGap="2px"
+                style="margin-bottom: -15px"
               >
-                <img matCardAvatar src="/assets/images/step2.jpg" />
-                <div fxLayout="column" style="width: fit-content">
-                  <span class="bold">
-                    {{
-                      fundraiser?.organizer?.firstName +
-                        " " +
-                        fundraiser?.organizer?.lastName | titlecase
-                    }}</span
+                <h2>
+                  <span class="bold"
+                    >{{ fundraiser?.totalRaised | currency }}
+                  </span>
+                  <sub class="text-small color-gray"
+                    >raised of {{ fundraiser?.goalAmount | currency }}goal</sub
                   >
-                  <span>Organizer</span>
+                </h2>
+              </div>
+              <mat-progress-bar color="primary" value="percentage">
+              </mat-progress-bar>
+              <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
+                <a fxLayout="column" (click)="donations('All')">
+                  <span class="bold">{{ fundraiser?.donations?.length }}k</span
+                  ><mat-hint>donors</mat-hint>
+                </a>
 
-                  <!-- TODO adress of the organiser -->
-                  <!-- <span>Atlanta, GA</span> -->
+                <span fxLayout="column">
+                  <span class="bold">{{ fundraiser?.totalShareCount }}k</span>
+                  <mat-hint>shares</mat-hint>
+                </span>
+                <span fxLayout="column">
+                  <span class="bold">{{ fundraiser?.likeCount }}k</span>
+                  <mat-hint>followers</mat-hint>
+                </span>
+              </div>
+              <div
+                fxLayout="row wrap"
+                fxLayoutAlign="space-between center"
+                style="position: sticky; top: 0"
+              >
+                <button
+                  fxFlex="40"
+                  mat-raised-button
+                  (click)="share()"
+                  class="styled-button share btn-small"
+                >
+                  <mat-icon>ios_share</mat-icon> Share
+                </button>
+                <button
+                  *ngIf="!hasDonated()"
+                  fxFlex="40"
+                  mat-raised-button
+                  [routerLink]="['/donate', fundraiser?._id]"
+                  class="styled-button donate btn-small"
+                >
+                  <mat-icon>attach_money</mat-icon> Donate now
+                </button>
+              </div>
+            </div>
+
+            <!-- Fundraiser info -->
+            <div
+              fxLayout="column"
+              fxLayoutAlign="space-around start"
+              fxLayoutGap="20px"
+              fxFlex="90"
+              fxFlex.lt-md="98"
+            >
+              <div>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="20px"
+                >
+                  <!-- organiser image or icon -->
+                  <img matCardAvatar src="/assets/images/step2.jpg" />
+                  <!-- <mat-icon color="primary"> volunteer_activism </mat-icon> -->
+                  <div
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="0px"
+                  >
+                    <div
+                      *ngIf="hasAcceptedTeamMembers()"
+                      fxLayout="row"
+                      fxLayoutAlign="start start"
+                    >
+                      <strong class="team-fund-label">
+                        <mat-icon>people</mat-icon> <span>Team fundraiser</span>
+                      </strong>
+                    </div>
+                    <p>
+                      {{
+                        fundraiser?.organizer?.firstName +
+                          " " +
+                          fundraiser?.organizer?.lastName | titlecase
+                      }}
+                      <span *ngIf="hasAcceptedTeamMembers()">
+                        and
+                        {{
+                          fundraiserServ.getNumberOfAcceptedTeamMembers(
+                            fundraiser!
+                          )
+                        }}
+                        <span
+                          *ngIf="
+                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) === 1
+                          "
+                          >other</span
+                        >
+                        <span
+                          *ngIf="
+                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) > 1
+                          "
+                          >others</span
+                        >
+                        are
+                      </span>
+                      <span *ngIf="!hasAcceptedTeamMembers()"> is </span>
+                      organizing this fundraiser
+                    </p>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+              </div>
+              <div>
+                <p>
+                  {{ fundraiser?.dateCreated | timeago }} |
+                  <a href="">{{ fundraiser?.category?.name }}</a>
+                </p>
+                <mat-divider></mat-divider>
+              </div>
+
+              <!-- story section -->
+              <section>
+                <div [innerHTML]="fundraiser?.story"></div>
+              </section>
+              <div
+                fxHide.gt-xs
+                *ngIf="fundraiser?.donations?.length !== 0"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <mat-icon class="mat-18 bg-purple-avatar"
+                      >trending_up</mat-icon
+                    >
+                    <strong
+                      >{{ fundraiser?.donations?.length }} people just
+                      donated</strong
+                    >
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                  <h3 mat-label class="bold" *ngIf="hasDonated()">
+                    You've donated {{ getMyDonationAmount() | currency }}
+                  </h3>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <img
+                      src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                    />
+                    <div fxLayout="column">
+                      <div
+                        fxLayout="row wrap"
+                        fxLayoutAlign="space-between start"
+                        fxLayoutGap="30px"
+                      >
+                        <span *ngIf="recentDonation?.isAnonymous"
+                          >Anonymous</span
+                        >
+                        <span *ngIf="!recentDonation?.isAnonymous">{{
+                          recentDonation?.userId?.firstName! +
+                            " " +
+                            recentDonation?.userId?.lastName | titlecase
+                        }}</span>
+                        <span class="text-small color-gray">
+                          {{ recentDonation?.date | timeago }}
+                        </span>
+                      </div>
+                      <div fxLayout="row wrap" fxLayoutGap="20px">
+                        <strong>{{ recentDonation?.amount | currency }}</strong>
+                        <a>Recent donation </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <img
+                      src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                    />
+                    <div fxLayout="column">
+                      <div
+                        fxLayout="row wrap"
+                        fxLayoutAlign="space-between start"
+                        fxLayoutGap="30px"
+                      >
+                        <span *ngIf="topDonation?.isAnonymous">Anonymous</span>
+                        <span *ngIf="!topDonation?.isAnonymous">{{
+                          topDonation?.userId?.firstName! +
+                            " " +
+                            topDonation?.userId?.lastName | titlecase
+                        }}</span>
+                        <span class="text-small color-gray">
+                          {{ topDonation?.date | timeago }}
+                        </span>
+                      </div>
+                      <div fxLayout="row wrap" fxLayoutGap="20px">
+                        <strong>{{ topDonation?.amount | currency }}</strong>
+                        <a href="">Top donation </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <img
+                    src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                  />
+                  <div fxLayout="column">
+                    <div
+                      fxLayout="row wrap"
+                      fxLayoutAlign="space-between start"
+                      fxLayoutGap="30px"
+                    >
+                      <span *ngIf="firstDonation?.isAnonymous">Anonymous</span>
+                      <span *ngIf="!firstDonation?.isAnonymous">{{
+                        firstDonation?.userId?.firstName! +
+                          " " +
+                          firstDonation?.userId?.lastName | titlecase
+                      }}</span>
+                      <span class="text-small color-gray">
+                        {{ firstDonation?.date | timeago }}
+                      </span>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="20px">
+                      <strong>{{ firstDonation?.amount | currency }}</strong>
+                      <a href="">First donation </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+                  <button
+                    *ngIf="donations.length > 2"
+                    mat-raised-button
+                    (click)="donations('All')"
+                    color="primary"
+                  >
+                    See all
+                  </button>
+                  <button
+                    *ngIf="donations.length > 2"
+                    mat-stroked-button
+                    (click)="donations('Top')"
+                    color="primary"
+                  >
+                    <mat-icon class="mat-18"> favorite_border </mat-icon>
+                    See top donations
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div>
+                  <h2 class="bold">
+                    Updates({{ fundraiser?.updates?.length }})
+                  </h2>
+                  <mat-divider></mat-divider>
+                </div>
+                <div
+                  *ngFor="let update of fundraiser?.updates; let last = last"
+                >
+                  <p>
+                    <Strong>{{ update.dateCreated | timeago }}</Strong>
+                    <span class="text-small color-gray">
+                      by
+                      {{
+                        update.userId?.firstName + " " + update.userId?.lastName
+                          | titlecase
+                      }}, Organizer</span
+                    >
+                  </p>
+                  <p>{{ update.content }}</p>
+                  <div *ngIf="!last">
+                    <mat-divider></mat-divider>
+                  </div>
+                </div>
+
+                <!-- TODO -->
+                <!-- <a href="">See older updates</a> -->
+              </div>
+              <div
+                fxLayout="row wrap"
+                fxLayoutAlign="space-between center"
+                style="position: sticky; top: 0"
+              >
+                <button
+                  fxFlex="40"
+                  mat-raised-button
+                  (click)="share()"
+                  class="styled-button share btn-small"
+                >
+                  <mat-icon>ios_share</mat-icon> Share
+                </button>
+                <button
+                  *ngIf="!hasDonated()"
+                  fxFlex="40"
+                  mat-raised-button
+                  [routerLink]="['/donate', fundraiser?._id]"
+                  class="styled-button donate btn-small"
+                >
+                  <mat-icon>attach_money</mat-icon> Donate now
+                </button>
+              </div>
+
+              <!-- Fudrising team section -->
+              <div
+                *ngIf="hasAcceptedTeamMembers()"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
+                <div>
+                  <h2 class="bold">
+                    Fundrising team: Team
+                    {{ fundraiser?.organizer?.firstName | titlecase }}
+                    <!-- ({{
+                1 + fundraiser!.teams!.length
+              }}) -->
+                  </h2>
+                  <div>
+                    <mat-divider></mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="20px"
+                    style="width: fit-content"
+                  >
+                    <img matCardAvatar src="/assets/images/step2.jpg" />
+                    <div fxLayout="column" style="width: fit-content">
+                      <span class="bold">
+                        {{
+                          fundraiser?.organizer?.firstName +
+                            " " +
+                            fundraiser?.organizer?.lastName | titlecase
+                        }}</span
+                      >
+                      <span>Organizer</span>
+
+                      <!-- TODO adress of the organiser -->
+                      <!-- <span>Atlanta, GA</span> -->
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <mat-divider></mat-divider>
+                </div>
+
+                <div
+                  fxLayout="row wrap"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="30px"
+                >
+                  <div fxFlex="25" *ngFor="let member of fundraiser?.teams">
+                    <div
+                      *ngIf="member.status !== 'pending'"
+                      fxLayout="row"
+                      fxLayoutGap="20px"
+                      style="margin: 20px 0px"
+                    >
+                      <img
+                        src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                      />
+                      <div fxLayout="column">
+                        <span class="bold"
+                          >{{
+                            member.id.userId.firstName +
+                              " " +
+                              member.id.userId.lastName | titlecase
+                          }}
+                        </span>
+                        <span class="text-small">team member</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of fundrising team section -->
+
+              <!-- Organiser and beneficiary section -->
+              <div *ngIf="fundraiser?.beneficiary">
+                <div>
+                  <h2 class="bold">Organizer and beneficiary</h2>
+                  <mat-divider> </mat-divider>
+                </div>
+                <div
+                  fxLayout="row"
+                  fxLayout.xs="column"
+                  fxLayoutAlign="space-between start"
+                  fxLayoutAlign.xs="space-between center"
+                  style="margin: 20px 0px"
+                >
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="20px"
+                    style="width: fit-content"
+                  >
+                    <img matCardAvatar src="/assets/images/step2.jpg" />
+                    <div fxLayout="column" style="width: fit-content">
+                      <span
+                        >{{ fundraiser?.organizer?.firstName | titlecase }}
+                        {{ fundraiser?.organizer?.lastName | titlecase }}</span
+                      >
+                      <span>Organizer</span>
+                      <!-- <span>Atlanta, GA</span> -->
+                    </div>
+                  </div>
+                  <mat-icon fxHide.xs> arrow_forward </mat-icon>
+                  <!-- <mat-icon fxShow.xs> arrow_downward </mat-icon> -->
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="20px"
+                    style="width: fit-content"
+                  >
+                    <mat-icon color="primary">volunteer_activism</mat-icon>
+                    <div fxLayout="column">
+                      <span
+                        >{{ fundraiser?.beneficiary?.firstName | titlecase }}
+                        {{
+                          fundraiser?.beneficiary?.lastName | titlecase
+                        }}</span
+                      >
+                      <span>Beneficiary</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <mat-divider></mat-divider>
-            </div>
+            <!-- end of organizer and beneficiary -->
 
-            <div
-              fxLayout="row wrap"
-              fxLayoutAlign="start center"
-              fxLayoutGap="30px"
-            >
-              <div fxFlex="25" *ngFor="let member of fundraiser?.teams">
+            <!-- Comment section -->
+            <div>
+              <h2 class="bold">Comments({{ getNumberOfComments() }})</h2>
+              <div>
+                <mat-divider></mat-divider>
+              </div>
+              <div
+                *ngFor="let donation of fundraiser?.donations; let last = last"
+              >
                 <div
-                  *ngIf="member.status !== 'pending'"
+                  *ngIf="donation?.comment"
                   fxLayout="row"
+                  fxLayoutAlign="start start"
                   fxLayoutGap="20px"
                   style="margin: 20px 0px"
                 >
@@ -366,103 +576,20 @@
                     src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
                   />
                   <div fxLayout="column">
-                    <span class="bold"
-                      >{{
-                        member.id.userId.firstName +
+                    <span class="bold">
+                      <span *ngIf="donation.isAnonymous">Anonymous</span>
+                      <span *ngIf="!donation.isAnonymous">{{
+                        donation.userId.firstName +
                           " " +
-                          member.id.userId.lastName | titlecase
-                      }}
-                    </span>
-                    <span class="text-small">team member</span>
+                          donation.userId.lastName | titlecase
+                      }}</span>
+                      donated
+                      <strong>${{ donation.amount }}</strong></span
+                    >
+                    <p>{{ donation.comment }} <a>Read more</a></p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <!-- end of fundrising team section -->
-
-          <!-- Organiser and beneficiary section -->
-          <div *ngIf="fundraiser?.beneficiary">
-            <div>
-              <h2 class="bold">Organizer and beneficiary</h2>
-              <mat-divider> </mat-divider>
-            </div>
-            <div
-              fxLayout="row"
-              fxLayout.xs="column"
-              fxLayoutAlign="space-between start"
-              fxLayoutAlign.xs="space-between center"
-              style="margin: 20px 0px"
-            >
-              <div
-                fxLayout="row"
-                fxLayoutAlign="start start"
-                fxLayoutGap="20px"
-                style="width: fit-content"
-              >
-                <img matCardAvatar src="/assets/images/step2.jpg" />
-                <div fxLayout="column" style="width: fit-content">
-                  <span
-                    >{{ fundraiser?.organizer?.firstName | titlecase }}
-                    {{ fundraiser?.organizer?.lastName | titlecase }}</span
-                  >
-                  <span>Organizer</span>
-                  <!-- <span>Atlanta, GA</span> -->
-                </div>
-              </div>
-              <mat-icon fxHide.xs> arrow_forward </mat-icon>
-              <!-- <mat-icon fxShow.xs> arrow_downward </mat-icon> -->
-              <div
-                fxLayout="row"
-                fxLayoutAlign="start start"
-                fxLayoutGap="20px"
-                style="width: fit-content"
-              >
-                <mat-icon color="primary">volunteer_activism</mat-icon>
-                <div fxLayout="column">
-                  <span
-                    >{{ fundraiser?.beneficiary?.firstName | titlecase }}
-                    {{ fundraiser?.beneficiary?.lastName | titlecase }}</span
-                  >
-                  <span>Beneficiary</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end of organizer and beneficiary -->
-
-        <!-- Comment section -->
-        <div>
-          <h2 class="bold">Comments({{ getNumberOfComments() }})</h2>
-          <div>
-            <mat-divider></mat-divider>
-          </div>
-          <div *ngFor="let donation of fundraiser?.donations; let last = last">
-            <div
-              *ngIf="donation?.comment"
-              fxLayout="row"
-              fxLayoutAlign="start start"
-              fxLayoutGap="20px"
-              style="margin: 20px 0px"
-            >
-              <img
-                src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-              />
-              <div fxLayout="column">
-                <span class="bold">
-                  <span *ngIf="donation.isAnonymous">Anonymous</span>
-                  <span *ngIf="!donation.isAnonymous">{{
-                    donation.userId.firstName + " " + donation.userId.lastName
-                      | titlecase
-                  }}</span>
-                  donated
-                  <strong>${{ donation.amount }}</strong></span
-                >
-                <p>{{ donation.comment }} <a>Read more</a></p>
-              </div>
-            </div>
-            <!-- <button
+                <!-- <button
             *ngIf="last"
             mat-stroked-button
             color="primary"
@@ -470,211 +597,232 @@
           >
             Show more
           </button> -->
-            <div>
-              <mat-divider></mat-divider>
+                <div>
+                  <mat-divider></mat-divider>
+                </div>
+              </div>
             </div>
+            <!--End of Comment section -->
           </div>
-        </div>
-        <!--End of Comment section -->
-      </div>
 
-      <!-- Card on the right side -->
+          <!-- Card on the right side -->
 
-      <mat-card fxHide.lt-md>
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <div>
+          <mat-card fxHide.lt-md>
             <div
-              fxLayout="row"
-              fxLayoutAlign="start center"
-              fxLayoutGap="2px"
-              style="margin-bottom: -15px"
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              fxLayoutGap="8px"
             >
-              <h2>
-                <span class="bold"
-                  >{{ fundraiser?.totalRaised | currency }}
-                </span>
-                <sub class="text-small color-gray"
-                  >raised of {{ fundraiser?.goalAmount | currency }} goal</sub
-                >
-              </h2>
-            </div>
-            <mat-progress-bar color="primary" [value]="percentage">
-            </mat-progress-bar>
-            <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-              <a fxLayout="column" href="">
-                <span class="bold">{{ fundraiser?.donations?.length }}</span
-                ><mat-hint>donors</mat-hint>
-              </a>
-
-              <div fxLayout="column">
-                <span class="bold">{{ fundraiser?.totalShareCount }}</span>
-                <mat-hint>shares</mat-hint>
-              </div>
-              <div fxLayout="column">
-                <span class="bold">{{ fundraiser?.likeCount }}</span>
-                <mat-hint>followers</mat-hint>
-              </div>
-            </div>
-          </div>
-          <button
-            mat-raised-button
-            (click)="share()"
-            class="styled-button share btn-large"
-          >
-            <mat-icon>ios_share</mat-icon> Share
-          </button>
-          <button
-            mat-raised-button
-            [routerLink]="['/donate', fundraiser?._id]"
-            class="styled-button donate btn-large"
-          >
-            <mat-icon>attach_money</mat-icon> Donate now
-          </button>
-
-          <!-- Show this div if donations have made to this fundraiser -->
-          <div
-            *ngIf="fundraiser?.donations?.length !== 0"
-            fxLayout="column"
-            fxLayoutGap="20px"
-          >
-            <div></div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <mat-icon class="mat-18 bg-purple-avatar">trending_up</mat-icon>
-                <strong
-                  >{{ fundraiser?.donations?.length }} people just
-                  donated</strong
-                >
-              </div>
               <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <img
-                  src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-                />
-                <div fxLayout="column">
-                  <div
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between start"
-                    fxLayoutGap="30px"
-                  >
-                    <span *ngIf="recentDonation?.isAnonymous">Anonymous</span>
-                    <span *ngIf="!recentDonation?.isAnonymous">{{
-                      recentDonation?.userId?.firstName! +
-                        " " +
-                        recentDonation?.userId?.lastName | titlecase
-                    }}</span>
-                    <span class="text-small color-gray">
-                      {{ recentDonation?.date | timeago }}
-                    </span>
-                  </div>
-                  <div fxLayout="row wrap" fxLayoutGap="20px">
-                    <strong>{{ recentDonation?.amount | currency }}</strong>
-                    <a>Recent donation </a>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row" fxLayoutGap="20px">
-                <img
-                  src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-                />
-                <div fxLayout="column">
-                  <div
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between start"
-                    fxLayoutGap="30px"
-                  >
-                    <span *ngIf="topDonation?.isAnonymous">Anonymous</span>
-                    <span *ngIf="!topDonation?.isAnonymous">{{
-                      topDonation?.userId?.firstName! +
-                        " " +
-                        topDonation?.userId?.lastName | titlecase
-                    }}</span>
-                    <span class="text-small color-gray">
-                      {{ topDonation?.date | timeago }}
-                    </span>
-                  </div>
-                  <div fxLayout="row wrap" fxLayoutGap="20px">
-                    <strong>{{ topDonation?.amount | currency }}</strong>
-                    <a href="">Top donation </a>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <mat-divider> </mat-divider>
-              </div>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
-              <img
-                src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-              />
-              <div fxLayout="column">
                 <div
-                  fxLayout="row wrap"
-                  fxLayoutAlign="space-between start"
-                  fxLayoutGap="30px"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                  fxLayoutGap="2px"
+                  style="margin-bottom: -15px"
                 >
-                  <span *ngIf="firstDonation?.isAnonymous">Anonymous</span>
-                  <span *ngIf="!firstDonation?.isAnonymous">{{
-                    firstDonation?.userId?.firstName! +
-                      " " +
-                      firstDonation?.userId?.lastName | titlecase
-                  }}</span>
-                  <span class="text-small color-gray">
-                    {{ firstDonation?.date | timeago }}
-                  </span>
+                  <h2>
+                    <span class="bold"
+                      >{{ fundraiser?.totalRaised | currency }}
+                    </span>
+                    <sub class="text-small color-gray"
+                      >raised of
+                      {{ fundraiser?.goalAmount | currency }} goal</sub
+                    >
+                  </h2>
                 </div>
-                <div fxLayout="row wrap" fxLayoutGap="20px">
-                  <strong>{{ firstDonation?.amount | currency }}</strong>
-                  <a href="">First donation </a>
+                <mat-progress-bar color="primary" [value]="percentage">
+                </mat-progress-bar>
+                <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
+                  <a fxLayout="column" href="">
+                    <span class="bold">{{ fundraiser?.donations?.length }}</span
+                    ><mat-hint>donors</mat-hint>
+                  </a>
+
+                  <div fxLayout="column">
+                    <span class="bold">{{ fundraiser?.totalShareCount }}</span>
+                    <mat-hint>shares</mat-hint>
+                  </div>
+                  <div fxLayout="column">
+                    <span class="bold">{{ fundraiser?.likeCount }}</span>
+                    <mat-hint>followers</mat-hint>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div fxLayout="row wrap" fxLayoutAlign="space-between start">
               <button
                 mat-raised-button
-                (click)="donations('All')"
-                color="primary"
+                (click)="share()"
+                class="styled-button share btn-large"
               >
-                See all
+                <mat-icon>ios_share</mat-icon> Share
               </button>
               <button
-                mat-stroked-button
-                (click)="donations('Top')"
-                color="primary"
+                *ngIf="!hasDonated()"
+                mat-raised-button
+                [routerLink]="['/donate', fundraiser?._id]"
+                class="styled-button donate btn-large"
               >
-                <mat-icon class="mat-18"> favorite_border </mat-icon>
-                See top donations
+                <mat-icon>attach_money</mat-icon> Donate now
               </button>
-            </div>
-          </div>
 
-          <!-- Show this div on if no donations have made to this fundraiser yet -->
-          <div *ngIf="fundraiser?.donations?.length === 0">
-            <div fxLayout="row" fxLayoutGap="20px">
-              <mat-icon color="primary"> volunteer_activism </mat-icon>
-              <p>Become the first supporter Your donation matters</p>
-            </div>
-            <p></p>
-            <p><mat-divider></mat-divider></p>
-            <p></p>
+              <!-- Show this div if donations have made to this fundraiser -->
+              <div
+                *ngIf="fundraiser?.donations?.length !== 0"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
+                <div></div>
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <mat-icon class="mat-18 bg-purple-avatar"
+                      >trending_up</mat-icon
+                    >
+                    <strong
+                      >{{ fundraiser?.donations?.length }} people just
+                      donated</strong
+                    >
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                  <h3 *ngIf="hasDonated()" class="bold">
+                    You've donated {{ getMyDonationAmount() | currency }}
+                  </h3>
 
-            <h3 class="bold">GoFundMe Guarantee</h3>
-            <p style="text-align: justify">
-              In the rare case something isn’t right, we will work with you to
-              determine if misuse occurred.
-            </p>
-          </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <img
+                      src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                    />
+                    <div fxLayout="column">
+                      <div
+                        fxLayout="row wrap"
+                        fxLayoutAlign="space-between start"
+                        fxLayoutGap="30px"
+                      >
+                        <span *ngIf="recentDonation?.isAnonymous"
+                          >Anonymous</span
+                        >
+                        <span *ngIf="!recentDonation?.isAnonymous">{{
+                          recentDonation?.userId?.firstName! +
+                            " " +
+                            recentDonation?.userId?.lastName | titlecase
+                        }}</span>
+                        <span class="text-small color-gray">
+                          {{ recentDonation?.date | timeago }}
+                        </span>
+                      </div>
+                      <div fxLayout="row wrap" fxLayoutGap="20px">
+                        <strong>{{ recentDonation?.amount | currency }}</strong>
+                        <a>Recent donation </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="column" fxLayoutGap="10px">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <img
+                      src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                    />
+                    <div fxLayout="column">
+                      <div
+                        fxLayout="row wrap"
+                        fxLayoutAlign="space-between start"
+                        fxLayoutGap="30px"
+                      >
+                        <span *ngIf="topDonation?.isAnonymous">Anonymous</span>
+                        <span *ngIf="!topDonation?.isAnonymous">{{
+                          topDonation?.userId?.firstName! +
+                            " " +
+                            topDonation?.userId?.lastName | titlecase
+                        }}</span>
+                        <span class="text-small color-gray">
+                          {{ topDonation?.date | timeago }}
+                        </span>
+                      </div>
+                      <div fxLayout="row wrap" fxLayoutGap="20px">
+                        <strong>{{ topDonation?.amount | currency }}</strong>
+                        <a href="">Top donation </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <mat-divider> </mat-divider>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <img
+                    src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+                  />
+                  <div fxLayout="column">
+                    <div
+                      fxLayout="row wrap"
+                      fxLayoutAlign="space-between start"
+                      fxLayoutGap="30px"
+                    >
+                      <span *ngIf="firstDonation?.isAnonymous">Anonymous</span>
+                      <span *ngIf="!firstDonation?.isAnonymous">{{
+                        firstDonation?.userId?.firstName! +
+                          " " +
+                          firstDonation?.userId?.lastName | titlecase
+                      }}</span>
+                      <span class="text-small color-gray">
+                        {{ firstDonation?.date | timeago }}
+                      </span>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="20px">
+                      <strong>{{ firstDonation?.amount | currency }}</strong>
+                      <a href="">First donation </a>
+                    </div>
+                  </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+                  <button
+                    *ngIf="donations.length > 2"
+                    mat-raised-button
+                    (click)="donations('All')"
+                    color="primary"
+                  >
+                    See all
+                  </button>
+                  <button
+                    *ngIf="donations.length > 2"
+                    mat-stroked-button
+                    (click)="donations('Top')"
+                    color="primary"
+                  >
+                    <mat-icon class="mat-18"> favorite_border </mat-icon>
+                    See top donations
+                  </button>
+                </div>
+              </div>
+
+              <!-- Show this div on if no donations have made to this fundraiser yet -->
+              <div *ngIf="fundraiser?.donations?.length === 0">
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <mat-icon color="primary"> volunteer_activism </mat-icon>
+                  <p>Become the first supporter Your donation matters</p>
+                </div>
+                <p></p>
+                <p><mat-divider></mat-divider></p>
+                <p></p>
+
+                <h3 class="bold">GoFundMe Guarantee</h3>
+                <p style="text-align: justify">
+                  In the rare case something isn’t right, we will work with you
+                  to determine if misuse occurred.
+                </p>
+              </div>
+            </div>
+          </mat-card>
         </div>
-      </mat-card>
+      </div>
     </div>
-  </div>
+  </main>
 </main>

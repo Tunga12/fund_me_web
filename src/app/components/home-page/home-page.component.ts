@@ -13,74 +13,18 @@ import { AuthService } from './../../services/auth/auth.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent implements OnInit, OnDestroy {
-  loading = true; // to show loading spinner till the fundraisers are available
-  errorMessage = '';
-  fundraisers: Fundraiser[] = [];
-  fundraiserSub?: Subscription;
-
-  currentPage = 0;
-  fundraiserHome?: HomeFundraiser;
-
-  cols: Subject<any> = new Subject();
+export class HomePageComponent implements OnInit {
   constructor(
-    private fundraiserService: FundraiserService,
     private router: Router,
     private docTitle: Title,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Home page');
-
-    this.getFundraisers();
   }
 
-  //get fundrisers of the first page
-  getFundraisers() {
-    this.fundraiserSub = this.fundraiserService
-      .getFundraisers(this.currentPage)
-      .subscribe(
-        (fundraiserHome: HomeFundraiser) => {
-          // this.currentPage=
-          this.fundraiserHome = fundraiserHome;
-          this.fundraisers = [
-            ...this.fundraisers,
-            ...fundraiserHome.fundraisers,
-          ];
-          this.loading = false;
-        },
-        (error: HttpErrorResponse) => {
-          this.loading = false;
-          console.log(error.error);
-          this.errorMessage = 'Unable to load fundraisers';
-        }
-      );
-  }
-
-  // checks if the current page has next page
-  hasNext() {
-    return this.fundraiserHome?.hasNextPage;
-  }
-
-  // get the fundraisers on the next page
-  nextPage() {
-    this.currentPage += 1;
-    this.getFundraisers();
-  }
-
-  percentage(fund: Fundraiser): number {
-    return this.fundraiserService.getPercentage(fund);
-  }
-
-  // goto create page
   createPage() {
-    console.log('click');
-
     this.router.navigateByUrl('/create');
-  }
-  // unsubscribe if from all subscriptions
-  ngOnDestroy(): void {
-    if (this.fundraiserSub) this.fundraiserSub.unsubscribe();
   }
 }

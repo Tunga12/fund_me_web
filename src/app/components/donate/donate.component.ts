@@ -10,7 +10,7 @@ import { FundraiserService } from './../../services/fundraiser/fundraiser.servic
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
 import { DonationService } from './../../services/donation/donation.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-donate',
@@ -31,11 +31,11 @@ export class DonateComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
     private donationService: DonationService,
-    private title: Title
-  ) {}
+    private title: Title,
+    public fundraiserService: FundraiserService
+  ) { }
 
   ngOnInit(): void {
     this.title.setTitle('Donate');
@@ -47,13 +47,13 @@ export class DonateComponent implements OnInit, OnDestroy {
       comment: [
         '', //[Validators.required, Validators.minLength(5)]
       ],
-      isAnonymous: [],
-      memberId: ['', []],
+      isAnonymous: [false, []],
+      memberId: '',
     });
 
     // get the Id f the fundraiser from the route
     this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') || '';
-    console.log(this.fundraiserId);
+    // console.log(this.fundraiserId);
 
     this.getFundraiser();
   }
@@ -90,24 +90,24 @@ export class DonateComponent implements OnInit, OnDestroy {
   // make donation to a fundriser
   donate() {
     this.loading = true;
-    console.log(this.form.value);
-    // clean up
-    if (this.memberId!.value === '') {
-      delete this.form.controls['memberId'];
+    let donation = this.form.value;
+    if (!this.memberId || !this.memberId!.value) {
+      delete donation['memberId'];
     }
 
     this.donationSub = this.donationService
-      .createDonation(this.fundraiserId,
-        this.form.value,
-      )
+      .createDonation(this.fundraiserId, this.form.value)
       .subscribe(
-        () => {
-          this.router.navigateByUrl(`/fundraiser-detail/${this.fundraiserId}`);
+        (response: HttpResponse<any>) => {
+          console.log(response.url);
           this.loading = false;
+          location.href=`${response.url}`;
         },
         (error: HttpErrorResponse) => {
           this.erorrMessage = error.error;
           this.loading = false;
+          console.log(error);
+          
         }
       );
   }

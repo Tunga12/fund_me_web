@@ -1,0 +1,20 @@
+
+<mat-grid-list *ngIf="fundraisers.length > 0" [responsiveColumns]="{ xs: 2, sm: 3, md: 3, lg: 6, xl: 8 }"
+    [gutterSize]="'10px'">
+    <mat-grid-tile *ngFor="let fundraiser of fundraisers" [colspan]="1" [rowspan]="1">
+        <mat-card [routerLink]="['/my-fundraiser-detail', fundraiser._id]" fxFlex.xs="98">
+            <div class="mat-image-container">
+                <img [src]="fundraiser.image" />
+            </div>
+            <mat-card-content fxLayout="column" fxLayoutAlign="start start" [ngStyle.xs]="{ height: '130px' }">
+                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+                    <strong>{{ fundraiser.title }}</strong>
+                    <div>
+                        <mat-divider></mat-divider>
+                    </div>
+                    <p fxFlexAlign="center">Manage</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

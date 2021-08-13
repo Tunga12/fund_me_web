@@ -12,16 +12,16 @@ export class UserService {
 
   // get currently logged in user
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${environment.BASE_URL}/users/me`);
+    return this.http.get<User>(`${environment.BASE_URL}/api/users/me`);
   }
   // update currently logged in user
   updateCurrentUser(user: User): Observable<User> {
-    return this.http.put<User>(`${environment.BASE_URL}/users/me`, user);
+    return this.http.put<User>(`${environment.BASE_URL}/api/users/me`, user);
   }
 
   // delete currently logged in user
   deleteCurrentUser() {
-    return this.http.delete(`${environment.BASE_URL}/users/me`, {
+    return this.http.delete(`${environment.BASE_URL}/api/users/me`, {
       responseType: 'text',
     });
   }

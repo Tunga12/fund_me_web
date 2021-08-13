@@ -7,6 +7,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
 import { Donation } from 'src/app/models/donation.model';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from './../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-fudraiser-detail-public',
@@ -14,6 +15,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./fudraiser-detail-public.component.css'],
 })
 export class FudraiserDetailPublicComponent implements OnInit {
+  userId = localStorage.getItem('userId') || '';
+
   errorMessage = '';
   loading = true; // to show a loading spinner
   percentage = 0;
@@ -29,6 +32,7 @@ export class FudraiserDetailPublicComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     public fundraiserServ: FundraiserService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +66,16 @@ export class FudraiserDetailPublicComponent implements OnInit {
         this.errorMessage = 'Unable to get this fundriser';
       }
     );
+  }
+
+  // check if the current user has donated to this fundraiser
+  hasDonated(): boolean {
+    return this.fundraiserServ.hasDonated(this.fundraiser!, this.userId);
+  }
+
+  // get the donation amount I made to a fundraiser
+  getMyDonationAmount(): number {
+    return this.fundraiserServ.myDonation(this.fundraiser!, this.userId);
   }
 
   // get the number of comments of thos fundraiser

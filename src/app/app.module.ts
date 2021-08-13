@@ -20,7 +20,6 @@ import { ImportContactsDialogComponent } from './components/teams/import-contact
 import { YoutubeVideoPlayerComponent } from './components/shared/youtube-video-player/youtube-video-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { StoryTextAreaComponent } from './components/shared/story-text-area/story-text-area.component';
-import { FundraiserListComponent } from './components/fundraiser-list/fundraiser-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { WithdrwalComponent } from './components/withdrwal/withdrwal.component';
 import { PersonalInfoComponent } from './components/withdrwal/personal-info/personal-info.component';
@@ -62,6 +61,12 @@ import { PasswordResetComponent } from './components/account-setting/password-re
 import { SearchComponent } from './components/search/search.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from './components/account-setting/delete-account-dialog/delete-account-dialog.component';
+import { MyFundraisersComponent } from './components/fundraiser/my-fundraisers/my-fundraisers.component';
+import { PublicFundListComponent } from './components/fundraiser-list/public-fund-list/public-fund-list.component';
+import { MyFundListComponent } from './components/fundraiser-list/my-fund-list/my-fund-list.component';
+import { TeamMemberComponent } from './components/fundraiser/my-fundraisers/team-member/team-member.component';
+import { BeneficiaryComponent } from './components/fundraiser/my-fundraisers/beneficiary/beneficiary.component';
+import { OrganizerComponent } from './components/fundraiser/my-fundraisers/organizer/organizer.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +92,6 @@ import { DeleteAccountDialogComponent } from './components/account-setting/delet
     EditUiComponent,
     YoutubeVideoPlayerComponent,
     StoryTextAreaComponent,
-    FundraiserListComponent,
     WithdrwalComponent,
     PersonalInfoComponent,
     PersonalInfoSummaryComponent,
@@ -111,6 +115,12 @@ import { DeleteAccountDialogComponent } from './components/account-setting/delet
     PasswordResetComponent,
     SearchComponent,
     DeleteAccountDialogComponent,
+    MyFundraisersComponent,
+    PublicFundListComponent,
+    MyFundListComponent,
+    TeamMemberComponent,
+    BeneficiaryComponent,
+    OrganizerComponent,
   ],
   entryComponents: [],
   imports: [

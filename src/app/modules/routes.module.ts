@@ -13,13 +13,16 @@ import { WithdrwalComponent } from '../components/withdrwal/withdrwal.component'
 import { PersonalInfoSummaryComponent } from '../components/withdrwal/personal-info-summary/personal-info-summary.component';
 import { DonateComponent } from '../components/donate/donate.component';
 import { NotificationComponent } from '../components/notification/notification.component';
-import { FundraiserListComponent } from '../components/fundraiser-list/fundraiser-list.component';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { MyFundraiserDetailComponent } from '../components/fundraiser/my-fundraiser-detail/my-fundraiser-detail.component';
 import { FudraiserDetailPublicComponent } from '../components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
 import { AccountSettingComponent } from '../components/account-setting/account-setting.component';
 import { SearchComponent } from '../components/search/search.component';
 import { AuthGuard } from '../services/auth-guard/auth-guard.service';
+import { MyFundraisersComponent } from '../components/fundraiser/my-fundraisers/my-fundraisers.component';
+import { OrganizerComponent } from '../components/fundraiser/my-fundraisers/organizer/organizer.component';
+import { TeamMemberComponent } from '../components/fundraiser/my-fundraisers/team-member/team-member.component';
+import { BeneficiaryComponent } from '../components/fundraiser/my-fundraisers/beneficiary/beneficiary.component';
 
 const ROUTES = [
   {
@@ -89,8 +92,20 @@ const ROUTES = [
   },
   {
     path: 'my-fundraisers',
-    component: FundraiserListComponent,
+    component: MyFundraisersComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'organizer',
+        component: OrganizerComponent,
+      }, {
+        path: 'team-member',
+        component: TeamMemberComponent,
+      }, {
+        path: 'beneficiary',
+        component: BeneficiaryComponent,
+      }
+    ]
   },
   {
     path: 'account-setting',
@@ -110,4 +125,4 @@ const ROUTES = [
   imports: [CommonModule, RouterModule.forRoot(ROUTES)],
   exports: [RouterModule],
 })
-export class AppRoutesModule {}
+export class AppRoutesModule { }

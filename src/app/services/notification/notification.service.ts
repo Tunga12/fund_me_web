@@ -13,14 +13,14 @@ export class NotificationService {
   // get all notifications of a user in Observable format.
   getNotifications(): Observable<Notification[]> {
     return this.http.get<Notification[]>(
-      `${environment.BASE_URL}/notifications/user`
+      `${environment.BASE_URL}/api/notifications/user`
     );
   }
 
   // creates a fundraiser and returns it in observable format
   createNotification(notification: Notification): Observable<Notification> {
     return this.http.post<Notification>(
-      `${environment.BASE_URL}/notifications/`,
+      `${environment.BASE_URL}/api/notifications/`,
       notification
     );
   }
@@ -28,7 +28,7 @@ export class NotificationService {
   // read notificaton
   readNotification(notification: Notification) {
     return this.http.put(
-      `${environment.BASE_URL}/notifications/${notification._id}`,
+      `${environment.BASE_URL}/api/notifications/${notification._id}`,
       {}
     );
   }
@@ -42,7 +42,7 @@ export class NotificationService {
   // delete a fundraiser given a user id and notification id
   deleteNotification(notification: Notification) {
     return this.http.delete(
-      `${environment.BASE_URL}/notifications/${notification._id}`,
+      `${environment.BASE_URL}/api/notifications/${notification._id}`,
       { responseType: 'text' }
     );
   }

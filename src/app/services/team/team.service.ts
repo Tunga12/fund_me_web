@@ -16,7 +16,7 @@ export class TeamService {
     fundraiserId: string
   ): Observable<TeamMember> {
     return this.httpClient.post<TeamMember>(
-      `${environment.BASE_URL}/members/${fundraiserId}`,
+      `${environment.BASE_URL}/api/members/${fundraiserId}`,
       email
     );
   }
@@ -24,7 +24,7 @@ export class TeamService {
   // Delete member
   deleteMember(team: TeamMember) {
     return this.httpClient.delete(
-      `${environment.BASE_URL}/members/${team.id._id}`,
+      `${environment.BASE_URL}/api/members/${team.id._id}`,
       { responseType: 'text' }
     );
   }
@@ -32,16 +32,16 @@ export class TeamService {
   // Accept invitation to be a team member of a campaign
   acceptInvitation(fundriserId: string) {
    return this.httpClient.put(
-      `${environment.BASE_URL}/fundraisers/invitation/${fundriserId}`,
-      { accepted: true },
-      { responseType: 'text' }
-    );
+     `${environment.BASE_URL}/api/fundraisers/invitation/${fundriserId}`,
+     { accepted: true },
+     { responseType: 'text' }
+   );
   }
 
   // Decline invitation to be a team member of a campaign
   declineInvitation(fundriserId: string) {
     return this.httpClient.put(
-      `${environment.BASE_URL}/fundraisers/invitation/${fundriserId}`,
+      `${environment.BASE_URL}/api/fundraisers/invitation/${fundriserId}`,
       { accepted: false },
       { responseType: 'text' }
     );
