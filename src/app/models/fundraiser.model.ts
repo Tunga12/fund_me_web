@@ -4,6 +4,7 @@ import { Category } from './category.model';
 import { Location } from 'src/app/models/location.model';
 import { User } from './user.model';
 import { Update } from './update.model';
+import { Withdrawal } from './withdrawal.model';
 
 export interface Fundraiser {
   __v?: any;
@@ -25,4 +26,8 @@ export interface Fundraiser {
   totalShareCount?: number;
   likeCount?: number;
   // link: string;
+  withdraw?:{
+    id:Withdrawal,
+    beneficiary:string
+  }
 }

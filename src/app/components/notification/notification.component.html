@@ -16,6 +16,10 @@
     </h2>
     <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
 
+    <h3 *ngIf="notifications.length===0 && !loading ">
+      You have no notifications.
+    </h3>
+
     <div *ngIf="loading" fxFlexAlign="center">
       <mat-progress-spinner
         mode="indeterminate"

@@ -16,6 +16,8 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
   styleUrls: ['./team-tab-content.component.css'],
 })
 export class TeamTabContentComponent implements OnInit {
+  userId=localStorage.getItem('userId');
+
   @Input() fundraiser!: Fundraiser;
   teamSub?: Subscription;
   constructor(
@@ -64,5 +66,12 @@ export class TeamTabContentComponent implements OnInit {
         );
       }
     );
+  }
+  isOrganizer(){
+    return this.fundraiser.organizer?._id===this.userId;
+  }
+  
+  isBeneficiary(){
+    return this.fundraiser.beneficiary?._id===this.userId;
   }
 }

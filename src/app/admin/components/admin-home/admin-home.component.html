@@ -1,0 +1,22 @@
+<!-- <input  class="search" matInput #key type="text" placeholder="Search fundraisers" /> -->
+<form [formGroup]="form" (ngSubmit)="searchFundraisers()">
+    <mat-form-field fxFlex="70" appearance="outline">
+        <input matInput formControlName="title" type="text" required placeholder="search fundraisers">
+        <span matPrefix>
+            <mat-icon class="mat-18">search</mat-icon>
+        </span>
+    </mat-form-field>
+</form>
+
+<div fxLayout="column" fxLayoutGap="20px" style="width: 90%;margin: '0px auto' " [ngStyle.lt-md]="{ width: '98%'}">
+    <div *ngIf="loading">
+        <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+        </mat-progress-spinner>
+    </div>
+
+    <p class="text-error">{{ errorMessage }}</p>
+
+    <!-- LIST OF FUNDRAISERS -->
+    <app-public-fund-list [fundraisers]="searchedFundarisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
+    </app-public-fund-list>
+</div>

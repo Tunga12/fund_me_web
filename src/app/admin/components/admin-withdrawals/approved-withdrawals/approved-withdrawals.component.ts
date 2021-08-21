@@ -1,0 +1,88 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { WithdrawalsPage } from 'src/app/admin/models/withdrawals-page.model';
+import { AdminWithdrawalsService } from 'src/app/admin/services/admin-withdrawals/admin-withdrawals.service';
+import { Withdrawal } from 'src/app/models/withdrawal.model';
+
+@Component({
+  selector: 'app-approved-withdrawals',
+  templateUrl: './approved-withdrawals.component.html',
+  styleUrls: ['./approved-withdrawals.component.css']
+})
+export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
+  displayedColumns = ['firstName', 'lastName', 'email', 'bankName', 'bankAccountNo', 'date']
+
+  approvedWithdrawals!: Withdrawal[];
+  withdrawalPage!: WithdrawalsPage;
+
+  errorMessage = '';
+  currentPage = 0;
+  loading = false;
+
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) sort!: MatSort;
+  
+  //datasource for the table
+  dataSource =new MatTableDataSource<Withdrawal>();
+
+  // subscriptions
+  withdrawalSub?: Subscription;
+
+  constructor(
+    private withdrawalService: AdminWithdrawalsService,
+    private pageTitle: Title
+  ) { }
+
+  ngOnInit(): void {
+    this.pageTitle.setTitle('withdrawals| pending');
+    // then get withdrawals
+    this.getApprovedWithdrawals();
+  }
+
+
+  // get accepted withdrawal requests
+  getApprovedWithdrawals() {
+    this.loading=true;
+    this.withdrawalSub = this.withdrawalService.getAcceptedWithdrawals().subscribe(
+      (withdrawalsPage: WithdrawalsPage) => {
+        this.loading = false;
+        this.approvedWithdrawals = withdrawalsPage.withdrawals;
+        this.dataSource = new MatTableDataSource<Withdrawal>(this.approvedWithdrawals);
+      
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        console.log(error.error);
+        this.errorMessage =
+          error.status === 404
+            ? "You don't have any withdrawal yet."
+            : 'Unable to load your withdrawals, please try later';
+      }
+    );
+  }
+
+  // checks if the current page has next page
+  hasNext() {
+    return this.withdrawalPage?.hasNextPage || false;
+  }
+
+  // get the withdrawals on the next page
+  nextPage() {
+    this.currentPage += 1;
+    this.getApprovedWithdrawals();
+  }
+
+  // unsubscribe if from all subscriptions
+  ngOnDestroy(): void {
+    this.withdrawalSub?.unsubscribe();
+  }
+
+
+
+}

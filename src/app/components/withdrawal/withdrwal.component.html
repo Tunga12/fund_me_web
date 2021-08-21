@@ -1,0 +1,72 @@
+<nav>
+  <nav-bar></nav-bar>
+</nav>
+<mat-card fxLayout="column" [ngStyle.xs]="{ width: '94%' }" [ngStyle.sm]="{ width: '60%' }" fxLayoutGap="10px">
+  <mat-card-header fxFlexAlign="center">
+    <mat-card-title>Select withdrawal type </mat-card-title>
+  </mat-card-header>
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+  <mat-card-content>
+    <form #form="ngForm" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+      <mat-form-field appearance="outline">
+        <mat-label>Who will withdraw the money?</mat-label>
+        <mat-select [(value)]="withdrawer" required>
+          <mat-option>Who will withdraw the money?</mat-option>
+          <mat-option value="me"> Me </mat-option>
+          <mat-option value="some_one"> Someone else </mat-option>
+        </mat-select>
+        <mat-hint>Must be 18+ with valid ID.</mat-hint>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field *ngIf="withdrawer!=='me' && withdrawer!==''" appearance="outline">
+        <mat-label>What type of saving withdrawal is right for you?</mat-label>
+        <mat-select [(value)]="saving_type" required>
+          <mat-option>What type of withdrawal is right for you?</mat-option>
+          <mat-option value="personal"> Personal </mat-option>
+          <mat-option value="company"> Company </mat-option>
+          <mat-option value="partnership"> Partnership </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="saving_type" class="saving-type-info" fxLayout="row">
+        <mat-icon *ngIf="saving_type !== ''" [ngStyle]="{ 'margin-right': '10px' }">account_balance</mat-icon>
+        <p *ngIf="saving_type === 'personal'">
+          Funds will be withdrawn to a personal bank account.
+        </p>
+        <p *ngIf="saving_type === 'company'">
+          Funds will be withdrawn to an organization or business bank account.
+          You must be an account representative for that business to withdraw
+          funds and you may be asked for the company’s tax ID.
+        </p>
+        <p *ngIf="saving_type === 'partnership'">
+          Funds will be withdrawn to an organization or business bank account
+          that is identified as Partnership. You must be an account
+          representative for that business to withdraw funds and you may be
+          asked for the company’s tax ID.
+        </p>
+      </div>
+
+      <mat-hint *ngIf="withdrawer!=='me' && withdrawer!==''" #textContent id="read-more">
+        If this is confusing, we want to understand what kind of bank account
+        you are withdrawing to Read more here.
+        <p></p>
+        Accounts can belong to a person or an organization (501(c)(3), business,
+        trust, etc.) For organizations, the individual withdrawing must be a
+        beneficial owner, someone with significant responsibility to control,
+        manage, or direct the organization (e.g., a Chief Executive Officer,
+        Vice President, Treasurer, or a controller).
+      </mat-hint>
+      <div class="read-more-link">
+        <!-- <a readMore [readMore-length]="200" [readMore-element]="textContent"> 
+          <span class="less">less</span><span class="more">more</span>
+        </a> -->
+      </div>
+      <button mat-raised-button [disabled]="form.invalid" [fxFlexAlign]="'center'" class="btn-large" color="primary"
+        (click)="openNextForm()">
+        Next
+      </button>
+      <button mat-button [fxFlexAlign]="'center'" [routerLink]="['/my-fundraiser-detail',fundId]">Back</button>
+    </form>
+  </mat-card-content>
+</mat-card>

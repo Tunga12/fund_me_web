@@ -5,5 +5,9 @@
     </mat-progress-spinner>
 </div>
 <p class="text-error">{{ errorMessage }}</p>
-<my-fund-list [fundraisers]="myFundraisers">
+<my-fund-list 
+[fundraisers]="myFundraisers"
+[hasNext]="hasNext()"
+(nextEvent)="nextPage()"
+>
 </my-fund-list>

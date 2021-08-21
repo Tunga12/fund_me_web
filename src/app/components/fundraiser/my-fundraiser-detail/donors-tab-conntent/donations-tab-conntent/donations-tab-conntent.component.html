@@ -15,12 +15,7 @@
 <div *ngIf="fundraiser.donations?.length !== 0" class="donations">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
     <h2 class="bold">Doantions({{ fundraiser.donations?.length }})</h2>
-    <button
-      mat-raised-button
-      color="primary"
-      color="primary"
-      (click)="openShareDialog()"
-    >
+    <button mat-raised-button color="primary" color="primary" (click)="openShareDialog()">
       Share fundraiser
     </button>
   </div>
@@ -29,40 +24,27 @@
   </div>
 
   <mat-list>
-    <mat-list-item
-      *ngFor="let donation of fundraiser.donations; let last = last"
-      style="margin: 20px 0px"
-    >
+    <mat-list-item *ngFor="let donation of fundraiser.donations; let last = last" style="margin: 20px 0px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <img
-          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-        />
+        <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
         <div fxLayout="column" fxLayoutAlign="center start">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="space-between start"
-            fxLayoutGap="30px"
-          >
-            <span
-              ><span *ngIf="donation?.isAnonymous">Anonymous</span>
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+            <span><span *ngIf="donation?.isAnonymous">Anonymous</span>
               <span *ngIf="!donation?.isAnonymous">{{
                 donation?.userId?.firstName! + " " + donation?.userId?.lastName
-                  | titlecase
-              }}</span>
-              <strong>${{ donation.amount }}</strong></span
-            >
+                | titlecase
+                }}</span>
+              <strong>${{ donation.amount }}</strong></span>
             <span> {{ donation.date | timeago }} </span>
           </div>
-          <p>
-            {{ donation.comment }}
-            <a>Read more</a>
+          <p #comment>{{ donation.comment?.slice(0,20) }}
+            <a #more *ngIf="comment?.textContent?.length! > 20"
+              (click)="comment.textContent=donation?.comment!">...more</a>
           </p>
         </div>
       </div>
       <mat-divider></mat-divider>
-      <!-- <button *ngIf="last" mat-stroked-button color="primary" class="btn-outline">
-        Show more
-      </button> -->
     </mat-list-item>
+
   </mat-list>
 </div>

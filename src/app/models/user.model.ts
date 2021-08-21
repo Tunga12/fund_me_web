@@ -8,5 +8,6 @@ export interface User {
   emailNotification?: boolean;
   isDeactivated?: boolean;
   isAdmin?: boolean;
-  __v?:string
+  __v?:string;
+  date?: string;
 }

@@ -1,21 +1,12 @@
+<nav-bar></nav-bar>
 <div *ngIf="loading">
-  <mat-progress-spinner
-    mode="indeterminate"
-    [value]="100"
-    color="primary"
-    class="loading-spinner"
-  ></mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+  </mat-progress-spinner>
 </div>
-<div
-  *ngIf="!loading"
-  fxLayout="column"
-  fxLayoutAlign="start start"
-  fxLayoutGap="20px"
-  [ngStyle]="{ width: '80%', margin: '30px auto' }"
-  [ngStyle.xs]="{ width: '98%', margin: '30px auto' }"
->
+<div *ngIf="!loading" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px"
+  [ngStyle]="{ width: '80%', margin: '30px auto' }" [ngStyle.xs]="{ width: '98%', margin: '30px auto' }">
   <div>
-    <button mat-stroked-button (click)="backToFundraiser()">
+    <button mat-stroked-button [routerLink]="['/fundraiser-detail', fundraiser?._id]">
       <mat-icon class="mat-18">arrow_back_ios</mat-icon>Back to fundraiser
     </button>
   </div>
@@ -24,17 +15,8 @@
     <mat-divider></mat-divider>
   </div>
 
-  <div
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="start center"
-    fxLayoutGap="15px"
-  >
-    <img
-      class="fundraiser-img"
-      [src]="fundraiser?.image"
-      [ngStyle.xs]="{ width: '100%', 'max-height': '150px' }"
-    />
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <img class="fundraiser-img" [src]="fundraiser?.image" [ngStyle.xs]="{ width: '100%', 'max-height': '150px' }" />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
       <p>
         You're supporting <strong>{{ fundraiser?.title }}</strong>
@@ -49,47 +31,29 @@
     </div>
   </div>
 
-  <div
-    fxLayout="row"
-    fxLayout.xs="column-reverse"
-    fxLayoutAlign="space-between start"
-  >
-    <form
-      [formGroup]="form"
-      (ngSubmit)="donate()"
-      style="width: 60%"
-      [ngStyle.xs]="{ width: '98%' }"
-    >
+  <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutAlign="space-between start">
+    <h1 *ngIf="hasAlreadyDonated()">Thanks, You have already donatd to this fundraiser!</h1>
+    <form *ngIf="!hasAlreadyDonated()" [formGroup]="form" (ngSubmit)="donate()" style="width: 60%"
+      [ngStyle.xs]="{ width: '98%' }" (change)="formChange()">
       <h2 class="bold">Enter your donation</h2>
       <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Donation amount</mat-label>
-            <input
-              class="bold"
-              matInput
-              formControlName="amount"
-              type="number"
-              required
-              placeholder="Donation amount"
-            />
+            <input class="bold" matInput formControlName="amount" type="number" required
+              placeholder="Donation amount" />
             <span matPrefix>
               <mat-icon class="mat-18">attach_money</mat-icon>
             </span>
-            <mat-error *ngIf="amount?.touched && amount?.errors?.required"
-              >Please enter amount you want to donate</mat-error
-            >
+            <mat-error *ngIf="amount?.touched && amount?.errors?.required">Please enter amount you want to donate
+            </mat-error>
           </mat-form-field>
         </div>
 
         <!-- Tip amount -->
         <div>
           <h3 class="bold">Tip amount</h3>
-          <div
-            *ngIf="custom_tip"
-            fxLayout="column"
-            fxLayoutAlign="start center"
-          >
+          <div *ngIf="custom_tip" fxLayout="column" fxLayoutAlign="start center">
             <div>
               <mat-form-field appearance="outline">
                 <mat-label>Tip amount</mat-label>
@@ -97,12 +61,9 @@
                 <span matPrefix>
                   <mat-icon class="mat-18">attach_money</mat-icon>
                 </span>
-                <mat-error *ngIf="tip?.touched && tip?.errors?.min"
-                  >Tip should be {{ tip?.errors?.min.min }}% minimum</mat-error
-                >
-                <mat-error *ngIf="tip?.touched && tip?.errors?.required"
-                  >Please enter tip to gofundme.</mat-error
-                >
+                <mat-error *ngIf="tip?.touched && tip?.errors?.min">Tip should be {{ tip?.errors?.min.min }}% minimum
+                </mat-error>
+                <mat-error *ngIf="tip?.touched && tip?.errors?.required">Please enter tip to gofundme.</mat-error>
               </mat-form-field>
             </div>
 
@@ -111,45 +72,25 @@
             </button>
           </div>
 
-          <div
-            *ngIf="!custom_tip"
-            fxLayout="column"
-            fxLayoutAlign="start center"
-          >
+          <div *ngIf="!custom_tip" fxLayout="column" fxLayoutAlign="start center">
             <!-- Add a tooltip here -->
-            <mat-slider
-              color="primary"
-              step="1"
-              value="donation.tip"
-              min="1"
-              max="25"
-              tickInterval="1"
-              [thumbLabel]="true"
-              [value]="tip!.value"
-              (change)="sliderChange($event)"
-              [displayWith]="percentSymbol()"
-            ></mat-slider>
+            <mat-slider color="primary" step="1" value="donation.tip" min="1" max="25" tickInterval="1"
+              [thumbLabel]="true" [value]="tip!.value" (change)="sliderChange($event)" [displayWith]="percentSymbol()">
+            </mat-slider>
             <button mat-stroked-button (click)="changeTipType()">
               Enter custom tip
             </button>
           </div>
         </div>
-        <mat-form-field
-          *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)"
-          appearance="outline"
-        >
+        <mat-form-field *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)" appearance="outline">
           <mat-label>Referer: Who invaited you to this campaign?</mat-label>
           <mat-select formControlName="memberId">
             <mat-option>Select a team member</mat-option>
             <ng-container *ngFor="let member of fundraiser!.teams">
-              <mat-option
-                *ngIf="member.status !== 'pending'"
-                [value]="member.id._id"
-                >{{
-                  member.id.userId.firstName + " " + member.id.userId.firstName
-                    | titlecase
-                }}</mat-option
-              >
+              <mat-option *ngIf="member.status !== 'pending'" [value]="member.id._id">{{
+                member.id.userId.firstName + " " + member.id.userId.firstName
+                | titlecase
+                }}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>
@@ -158,24 +99,18 @@
             <mat-label>Comment</mat-label>
             <textarea matInput formControlName="comment" type="text"></textarea>
           </mat-form-field>
-          <mat-error *ngIf="comment?.touched && comment?.errors?.minlength"
-            >Tip should be
+          <mat-error *ngIf="comment?.touched && comment?.errors?.minlength">Tip should be
             {{ comment?.errors?.minlength.requiredLength }} characters
-            minimum</mat-error
-          >
+            minimum</mat-error>
         </div>
         <div>
-          <mat-checkbox
-            formControlName="isAnonymous"
-            [indeterminate]="false"
-            color="primary"
-          >
+          <mat-checkbox formControlName="isAnonymous" [indeterminate]="false" color="primary">
             Don't display my name publicly on the campaign.
           </mat-checkbox>
         </div>
 
         <div class="text-error">{{ erorrMessage }}</div>
-        <button
+        <!-- <button
           [disabled]="form.invalid"
           mat-raised-button
           color="primary"
@@ -183,47 +118,32 @@
           type="submit"
         >
           Donate now
-        </button> 
+        </button>  -->
       </div>
+
+      <ngx-paypal [fxHide]=" form.invalid " [config]="payPalConfig"></ngx-paypal>
+
+
+
     </form>
-    <mat-card [ngStyle.xs]="{ width: '90%' }">
+    <mat-card *ngIf="!hasAlreadyDonated()" [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>
         <h2 class="bold">Your donation</h2>
-        <div
-          fxLayout="column"
-          fxLayout.xs="row"
-          fxLayoutAlign="space-between center"
-          fxLayoutGap="10px"
-        >
-          <div
-            class="color-gray"
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-          >
+        <div fxLayout="column" fxLayout.xs="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+          <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
             <p>Your donation</p>
             <p class="bold">${{ amount!.value }}</p>
           </div>
 
-          <div
-            class="color-gray"
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-          >
-            <p>GOFundMe tip</p>
+          <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+            <p>GoFundMe tip</p>
             <p class="bold">${{ tip_percentage }}</p>
           </div>
           <div>
             <mat-divider></mat-divider>
           </div>
           <p></p>
-          <div
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-            class="bold"
-          >
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start" class="bold">
             <p>Total <span fxHide.xs> due today </span></p>
             <p>{{ amount!.value + tip_percentage }}</p>
           </div>
@@ -231,6 +151,5 @@
       </mat-card-content>
     </mat-card>
     <!-- Donate now button -->
-    
   </div>
 </div>

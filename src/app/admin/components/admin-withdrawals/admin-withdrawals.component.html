@@ -1,0 +1,7 @@
+<nav mat-tab-nav-bar>
+    <a matTabLink *ngFor="let tabLink of ['pending','approved','rejected']" [routerLink]="tabLink" routerLinkActive
+        #rlaRef="routerLinkActive" [active]="rlaRef.isActive">
+        {{ tabLink | titlecase }}
+    </a>
+</nav>
+<router-outlet></router-outlet>

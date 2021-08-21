@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { HomeFundraiser } from './../../../models/home-fundraiser.model';
+import { FundraiserPage } from '../../../models/fundraiser-page.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -39,7 +39,7 @@ export class MyFundraisersComponent implements OnInit {
   // get fundraisers of current user
   getMyFundraisers() {
     this.fundraiserSUb = this.fundraiserServ.getMyFundraisers().subscribe(
-      (fundraisersPage:HomeFundraiser) => {
+      (fundraisersPage:FundraiserPage) => {
         this.loading = false;
         this.myFundraisers = fundraisersPage.fundraisers;
       },

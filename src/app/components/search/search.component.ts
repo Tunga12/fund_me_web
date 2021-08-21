@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { HomeFundraiser } from 'src/app/models/home-fundraiser.model';
+import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 
 @Component({
@@ -21,15 +21,14 @@ export class SearchComponent implements OnInit {
 
   fundraiserSub?: Subscription;
 
-  cols: Subject<any> = new Subject();
-  fundraiserHome?: HomeFundraiser;
+  fundraiserHome?: FundraiserPage;
   currentPage: number = 0;
 
   constructor(
     private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Search');
@@ -44,7 +43,7 @@ export class SearchComponent implements OnInit {
     this.fundraiserSub = this.fundraiserService
       .search(this.param, this.currentPage)
       .subscribe(
-        (fundraiserHome: HomeFundraiser) => {
+        (fundraiserHome: FundraiserPage) => {
           this.fundraiserHome = fundraiserHome;
           this.searchedFundarisers = [
             // ...this.searchedFundarisers,
@@ -62,7 +61,7 @@ export class SearchComponent implements OnInit {
 
   // checks if the current page has next page
   hasNext() {
-    return this.fundraiserHome?.hasNextPage;
+    return this.fundraiserHome?.hasNextPage || false;
   }
 
   // get the fundraisers on the next page

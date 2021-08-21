@@ -1,0 +1,75 @@
+<nav-bar> </nav-bar>
+<mat-card class="fundraiser-form" *ngIf="step==='form'">
+  <mat-card-header>
+    <mat-card-title>Who will withdraw the money raised?</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <!-- Loading indicator -->
+  <div *ngIf="loading" fxFlexAlign="center">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+  </div>
+
+  <mat-card-content *ngIf="!loading && step==='form'">
+    <form [formGroup]="form"  (change)="formChange()" fxLayout="column"
+      fxLayoutAlign="start start" fxLayoutGap="10px">
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput formControlName="firstName" type="text" required placeholder="First name" />
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.required">Please enter your first name
+        </mat-error>
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength">First name must be
+          {{ firstName?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.maxlength">First name must be
+          {{ firstName?.errors?.maxlength.requiredLength }} minimun.
+        </mat-error>
+
+        <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace">First name cannot include whitespaces.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput formControlName="lastName" type="text" required placeholder="last name" />
+
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.required">Please enter your last name
+        </mat-error>
+
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength">Last name must be
+          {{ lastName?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.maxlength">Last name must be
+          {{ lastName?.errors?.maxlength.requiredLength }} maximun.
+        </mat-error>
+
+        <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace">Last name cannot include whitespaces.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" type="text" required placeholder="Email adress" />
+        <mat-error *ngIf="email?.touched && email?.errors?.email">Please enter a valid email.
+        </mat-error>
+        <mat-error *ngIf="email?.touched && email?.errors?.required">Please enter your email
+        </mat-error>
+      </mat-form-field>
+      <p>
+        <strong>Grant full access</strong> to this person, who will withdraw the
+        money raised. This person will be able to see donor names, send
+        thank-you notes, and post campaign updates.
+      </p>
+      <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
+
+      <button (click)="nextStep()" mat-raised-button class="btn-large" [fxFlexAlign]="'center'" color="primary">
+        Invite Beneficiary
+      </button>
+      <button [routerLink]="['/withdrawal',fundId]" mat-button [fxFlexAlign]="'center'">Go back</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+<app-confirm-page *ngIf="!loading && step==='confirm'" [beneficiary]="beneficiary">
+</app-confirm-page>

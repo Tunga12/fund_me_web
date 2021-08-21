@@ -9,7 +9,6 @@ interface InputDatFormat {
   type: string;
   fundraiser: Fundraiser;
 }
-
 @Component({
   selector: 'app-doantions',
   templateUrl: './doantions.component.html',
@@ -43,7 +42,7 @@ export class DoantionsComponent implements OnInit {
       this.type === 'Top'
         ? this.fundariserService
             .sortDonationsByAmountDSC(this.data.fundraiser.donations!)
-            .slice(0, 3)
+            .slice(0, 5)
         : this.data.fundraiser.donations!;
   }
 

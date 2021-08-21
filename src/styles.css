@@ -207,3 +207,14 @@ div.avatar-contain {
 .loading-spinner {
   margin: 100px auto;
 }
+
+.logo{
+  cursor: pointer;
+}
+
+.search {
+  margin-left: 10px;
+  padding: 10px;
+  min-width: 200px;
+  border-radius: 6px;
+}

@@ -1,0 +1,71 @@
+<div *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+</div>
+
+<p class="text-error">{{ errorMessage }}</p>
+
+<div *ngIf="!loading">
+    <div class="no-data" *ngIf="dataSource.data.length===0" style="margin: 30px">
+        You have no rejected withdrawal requests yet.</div>
+</div>
+<div *ngIf="dataSource.data.length!==0">
+    <mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="firstName">
+            <mat-header-cell *matHeaderCellDef> First name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.beneficiary.firstName |titlecase}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef> Last name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.beneficiary.lastName |titlecase}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.beneficiary.email |titlecase}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bankName">
+            <mat-header-cell *matHeaderCellDef> Bank name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.bankName |titlecase}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bankAccountNo">
+            <mat-header-cell *matHeaderCellDef> Bank account no.</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.bankAccountNo | titlecase}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.date | date }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="accept">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary" (click)="acceptWithdrawalRequest(element._id)">
+                    <mat-icon class="mat-18">check </mat-icon>
+                </button> Accept
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="decline">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="rejectWithdrawalRequest(element._id)">
+                    <mat-icon class="mat-18">close</mat-icon>
+                </button> Decline
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row *matNoDataRow>No pending withdrawal requests yet.</mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page">
+    </mat-paginator>
+</div>

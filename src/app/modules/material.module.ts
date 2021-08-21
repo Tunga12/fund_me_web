@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const imports = [
+  MatDatepickerModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
@@ -54,6 +55,7 @@ const imports = [
   MatTabsModule,
   MatDialogModule,
   MatCheckboxModule,
+  MatSidenavModule,
 ];
 const exports = imports;
 @NgModule({

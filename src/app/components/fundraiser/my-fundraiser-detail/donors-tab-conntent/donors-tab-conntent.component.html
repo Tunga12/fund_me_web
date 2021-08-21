@@ -10,21 +10,20 @@
   ></mat-progress-spinner> -->
   </div>
 
-  <mat-tab-group mat-align-tabs="start" [disableRipple]="false">
+  <!-- <mat-tab-group mat-align-tabs="start" [disableRipple]="false">
     <mat-tab
       label="{{ index === 0 ? 'Donations' : 'Invited contacts' }}"
       draggable="true"
       *ngFor="let tab of [0, 1]; let index = index"
     >
-      <div *ngIf="index === 0">
+      <div *ngIf="index === 0"> -->
         <donations-tab-conntent
           [fundraiser]="fundraiser"
         ></donations-tab-conntent>
       </div>
-      
+<!--       
       <div class="tab-content" *ngIf="index === 1">
         <invited-contacts-tab-content></invited-contacts-tab-content>
       </div>
     </mat-tab>
-  </mat-tab-group>
-</div>
+  </mat-tab-group> -->

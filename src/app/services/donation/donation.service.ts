@@ -16,7 +16,7 @@ export class DonationService {
       delete donation.comment;
     }
     return this.httpClient.post(
-      `${environment.BASE_URL}/donation/pay/${fundraiseId}`,
+      `${environment.BASE_URL}/api/donations/${fundraiseId}`,
       donation,
       { observe: 'response',responseType:'text'}    
     );

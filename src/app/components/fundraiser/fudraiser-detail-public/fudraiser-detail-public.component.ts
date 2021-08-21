@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { ShareDialogComponent } from '../../shared/share-dialog/share-dialog.component';
-import { DoantionsComponent } from './doantions/doantions.component';
-import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
-import { Donation } from 'src/app/models/donation.model';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Donation } from 'src/app/models/donation.model';
+import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { ShareArgs } from 'src/app/models/share-buttons-args';
+
+import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
 import { AuthService } from './../../../services/auth/auth.service';
+import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
+import { DoantionsComponent } from './doantions/doantions.component';
 
 @Component({
   selector: 'app-fudraiser-detail-public',
   templateUrl: './fudraiser-detail-public.component.html',
   styleUrls: ['./fudraiser-detail-public.component.css'],
 })
-export class FudraiserDetailPublicComponent implements OnInit {
+export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId') || '';
 
   errorMessage = '';
@@ -27,27 +30,46 @@ export class FudraiserDetailPublicComponent implements OnInit {
   topDonation?: Donation;
   recentDonation?: Donation;
   firstDonation?: Donation;
+
+  fundSub?: Subscription;
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     public fundraiserServ: FundraiserService,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('fundraiser detail');
     // get the id parameter from router
     this.activatedRoute.paramMap.subscribe((params) => {
       this.fundraiserId = params.get('id') ?? '';
+
+      // console.log(this.fundraiserId)
     });
+
     // get the fundraiser with this id
     this.getFundriser(this.fundraiserId);
   }
 
+  increaseShareCount() {
+    this.loading = true;
+    this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
+    this.fundSub = this.fundraiserServ.editFundraiser(this.fundraiser!).subscribe(
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+
   // get fundriser using id
   getFundriser(fundriserId: string) {
-    this.fundraiserServ.getFundraiser(fundriserId).subscribe(
+    let ref;// id for the user who shared this fundraiser
+    this.fundSub = this.fundraiserServ.getFundraiser(fundriserId).subscribe(
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
@@ -58,7 +80,18 @@ export class FudraiserDetailPublicComponent implements OnInit {
         console.log(this.fundraiser);
         console.log(
           this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser)
+
         );
+
+        // if there is a referer id increase share count
+        this.activatedRoute.queryParams.subscribe(
+          (qParams) => {
+            ref = qParams['ref'] || '';
+            if (ref && ref!==this.userId) {
+              this.increaseShareCount();
+            }
+          }
+        )
       },
       (error) => {
         this.loading = false;
@@ -109,8 +142,18 @@ export class FudraiserDetailPublicComponent implements OnInit {
   }
 
   share() {
+    let data: ShareArgs = {
+      url: `http://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      image: this.fundraiser?.image,
+      title: this.fundraiser?.title,
+      description: `Hi, I havae created a fundraiser on gofundme ${this.fundraiser?.beneficiary ? 'to help' + this.fundraiser.beneficiary.firstName : ''} please signup and help me by donating and sharing it to your friends. thanks!`
+    };
     this.dialog
-      .open(ShareDialogComponent, { data: { id: 1 } })
+      .open(ShareDialogComponent,
+        {
+          data: data
+        }
+      )
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
@@ -124,4 +167,9 @@ export class FudraiserDetailPublicComponent implements OnInit {
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
+
+  ngOnDestroy(): void {
+    this.fundSub?.unsubscribe()
+  }
+
 }

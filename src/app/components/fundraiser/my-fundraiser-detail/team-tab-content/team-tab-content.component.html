@@ -1,28 +1,19 @@
-<div fxLayout="row" style="padding-top: 20px" fxLayoutGap="20px">
-  <a *ngIf="hasAcceptedTeamMembers()" (click)="openAddTeamMembersDialog()"
-    ><mat-icon class="mat-18">add_circle_outline</mat-icon> Add team member</a
-  >
+<div *ngIf="isOrganizer()" fxLayout="row" style="padding-top: 20px" fxLayoutGap="20px">
+  <a *ngIf="hasAcceptedTeamMembers()" (click)="openAddTeamMembersDialog()">
+    <mat-icon class="mat-18">add_circle_outline</mat-icon> Add team member
+  </a>
   <a [routerLink]="['/edit', fundraiser?._id]">
     <mat-icon> settings </mat-icon>
-    Team settings</a
-  >
+    Team settings
+  </a>
 </div>
 
 <!-- Fudrising team section -->
 <div *ngIf="hasAcceptedTeamMembers()" fxLayout="column" fxLayoutGap="20px">
   <div>
-    <div
-      fxLayout="row"
-      fxLayout="column"
-      fxLayoutAlign="space-between center"
-      fxLayoutGap="20px"
-    >
+    <div fxLayout="row" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
       <h2 class="bold">Fundrising team members</h2>
-      <button
-        (click)="openAddTeamMembersDialog()"
-        mat-raised-button
-        color="primary"
-      >
+      <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
         Add team members
       </button>
     </div>
@@ -33,22 +24,14 @@
 
   <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
     <div fxFlex="25" *ngFor="let team of fundraiser.teams">
-      <div
-        *ngIf="team.status !== 'pending'"
-        fxLayout="row"
-        fxLayoutGap="20px"
-        style="margin: 20px 0px"
-      >
-        <img
-          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-        />
+      <div *ngIf="team.status !== 'pending'" fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
+        <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
         <div fxLayout="column">
           <span class="bold">
             {{
-              team.id.userId.firstName + " " + team.id.userId.lastName
-                | titlecase
-            }}</span
-          >
+            team.id.userId.firstName + " " + team.id.userId.lastName
+            | titlecase
+            }}</span>
           <span class="text-small">team member</span>
         </div>
       </div>
@@ -59,37 +42,23 @@
 <div *ngIf="hasPendingTeamMembers()" style="margin: 20px">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <p class="bold">Pending Requests</p>
-    <button
-      (click)="openAddTeamMembersDialog()"
-      mat-raised-button
-      color="primary"
-    >
+    <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
       Add team members
     </button>
   </div>
 
   <mat-divider></mat-divider>
-  <div
-    *ngFor="let team of fundraiser.teams; let index = index"
-    fxLayout="column"
-    fxLayoutAlign="center"
-    style="margin: 10px auto"
-  >
-    <div
-      *ngIf="team.status === 'pending'"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-    >
+  <div *ngFor="let team of fundraiser.teams; let index = index" fxLayout="column" fxLayoutAlign="center"
+    style="margin: 10px auto">
+    <div *ngIf="team.status === 'pending'" fxLayout="row" fxLayoutAlign="space-between center">
       <p>
         {{ team.id.userId.email }}
       </p>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
         <!-- <a href=""> Resend request</a> -->
-        <mat-icon class="more" mat-button [matMenuTriggerFor]="menu"
-        >more_vert</mat-icon>
+        <mat-icon *ngIf="isOrganizer()" class="more" mat-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
         <mat-menu #menu="matMenu">
-          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item
-            >Contact invitee</a>
+          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item>Contact invitee</a>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="deleteInvitation(team)">
             Delete invitation
@@ -103,15 +72,11 @@
   </div>
 </div>
 
-<div *ngIf="fundraiser?.teams?.length! === 0" class="tab-content">
+<div *ngIf="fundraiser?.teams?.length! === 0 && isOrganizer()" class="tab-content">
   <div>
     <h3 class="tab-content-header">You haven’t added team members yet.</h3>
     <h3>Keep your supporters up to date on your fundraisers!</h3>
-    <button
-      (click)="openAddTeamMembersDialog()"
-      mat-raised-button
-      color="primary"
-    >
+    <button (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
       Add team members
     </button>
   </div>
@@ -121,12 +86,7 @@
     <p class="bar"></p>
   </div>
   <mat-form-field appearance="fill">
-    <input
-      matInput
-      type="text"
-      value="https://fund.mem.com/blalbsl/fff"
-      [disabled]="true"
-    />
+    <input matInput type="text" value="https://fund.mem.com/blalbsl/fff" [disabled]="true" />
   </mat-form-field>
   <button mat-raised-button color="primary">Copy link</button>
 
@@ -134,4 +94,7 @@
     Only share this invite link with people you want to join your fundraising
     team.
   </p>
+</div>
+<div *ngIf="fundraiser?.teams?.length! === 0 && !isOrganizer()" class="tab-content">
+  <h3>No teamm members</h3>
 </div>

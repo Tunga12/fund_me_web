@@ -1,17 +1,12 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { CategoryService } from './../../services/category/category.service';
-import { Category } from 'src/app/models/category.model';
-import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/services/user/user.service';
-import { User } from 'src/app/models/user.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Category } from 'src/app/models/category.model';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
+
 import { AuthService } from './../../services/auth/auth.service';
+import { CategoryService } from './../../services/category/category.service';
 
 @Component({
   selector: 'nav-bar',
@@ -44,7 +39,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getCategories();
+    // this.getCategories();
     if (this.authService.isLoggedIn()) {
       this.getCurrentUser();
     }

@@ -1,0 +1,49 @@
+<div>
+    <mat-form-field appearance="fill" fxFlex="50">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input #dateRangeStart matStartDate placeholder="Start date">
+            <input #dateRangeEnd matEndDate placeholder="End date"
+                (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+</div>
+<div *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+</div>
+<div *ngIf="!loading" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+        <mat-icon class="mat-27">payment</mat-icon>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+            <strong> {{getNumberOfFundraisersCreated()}} </strong>
+            <strong> CAMPIGNS </strong>
+        </div>
+    </div>
+
+    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+        <mat-icon class="mat-18">trending_up</mat-icon>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+            <strong> {{filteredDonations.length}} </strong>
+            <strong> Donations </strong>
+        </div>
+    </div>
+
+    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+        <mat-icon class="mat-18">people</mat-icon>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+            <strong> {{ totalRaised|currency }} </strong>
+            <strong> RAISED </strong>
+        </div>
+    </div>
+
+    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+        <mat-icon class="mat-18">people</mat-icon>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+            <strong> {{ filteredUsers.length }} </strong>
+            <strong> NEW USERS </strong>
+        </div>
+    </div>
+</div>

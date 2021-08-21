@@ -1,0 +1,12 @@
+.material-icons{
+    font-size: 70px;
+}
+
+p{
+    text-align: center;
+}
+
+mat-card.mat-card{
+    margin: 20px auto;
+    width: 35%;
+}

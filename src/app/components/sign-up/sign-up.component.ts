@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('Sign up');
+    this.docTitle.setTitle('GoFundMe | Sign up');
     // create the form
     this.form = this.formBuilder.group({
       firstName: [

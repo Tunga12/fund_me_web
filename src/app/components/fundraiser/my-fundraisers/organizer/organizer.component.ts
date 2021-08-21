@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { HomeFundraiser } from 'src/app/models/home-fundraiser.model';
+import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 
 @Component({
@@ -19,10 +19,13 @@ export class OrganizerComponent implements OnInit, OnDestroy {
   fundraiserSUb?: Subscription;
   errorMessage: string = '';
 
+  currentPage = 0;
+  fundraiserHome?: FundraiserPage;
+  
   constructor(
     private fundraiserServ: FundraiserService,
     private docTitle: Title
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.docTitle.setTitle('My fundaisers| Organizer');
@@ -30,10 +33,11 @@ export class OrganizerComponent implements OnInit, OnDestroy {
     this.getMyFundraisers();
   }
 
+
   // get fundraisers of current user
   getMyFundraisers() {
     this.fundraiserSUb = this.fundraiserServ.getMyFundraisers().subscribe(
-      (fundraisersPage: HomeFundraiser) => {
+      (fundraisersPage:FundraiserPage) => {
         this.loading = false;
         this.myFundraisers = fundraisersPage.fundraisers;
       },
@@ -48,8 +52,19 @@ export class OrganizerComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.fundraiserSUb?.unsubscribe();
-  }
+// checks if the current page has next page
+hasNext() {
+  return this.fundraiserHome?.hasNextPage||false;
+}
 
+// get the fundraisers on the next page
+nextPage() {
+  this.currentPage += 1;
+  this.getMyFundraisers();
+}
+
+// unsubscribe if from all subscriptions
+ngOnDestroy(): void {
+  this.fundraiserSUb?.unsubscribe();
+}
 }

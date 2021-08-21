@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+  <nav class="container">
+    <nav-bar></nav-bar>
+  </nav>
+  <div class="container">
+    <button mat-button>
+      <mat-icon class="mat-18">ios_arrow_back</mat-icon><span fxHide.xs>Back</span>
+    </button>
+    <h1 class="bold">Withdrawals </h1>
+    <p>fundraiser title </p>
+    <nav mat-tab-nav-bar>
+      <a matTabLink [routerLink]="['/my-fundraiser/withdrawals',fundraiser?._id,'overview']"
+        routerLinkActive="router-link-active" [active]="tab==='overview'">
+        Overview
+      </a>
+      <a matTabLink [routerLink]="['/my-fundraiser/withdrawals',fundraiser?._id,'history']"
+        routerLinkActive="router-link-active" [active]="tab==='history'">
+        History
+      </a>
+    </nav>
+
+    <app-withdrawals-overview [fundraiser]="fundraiser" *ngIf="tab==='overview'"></app-withdrawals-overview>
+    <app-withdrawals-history [fundraiser]="fundraiser" *ngIf="tab==='history'"></app-withdrawals-history>
+  </div>
+</div>

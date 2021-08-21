@@ -1,0 +1,68 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+
+    <mat-card fxFlex.xs="90" fxFlex.gt-xs="50" *ngIf="fundraiser?.withdraw?.id?.isOrganizer" fxLayout="column"
+        fxLayoutGap="10px">
+        <p>Total raised from this funraiser(after fees)</p>
+        <h2 class="bold">{{fundraiser.totalRaised |currency}}</h2>
+
+        <p>Last withdrawal: N/A</p>
+        <strong>{{0|currency}}</strong>
+        <div>
+            <a class="text-small" [routerLink]="['/my-fundraiser/withdrawals',fundraiser?._id,'history']"
+                routerLinkActive="router-link-active">See withdrawal history </a>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon class="mat-18">account_balance</mat-icon>
+            Bank information
+        </div>
+        <p>Bank name <strong>{{fundraiser.withdraw?.id?.bankName }}</strong></p>
+        <p>Account number <strong>{{fundraiser.withdraw?.id?.bankAccountNo }}</strong></p>
+
+        <div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+            <mat-label for="auto_withdrawal">Automatic withdrawal
+                <!-- <mat-icon class="mat-9" style="font-size: 16px;">edit</mat-icon> -->
+            </mat-label>
+            <mat-select id="auto_withdrawal" value="weekly" placeholder="Automatic withdrawal">
+                <mat-option [value]="'daily'"> Daily</mat-option>
+                <mat-option [value]="'weekly'"> Weekly</mat-option>
+                <mat-option [value]="'monthly'"> Monthly</mat-option>
+            </mat-select>
+        </div>
+    </mat-card>
+
+    <mat-card *ngIf="fundraiser?.withdraw?.id?.isOrganizer" fxFlex.xs="90" fxFlex.gt-xs="50">
+        <mat-card-content>
+            <mat-vertical-stepper>
+                <mat-step label="Beneficiary set">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>{{ fundraiser.withdraw?.id?.beneficiary?.firstName +'
+                                '+fundraiser.withdraw?.id?.beneficiary?.firstName | titlecase }}</mat-card-title>
+                            <mat-card-subtitle>
+                                {{fundraiser.withdraw?.id?.beneficiary?.email}}
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                    </mat-card>
+                </mat-step>
+                <mat-step label="Invitation Sent">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="color-gray">
+                            Invitation sent to {{fundraiser.withdraw?.id?.beneficiary?.email}}
+                        </span> <button mat-button>Resend</button>
+                    </div>
+                </mat-step>
+                <mat-step label="Beneficiary Accepted">
+                    Beneficiary accepted
+                </mat-step>
+                <mat-step label="Money withdrawn">
+                    Invitation Sent
+                </mat-step>
+            </mat-vertical-stepper>
+        </mat-card-content>
+        <mat-card-actions [align]="'start'">
+            <!-- <button mat-button (click)="isOrganizer=!isOrganizer">Toggle</button> -->
+            <button mat-button>Cancel Invitation </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Fundraiser } from './../../../../models/fundraiser.model';
 
 @Component({
@@ -9,9 +10,13 @@ import { Fundraiser } from './../../../../models/fundraiser.model';
 export class DonorsTabConntentComponent implements OnInit {
 
   @Input() fundraiser!: Fundraiser;
-  constructor() { }
+  constructor(
+    private docTitle: Title
+  ) { }
 
   ngOnInit(): void {
+    this.docTitle.setTitle('Donations');
+
   }
 
 }

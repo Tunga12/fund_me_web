@@ -1,0 +1,62 @@
+<nav>
+  <nav-bar></nav-bar>
+</nav>
+
+<mat-card [ngStyle.sm]="{ width: '90%' }" [ngStyle.xs]="{ width: '94%' }">
+  <mat-card-header>
+    <mat-card-title>Identity summary</mat-card-title>
+  </mat-card-header>
+  <div>
+    <mat-divider mat-inset></mat-divider>
+  </div>
+
+  <!-- Loading  indicator -->
+<div *ngIf="loading" fxFlexAlign="center">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  ></mat-progress-spinner>
+</div>
+
+  <mat-card-content *ngIf="!errorMessage && !loading"
+  fxLayout="column"
+  >
+    <p>
+      Please review the following information to be sure the details match your
+      legal information as it appears on your government issued ID or passport.
+    </p>
+    <p>
+      As a reminder, GoFundMe is required to collect this information in order
+      to process withdrawals to your account. It will only be used to verify
+      your identity. If we cannot verify your identity with the information,
+      there is a chance that you will be required to supply documentation. To
+      learn more about what is required, please refer to our support guide on
+      withdrawal requirements.
+    </p>
+    <p>
+      If you would like someone else to withdraw funds, please add them as a
+      beneficiary.
+    </p>
+    <p><strong>First name:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.firstName | titlecase }}</p>
+    <p><strong>Last name:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.lastName | titlecase }}</p>
+    <p><strong>Email:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.email | titlecase }}</p>
+    <p><strong>Bank name:</strong> {{ fundraiser?.withdraw?.id?.bankName | titlecase }}</p>
+    <p><strong>Bank account number:</strong> {{ fundraiser?.withdraw?.id?.bankAccountNo | titlecase }}</p>
+
+    <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
+
+    <button fxFlexAlign="center" [routerLink]="['/withdrawal/setup/complete',fundId]" mat-raised-button color="primary"
+    style="width: 60%;"
+    >
+      Confirm your information
+    </button>
+    <p></p>
+    <button mat-button  (click)="editInfo()" class="bold" style="margin: 0px auto;"
+    
+    >
+      Edit your info
+    </button>
+  </mat-card-content>
+</mat-card>

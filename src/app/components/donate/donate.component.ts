@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
@@ -12,36 +12,57 @@ import { Subscription } from 'rxjs';
 import { DonationService } from './../../services/donation/donation.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { Donation } from 'src/app/models/donation.model';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+
+
+
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
   styleUrls: ['./donate.component.css'],
 })
 export class DonateComponent implements OnInit, OnDestroy {
+  // donation object
+  donation: Donation = {
+    amount: 0,
+    tip: 10,
+    memberId: ''
+
+  };
+
+  fundraiserId = '';
   loading = true; // to show/hide loading spinner
   erorrMessage = '';
   form!: FormGroup;
   fundraiser?: Fundraiser;
-  fundraiserId = '';
   // determines tip is from slider or not
   custom_tip = false;
   fundraiserSub?: Subscription;
   donationSub?: Subscription;
 
+
+
+  public payPalConfig?: IPayPalConfig;
+
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private donationService: DonationService,
+    private router: Router,
     private title: Title,
+    private snackBar: MatSnackBar,
+    private snackbarServ: SnackbarService,
     public fundraiserService: FundraiserService
   ) { }
 
+
   ngOnInit(): void {
     this.title.setTitle('Donate');
-
     this.form = this.formBuilder.group({
-      amount: [undefined, [Validators.required]],
+      amount: [undefined, [Validators.required, Validators.min(5)]],
       tip: [10, [Validators.required, Validators.min(10)]],
       // anonymous: [],
       comment: [
@@ -53,9 +74,64 @@ export class DonateComponent implements OnInit, OnDestroy {
 
     // get the Id f the fundraiser from the route
     this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') || '';
-    // console.log(this.fundraiserId);
-
     this.getFundraiser();
+
+    this.initConfig();
+  }
+
+  private initConfig(): void {
+    this.payPalConfig = {
+      clientId: 'Aatbc1PvvGMzDDJXG_gpBOl3FKna4TAmIgtuyufjBGtsX514ZS2vLHNs-xRidfrSzxsQ9hbLawfGxlAu',
+      createOrderOnClient: (data: any) => <ICreateOrderRequest><unknown>{
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            value: this.donation.amount + (this.donation.amount * this.donation.tip / 100),
+          },
+        }]
+      },
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then((details: any) => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.donate();
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+        this.snackBar.open("Donation cacelled", "close", this.snackbarServ.getConfig())
+      },
+      onError: err => {
+        console.log('OnError', err);
+        this.snackBar.open("Some thing went wrong", "close", this.snackbarServ.getConfig())
+
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
+
+
+
+
+  // observe the form changes to our model
+  formChange() {
+    this.donation = this.form.value;
+    // console.log(donation);
+
+  }
+
+  // check if this user has already donated to this fundraiser
+
+  hasAlreadyDonated(): boolean {
+    let userId = localStorage.getItem('userId');
+    let donor = this.fundraiser?.donations?.find((donation: Donation) => donation.userId?._id === userId);
+    return donor ? true : false;
   }
 
   public get amount(): AbstractControl | null {
@@ -90,24 +166,24 @@ export class DonateComponent implements OnInit, OnDestroy {
   // make donation to a fundriser
   donate() {
     this.loading = true;
-    let donation = this.form.value;
+    this.donation = this.form.value;
     if (!this.memberId || !this.memberId!.value) {
-      delete donation['memberId'];
+      delete this.donation['memberId'];
     }
 
     this.donationSub = this.donationService
       .createDonation(this.fundraiserId, this.form.value)
       .subscribe(
         (response: HttpResponse<any>) => {
-          console.log(response.url);
+          this.snackBar.open("Donation successfully completed", "close", this.snackbarServ.getConfig());
           this.loading = false;
-          location.href=`${response.url}`;
+          this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
         },
         (error: HttpErrorResponse) => {
           this.erorrMessage = error.error;
+          this.snackBar.open("Donation not successfull", "close", this.snackbarServ.getConfig())
           this.loading = false;
           console.log(error);
-          
         }
       );
   }
@@ -139,9 +215,6 @@ export class DonateComponent implements OnInit, OnDestroy {
     }
   }
 
-  backToFundraiser() {
-    this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
-  }
 
   changeTipType() {
     this.custom_tip = !this.custom_tip;

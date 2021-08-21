@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { HomeFundraiser } from 'src/app/models/home-fundraiser.model';
+import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { environment } from 'src/environments/environment';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Donation } from 'src/app/models/donation.model';
@@ -14,11 +14,19 @@ export class FundraiserService {
   constructor(private http: HttpClient) {}
 
   // get fundraisers by page
-  getFundraisers(page: number): Observable<HomeFundraiser> {
-    return this.http.get<HomeFundraiser>(
+  getFundraisers(page: number): Observable<FundraiserPage> {
+    return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/popular/?page=${page}`
     );
   }
+
+   // get fundraisers by page
+ async getFundraisersAdmin(page: number)  {
+  return await this.http.get<FundraiserPage>(
+    `${environment.BASE_URL}/api/fundraisers/?page=${page}`
+  ).toPromise();
+}
+
 
   // create fundiser
   createFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
@@ -43,16 +51,23 @@ export class FundraiserService {
   }
 
   // get fundraisers of current user
-  getMyFundraisers(): Observable<HomeFundraiser> {
-    return this.http.get<HomeFundraiser>(
+  getMyFundraisers(): Observable<FundraiserPage> {
+    return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/user`
     );
   }
 
   // get team fundraisers of current user
-  getMemeberFundraisers(): Observable<HomeFundraiser> {
-    return this.http.get<HomeFundraiser>(
+  getMemeberFundraisers(): Observable<FundraiserPage> {
+    return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/member`
+    );
+  }
+
+  // get fundraisers for current who is beneficiary of
+  getBeneficiaryFundraisers():Observable<FundraiserPage> {
+    return this.http.get<FundraiserPage>(
+      `${environment.BASE_URL}/api/fundraisers/beneficiary`
     );
   }
 
@@ -83,8 +98,8 @@ export class FundraiserService {
   }
 
   // search fundraiser by title
-  search(title: string, page: number): Observable<HomeFundraiser> {
-    return this.http.get<HomeFundraiser>(
+  search(title: string, page: number): Observable<FundraiserPage> {
+    return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/title/${title}?page=${page}`
     );
   }
@@ -103,7 +118,7 @@ export class FundraiserService {
 
   //to know if a fundraiser has a team (accepted mambers)
   hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {
-    let team = fundraiser.teams?.filter((member: TeamMember) => {
+    let team = fundraiser?.teams?.filter((member: TeamMember) => {
       if (member.status !== 'pending') return true;
       return false;
     });
@@ -113,7 +128,7 @@ export class FundraiserService {
   //to know if a user has a has donated to a fundraiser
   hasDonated(fundraiser: Fundraiser, userId: string): boolean {
     let donation = fundraiser.donations?.find((donation: Donation) => {
-      if (donation.userId._id === userId) return true;
+      if (donation.userId?._id === userId) return true;
       return false;
     });
     return donation ? true : false;
@@ -122,7 +137,7 @@ export class FundraiserService {
   // get the donation amount of a user to a fundraiser
   myDonation(fundraiser: Fundraiser, userId: string): number {
     let donation = fundraiser.donations?.find((donation: Donation) => {
-      if (donation.userId._id === userId) return true;
+      if (donation.userId?._id === userId) return true;
       return false;
     });
     return donation ? donation.amount : 0;

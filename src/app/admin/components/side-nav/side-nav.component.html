@@ -1,0 +1,75 @@
+<mat-toolbar 
+class="example-toolbar"
+[classList]="'bg-white'"
+fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div fxLayout="row">
+        <button
+        fxHide.gt-xs
+        mat-icon-button (click)="startSidenavRef.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <!-- LOGO -->
+    <img [routerLink]="['/']" class="logo" routerLinkActive="router-link-active" src="/assets/images/logo.jpg"
+        ngStyle.xs="{height:'30%'}" ngStyle.gt-xs="{height:'40%'}" fxFlex.xs="20" fxFlex.gt-xs="10" />
+
+
+
+    <!-- USER account MENU -->
+    <a *ngIf="authService.isLoggedIn() && currentUser" mat-button [matMenuTriggerFor]="account"
+        (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"
+        class="nav-link mat-button">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+                <div class="avatar-contain">
+                    {{ currentUser?.firstName?.charAt(0) | titlecase }}
+                    {{ currentUser?.lastName?.charAt(0) | titlecase }}
+                </div>
+                <span>
+                    {{ currentUser?.firstName |titlecase}}
+                </span>
+            </div>
+            <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
+        </div>
+    </a>
+
+    <mat-menu #account="matMenu">
+        <a mat-menu-item routerLink="/notification" class="mat-menu-item">
+            Notifications
+        </a>
+
+        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+            Account settings
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item fxLayoutAlign="center" routerLink="/sign-in" (click)="authService.logOut()">Sign out</a>
+    </mat-menu>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav fixedTopGap="56" #startSidenavRef mode="side" opened>
+        <mat-nav-list dense>
+            <a mat-list-item routerLink="home">
+                <mat-icon mat-list-icon class="mat-18">home</mat-icon>Home
+            </a>
+            <a mat-list-item routerLink="statistics">
+                <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon>Statistics
+            </a>
+            <a mat-list-item routerLink="withdrawals">
+                <mat-icon mat-list-icon class="mat-18">account_balance_wallet</mat-icon>Withdrawals
+            </a>
+            <a mat-list-item routerLink="payments">
+                <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon>Payments
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+        <!-- Toggle button -->
+        <a (click)="startSidenavRef.toggle()" class="toggle">
+            <mat-icon mat-list-icon class="mat-18">{{ startSidenavRef.opened?'arrow_back_ios':'arrow_forward_ios'}}
+            </mat-icon>
+        </a>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

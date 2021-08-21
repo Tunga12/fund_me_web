@@ -1,0 +1,76 @@
+<nav>
+  <nav-bar></nav-bar>
+</nav>
+
+<mat-card class="fundraiser-form" [ngStyle.xs]="{ width: '92%' }" [ngStyle.sm]="{ width: '70%' }">
+  <mat-card-header fxFlexAlign="center">
+    <!-- <mat-card-title>Verify Your Identity</mat-card-title> -->
+    <mat-card-title>Enter a bank information</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <!-- Loading indicator -->
+  <div *ngIf="loading" fxFlexAlign="center">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage " style="margin-top: 30px; text-align: justify">
+    <!-- <p>
+      GoFundMe is required to collect this information. It will only be used to
+      verify your identity.
+    </p> -->
+    <p>
+      You will need to be 18 or older and have a valid identification card to
+      continue.
+      <!-- If your information cannot be verified, there is a chance that
+      you will later be asked to supply supporting documentation. To read more
+      about what is required, please click here. -->
+    </p>
+    <p>
+      If you would like someone else to withdraw funds, please add them as a
+      <a [routerLink]="['/withdrawal/beneficiary-form',fundId]"> beneficiary</a>.
+    </p>
+  </div>
+
+  <mat-card-content *ngIf="!loading && !errorMessage ">
+    <form fxLayout="column" [formGroup]="form" (ngSubmit)="createWithdrawal()" fxLayoutAlign="start center"
+      fxLayoutGap="10px">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Bank name</mat-label>
+        <input formControlName="bankName" matInput type="text" placeholder="Bank name" />
+        <mat-error *ngIf="bankName?.touched && bankName?.errors?.required">Please enter the name
+        </mat-error>
+
+        <mat-error *ngIf="bankName?.touched && bankName?.errors?.minlength">Bank name must be
+          {{ bankName?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Bank account number </mat-label>
+        <input formControlName="bankAccountNo" matInput type="text" placeholder="account no." />
+
+        <mat-error *ngIf="bankAccountNo?.touched && bankAccountNo?.errors?.required">Please enter your bank account
+          number
+        </mat-error>
+        <mat-error *ngIf="bankAccountNo?.touched && bankAccountNo?.errors?.minlength">Bank account number must be
+          {{ bankAccountNo?.errors?.minlength.requiredLength }} minimun.
+        </mat-error>
+        <mat-error *ngIf="bankAccountNo?.touched && bankAccountNo?.errors?.whiteSpace">Bank account number cannot
+          include whitespaces.
+        </mat-error>
+      </mat-form-field>
+
+  <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
+
+      <button mat-raised-button [disabled]="form.invalid" type="submit" class="btn-large" color="primary">
+        Save your info
+      </button>
+      <button mat-button [fxFlexAlign]="'center'" (click)="goBack()">
+        Go Back
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
