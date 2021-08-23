@@ -10,7 +10,7 @@ import { ShareArgs } from 'src/app/models/share-buttons-args';
 import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
 import { AuthService } from './../../../services/auth/auth.service';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
-import { DoantionsComponent } from './doantions/doantions.component';
+import { DonationsComponent } from './doantions/doantions.component';
 
 @Component({
   selector: 'app-fudraiser-detail-public',
@@ -161,7 +161,7 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
   // open all donations dialog
   donations(type: string) {
     this.dialog
-      .open(DoantionsComponent, {
+      .open(DonationsComponent, {
         data: { type: type, fundraiser: this.fundraiser },
       })
       .afterClosed()

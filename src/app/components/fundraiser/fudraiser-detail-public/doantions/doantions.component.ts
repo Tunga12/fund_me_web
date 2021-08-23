@@ -14,7 +14,7 @@ interface InputDatFormat {
   templateUrl: './doantions.component.html',
   styleUrls: ['./doantions.component.css'],
 })
-export class DoantionsComponent implements OnInit {
+export class DonationsComponent implements OnInit {
   donations!: Donation[];
   type = ''; //to know top donations or all donations
   topButtonLabel = '';

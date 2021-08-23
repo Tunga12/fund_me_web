@@ -1,11 +1,7 @@
-<mat-toolbar 
-class="example-toolbar"
-[classList]="'bg-white'"
-fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+<mat-toolbar class="example-toolbar elevation-mat28" [classList]="'bg-white'" fxLayout="row" fxLayoutAlign="space-between center"
+    fxLayoutGap="20px">
     <div fxLayout="row">
-        <button
-        fxHide.gt-xs
-        mat-icon-button (click)="startSidenavRef.toggle()">
+        <button fxHide.gt-xs mat-icon-button (click)="startSidenavRef.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
     </div>
@@ -61,15 +57,17 @@ fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
             <a mat-list-item routerLink="payments">
                 <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon>Payments
             </a>
+            <a mat-list-item routerLink="helps">
+                <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon>Payments
+            </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <router-outlet></router-outlet>
         <!-- Toggle button -->
         <a (click)="startSidenavRef.toggle()" class="toggle">
             <mat-icon mat-list-icon class="mat-18">{{ startSidenavRef.opened?'arrow_back_ios':'arrow_forward_ios'}}
             </mat-icon>
         </a>
-
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

@@ -15,4 +15,9 @@ export class AdminUsersService {
  async getAllUsers(){
    return await this.http.get<User[]>(`${environment.BASE_URL}/api/users`).toPromise();
   }
+
+   // get currently logged in user
+   async getCurrentUser() {
+    return await this.http.get<User>(`${environment.BASE_URL}/api/users/me`).toPromise();
+  }
 }

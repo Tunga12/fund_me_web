@@ -4,7 +4,7 @@ height: 100%;
 
 .toggle{
     position: sticky;
-    top: 300px;
+    /* top: 10px; */
 }
 
 .example-container {

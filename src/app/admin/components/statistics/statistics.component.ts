@@ -114,8 +114,8 @@ export class StatisticsComponent implements OnInit {
   // get all users
   async getUsers() {
     await this.usersService.getAllUsers().then(
-      (users) => this.allUsers = users,
-      (error) => {
+      (users: User[]) => this.allUsers = users,
+      (error: HttpErrorResponse) => {
         console.log(error);
       }
     )

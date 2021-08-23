@@ -1,7 +1,6 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,16 +10,12 @@ import { NgxEditorModule } from 'ngx-editor';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
-import { TimeagoModule } from 'ngx-timeago';
 
 import { AdminModule } from './admin/admin.module';
 import { AppComponent } from './app.component';
-import { ResponsiveColumnsDirective } from './breakpoints/responsive-columns.directive';
-import { AccountSettingComponent } from './components/account-setting/account-setting.component';
 import {
   DeleteAccountDialogComponent,
 } from './components/account-setting/delete-account-dialog/delete-account-dialog.component';
-import { PasswordResetComponent } from './components/account-setting/password-reset/password-reset.component';
 import { DonateComponent } from './components/donate/donate.component';
 import { EditUiComponent } from './components/edit-ui/edit-ui.component';
 import { DeleteDialogComponent } from './components/edit-ui/overview/delete-dialog/delete-dialog.component';
@@ -38,7 +33,7 @@ import {
 import {
   SetFundraiserStoryComponent,
 } from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
-import { DoantionsComponent } from './components/fundraiser/fudraiser-detail-public/doantions/doantions.component';
+import { DonationsComponent } from './components/fundraiser/fudraiser-detail-public/doantions/doantions.component';
 import {
   FudraiserDetailPublicComponent,
 } from './components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
@@ -76,9 +71,7 @@ import { WithdrawalsComponent } from './components/fundraiser/withdrawals/withdr
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { EmailInviteDialogComponent } from './components/invite/email-invite-dialog/email-invite-dialog.component';
 import { PhoneInviteDialogComponent } from './components/invite/phone-invite-dialog/phone-invite-dialog.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotificationComponent } from './components/notification/notification.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {
   AddPhotoVideoDialogComponent,
 } from './components/post-an-update/add-photo-video-dialog/add-photo-video-dialog.component';
@@ -86,35 +79,26 @@ import {
   AddYoutubeVideoDialogComponent,
 } from './components/post-an-update/add-youtube-video-dialog/add-youtube-video-dialog.component';
 import { PostAnUpdateComponent } from './components/post-an-update/post-an-update.component';
-import { SearchComponent } from './components/search/search.component';
 import { ShareDialogComponent } from './components/share-dialog/share-dialog.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { StoryTextAreaComponent } from './components/story-text-area/story-text-area.component';
 import { ImportContactsDialogComponent } from './components/teams/import-contacts-dialog/import-contacts-dialog.component';
-import { BeneficiaryFormComponent } from './components/withdrawal/beneficiary-form/beneficiary-form/beneficiary-form.component';
+import {
+  BeneficiaryFormComponent,
+} from './components/withdrawal/beneficiary-form/beneficiary-form/beneficiary-form.component';
+import { ConfirmPageComponent } from './components/withdrawal/beneficiary-form/confirm-page/confirm-page.component';
 import { PersonalInfoSummaryComponent } from './components/withdrawal/personal-info-summary/personal-info-summary.component';
 import { PersonalInfoComponent } from './components/withdrawal/personal-info/personal-info.component';
+import { SuccessPageComponent } from './components/withdrawal/success-page/success-page.component';
+import { WithdrwalComponent } from './components/withdrawal/withdrwal.component';
 import { YoutubeVideoPlayerComponent } from './components/youtube-video-player/youtube-video-player.component';
 import { HttpErrorsInterceptor } from './interceptors/http-errors.interceptor';
 import { HttpHeaderInterceptor } from './interceptors/http-headers.interceptor';
 import { MyMaterialModule } from './modules/material.module';
 import { SharedModule } from './shared/shared.module';
-import { SuccessPageComponent } from './components/withdrawal/success-page/success-page.component';
-import { WithdrwalComponent } from './components/withdrawal/withdrwal.component';
-import { ConfirmPageComponent } from './components/withdrawal/beneficiary-form/confirm-page/confirm-page.component';
-import { ActiveUsersComponent } from './components/users/active-users/active-users.component';
-import { DeletedUsersComponent } from './components/users/deleted-users/deleted-users.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatTableExporterModule } from 'mat-table-exporter';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
-    SignInComponent,
-    SignUpComponent,
     CreateFundraiserComponent,
     SetBasicInfoComponent,
     SetFundraiserMediaComponent,
@@ -139,7 +123,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     BeneficiaryFormComponent,
     FudraiserDetailPublicComponent,
     DonateComponent,
-    DoantionsComponent,
+    DonationsComponent,
     BannerComponent,
     DonationsTabConntentComponent,
     InvitedContactsTabContentComponent,
@@ -147,14 +131,9 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     TeamTabContentComponent,
     UpdatesTabContentComponent,
     NotificationComponent,
-    PageNotFoundComponent,
     OverviewComponent,
     DeleteDialogComponent,
     StoryComponent,
-    ResponsiveColumnsDirective,
-    AccountSettingComponent,
-    PasswordResetComponent,
-    SearchComponent,
     DeleteAccountDialogComponent,
     MyFundraisersComponent,
     MyFundListComponent,
@@ -166,8 +145,6 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     WithdrawalsHistoryComponent,
     SuccessPageComponent,
     ConfirmPageComponent,
-    ActiveUsersComponent,
-    DeletedUsersComponent,
   ],
   entryComponents: [],
   imports: [
@@ -177,8 +154,6 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     BrowserAnimationsModule,
     MyMaterialModule,
     RouterModule,
-    FlexLayoutModule,
-    TimeagoModule.forRoot(),
     NgxEditorModule,
     ShareButtonsModule.withConfig(
       {
@@ -186,17 +161,12 @@ import { MatTableExporterModule } from 'mat-table-exporter';
       }
     ),
     ShareIconsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
     NgxPayPalModule,
     AdminModule,
     SharedModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
   ],
 
   providers: [
-    MatDatepickerModule,
     {
       provide: MatDialogRef,
       useValue: {},
