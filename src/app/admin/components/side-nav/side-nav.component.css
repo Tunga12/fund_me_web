@@ -4,6 +4,7 @@ height: 100%;
 
 .toggle{
     position: sticky;
+    display: inline;
     /* top: 10px; */
 }
 
@@ -40,5 +41,5 @@ height: 100%;
   }
   
   mat-sidenav-content.mat-sidenav-content{
-    margin: 30px auto;
+    margin: 20px 20px;
   }

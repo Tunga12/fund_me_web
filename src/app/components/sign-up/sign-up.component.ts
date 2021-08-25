@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
   hidePassword = true; // to toggle the visiblity of password
-  hideConfirmPassword = true; // to toggle the visiblity of confirmPassword
+  // hideConfirmPassword = true; // to toggle the visiblity of confirmPassword
   signUpSecussful = false; // to know the succefullness of sign up and show and hide spinner
   form!: FormGroup;
   // subsctiption

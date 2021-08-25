@@ -1,15 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  AbstractControl,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from './../../services/auth/auth.service';
-import { Subscription } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { AuthService } from './../../services/auth/auth.service';
 
 @Component({
   selector: 'sign-in-page',
@@ -20,8 +16,6 @@ export class SignInComponent implements OnInit, OnDestroy {
   loading = false;
   logInSub?: Subscription;
   logInMessage?: string;
-  // TODO
-
   hidePassword = true; // to toggle visiblity of password
   logInSuccessfull = false; // to know the login status
   form!: FormGroup;
@@ -35,7 +29,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('Sign in');
+    this.docTitle.setTitle('GoFundMe | Sign in');
 
     // build the form
     this.form = this.formBuilder.group({
@@ -61,7 +55,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       },
       (error: HttpErrorResponse) => {
         this.loading = false;
-        this.password?.setValue('');
+        // this.password?.setValue('');
         this.logInMessage = 'Incorrect email or Password';
         console.log(error.message);
       }
@@ -69,7 +63,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   change() {
-    this.logInMessage = '';
+    this.logInMessage = '';    
   }
 
   public get email(): AbstractControl | null {

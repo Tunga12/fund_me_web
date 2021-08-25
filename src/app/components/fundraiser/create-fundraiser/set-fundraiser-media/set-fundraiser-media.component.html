@@ -7,7 +7,7 @@
     (change)="onImageChoosen($event)"
   />
 
- <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; width:500px">  <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
+ <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; max-width:500px;min-width: 400px">  <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
   <div *ngIf="loading">
     <mat-progress-spinner
       mode="indeterminate"

@@ -15,7 +15,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
   styleUrls: ['./story-text-area.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class StoryTextAreaComponent implements OnInit, OnDestroy {
+export class StoryTextAreaComponent implements OnDestroy {
   @Input() form!: FormGroup;
   editor: Editor;
   toolbar: Toolbar = [
@@ -29,10 +29,6 @@ export class StoryTextAreaComponent implements OnInit, OnDestroy {
     this.editor = new Editor();
   }
 
-
-  ngOnInit(): void {
-    // this.editor = new Editor();
-  }
 
   ngOnDestroy(): void {
     this.editor.destroy();

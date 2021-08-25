@@ -6,7 +6,7 @@ button {
 h1.bold,
 h2.bold {
   font-weight: 900;
-  font-size: xx-large;
+  font-size: x-large;
 }
 
 .mobile-header {
@@ -15,7 +15,7 @@ h2.bold {
 }
 
 .illustration {
-  background-image: url(https://d25oniaj7o2jcw.cloudfront.net/gofundme-homepage-illustration-1920w.png);
+  background-image: url(../../../assets/images/gofundme-homepage-illustration-1920w.png);
   background-position: 50% center;
   padding: 100px 100px 200px 100px;
   height: 90% !important;

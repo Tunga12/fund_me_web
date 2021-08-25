@@ -62,7 +62,7 @@ export class DonateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.title.setTitle('Donate');
     this.form = this.formBuilder.group({
-      amount: [undefined, [Validators.required, Validators.min(5)]],
+      amount: [10, [Validators.required, Validators.min(5)]],
       tip: [10, [Validators.required, Validators.min(10)]],
       // anonymous: [],
       comment: [
@@ -126,13 +126,13 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   }
 
-  // check if this user has already donated to this fundraiser
+  // // check if this user has already donated to this fundraiser
 
-  hasAlreadyDonated(): boolean {
-    let userId = localStorage.getItem('userId');
-    let donor = this.fundraiser?.donations?.find((donation: Donation) => donation.userId?._id === userId);
-    return donor ? true : false;
-  }
+  // hasAlreadyDonated(): boolean {
+  //   let userId = localStorage.getItem('userId');
+  //   let donor = this.fundraiser?.donations?.find((donation: Donation) => donation.userId?._id === userId);
+  //   return donor ? true : false;
+  // }
 
   public get amount(): AbstractControl | null {
     return this.form.get('amount');

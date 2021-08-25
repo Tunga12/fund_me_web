@@ -1,0 +1,37 @@
+<div class="helps">
+    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
+        <button mat-raised-button 
+        (click)="toggleForm()"
+        [color]="!showForm?'primary':'warn'">
+            {{ !showForm?'Add new':
+            'Close'}}</button>
+    </div>
+    <ng-container *ngIf="showForm">
+        <help-form
+        [help] = "helpToEdit"
+        [mode]="mode"
+        (createHelp)="createHelp($event)"
+        (editHelp)="editHelp($event)"
+        ></help-form>
+    </ng-container>
+
+    <div *ngFor="let help of helps">
+        <mat-expansion-panel [hideToggle]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ help.title }}</mat-panel-title>
+                <!-- <mat-panel-description>Description </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <mat-panel-description [innerHtml]="help.content"></mat-panel-description>
+
+            <mat-action-row>
+                <button mat-button (click)="openForm(help)">
+                    <mat-icon class="mat-18">edit</mat-icon>Edit
+                </button>
+                <button mat-button color="warn" (click)="deleteHelp(help)">
+                    <mat-icon class="mat-18">delete</mat-icon>Delete
+                </button>
+            </mat-action-row>
+        </mat-expansion-panel>
+        <div style="height: 10px;"></div>
+    </div>
+</div>

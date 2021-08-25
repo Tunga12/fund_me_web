@@ -1,0 +1,7 @@
+.NgxEditor__Content{
+    min-height: 100px !important;
+}
+
+mat-card.mat-card{
+    margin: 10px auto;
+}

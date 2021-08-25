@@ -17,7 +17,9 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
   styleUrls: ['./pending-withdrawals.component.css']
 })
 export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
-  displayedColumns = ['firstName', 'lastName', 'email', 'bankName', 'bankAccountNo', 'date', 'accept', 'decline']
+  displayedColumns = [
+    //'firstName', 'lastName', 'email',
+     'bankName', 'bankAccountNo', 'date', 'accept', 'decline']
 
   pendingWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;

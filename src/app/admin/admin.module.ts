@@ -19,10 +19,11 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AdminAuthGuard } from './services/admin-auth-guard/admin-auth-guard.service';
-import { HelpsComponent } from './components/helps/helps/helps.component';
-import { CreateHelpComponent } from './components/helps/create-help/create-help.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HelpsComponent } from './components/helps/helps.component';
+import { HelpFormComponent } from './components/help-form/help-form.component';
 
 const routes: Routes =
     [
@@ -80,8 +81,8 @@ const routes: Routes =
         RejectedWithdrawalsComponent,
         AdminWithdrawalsComponent,
         AdminHomeComponent,
-        HelpsComponent,
-        CreateHelpComponent
+        HelpFormComponent,
+        HelpsComponent        
     ],
 
     imports: [
@@ -91,6 +92,7 @@ const routes: Routes =
         MatTableExporterModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatExpansionModule
     ],
     
     exports: [

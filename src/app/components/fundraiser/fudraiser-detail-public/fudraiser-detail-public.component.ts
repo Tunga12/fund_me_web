@@ -10,7 +10,7 @@ import { ShareArgs } from 'src/app/models/share-buttons-args';
 import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
 import { AuthService } from './../../../services/auth/auth.service';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
-import { DonationsComponent } from './doantions/doantions.component';
+import { DonationsComponent } from './donations/donations.component';
 
 @Component({
   selector: 'app-fudraiser-detail-public',

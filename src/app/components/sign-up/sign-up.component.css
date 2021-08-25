@@ -14,3 +14,7 @@ mat-icon.mat-icon {
 img{
   cursor: pointer;
 }
+
+mat-card-footer.mat-card-footer{
+margin: 5px;
+}

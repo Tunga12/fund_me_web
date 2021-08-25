@@ -1,7 +1,6 @@
-<nav>
+<nav class="mat-elevation-z8">
   <nav-bar></nav-bar>
 </nav>
-
 <div>
   <div fxHide.lt-md class="illustration">
     <div fxLayout="column" fxLayoutAlign="start start">
@@ -9,6 +8,7 @@
       <h1 class="bold">causes you care about</h1>
       <h1 class="color-gray">Get Started Today.</h1>
     </div>
+    
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign="start center"
       fxLayoutGap="30px">
       <button ngClass="btn-large" routerLink="/create" mat-raised-button color="primary">
@@ -29,10 +29,11 @@
       <img class="img-mobile" src="/assets/images/gofundme-homepage-illustration-1920w.png" />
     </div>
 
-    <h2 class="mobile-header" class="bold">
-      Fundraising for the people and causes you care about
-    </h2>
-
+    <div class="mobile-header">
+      <h2 class="bold">
+        Fundraising for the people and causes you care about
+      </h2>
+    </div>
     <h1 class="color-gray">Get Started Today.</h1>
     <a routerLink="/create" mat-raised-button color="primary" fxFlex.lt-sm="60" class="btn-larg">
       Start a GoFundMe
@@ -46,7 +47,7 @@
 
 <!-- fundraisers list  -->
 <div fxLayout="column" fxLayoutGap="20px" style="width: 80%; margin: 50px auto"
-  [ngStyle.lt-md]="{ width: '98%', margin: '0px auto' }">
+  [ngStyle.lt-md]="{ width: '96%', margin: '0px auto' }">
   <h2 class="bold">Top fundraisers</h2>
   <div *ngIf="loading">
     <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">

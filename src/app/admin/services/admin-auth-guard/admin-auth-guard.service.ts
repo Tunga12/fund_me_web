@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
-
+import { UserService } from 'src/app/services/user/user.service';
 import { AdminUsersService } from '../admin-users/admin-users.service';
 
 @Injectable({
@@ -10,29 +10,34 @@ import { AdminUsersService } from '../admin-users/admin-users.service';
 })
 export class AdminAuthGuard implements CanActivate {
   user?: User;
-  constructor
-    (
-      private router: Router,
-      private adminUserService: AdminUsersService,
+  constructor(
+    private userService: AdminUsersService,
+    private router: Router
   ) {
 
   }
 
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    await this.userService.getCurrentUser().then(
+      (user) => {
+        this.user = user;
+      }
+    );
 
-
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    this.adminUserService.getCurrentUser()
-      .then(
-        (user: User) => {
-          this.user = user!
+    return new Promise(
+      (resolve, reject) => {
+        if (this.user?.isAdmin) {
+          resolve(true);
+          console.log('admin');
         }
-      );
-
-    if (this.user) {
-      return true;
+        else{
+        this.router.navigate(['/sign-in']);
+        resolve(false);
+      }
     }
-    this.router.navigate(['/sign-in']);
-    return false;
+
+    );
+
+
   }
 }

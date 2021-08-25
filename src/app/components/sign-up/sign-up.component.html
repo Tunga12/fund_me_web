@@ -1,14 +1,13 @@
-<nav>
+<nav class="mat-elevation-z2">
   <mat-toolbar [classList]="'bg-white'" fxLayout="row wrap" fxLayoutAlign="space-between center">
-
     <!-- LOGO -->
     <img [routerLink]="['/']" routerLinkActive="router-link-active" src="/assets/images/logo.jpg"
       ngStyle.xs="{height:'30%'}" ngStyle.gt-xs="{height:'40%'}" fxFlex.xs="20" fxFlex.gt-xs="10" />
 
     <div>
-      <p>Already have an account? <a mat-button color="primary" [routerLink]="['/sign-in']">
+      <div>Already have an account? <a color="primary" [routerLink]="['/sign-in']">
           Sign in
-        </a></p>
+        </a></div>
     </div>
   </mat-toolbar>
 </nav>
@@ -65,7 +64,9 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
         <mat-form-field appearance="outline">
           <mat-label> Email Address *</mat-label>
-          <input matInput formControlName="email" placeholder="Email address" type="email" email />
+          <input matInput formControlName="email" 
+          placeholder="Email address" type="email"
+           />
           <mat-icon matPrefix>email</mat-icon>
           <mat-error *ngIf="email?.touched && email?.errors?.email">Please enter a valid email.
           </mat-error>
@@ -75,7 +76,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label> Phone number *</mat-label>
-          <input matInput formControlName="phoneNumber" placeholder="Phone number" type="tel" />
+          <input matInput formControlName="phoneNumber" placeholder="Phone number" type="tel" 
+          />
           <mat-icon matPrefix>phone</mat-icon>
           <mat-error *ngIf="phone?.touched && phone?.errors?.minlength">Phone number must be
             {{ phone?.errors?.minlength?.requiredLength }} digits.
@@ -89,7 +91,9 @@
         <mat-form-field appearance="outline">
           <mat-label>Enter your password *</mat-label>
           <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
-            (change)="onPasswordChange()" />
+            (change)="onPasswordChange()" 
+            autocomplete="new-password"
+            />
           <mat-icon matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hidePassword">{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
           <mat-error *ngIf="password?.touched && password?.errors?.minlength">Password length must be minimum
@@ -106,13 +110,15 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Confirm your password *</mat-label>
-          <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"
-            [pattern]="password?.value" (change)="onPasswordChange()" />
-
-          <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'"
+          <input matInput formControlName="confirmPassword" [type]="hidePassword ? 'password' : 'text'"
+            [pattern]="password?.value" (change)="onPasswordChange()"
+            autocomplete="new-password" 
+            />
+          <!-- 
+          <mat-icon matSuffix (click)="hidePassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hidePassword">{{
             hideConfirmPassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
+            }}</mat-icon> -->
           <mat-error *ngIf="
               confirmPassword?.touched && confirmPassword?.errors?.mismatch
             ">

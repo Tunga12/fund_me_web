@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { NgxEditorModule } from 'ngx-editor';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
@@ -33,7 +32,7 @@ import {
 import {
   SetFundraiserStoryComponent,
 } from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
-import { DonationsComponent } from './components/fundraiser/fudraiser-detail-public/doantions/doantions.component';
+import { DonationsComponent } from './components/fundraiser/fudraiser-detail-public/donations/donations.component';
 import {
   FudraiserDetailPublicComponent,
 } from './components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
@@ -80,7 +79,6 @@ import {
 } from './components/post-an-update/add-youtube-video-dialog/add-youtube-video-dialog.component';
 import { PostAnUpdateComponent } from './components/post-an-update/post-an-update.component';
 import { ShareDialogComponent } from './components/share-dialog/share-dialog.component';
-import { StoryTextAreaComponent } from './components/story-text-area/story-text-area.component';
 import { ImportContactsDialogComponent } from './components/teams/import-contacts-dialog/import-contacts-dialog.component';
 import {
   BeneficiaryFormComponent,
@@ -116,7 +114,6 @@ import { SharedModule } from './shared/shared.module';
     ImportContactsDialogComponent,
     EditUiComponent,
     YoutubeVideoPlayerComponent,
-    StoryTextAreaComponent,
     WithdrwalComponent,
     PersonalInfoComponent,
     PersonalInfoSummaryComponent,
@@ -154,7 +151,6 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     MyMaterialModule,
     RouterModule,
-    NgxEditorModule,
     ShareButtonsModule.withConfig(
       {
         debug: true,

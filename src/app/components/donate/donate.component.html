@@ -32,9 +32,8 @@
   </div>
 
   <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutAlign="space-between start">
-    <h1 *ngIf="hasAlreadyDonated()">Thanks, You have already donatd to this fundraiser!</h1>
-    <form *ngIf="!hasAlreadyDonated()" [formGroup]="form" (ngSubmit)="donate()" style="width: 60%"
-      [ngStyle.xs]="{ width: '98%' }" (change)="formChange()">
+    <form [formGroup]="form" (ngSubmit)="donate()" style="width: 60%" [ngStyle.xs]="{ width: '98%' }"
+      (change)="formChange()">
       <h2 class="bold">Enter your donation</h2>
       <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
         <div>
@@ -120,36 +119,7 @@
           Donate now
         </button>  -->
       </div>
-
       <ngx-paypal [fxHide]=" form.invalid " [config]="payPalConfig"></ngx-paypal>
-
-
-
     </form>
-    <mat-card *ngIf="!hasAlreadyDonated()" [ngStyle.xs]="{ width: '90%' }">
-      <mat-card-content>
-        <h2 class="bold">Your donation</h2>
-        <div fxLayout="column" fxLayout.xs="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-          <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-            <p>Your donation</p>
-            <p class="bold">${{ amount!.value }}</p>
-          </div>
-
-          <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-            <p>GoFundMe tip</p>
-            <p class="bold">${{ tip_percentage }}</p>
-          </div>
-          <div>
-            <mat-divider></mat-divider>
-          </div>
-          <p></p>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start" class="bold">
-            <p>Total <span fxHide.xs> due today </span></p>
-            <p>{{ amount!.value + tip_percentage }}</p>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <!-- Donate now button -->
   </div>
 </div>

@@ -17,7 +17,9 @@ import { AdminWithdrawalsService } from '../../services/admin-withdrawals/admin-
 export class PaymentsComponent implements OnInit {
   loading: boolean=false;
 
-  displayedColumns = ['firstName', 'lastName', 'bankName', 'bankAccountNo']
+  displayedColumns = [
+    //'firstName', 'lastName',
+   'bankName', 'bankAccountNo']
 
   approvedWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;

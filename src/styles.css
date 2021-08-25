@@ -19,9 +19,13 @@ body {
   border: solid 1px red;
 } */
 
+/* .mat-toolbar-row, .mat-toolbar-single-row {
+   height: 50px; 
+} */
+
 .nav-fixed {
   background-color: rgb(255, 255, 255);
-  position: static;
+  position: sticky;
   top: 0;
 }
 

@@ -11,8 +11,8 @@ interface InputDatFormat {
 }
 @Component({
   selector: 'app-doantions',
-  templateUrl: './doantions.component.html',
-  styleUrls: ['./doantions.component.css'],
+  templateUrl: './donations.component.html',
+  styleUrls: ['./donations.component.css'],
 })
 export class DonationsComponent implements OnInit {
   donations!: Donation[];

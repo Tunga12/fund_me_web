@@ -15,7 +15,9 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
   styleUrls: ['./approved-withdrawals.component.css']
 })
 export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
-  displayedColumns = ['firstName', 'lastName', 'email', 'bankName', 'bankAccountNo', 'date']
+  displayedColumns = [
+    //'firstName', 'lastName', 'email', 
+    'bankName', 'bankAccountNo', 'date']
 
   approvedWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;
@@ -53,6 +55,8 @@ export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
       (withdrawalsPage: WithdrawalsPage) => {
         this.loading = false;
         this.approvedWithdrawals = withdrawalsPage.withdrawals;
+        console.log('approved', this.approvedWithdrawals);
+        
         this.dataSource = new MatTableDataSource<Withdrawal>(this.approvedWithdrawals);
       
       },

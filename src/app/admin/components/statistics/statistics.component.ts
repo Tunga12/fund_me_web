@@ -1,13 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
-import { Data } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Donation } from 'src/app/models/donation.model';
 import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { User } from 'src/app/models/user.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+
 import { AdminDonationsService } from '../../services/admin-donations/admin-donations.service';
 import { AdminUsersService } from '../../services/admin-users/admin-users.service';
 
@@ -123,7 +121,7 @@ export class StatisticsComponent implements OnInit {
 
   // get users by date 
   async getUsersByDate(startDate: Date, endDate: Date) {
-    this.filteredUsers = await this.allUsers.filter(user => startDate <= new Date(user.date!) && new Date(user.date!) <= endDate)
+    this.filteredUsers = await this.allUsers.filter(user => (startDate <= new Date(user.date!)) && (new Date(user.date!) <= endDate))
   }
 
   //get all donations

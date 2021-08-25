@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxEditorModule } from 'ngx-editor';
 import { TimeagoModule } from 'ngx-timeago';
 
 import { AccountSettingComponent } from '../components/account-setting/account-setting.component';
@@ -14,6 +15,7 @@ import { PageNotFoundComponent } from '../components/page-not-found/page-not-fou
 import { SearchComponent } from '../components/search/search.component';
 import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
+import { StoryTextAreaComponent } from '../components/story-text-area/story-text-area.component';
 import { MyMaterialModule } from '../modules/material.module';
 import { AppRoutesModule } from '../modules/routes.module';
 
@@ -32,7 +34,6 @@ const ROUTES: Routes = [
     component: SearchComponent,
   },
   // { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
-
 ]
 
 @NgModule({
@@ -45,6 +46,7 @@ const ROUTES: Routes = [
     NavBarComponent,
     AccountSettingComponent,
     PasswordResetComponent,
+    StoryTextAreaComponent,
   ],
   imports: [
     CommonModule,
@@ -56,9 +58,11 @@ const ROUTES: Routes = [
     FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxEditorModule,
   ],
   exports: [
     FlexLayoutModule,
+    StoryTextAreaComponent,
     PublicFundListComponent,
     PageNotFoundComponent,
     MyMaterialModule,
@@ -70,7 +74,7 @@ const ROUTES: Routes = [
     PasswordResetComponent,
     TimeagoModule,
     HttpClientModule,
-
+    NgxEditorModule,
   ]
 })
 export class SharedModule { }

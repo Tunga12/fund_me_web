@@ -123,7 +123,12 @@ const routes: Routes = [
       }, {
         path: 'beneficiary',
         component: BeneficiaryComponent,
-      }
+      },
+      {
+        path: '',
+        redirectTo:'organizer',
+        pathMatch:'full'
+      },
     ]
   },
   {
