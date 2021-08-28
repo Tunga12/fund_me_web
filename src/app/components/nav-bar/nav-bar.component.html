@@ -127,16 +127,16 @@
     fxLayoutAlign="end center"
     fxLayoutGap="20px"
   >
-    <a mat-button *ngIf="!authService.isLoggedIn()" [routerLink]="['/sign-in']">
-      Sign in
-    </a>
     <a
       *ngIf="!authService.isLoggedIn()"
-      mat-stroked-button
+      mat-raised-button
       color="primary"
       [routerLink]="['/create']"
     >
       Start a Campign
+    </a>
+    <a mat-button *ngIf="!authService.isLoggedIn()" [routerLink]="['/sign-in']">
+      Sign in
     </a>
   </mat-toolbar-row>
 </mat-toolbar>

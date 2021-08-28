@@ -1,4 +1,4 @@
-<nav class="mat-elevation-z8">
+<nav class="mat-elevation-z1">
   <nav-bar></nav-bar>
 </nav>
 <div>
@@ -21,6 +21,7 @@
         routerLink="/create"
         mat-raised-button
         color="primary"
+        [ngStyle]="{ 'max-width': '30%' }"
       >
         Start a Campign
       </a>
@@ -48,7 +49,9 @@
     </div>
 
     <div class="mobile-header">
-      <h1 class="bold mat-h1">Fundraising for the people and causes you care about</h1>
+      <h1 class="bold mat-h1">
+        Fundraising for the people and causes you care about
+      </h1>
     </div>
     <h1 class="color-gray mat-h1">Get Started Today.</h1>
     <a
@@ -56,7 +59,7 @@
       mat-raised-button
       color="primary"
       class="btn-large"
-      [ngStyle.lt-sm]="{'max-width': '60%'}"
+      [ngStyle.lt-sm]="{ 'max-width': '60%' }"
     >
       Start a Campign
     </a>
@@ -87,7 +90,11 @@
   <p class="text-error">{{ errorMessage }}</p>
 
   <!-- LIST OF FUNDRAISERS -->
-  <app-public-fund-list [fundraisers]="fundraisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
+  <app-public-fund-list
+    [fundraisers]="fundraisers"
+    [hasNext]="hasNext()"
+    (nextEvent)="nextPage()"
+  >
   </app-public-fund-list>
 </div>
 
