@@ -15,7 +15,7 @@
         fxLayoutGap="5px"
       >
         <a mat-button [routerLink]="['/create']" class="nav-link">
-          Start a Legas
+          Start a Campign
         </a>
         <mat-divider fxShow.gt-xs vertical style="height: 30px"></mat-divider>
         <a mat-button [routerLink]="['/sign-in']" class="nav-link"> Sign in </a>
@@ -38,7 +38,7 @@
 
       <mat-menu #menuRef="matMenu" [overlapTrigger]="false">
         <a mat-menu-item routerLink="/sign-in">Sign in</a>
-        <a mat-menu-item routerLink="/create">Start a Legas</a>
+        <a mat-menu-item routerLink="/create">Start a Campign</a>
         <a mat-menu-item (click)="share()"> Share </a>
         <a mat-menu-item [routerLink]="['/donate', fundraiser?._id]">
           Donate
