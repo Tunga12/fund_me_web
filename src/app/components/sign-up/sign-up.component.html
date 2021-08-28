@@ -1,8 +1,7 @@
 <nav class="mat-elevation-z2">
   <mat-toolbar [classList]="'bg-white'" fxLayout="row wrap" fxLayoutAlign="space-between center">
     <!-- LOGO -->
-    <img [routerLink]="['/']" routerLinkActive="router-link-active" src="/assets/images/logo.jpg"
-      ngStyle.xs="{height:'30%'}" ngStyle.gt-xs="{height:'40%'}" fxFlex.xs="20" fxFlex.gt-xs="10" />
+    <img class="logo" [routerLink]="['/']"src="/assets/images/icon.svg"/>
 
     <div>
       <div>Already have an account? <a color="primary" [routerLink]="['/sign-in']">
@@ -144,8 +143,8 @@
     <mat-divider mat-inset></mat-divider>
   </div>
   <mat-card-footer>
-    GoFundMe's fee is 5% from each donation you receive. The payment processor
-    fee is 2.9% + $0.30 per donation. By continuing, you agree to the GoFundMe
+    Legas's fee is 5% from each donation you receive. The payment processor
+    fee is 2.9% + $0.30 per donation. By continuing, you agree to the Legas
     <a link routerLink="/terms" routerLinkActive="router-link-active" color="accent">
       terms</a>
     and acknowledge receipt of our

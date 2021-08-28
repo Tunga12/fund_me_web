@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.css'],
 })
-export class PersonalInfoComponent implements OnInit {
+export class PersonalInfoComponent implements OnInit,OnDestroy {
   form!: FormGroup;
   // validate the existance of whitesaces in our input
   whiteSpaceValidator = new WhiteSpaceValidatorDirective();
@@ -24,7 +24,7 @@ export class PersonalInfoComponent implements OnInit {
   // loading and error message
   loading=false;
   errorMessage='';
-
+  
   // subscrriptions
   activatedRouteSub?: Subscription;
   withdrawalSub?: Subscription;
@@ -38,7 +38,7 @@ export class PersonalInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageTitle.setTitle('GoFundMe | Add Beneficiary');
+    this.pageTitle.setTitle('Legas | Add Beneficiary');
     // get the id of the fundraiser
     this.activatedRouteSub = this.activatedRoute.paramMap.subscribe((params) => {
       this.fundId = params.get('id') || '';
@@ -84,8 +84,8 @@ export class PersonalInfoComponent implements OnInit {
           this.fundraiser = fund;
         this.loading=false;
         // if this fundraiser has a withdrawal info linked, show it
-          if (this.fundraiser.withdraw?.id) {
-            this.form.patchValue(this.fundraiser.withdraw?.id);
+          if (this.fundraiser.withdraw) {
+            this.form.patchValue(this.fundraiser.withdraw);
           }
         },
         (error: HttpErrorResponse) => {

@@ -28,7 +28,7 @@
       legal information as it appears on your government issued ID or passport.
     </p>
     <p>
-      As a reminder, GoFundMe is required to collect this information in order
+      As a reminder, Legas is required to collect this information in order
       to process withdrawals to your account. It will only be used to verify
       your identity. If we cannot verify your identity with the information,
       there is a chance that you will be required to supply documentation. To
@@ -39,11 +39,11 @@
       If you would like someone else to withdraw funds, please add them as a
       beneficiary.
     </p>
-    <p><strong>First name:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.firstName | titlecase }}</p>
-    <p><strong>Last name:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.lastName | titlecase }}</p>
-    <p><strong>Email:</strong> {{ fundraiser?.withdraw?.id?.beneficiary?.email | titlecase }}</p>
-    <p><strong>Bank name:</strong> {{ fundraiser?.withdraw?.id?.bankName | titlecase }}</p>
-    <p><strong>Bank account number:</strong> {{ fundraiser?.withdraw?.id?.bankAccountNo | titlecase }}</p>
+    <p><strong>First name:</strong> {{ fundraiser?.organizer?.firstName | titlecase }}</p>
+    <p><strong>Last name:</strong> {{ fundraiser?.organizer?.lastName | titlecase }}</p>
+    <p><strong>Email:</strong> {{ fundraiser?.organizer?.email | titlecase }}</p>
+    <p><strong>Bank name:</strong> {{ fundraiser?.withdraw?.bankName | titlecase }}</p>
+    <p><strong>Bank account number:</strong> {{ fundraiser?.withdraw?.bankAccountNo | titlecase }}</p>
 
     <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
 

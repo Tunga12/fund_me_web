@@ -18,9 +18,13 @@ export class HelpFormComponent implements OnInit {
   editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
-    ['underline', 'strike'],
+    ['underline'],
     ['bullet_list'],
     ['text_color'],
+    ['image'],
+    ['ordered_list'],
+    ['link'],
+    ['background_color']
   ];
 
   constructor(

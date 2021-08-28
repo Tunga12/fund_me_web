@@ -63,7 +63,7 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.title.setTitle('Donate');
     this.form = this.formBuilder.group({
       amount: [10, [Validators.required, Validators.min(5)]],
-      tip: [10, [Validators.required, Validators.min(10)]],
+      tip: [15, [Validators.required, Validators.min(15)]],
       // anonymous: [],
       comment: [
         '', //[Validators.required, Validators.minLength(5)]

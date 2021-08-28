@@ -1,71 +1,142 @@
-<mat-toolbar [classList]="'bg-white'" fxLayout="row wrap" fxLayoutAlign="space-between center">
+<mat-toolbar [classList]="'bg-white'">
+  <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div fxFlexOrder.lt-sm="1">
+      <!-- search field -->
+      <input
+        class="search"
+        matInput
+        #key
+        type="search"
+        placeholder="Search fundraisers"
+        (keyup.enter)="search(key.value)"
+      />
+    </div>
+    <!-- LOGO -->
+    <img
+      fxFlexOrder.lt-sm="0"
+      routerLink="/"
+      src="/assets/images/icon.svg"
+      class="logo"
+    />
+    <div>
+      <a
+        fxHide.lt-sm
+        mat-button
+        *ngIf="!authService.isLoggedIn()"
+        [routerLink]="['/sign-in']"
+      >
+        Sign in
+      </a>
+      <a
+        fxHide.lt-sm
+        *ngIf="!authService.isLoggedIn()"
+        mat-stroked-button
+        color="primary"
+        [routerLink]="['/create']"
+      >
+        Start a Legas
+      </a>
 
+      <a
+        fxHide.lt-md
+        *ngIf="authService.isLoggedIn()"
+        mat-button
+        [routerLink]="['/my-fundraisers/organizer']"
+        class="nav-link mat-button"
+      >
+        Your fundraisers
+      </a>
 
-  <div>
-    <!-- search field -->
-    <input class="search" matInput #key type="search" placeholder="Search fundraisers"
-      (keyup.enter)="search(key.value)" />
-  </div>
+      <!-- USER account MENU -->
+      <a
+        *ngIf="authService.isLoggedIn() && currentUser"
+        fxHide.lt-md
+        mat-button
+        [matMenuTriggerFor]="account"
+        (onMenuClose)="accountCaret = !accountCaret"
+        (onMenuOpen)="accountCaret = !accountCaret"
+        class="nav-link mat-button"
+      >
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="3px"
+        >
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+            <div class="avatar-contain">
+              {{ currentUser?.firstName?.charAt(0) | titlecase }}
+              {{ currentUser?.lastName?.charAt(0) | titlecase }}
+            </div>
+            <span>
+              {{ currentUser?.firstName }}
+            </span>
+          </div>
+          <mat-icon>{{
+            accountCaret ? "expand_more" : "expand_less"
+          }}</mat-icon>
+        </div>
+      </a>
+      <mat-menu #account="matMenu">
+        <a mat-menu-item routerLink="/notification" class="mat-menu-item">
+          Notifications
+        </a>
+        <a
+          fxHide.gt-sm
+          *ngIf="authService.isLoggedIn()"
+          mat-button
+          [routerLink]="['/my-fundraisers/organizer']"
+          class="nav-link mat-button"
+        >
+          Your fundraisers
+        </a>
+        <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
+          Donations you've made
+        </a>
+        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+          Account settings
+        </a>
+        <a mat-menu-item routerLink="/help" class="mat-menu-item"> Helps </a>
+        <a mat-menu-item routerLink="/create" class="mat-menu-item">
+          Start a new fundraiser
+        </a>
 
-  <!-- LOGO -->
-  <!-- <img [routerLink]="['/']"  routerLinkActive="router-link-active" src="/assets/images/icon.svg"/> -->
-  <!-- <mat-icon svgIcon="/assets/images/icon.svg"></mat-icon> -->
-  <!-- <mat-icon svgIcon="assets:/assets/images/icon.svg"></mat-icon> -->
-  <div>
+        <mat-divider></mat-divider>
+        <a
+          mat-menu-item
+          fxLayoutAlign="center"
+          routerLink="/sign-in"
+          (click)="authService.logOut()"
+          >Sign out</a
+        >
+      </mat-menu>
+
+      <button
+        *ngIf="authService.isLoggedIn()"
+        [matMenuTriggerFor]="account"
+        mat-icon-button
+        fxShow="true"
+        fxHide.gt-sm
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    fxHide.gt-xs
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="20px"
+  >
     <a mat-button *ngIf="!authService.isLoggedIn()" [routerLink]="['/sign-in']">
       Sign in
     </a>
-    <a *ngIf="!authService.isLoggedIn()" mat-stroked-button color="primary" [routerLink]="['/create']">
-      Start a GoFundMe
+    <a
+      *ngIf="!authService.isLoggedIn()"
+      mat-stroked-button
+      color="primary"
+      [routerLink]="['/create']"
+    >
+      Start a Legas
     </a>
-
-    <a fxHide.lt-md *ngIf="authService.isLoggedIn()" mat-button [routerLink]="['/my-fundraisers/organizer']"
-      class="nav-link mat-button">
-      Your fundraisers
-    </a>
-
-
-    <!-- USER account MENU -->
-    <a *ngIf="authService.isLoggedIn() && currentUser" fxHide.lt-md mat-button [matMenuTriggerFor]="account"
-      (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"
-      class="nav-link mat-button">
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
-          <div class="avatar-contain">
-            {{ currentUser?.firstName?.charAt(0) | titlecase }}
-            {{ currentUser?.lastName?.charAt(0) | titlecase }}
-          </div>
-          <span>
-            {{ currentUser?.firstName }}
-          </span>
-        </div>
-        <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
-      </div>
-    </a>
-    <mat-menu #account="matMenu">
-      <a mat-menu-item routerLink="/notification" class="mat-menu-item">
-        Notifications
-      </a>
-      <a fxHide.gt-sm *ngIf="authService.isLoggedIn()" mat-button [routerLink]="['/my-fundraisers/organizer']"
-        class="nav-link mat-button">
-        Your fundraisers
-      </a>
-      <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
-        Donations you've made
-      </a>
-      <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
-        Account settings
-      </a>
-      <a mat-menu-item routerLink="/create" class="mat-menu-item">
-        Start a new fundraiser
-      </a>
-
-      <mat-divider></mat-divider>
-      <a mat-menu-item fxLayoutAlign="center" routerLink="/sign-in" (click)="authService.logOut()">Sign out</a>
-    </mat-menu>
-
-    <button *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="account" mat-icon-button fxShow="true" fxHide.gt-sm>
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
+  </mat-toolbar-row>
 </mat-toolbar>

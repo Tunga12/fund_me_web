@@ -28,6 +28,7 @@
     height: 100px;
   }
   
-  mat-grid-list{
-    margin-top: 20px;
-  }
+
+ div{
+   width: 100%;
+ }

@@ -1,4 +1,3 @@
-import { User } from "./user.model";
 
 export interface Withdrawal {
     status?: string,
@@ -7,6 +6,5 @@ export interface Withdrawal {
     bankName: string,
     bankAccountNo: string,
     isOrganizer?: boolean,
-    beneficiary?: User,
     date?: string,
 }

@@ -53,7 +53,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.loading = false;
-          this.router.navigate(['/my-fundraiser/withdrawals', this.fundId]);
+          this.router.navigate(['/my-fundraiser/withdrawals', this.fundId,'overview']);
           this.snackBar.open("Invitation suuccessful", 'close', this.snackbarServ.getConfig())
         },
         (error: HttpErrorResponse) => {
@@ -63,6 +63,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
         }
       );
   }
+  
   ngOnDestroy(): void {
     this.beneficiarySub?.unsubscribe();
     this.activatedRouteSub?.unsubscribe();

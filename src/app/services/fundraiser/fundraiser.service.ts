@@ -49,6 +49,12 @@ export class FundraiserService {
       `${environment.BASE_URL}/api/fundraisers/${fudriserId}`
     );
   }
+  //get a single fundraiser by id
+  getFundraiserAsync(fudriserId: string){
+    return this.http.get<Fundraiser>(
+      `${environment.BASE_URL}/api/fundraisers/${fudriserId}`
+    ).toPromise();
+  }
 
   // get fundraisers of current user
   getMyFundraisers(): Observable<FundraiserPage> {

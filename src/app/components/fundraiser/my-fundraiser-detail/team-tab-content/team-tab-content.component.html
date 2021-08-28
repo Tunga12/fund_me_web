@@ -29,7 +29,7 @@
         <div fxLayout="column">
           <span class="bold">
             {{
-            team.id.userId.firstName + " " + team.id.userId.lastName
+            team?.id?.userId?.firstName + " " + team?.id?.userId?.lastName
             | titlecase
             }}</span>
           <span class="text-small">team member</span>
@@ -48,11 +48,11 @@
   </div>
 
   <mat-divider></mat-divider>
-  <div *ngFor="let team of fundraiser.teams; let index = index" fxLayout="column" fxLayoutAlign="center"
+  <div *ngFor="let team of fundraiser.teams; let last = last" fxLayout="column" fxLayoutAlign="center"
     style="margin: 10px auto">
     <div *ngIf="team.status === 'pending'" fxLayout="row" fxLayoutAlign="space-between center">
       <p>
-        {{ team.id.userId.email }}
+        {{ team?.id?.userId?.email }}
       </p>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
         <!-- <a href=""> Resend request</a> -->
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div>
-      <mat-divider></mat-divider>
+      <mat-divider *ngIf="!last"></mat-divider>
     </div>
   </div>
 </div>

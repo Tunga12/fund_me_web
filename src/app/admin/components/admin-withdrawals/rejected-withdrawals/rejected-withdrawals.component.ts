@@ -15,7 +15,9 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
   styleUrls: ['./rejected-withdrawals.component.css']
 })
 export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
-  displayedColumns = ['firstName', 'lastName', 'email', 'bankName', 'bankAccountNo', 'date']
+  displayedColumns = [
+    // 'firstName', 'lastName', 'email',
+     'bankName', 'bankAccountNo', 'date']
 
   rejectedWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;

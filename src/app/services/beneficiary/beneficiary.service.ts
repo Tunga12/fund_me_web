@@ -16,7 +16,7 @@ export class BeneficiaryService {
     return this.http.post(`${environment.BASE_URL}/api/withdrawal/beneficiary/invitation/${fundraiserId}`,
       beneficiary
 ,
-      // { responseType:'text'}
+      { responseType:'text'}
     );
   }
 }

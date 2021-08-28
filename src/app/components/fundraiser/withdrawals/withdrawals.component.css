@@ -1,5 +1,8 @@
-.container{
-margin: 0px auto;
-width: 80%;
+.container {
+  width: 80%;
+  margin: 10px auto;
+}
 
+div{
+    width: 100%;
 }

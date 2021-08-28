@@ -212,8 +212,10 @@ div.avatar-contain {
   margin: 100px auto;
 }
 
-.logo{
+.logo {
   cursor: pointer;
+  width: 100px;
+  height: 70px;
 }
 
 .search {

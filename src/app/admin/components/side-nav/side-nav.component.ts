@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -9,15 +10,22 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
-export class SideNavComponent implements OnDestroy {
+export class SideNavComponent implements OnInit, OnDestroy {
+  mobileQuery:MediaQueryList;
+  private _mobileQueryListener:()=>void;
   accountCaret=true;
   currentUser?: User; //currently loggedd in user
   currentUserSub?: Subscription;
 
   constructor(
     private userService: UserService,
-    public authService: AuthService
-  ) {}
+    public authService: AuthService,
+    changeDetectorRef: ChangeDetectorRef,
+     media: MediaMatcher) {
+      this.mobileQuery = media.matchMedia('(max-width: 600px)');
+      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+      this.mobileQuery.addListener(this._mobileQueryListener);
+    }
 
   ngOnInit(): void {
       this.getCurrentUser();

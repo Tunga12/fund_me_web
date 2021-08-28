@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxEditorModule } from 'ngx-editor';
 import { TimeagoModule } from 'ngx-timeago';
@@ -59,8 +60,10 @@ const ROUTES: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     NgxEditorModule,
+    MatExpansionModule,
   ],
   exports: [
+    MatExpansionModule,
     FlexLayoutModule,
     StoryTextAreaComponent,
     PublicFundListComponent,

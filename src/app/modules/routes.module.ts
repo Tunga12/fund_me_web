@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AccountSettingComponent } from '../components/account-setting/account-setting.component';
@@ -15,6 +15,7 @@ import { MyFundraisersComponent } from '../components/fundraiser/my-fundraisers/
 import { OrganizerComponent } from '../components/fundraiser/my-fundraisers/organizer/organizer.component';
 import { TeamMemberComponent } from '../components/fundraiser/my-fundraisers/team-member/team-member.component';
 import { WithdrawalsComponent } from '../components/fundraiser/withdrawals/withdrawals.component';
+import { HelpComponent } from '../components/help/help.component';
 import { HomePageComponent } from '../components/home-page/home-page.component';
 import { NotificationComponent } from '../components/notification/notification.component';
 import { SearchComponent } from '../components/search/search.component';
@@ -55,7 +56,9 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditUiComponent,
-    canActivate: [AuthGuard, EditGuard],
+    canActivate: [AuthGuard, 
+      // EditGuard
+    ],
   },
   {
     path: 'share',
@@ -89,14 +92,18 @@ const routes: Routes = [
   {
     path: 'withdrawal/:id',
     component: WithdrwalComponent,
-    canActivate: [AuthGuard, WithdrawGuard],
+    canActivate: [AuthGuard,
+      //  WithdrawGuard
+      ],
   },
 
 
   {
     path: 'my-fundraiser/withdrawals/:id/:tab',
     component: WithdrawalsComponent,
-    canActivate: [AuthGuard, WithdrawGuard],
+    canActivate: [AuthGuard, 
+      // WithdrawGuard
+    ],
   },
 
   {
@@ -132,6 +139,10 @@ const routes: Routes = [
     ]
   },
   {
+    path:'help',
+    component:HelpComponent,
+  },
+  {
     path: 'account-setting',
     component: AccountSettingComponent,
     canActivate: [AuthGuard],
@@ -143,7 +154,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(routes),
-  ],
+],
   exports: [RouterModule],
 })
 export class AppRoutesModule { }

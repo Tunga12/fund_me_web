@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DonorsTabConntentComponent } from './donors-tab-conntent.component';
+import { HelpComponent } from './help.component';
 
-describe('DonorsTabConntentComponent', () => {
-  let component: DonorsTabConntentComponent;
-  let fixture: ComponentFixture<DonorsTabConntentComponent>;
+describe('HelpComponent', () => {
+  let component: HelpComponent;
+  let fixture: ComponentFixture<HelpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DonorsTabConntentComponent ]
+      declarations: [ HelpComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DonorsTabConntentComponent);
+    fixture = TestBed.createComponent(HelpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

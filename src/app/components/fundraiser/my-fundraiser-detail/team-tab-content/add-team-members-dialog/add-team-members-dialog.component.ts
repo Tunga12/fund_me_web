@@ -1,5 +1,9 @@
 import { Component, Inject, Input, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { ImportContactsDialogComponent } from '../../../../teams/import-contacts-dialog/import-contacts-dialog.component';
 import {
   FormGroup,
@@ -13,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { TeamMember } from './../../../../../models/team-memeber.model';
 
 @Component({
   selector: 'app-add-team-members-dialog',
@@ -33,7 +38,8 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
     // private fundraiserServ: FundraiserService,
     private snackbarService: SnackbarService,
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) private data: any
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<AddTeamMembersDialogComponent>
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [
@@ -54,23 +60,22 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   }
 
   addEmail() {
+    // let member:TeamMember
     this.loading = true;
     let email = this.form.value['email'];
     console.log(email);
     this.teamSub = this.teamSevice
       .addMember({ email: email }, this.fundraiser._id!)
       .subscribe(
-        (team) => {
+         () => {
           this.loading = false;
-          this.fundraiser?.teams?.push(team);
-          // this.getFundriser();
-          this.dialog.closeAll();
-          console.log(team);
           this.snackBar.open(
             'Invaitation successful',
             'close',
             this.snackbarService.getConfig()
           );
+          // this.dialog.closeAll();
+          this.dialogRef.close(true);
         },
         (error) => {
           this.loading = false;
@@ -81,9 +86,9 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   }
 
   // // get fundriser using id
-  // getFundriser() {
+  // async getFundriser() {
   //   this.loading = true;
-  //   this.fundraiserServ.getFundraiser(this.fundraiser?._id!).subscribe(
+  //   await this.fundraiserServ.getFundraiserAsync(this.fundraiser?._id!).then(
   //     (fundraiser) => {
   //       this.fundraiser = fundraiser;
   //       this.loading = false;

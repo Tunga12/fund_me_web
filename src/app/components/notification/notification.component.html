@@ -16,7 +16,7 @@
     </h2>
     <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
 
-    <h3 *ngIf="notifications.length===0 && !loading ">
+    <h3 *ngIf="notifications?.length===0 && !loading ">
       You have no notifications.
     </h3>
 
@@ -40,7 +40,7 @@
     >
       <h3 class="time">{{ notification.date | timeago }}</h3>
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-        <img matCardAvatar src="/assets/images/me.jpg" alt="" />
+        <img matCardAvatar src="/assets/images/logo.png" alt="" />
         <div>
           <h2 class="bold">{{ notification.title }}</h2>
           <p>

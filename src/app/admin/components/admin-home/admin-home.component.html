@@ -1,6 +1,6 @@
 <!-- <input  class="search" matInput #key type="text" placeholder="Search fundraisers" /> -->
 <form [formGroup]="form" (ngSubmit)="searchFundraisers()">
-    <mat-form-field fxFlex="70" appearance="outline">
+    <mat-form-field fxFlex="70" appearance="outline" fxFlex.lt-md="90">
         <input matInput formControlName="title" type="text" required placeholder="search fundraisers">
         <span matPrefix>
             <mat-icon class="mat-18">search</mat-icon>

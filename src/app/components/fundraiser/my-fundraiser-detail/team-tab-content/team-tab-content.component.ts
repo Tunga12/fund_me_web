@@ -20,13 +20,16 @@ export class TeamTabContentComponent implements OnInit {
 
   @Input() fundraiser!: Fundraiser;
   teamSub?: Subscription;
+  errorMessage='';
+  loading: boolean=false;
   constructor(
     private dialog: MatDialog,
     private fundraiserService: FundraiserService,
     private teamService: TeamService,
     private docTitle: Title,
     private snackBar: MatSnackBar,
-    private snackbarServ: SnackbarService
+    private snackbarServ: SnackbarService,
+    private fundraiserServ: FundraiserService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +44,33 @@ export class TeamTabContentComponent implements OnInit {
     return this.fundraiserService.hasPendingTeamMembers(this.fundraiser!);
   }
   openAddTeamMembersDialog() {
-    this.dialog.open(AddTeamMembersDialogComponent, { data: this.fundraiser });
+    this.dialog.open(AddTeamMembersDialogComponent, { data: this.fundraiser })
+    .afterClosed().subscribe(
+      async result=>{
+        if (result) {
+          await this.getFundriser();
+        }
+      }
+    );
+  }
+
+  // get fundriser using id
+  async getFundriser() {
+    this.loading = true;
+    await this.fundraiserServ.getFundraiserAsync(this.fundraiser?._id!).then(
+      (fundraiser) => {
+        this.fundraiser = fundraiser;
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        console.log(error.status);
+        this.loading = false;
+        this.errorMessage = navigator.onLine
+          ? error.error
+          : 'You are offline, please check your internet connection!';
+      }
+    );
   }
 
   deleteInvitation(team: TeamMember) {
@@ -50,14 +79,13 @@ export class TeamTabContentComponent implements OnInit {
     this.teamSub = this.teamService.deleteMember(team).subscribe(
       () => {
         this.snackBar.open(
-          'Team deleted',
+          'Team member deleted',
           'close',
           this.snackbarServ.getConfig()
         );
       },
       (err) => {
         console.log(err.error);
-        
         this.fundraiser.teams?.push(team);
         this.snackBar.open(
           'Unable to delete',

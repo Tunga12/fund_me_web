@@ -51,8 +51,8 @@ export class WithdrawalsComponent implements OnInit, OnDestroy {
         this.fundraiser = fundraiser;
         this.loading = false;
         console.log(fundraiser);
-
       },
+      
       (error) => {
         console.log(error);
         console.log(error.status);

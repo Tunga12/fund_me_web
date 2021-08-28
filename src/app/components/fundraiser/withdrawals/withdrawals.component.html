@@ -1,13 +1,21 @@
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-  <nav class="container">
-    <nav-bar></nav-bar>
-  </nav>
-  <div class="container">
-    <button mat-button>
-      <mat-icon class="mat-18">ios_arrow_back</mat-icon><span fxHide.xs>Back</span>
-    </button>
-    <h1 class="bold">Withdrawals </h1>
-    <p>fundraiser title </p>
+<nav class="mat-elevation-z1">
+  <nav-bar></nav-bar>
+</nav>
+
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="container" >
+  <p class="text-error"> {{ errorMessage }}</p>
+  <button mat-button [routerLink]="['/my-fundraiser-detail',fundraiser?._id]" routerLinkActive="router-link-active" >
+    <mat-icon class="mat-18">arrow_back_ios</mat-icon><span fxHide.xs>Back</span>
+  </button>
+
+  <div *ngIf="loading"  fxFlexAlign="center">
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    </mat-progress-spinner>
+  </div>
+  
+  <div *ngIf="!loading && fundraiser" fxLayout="column">
+    <strong class="bold">Withdrawals </strong>
+    <span>{{fundraiser.title}}</span>
     <nav mat-tab-nav-bar>
       <a matTabLink [routerLink]="['/my-fundraiser/withdrawals',fundraiser?._id,'overview']"
         routerLinkActive="router-link-active" [active]="tab==='overview'">

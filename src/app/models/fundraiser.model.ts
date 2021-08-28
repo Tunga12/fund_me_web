@@ -26,8 +26,6 @@ export interface Fundraiser {
   totalShareCount?: number;
   likeCount?: number;
   // link: string;
-  withdraw?:{
-    id:Withdrawal,
-    beneficiary:string
-  }
+  withdraw?:Withdrawal,
+ 
 }

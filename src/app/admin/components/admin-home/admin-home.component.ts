@@ -32,7 +32,7 @@ export class AdminHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.docTitle.setTitle('GoFundMe | Admin home');
+    this.docTitle.setTitle('Legas | Admin home');
     this.form = this.fb.group(
       {
         title: ''

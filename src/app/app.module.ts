@@ -42,7 +42,7 @@ import {
 } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-conntent/donations-tab-conntent.component';
 import {
   DonorsTabConntentComponent,
-} from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donors-tab-conntent.component';
+} from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donors-tab-content.component';
 import {
   InvitedContactsTabContentComponent,
 } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/invited-contacts-tab-content/invited-contacts-tab-content.component';
@@ -93,6 +93,7 @@ import { HttpErrorsInterceptor } from './interceptors/http-errors.interceptor';
 import { HttpHeaderInterceptor } from './interceptors/http-headers.interceptor';
 import { MyMaterialModule } from './modules/material.module';
 import { SharedModule } from './shared/shared.module';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { SharedModule } from './shared/shared.module';
     WithdrawalsHistoryComponent,
     SuccessPageComponent,
     ConfirmPageComponent,
+    HelpComponent,
   ],
   entryComponents: [],
   imports: [

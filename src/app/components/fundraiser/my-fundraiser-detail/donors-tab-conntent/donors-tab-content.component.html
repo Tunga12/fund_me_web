@@ -1,0 +1,41 @@
+<div class="tab-content">
+  <!-- <div fxLayout="column">
+    <h1 class="bold">Donor statistics here</h1>
+    <div>
+      <div class="round-percent-chart">
+        <svg viewBox="0 0 36 36" class="circular-chart green">
+          <path
+            class="percent-chart-bg"
+            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+          ></path>
+          <path
+            class="percent-chart-circle"
+            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+            style="stroke-dasharray: 10, 100"
+          ></path>
+        </svg>
+        <div class="percent-chart-text absolute-center">
+          <span
+            ><div class="percent-chart-progress">20</div>
+            <div class="percent-chart-goal light-gray">/ 20</div></span
+          >
+        </div>
+      </div>
+    </div> 
+  </div>-->
+
+  <!-- <mat-tab-group mat-align-tabs="start" [disableRipple]="false">
+    <mat-tab
+      label="{{ index === 0 ? 'Donations' : 'Invited contacts' }}"
+      draggable="true"
+      *ngFor="let tab of [0, 1]; let index = index"
+    >
+      <div *ngIf="index === 0"> -->
+  <donations-tab-conntent [fundraiser]="fundraiser"></donations-tab-conntent>
+</div>
+<!--       
+      <div class="tab-content" *ngIf="index === 1">
+        <invited-contacts-tab-content></invited-contacts-tab-content>
+      </div>
+    </mat-tab>
+  </mat-tab-group> -->

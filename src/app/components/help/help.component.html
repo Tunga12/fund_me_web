@@ -1,0 +1,100 @@
+<nav class="mat-elevation-z1">
+  <nav-bar></nav-bar>
+</nav>
+<div
+style="margin: 30px auto"
+>
+  <div>
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+      fxLayoutGap="10px"
+      fxFlex.gt-xs="80"
+    >
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="10px"
+        class="card"
+      >
+        <img src="assets/images/get-started.svg" alt=""/>
+        <h3 class="color-gray">Getting started</h3>
+        <p class="color-gray">
+          Welcome! Learn how to get started on your fundraising journey here.
+        </p>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="5px"
+        class="card"
+      >
+        <img src="assets/images/account-mgmt.svg" alt="" width="100px" />
+        <h3 class="color-gray">Account management</h3>
+        <p class="color-gray">
+          Everything you need to run your campaign and make changes to your
+          account.
+        </p>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="10px"
+      >
+        <img src="assets/images/money-mgmt.svg" alt="" width="100px" />
+        <h3 class="color-gray">Money management</h3>
+        <p class="color-gray">
+          How to withdraw or refund money raised for individuals, organizations,
+          and charities. .
+        </p>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="10px"
+      >
+        <img src="assets/images/donor.svg" alt="" width="100px" />
+        <h3 class="color-gray">Donor questions</h3>
+        <p class="color-gray">
+          Helpful information before and after making a donation.
+        </p>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="10px"
+      >
+        <img src="assets/images/common-issues.svg" alt="" width="100px" />
+        <h3 class="color-gray">Common issues</h3>
+        <p class="color-gray">Solutions and troubleshooting tips.</p>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlex="30"
+        fxLayoutGap="10px"
+      >
+        <img src="assets/images/security.svg" alt="" width="100px" />
+        <h3 class="color-gray">Safety & security</h3>
+        <p class="color-gray">
+          Learn about the Legas Guarantee and why we are the safest place to
+          give online..
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-expansion-panel [hideToggle]="false" *ngFor="let help of helps" style="width: 80%;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ help.title }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description [innerHtml]="help.content"></mat-panel-description>
+    </mat-expansion-panel>
+  </div>
+</div>

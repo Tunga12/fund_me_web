@@ -4,3 +4,8 @@ mat-icon.mat-icon{
 .container{
     margin-top: 10px;
 }
+
+fa-icon{
+    margin-right: 10px !important;
+    color: rgb(9, 168, 102);
+}

@@ -1,0 +1,94 @@
+.gray-container {
+  background-color: rgb(231, 230, 230);
+}
+.round-percent-chart {
+  position: relative;
+  text-align: center;
+  width: 6.25rem;
+}
+
+.percent-chart-bg {
+  fill: none;
+  stroke: rgb(226, 224, 224);
+  stroke-width: 3;
+}
+
+.percent-chart-circle {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke: green;
+}
+
+.percent-chart-progress {
+  font-size: rem-calc(24);
+  line-height: rem-calc(24);
+}
+
+.percent-chart-goal {
+  font-size: rem-calc(16);
+}
+
+.pg-norma .percent-chart-bg {
+  stroke: #ccf1e0;
+}
+
+.pg-norma .percent-chart-circle {
+  stroke: green;
+}
+.round-percent-chart {
+  position: relative;
+  text-align: center;
+  width: rem-calc(100);
+}
+
+.percent-chart-bg {
+  fill: none;
+  stroke: rgb(226, 224, 224);
+  stroke-width: 3;
+}
+
+.percent-chart-circle {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke: green;
+}
+
+.percent-chart-progress {
+  font-size: rem-calc(24);
+  line-height: rem-calc(24);
+}
+
+
+
+.pg-norma .percent-chart-bg {
+  stroke: #ccf1e0;
+}
+
+.pg-norma .percent-chart-circle {
+  stroke: green;
+}
+
+.percent-chart-goal {
+  font-size: 1rem;
+}
+
+.light-gray {
+  color: #999 !important;
+}
+
+.percent-chart-progress {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.absolute-center,
+.dropzone-link {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

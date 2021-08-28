@@ -24,13 +24,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HelpsComponent } from './components/helps/helps.component';
 import { HelpFormComponent } from './components/help-form/help-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
 
 const routes: Routes =
     [
         {
             path: 'admin',
             component: SideNavComponent,
-            canActivate: [AdminAuthGuard],
+            canActivate: [AdminAuthGuard, AuthGuard],
             children: [
                 { path: '', redirectTo: 'home', pathMatch: 'full' },
                 {
@@ -50,7 +52,13 @@ const routes: Routes =
                         }, {
                             path: 'approved',
                             component: ApprovedWithdrawalsComponent,
+                        },
+                        {
+                            path:'',
+                            redirectTo:'pending',
+                            pathMatch:'full'
                         }
+
                     ]
                 }
 
@@ -92,7 +100,7 @@ const routes: Routes =
         MatTableExporterModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatExpansionModule
+        FontAwesomeModule
     ],
     
     exports: [

@@ -22,7 +22,7 @@ export class EditGuard implements CanActivate {
     if (this.fundraiser.organizer?._id === this.userId) {
       return true;
     }
-    this.router.navigate(['/sign-in']);
+    // this.router.navigate(['/sign-in']);
     return false;
   }
 

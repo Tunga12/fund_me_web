@@ -58,14 +58,8 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
       (withdrawalsPage: WithdrawalsPage) => {
         this.loading = false;
         this.pendingWithdrawals = withdrawalsPage.withdrawals;
-        console.log(this.pendingWithdrawals);
         this.dataSource = new MatTableDataSource<Withdrawal>(this.pendingWithdrawals);
-
-        // this.dataSource.data = this.pendingWithdrawals;
-        console.log(this.dataSource);
-        // this.dataSource.paginator = this.paginator;
         this.cdr.detectChanges();
-
         this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.sort;
       },
@@ -92,29 +86,37 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
   }
 
   // accept withdrawal request
-  acceptWithdrawalRequest(id: string) {
-    this.withdrawalSub = this.withdrawalService.acceptWithdrawalRequest(id).subscribe(
+  acceptWithdrawalRequest(withdrawal:Withdrawal) {
+    
+    let index=this.pendingWithdrawals.indexOf(withdrawal);
+    this.pendingWithdrawals.splice(index,1);
+    this.withdrawalSub = this.withdrawalService.acceptWithdrawalRequest(withdrawal._id!).subscribe(
       () => {
         this.snacckBar.open('Request accepted', 'Close', this.snackbarService.getConfig());
-        this.getPendingWithdrawals();
+
+        // this.getPendingWithdrawals();
       }
       ,
       (error: HttpErrorResponse) => {
+        this.pendingWithdrawals.splice(index,0,withdrawal);
         this.snacckBar.open('Operatin failed', 'Close', this.snackbarService.getConfig());
-        console.log(error.error);
-        
+        console.log(error.error); 
       }
     );
   }
 
 // reject withdrawal request
-rejectWithdrawalRequest(id: string) {
-  this.withdrawalSub = this.withdrawalService.declineWithdrawalRequest(id).subscribe(
-    () => {
-      this.snacckBar.open('Request declined successfuly!', 'Close', this.snackbarService.getConfig());
+rejectWithdrawalRequest(withdrawal: Withdrawal) {
+  let index=this.pendingWithdrawals.indexOf(withdrawal);
+    this.pendingWithdrawals.splice(index,1);
+
+  this.withdrawalSub = this.withdrawalService.declineWithdrawalRequest(withdrawal._id!).subscribe(
+    () => {      
+        this.snacckBar.open('Request declined successfuly!', 'Close', this.snackbarService.getConfig());
     }
     ,
     (error: HttpErrorResponse) => {
+      this.pendingWithdrawals.splice(index,0,withdrawal);
       this.snacckBar.open('Operation failed', 'Close', this.snackbarService.getConfig());
       console.log(error.error);
     }

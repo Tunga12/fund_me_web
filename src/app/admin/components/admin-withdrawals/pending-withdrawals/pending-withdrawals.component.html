@@ -47,7 +47,7 @@
         <ng-container matColumnDef="accept">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="acceptWithdrawalRequest(element._id)">
+                <button mat-icon-button color="primary" (click)="acceptWithdrawalRequest(element)">
                     <mat-icon class="mat-18">check </mat-icon>
                 </button> Accept
             </mat-cell>
@@ -56,7 +56,7 @@
         <ng-container matColumnDef="decline">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="warn" (click)="rejectWithdrawalRequest(element._id)">
+                <button mat-icon-button color="warn" (click)="rejectWithdrawalRequest(element)">
                     <mat-icon class="mat-18">close</mat-icon>
                 </button> Decline
             </mat-cell>

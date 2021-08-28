@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { faCoins, faDonate } from '@fortawesome/free-solid-svg-icons';
 import { Donation } from 'src/app/models/donation.model';
 import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
@@ -8,6 +9,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 
 import { AdminDonationsService } from '../../services/admin-donations/admin-donations.service';
 import { AdminUsersService } from '../../services/admin-users/admin-users.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-statistics',
@@ -15,6 +17,10 @@ import { AdminUsersService } from '../../services/admin-users/admin-users.servic
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
+  coinIcon= faCoins;
+  donateIcon= faDonate;
+
+
   fundraiserPage?: FundraiserPage;
 
   // fundraisers
@@ -29,23 +35,28 @@ export class StatisticsComponent implements OnInit {
   filteredUsers: User[] = [];
   allUsers: User[] = [];
   totalRaised = 0;
-
+  totalTip = 0;
   loading: boolean = false;
   errorMessage: string = '';
   currentPage: number = 0;
+
   dateChosen: Date = new Date('2021-07-29T13:10:10.626Z');
   endDate: Date = new Date();
   constructor(
     private fundraiserService: FundraiserService,
     private usersService: AdminUsersService,
     private adminDonationService: AdminDonationsService
-  ) { }
+   , private title: Title,
+    ) { }
 
   async ngOnInit() {
+    this.title.setTitle('Admin | statistics');
     this.loading = true;
     await this.getAllFundraisers();
     this.getFudraisersByDate(this.dateChosen, this.endDate);
 
+    // console.log(this.allFundraisers);
+    
     await this.getUsers();
     this.getUsersByDate(this.dateChosen, this.endDate);
 
@@ -57,6 +68,7 @@ export class StatisticsComponent implements OnInit {
 
   async dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     this.totalRaised = 0;
+    this.totalTip=0;
     this.loading = true;
     let startDate = new Date(dateRangeStart.value)
     let endDate = new Date(dateRangeEnd.value)
@@ -74,7 +86,7 @@ export class StatisticsComponent implements OnInit {
     } while (this.currentPage < this.fundraiserPage?.totalPages!);
   }
 
-  //get fundrisers of the first page
+  //get fundrisers of a page
   async getFundraisers() {
     this.loading = true;
     await this.fundraiserService
@@ -82,6 +94,8 @@ export class StatisticsComponent implements OnInit {
       .then(
         (fundraiserPage: FundraiserPage) => {
           this.fundraiserPage = fundraiserPage;
+          console.log(fundraiserPage.fundraisers);
+          
           this.allFundraisers = [
             ...this.allFundraisers,
             ...fundraiserPage.fundraisers,
@@ -89,6 +103,7 @@ export class StatisticsComponent implements OnInit {
           this.loading = false;
           this.currentPage++;
         },
+
         (error: HttpErrorResponse) => {
           this.loading = false;
           console.log(error.error);
@@ -99,15 +114,16 @@ export class StatisticsComponent implements OnInit {
 
   // filter fundraisers by date
   async getFudraisersByDate(startDate: Date, endDate: Date) {
-    this.filteredFundraisers = await this.allFundraisers.filter((fund: Fundraiser) => startDate <= new Date(fund.dateCreated!) && new Date(fund.dateCreated!) <= endDate);
+    this.filteredFundraisers = await this.allFundraisers.filter((fund: Fundraiser) => {
+      let creationDate=  new Date(fund.dateCreated!);
+      return startDate <= creationDate && creationDate <= endDate;
+    });
   }
 
   // get #fundraisers 
   getNumberOfFundraisersCreated(): number {
     return this.filteredFundraisers.length;
   }
-
-
 
   // get all users
   async getUsers() {
@@ -121,7 +137,10 @@ export class StatisticsComponent implements OnInit {
 
   // get users by date 
   async getUsersByDate(startDate: Date, endDate: Date) {
-    this.filteredUsers = await this.allUsers.filter(user => (startDate <= new Date(user.date!)) && (new Date(user.date!) <= endDate))
+    this.filteredUsers = await this.allUsers.filter(user => {
+      let signupDate = new Date(user.date!);
+     return (startDate <= signupDate) && (signupDate <= endDate);
+    });
   }
 
   //get all donations
@@ -134,13 +153,19 @@ export class StatisticsComponent implements OnInit {
   //get filtered donations by date
   async getFilteredDonationsByDate(startDate: Date, endDate: Date) {
     this.filteredDonations = await this.allDonations.filter(
-      (donation) => startDate <= new Date(donation.date!) && new Date(donation.date!) <= endDate)
+      (donation) => {
+        let donationDate = new Date(donation.date!);
+        return (startDate <= donationDate && donationDate <= endDate) 
+      });
   }
 
   // get total raised
   async getTotalRaised() {
     await this.filteredDonations.forEach(
-      (donation) => this.totalRaised += donation.amount
+      (donation) => {
+        this.totalRaised += donation.amount;
+        this.totalTip += donation.tip;
+      }
     );
   }
 

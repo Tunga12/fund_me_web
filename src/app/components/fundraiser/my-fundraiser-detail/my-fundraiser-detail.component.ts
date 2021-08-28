@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { ShareArgs } from 'src/app/models/share-buttons-args';
@@ -16,8 +16,8 @@ import { Update } from './../../../models/update.model';
   templateUrl: './my-fundraiser-detail.component.html',
   styleUrls: ['./my-fundraiser-detail.component.css'],
 })
-export class MyFundraiserDetailComponent implements OnInit,OnDestroy {
-  userId=localStorage.getItem('userId');
+export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
+  userId = localStorage.getItem('userId');
   tabs = [1, 2, 3];
   update!: Update;
   percentage: number = 0;
@@ -33,9 +33,10 @@ export class MyFundraiserDetailComponent implements OnInit,OnDestroy {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private fundraiserServ: FundraiserService,
-    private docTitle: Title
+    private docTitle: Title,
+    private router: Router
   ) {}
-  
+
   ngOnInit(): void {
     this.docTitle.setTitle('Manage fundraiser');
     // get the id parameter from router
@@ -52,7 +53,6 @@ export class MyFundraiserDetailComponent implements OnInit,OnDestroy {
         this.loading = false;
         this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(fundraiser);
-        
       },
       (error) => {
         console.log(error);
@@ -62,15 +62,23 @@ export class MyFundraiserDetailComponent implements OnInit,OnDestroy {
           ? error.error
           : 'You are offline, please check your internet connection!';
       }
-      );
+    );
   }
 
-  isOrganizer(){
-    return this.fundraiser.organizer?._id===this.userId;
+  isOrganizer() {
+    return this.fundraiser.organizer?._id === this.userId;
   }
-  
-  isBeneficiary(){
-    return this.fundraiser.withdraw?.beneficiary===this.userId;
+
+  isBeneficiary() {
+    return this.fundraiser?.beneficiary?._id === this.userId;
+  }
+
+  withdrawal(id: string) {
+    {
+      this.fundraiser.withdraw
+        ? this.router.navigate(['/my-fundraiser/withdrawals/', id,'overview'])
+        : this.router.navigate(['/withdrawal', id]);
+    }
   }
 
   //  opendialog for update
@@ -79,23 +87,24 @@ export class MyFundraiserDetailComponent implements OnInit,OnDestroy {
       data: { mode: 'Post', update: this.update, fundraiser: this.fundraiser },
     });
   }
-  
+
   openShareDialog() {
     let data: ShareArgs = {
       url: `http://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
-      description: `Hi, I havae created a fundraiser on gofundme ${this.fundraiser?.beneficiary ? 'to help' + this.fundraiser.beneficiary.firstName : ''} please signup and help me by donating and sharing it to your friends. thanks!`
+      description: `Hi, I havae created a fundraiser on gofundme ${
+        this.fundraiser?.beneficiary
+          ? 'to help' + this.fundraiser.beneficiary.firstName
+          : ''
+      } please signup and help me by donating and sharing it to your friends. thanks!`,
     };
-    this.dialog
-      .open(ShareDialogComponent,
-        {
-          data: data
-        }
-      )
-    }
+    this.dialog.open(ShareDialogComponent, {
+      data: data,
+    });
+  }
 
-    ngOnDestroy(): void {
-this.fundraiserSub?.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.fundraiserSub?.unsubscribe();
+  }
 }

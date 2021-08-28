@@ -54,7 +54,7 @@ export class EditUiComponent implements OnInit, OnDestroy {
       });
   }
 
-  // post edit
+  // fundraiser edit
   editFundraiser() {
     this.fundraiserSub = this.fundraiserServ
       .editFundraiser(this.fundraiser)

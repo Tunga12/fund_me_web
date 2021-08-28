@@ -14,7 +14,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'sign-up',
+  selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('GoFundMe | Sign up');
+    this.docTitle.setTitle('Legas | Sign up');
     // create the form
     this.form = this.formBuilder.group({
       firstName: [
@@ -94,10 +94,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
           localStorage.setItem('x-auth-token', token);
           localStorage.setItem('userId', (result.body as User)._id ?? '');
         }
-        this.loading = false;
 
-        // TODO
-        this.router.navigate(['/home-page']);
+        let redirec_url = localStorage.getItem('redirect-url');
+        localStorage.removeItem('redirect-url');
+        this.loading = false;
+        redirec_url
+          ? this.router.navigateByUrl(redirec_url)
+          : this.router.navigateByUrl('/home-page');
       },
       (error: HttpErrorResponse) => {
         this.errorMessage = error.error;

@@ -4,53 +4,83 @@
 <div>
   <div fxHide.lt-md class="illustration">
     <div fxLayout="column" fxLayoutAlign="start start">
-      <h1 class="bold">Fundraising for the people and</h1>
-      <h1 class="bold">causes you care about</h1>
-      <h1 class="color-gray">Get Started Today.</h1>
+      <h1 class="bold mat-h1">Fundraising for the people and</h1>
+      <h1 class="bold mat-h1">causes you care about</h1>
+      <h1 class="color-gray mat-h1">Get Started Today.</h1>
     </div>
-    
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign="start center"
-      fxLayoutGap="30px">
-      <button ngClass="btn-large" routerLink="/create" mat-raised-button color="primary">
-        Start a GoFundMe
-      </button>
+
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign.xs="center center"
+      fxLayoutAlign="start center"
+      fxLayoutGap="20px"
+    >
+      <a
+        class="btn-large"
+        routerLink="/create"
+        mat-raised-button
+        color="primary"
+      >
+        Start a Legas
+      </a>
       <div fxHide.lt-md>
         <mat-divider [vertical]="true" style="height: 30px"></mat-divider>
       </div>
       <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
         <mat-icon class="mat-18">play_circle_outline</mat-icon>
-        See how GoFundMe works
+        See how Legas works
       </button>
     </div>
   </div>
 
-  <div fxHide.gt-sm fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <div
+    fxHide.gt-sm
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="20px"
+  >
     <div class="full-width">
-      <img class="img-mobile" src="/assets/images/gofundme-homepage-illustration-1920w.png" />
+      <img
+        class="img-mobile"
+        src="/assets/images/gofundme-homepage-illustration-1920w.png"
+      />
     </div>
 
     <div class="mobile-header">
-      <h2 class="bold">
-        Fundraising for the people and causes you care about
-      </h2>
+      <h1 class="bold mat-h1">Fundraising for the people and causes you care about</h1>
     </div>
-    <h1 class="color-gray">Get Started Today.</h1>
-    <a routerLink="/create" mat-raised-button color="primary" fxFlex.lt-sm="60" class="btn-larg">
-      Start a GoFundMe
+    <h1 class="color-gray mat-h1">Get Started Today.</h1>
+    <a
+      routerLink="/create"
+      mat-raised-button
+      color="primary"
+      class="btn-large"
+      [ngStyle.lt-sm]="{'max-width': '60%'}"
+    >
+      Start a Legas
     </a>
     <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
       <mat-icon class="mat-18">play_circle_outline</mat-icon>
-      See how GoFundMe works
+      See how Legas works
     </button>
   </div>
 </div>
-
 <!-- fundraisers list  -->
-<div fxLayout="column" fxLayoutGap="20px" style="width: 80%; margin: 50px auto"
-  [ngStyle.lt-md]="{ width: '96%', margin: '0px auto' }">
-  <h2 class="bold">Top fundraisers</h2>
+<div
+  fxLayout="column"
+  fxLayoutGap="20px"
+  style="width: 80%; margin: 50px auto"
+  [ngStyle.lt-md]="{ width: '96%', margin: '0px auto' }"
+>
+  <h2 class="bold mat-h2">Top fundraisers</h2>
   <div *ngIf="loading">
-    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
+    <mat-progress-spinner
+      mode="indeterminate"
+      [value]="100"
+      color="primary"
+      class="loading-spinner"
+    >
     </mat-progress-spinner>
   </div>
 
@@ -62,10 +92,19 @@
 </div>
 
 <div style="background-color: #fbf8f6; padding: 20px">
-  <div fxLayout="column" style="width: 80%; margin: 30px auto" [ngStyle.lt-md]="{ width: '98%', margin: '30px auto' }">
+  <div
+    fxLayout="column"
+    style="width: 80%; margin: 30px auto"
+    [ngStyle.lt-md]="{ width: '98%', margin: '30px auto' }"
+  >
     <span class="bold trending-topic">TRENDING TOPIC</span>
-    <h2 class="bold">Fundraising for coronavirus relief</h2>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center start" fxLayoutGap="30px">
+    <h2 class="bold mat-h2">Fundraising for coronavirus relief</h2>
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="center start"
+      fxLayoutGap="30px"
+    >
       <img src="/assets/images/step2.jpg" [ngStyle.lt-md]="{ width: '100%' }" />
       <p>
         As COVID-19 continues to spread, more individuals, communities, and
@@ -79,7 +118,12 @@
       </p>
     </div>
 
-    <div fxLayout="center" fxLayout.lt-md="column-reverse" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <div
+      fxLayout="center"
+      fxLayout.lt-md="column-reverse"
+      fxLayoutAlign="start start"
+      fxLayoutGap="30px"
+    >
       <div>
         <p>
           As COVID-19 continues to spread, more individuals, communities, and
@@ -100,22 +144,36 @@
   </div>
 </div>
 
-<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px" style="margin: 100px auto; width: 80%">
-  <h2 class="bold">The leader in online fundraising</h2>
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="30px"
+  style="margin: 100px auto; width: 80%"
+>
+  <h2 class="bold mat-h2">The leader in online fundraising</h2>
   <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="30px">
-    <div *ngFor="let item of [1, 2, 4, 5, 6, 44]" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px"
-      style="margin: 30px">
+    <div
+      *ngFor="let item of [1, 2, 4, 5, 6, 44]"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      style="margin: 30px"
+    >
       <mat-icon color="primary">phone_android</mat-icon>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-        <h3 class="bold">Mobile app</h3>
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px" class="color-gray">
-          <span> The GoFundMe app makes it</span>
+        <h3 class="bold mat-h3">Mobile app</h3>
+        <div
+          fxLayout="column"
+          fxLayoutAlign="start start"
+          fxLayoutGap="0px"
+          class="color-gray"
+        >
+          <span> The Legas app makes it</span>
           <span>simple to launch and manage your</span>
           <span>fundraiser on the go. </span>
         </div>
       </div>
     </div>
   </div>
-  <a routerLink="/create" mat-raised-button color="primary">Start a GoFundMe
-  </a>
+  <a routerLink="/create" mat-raised-button color="primary">Start a Legas </a>
 </div>
