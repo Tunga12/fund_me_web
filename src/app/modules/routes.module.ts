@@ -6,9 +6,7 @@ import { AccountSettingComponent } from '../components/account-setting/account-s
 import { DonateComponent } from '../components/donate/donate.component';
 import { EditUiComponent } from '../components/edit-ui/edit-ui.component';
 import { CreateFundraiserComponent } from '../components/fundraiser/create-fundraiser/create-fundraiser.component';
-import {
-  FudraiserDetailPublicComponent,
-} from '../components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
+import { FundraiserDetailPublicComponent } from '../components/fundraiser/fundraiser-detail-public/fundraiser-detail-public.component';
 import { MyFundraiserDetailComponent } from '../components/fundraiser/my-fundraiser-detail/my-fundraiser-detail.component';
 import { BeneficiaryComponent } from '../components/fundraiser/my-fundraisers/beneficiary/beneficiary.component';
 import { MyFundraisersComponent } from '../components/fundraiser/my-fundraisers/my-fundraisers.component';
@@ -51,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'fundraiser-detail/:id',
-    component: FudraiserDetailPublicComponent,
+    component: FundraiserDetailPublicComponent,
   },
   {
     path: 'edit/:id',

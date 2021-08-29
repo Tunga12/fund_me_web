@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "cypress":"cypress open"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "angular-cli-ghpages": "^1.0.0-rc.2",
+    "g": "^2.0.1",
     "mat-table-exporter": "^10.2.3",
     "ngx-editor": "^10.1.0",
     "ngx-paypal": "^8.0.0",

@@ -23,19 +23,15 @@ import { StoryComponent } from './components/edit-ui/story/story.component';
 import { MyFundListComponent } from './components/fundraiser-list/my-fund-list/my-fund-list.component';
 import { CreateFundraiserComponent } from './components/fundraiser/create-fundraiser/create-fundraiser.component';
 import { SetBasicInfoComponent } from './components/fundraiser/create-fundraiser/set-basic-info/set-basic-info.component';
-import {
-  SetFundraiserGoalComponent,
-} from './components/fundraiser/create-fundraiser/set-fundraiser-goal/set-fundraiser-goal.component';
+
 import {
   SetFundraiserMediaComponent,
 } from './components/fundraiser/create-fundraiser/set-fundraiser-media/set-fundraiser-media.component';
 import {
   SetFundraiserStoryComponent,
 } from './components/fundraiser/create-fundraiser/set-fundraiser-story/set-fundraiser-story.component';
-import { DonationsComponent } from './components/fundraiser/fudraiser-detail-public/donations/donations.component';
-import {
-  FudraiserDetailPublicComponent,
-} from './components/fundraiser/fudraiser-detail-public/fudraiser-detail-public.component';
+import { DonationsComponent } from './components/fundraiser/fundraiser-detail-public/donations/donations.component';
+
 import { BannerComponent } from './components/fundraiser/my-fundraiser-detail/banner/banner.component';
 import {
   DonationsTabConntentComponent,
@@ -94,6 +90,8 @@ import { HttpHeaderInterceptor } from './interceptors/http-headers.interceptor';
 import { MyMaterialModule } from './modules/material.module';
 import { SharedModule } from './shared/shared.module';
 import { HelpComponent } from './components/help/help.component';
+import { StatComponent } from './components/fundraiser/fundraiser-detail-public/stat/stat.component';
+import { FundraiserDetailPublicComponent } from './components/fundraiser/fundraiser-detail-public/fundraiser-detail-public.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +100,6 @@ import { HelpComponent } from './components/help/help.component';
     SetBasicInfoComponent,
     SetFundraiserMediaComponent,
     SetFundraiserStoryComponent,
-    SetFundraiserGoalComponent,
     MyFundraiserDetailComponent,
     HomePageComponent,
     ShareDialogComponent,
@@ -119,7 +116,7 @@ import { HelpComponent } from './components/help/help.component';
     PersonalInfoComponent,
     PersonalInfoSummaryComponent,
     BeneficiaryFormComponent,
-    FudraiserDetailPublicComponent,
+    FundraiserDetailPublicComponent,
     DonateComponent,
     DonationsComponent,
     BannerComponent,
@@ -144,6 +141,7 @@ import { HelpComponent } from './components/help/help.component';
     SuccessPageComponent,
     ConfirmPageComponent,
     HelpComponent,
+    StatComponent,
   ],
   entryComponents: [],
   imports: [

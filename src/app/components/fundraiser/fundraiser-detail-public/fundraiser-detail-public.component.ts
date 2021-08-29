@@ -8,16 +8,16 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { ShareArgs } from 'src/app/models/share-buttons-args';
 
 import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
-import { AuthService } from './../../../services/auth/auth.service';
-import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { FundraiserService } from '../../../services/fundraiser/fundraiser.service';
 import { DonationsComponent } from './donations/donations.component';
 
 @Component({
-  selector: 'app-fudraiser-detail-public',
-  templateUrl: './fudraiser-detail-public.component.html',
-  styleUrls: ['./fudraiser-detail-public.component.css'],
+  selector: 'app-fundraiser-detail-public',
+  templateUrl: './fundraiser-detail-public.component.html',
+  styleUrls: ['./fundraiser-detail-public.component.css'],
 })
-export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
+export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId') || '';
 
   errorMessage = '';
@@ -38,7 +38,7 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
     private docTitle: Title,
     public fundraiserServ: FundraiserService,
     public authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.docTitle.setTitle('fundraiser detail');
@@ -56,19 +56,21 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
   increaseShareCount() {
     this.loading = true;
     this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
-    this.fundSub = this.fundraiserServ.editFundraiser(this.fundraiser!).subscribe(
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+    this.fundSub = this.fundraiserServ
+      .editFundraiser(this.fundraiser!)
+      .subscribe(
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
   }
 
   // get fundriser using id
   getFundriser(fundriserId: string) {
-    let ref;// id for the user who shared this fundraiser
+    let ref; // id for the user who shared this fundraiser
     this.fundSub = this.fundraiserServ.getFundraiser(fundriserId).subscribe(
       (fundraiser) => {
         this.fundraiser = fundraiser;
@@ -80,18 +82,15 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
         console.log(this.fundraiser);
         console.log(
           this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser)
-
         );
 
         // if there is a referer id increase share count
-        this.activatedRoute.queryParams.subscribe(
-          (qParams) => {
-            ref = qParams['ref'] || '';
-            if (ref && ref!==this.userId) {
-              this.increaseShareCount();
-            }
+        this.activatedRoute.queryParams.subscribe((qParams) => {
+          ref = qParams['ref'] || '';
+          if (ref && ref !== this.userId) {
+            this.increaseShareCount();
           }
-        )
+        });
       },
       (error) => {
         this.loading = false;
@@ -146,14 +145,16 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
       url: `http://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
-      description: `Hi, I havae created a fundraiser on gofundme ${this.fundraiser?.beneficiary ? 'to help' + this.fundraiser.beneficiary.firstName : ''} please signup and help me by donating and sharing it to your friends. thanks!`
+      description: `Hi, I havae created a fundraiser on gofundme ${
+        this.fundraiser?.beneficiary
+          ? 'to help' + this.fundraiser.beneficiary.firstName
+          : ''
+      } please signup and help me by donating and sharing it to your friends. thanks!`,
     };
     this.dialog
-      .open(ShareDialogComponent,
-        {
-          data: data
-        }
-      )
+      .open(ShareDialogComponent, {
+        data: data,
+      })
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
@@ -169,7 +170,6 @@ export class FudraiserDetailPublicComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.fundSub?.unsubscribe()
+    this.fundSub?.unsubscribe();
   }
-
 }

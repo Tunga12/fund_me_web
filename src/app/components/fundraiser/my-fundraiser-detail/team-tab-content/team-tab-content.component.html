@@ -47,7 +47,6 @@
     </button>
   </div>
 
-  <mat-divider></mat-divider>
   <div *ngFor="let team of fundraiser.teams; let last = last" fxLayout="column" fxLayoutAlign="center"
     style="margin: 10px auto">
     <div *ngIf="team.status === 'pending'" fxLayout="row" fxLayoutAlign="space-between center">
@@ -67,7 +66,7 @@
       </div>
     </div>
     <div>
-      <mat-divider *ngIf="!last"></mat-divider>
+      <mat-divider></mat-divider>
     </div>
   </div>
 </div>

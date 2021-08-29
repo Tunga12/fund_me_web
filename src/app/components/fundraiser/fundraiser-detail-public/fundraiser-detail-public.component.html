@@ -69,7 +69,7 @@
           [ngStyle]="{ margin: '20px auto' }"
           fxLayoutAlign.xs="start center"
         >
-          <h1 fxHide.lt-sm class="bold">{{ fundraiser?.title }}</h1>
+          <h1 fxHide.lt-md class="bold">{{ fundraiser?.title }}</h1>
           <div fxLayout="row" fxLayoutAlign="space-around start" fxFlex.md="98">
             <div
               fxLayout="column"
@@ -89,41 +89,8 @@
 
               <div fxHide.md fxLayout.xs="column">
                 <h1 class="bold">{{ fundraiser?.title }}</h1>
-                <div
-                  fxLayout="row"
-                  fxLayoutAlign="start center"
-                  fxLayoutGap="2px"
-                  style="margin-bottom: -15px"
-                >
-                  <h2>
-                    <span class="bold"
-                      >{{ fundraiser?.totalRaised | currency }}
-                    </span>
-                    <sub class="text-small color-gray"
-                      >raised of
-                      {{ fundraiser?.goalAmount | currency }}goal</sub
-                    >
-                  </h2>
-                </div>
-                <mat-progress-bar color="primary" value="percentage">
-                </mat-progress-bar>
-                <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-                  <a fxLayout="column" (click)="donations('All')">
-                    <span class="bold"
-                      >{{ fundraiser?.donations?.length }}k</span
-                    >
-                    <mat-hint>donors</mat-hint>
-                  </a>
-
-                  <span fxLayout="column">
-                    <span class="bold">{{ fundraiser?.totalShareCount }}k</span>
-                    <mat-hint>shares</mat-hint>
-                  </span>
-                  <span fxLayout="column">
-                    <span class="bold">{{ fundraiser?.likeCount }}k</span>
-                    <mat-hint>followers</mat-hint>
-                  </span>
-                </div>
+               <app-stat fxHide.gt-sm [fundraiser]="fundraiser!" [ngStyle]="{'width': '100%'}"></app-stat>
+              
                 <div
                   fxLayout="row wrap"
                   fxLayoutAlign="space-between center"
@@ -249,11 +216,13 @@
                     <div>
                       <mat-divider> </mat-divider>
                     </div>
-                    <h3 mat-label class="bold" *ngIf="hasDonated()">
-                      You've donated {{ getMyDonationAmount() | currency }}
-                    </h3>
-                    <div>
-                      <mat-divider> </mat-divider>
+                    <div *ngIf="hasDonated()">
+                      <h3 mat-label class="bold">
+                        You've donated {{ getMyDonationAmount() | currency }}
+                      </h3>
+                      <div>
+                        <mat-divider> </mat-divider>
+                      </div>
                     </div>
                   </div>
                   <div fxLayout="column" fxLayoutGap="10px">
@@ -511,10 +480,11 @@
                   </div>
                   <div
                     fxLayout="row"
-                    fxLayout.xs="column"
+                    fxLayout.lt-sm="column"
                     fxLayoutAlign="space-between start"
                     fxLayoutAlign.xs="space-between center"
                     style="margin: 20px 0px"
+                    fxLayoutGap="20px"
                   >
                     <div
                       fxLayout="row"
@@ -626,49 +596,7 @@
                 fxLayoutAlign="start start"
                 fxLayoutGap="8px"
               >
-                <div>
-                  <div
-                    fxLayout="row"
-                    fxLayoutAlign="start center"
-                    fxLayoutGap="2px"
-                    style="margin-bottom: -15px"
-                  >
-                    <h2>
-                      <span class="bold"
-                        >{{ fundraiser?.totalRaised | currency }}
-                      </span>
-                      <sub class="text-small color-gray"
-                        >raised of
-                        {{ fundraiser?.goalAmount | currency }} goal</sub
-                      >
-                    </h2>
-                  </div>
-                  <mat-progress-bar color="primary" [value]="percentage">
-                  </mat-progress-bar>
-                  <div
-                    fxLayout="row"
-                    fxLayoutGap="30px"
-                    style="margin: 10px 0px"
-                  >
-                    <a fxLayout="column" href="">
-                      <span class="bold">{{
-                        fundraiser?.donations?.length
-                      }}</span>
-                      <mat-hint>donors</mat-hint>
-                    </a>
-
-                    <div fxLayout="column">
-                      <span class="bold">{{
-                        fundraiser?.totalShareCount
-                      }}</span>
-                      <mat-hint>shares</mat-hint>
-                    </div>
-                    <div fxLayout="column">
-                      <span class="bold">{{ fundraiser?.likeCount }}</span>
-                      <mat-hint>followers</mat-hint>
-                    </div>
-                  </div>
-                </div>
+               <app-stat [fundraiser]="fundraiser!" [ngStyle]="{'width': '100%'}"></app-stat>
                 <button
                   mat-raised-button
                   (click)="share()"

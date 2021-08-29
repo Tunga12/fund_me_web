@@ -2,10 +2,11 @@
   <mat-toolbar
     [classList]="'bg-white'"
     fxLayout="row wrap"
-    fxLayoutAlign="space-between center"
+    fxLayoutAlign="space-around center"
   >
     <!-- LOGO -->
     <img [routerLink]="['/']" class="logo" src="/assets/images/icon.svg" />
+    <div fxFLexFill></div>
     <div>
       Don't you have an account?<a color="primary" [routerLink]="['/sign-up']">
         Sign up

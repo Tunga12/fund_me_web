@@ -1,3 +1,6 @@
+<nav class="mat-elevation-z2">
+  <nav-bar></nav-bar>
+</nav >
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"
@@ -10,8 +13,7 @@
 <div *ngIf="!loading">
   <header fxHide.lt-md>
     <div
-      [ngStyle.lt-md]="{ width: '98%' }"
-      [ngStyle.md]="{ width: '80%', margin: '20px auto' }"
+      [ngStyle.gt-sm]="{ width: '80%', margin: '20px auto' }"
     >
       <div class="back-btn">
         <button

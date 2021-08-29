@@ -18,7 +18,7 @@
       src="/assets/images/icon.svg"
       class="logo"
     />
-    <div>
+    <div fxFlexOrder.lt-sm="2">
       <a
         fxHide.lt-sm
         mat-button
@@ -116,26 +116,27 @@
         mat-icon-button
         fxShow="true"
         fxHide.gt-sm
+        fxFlexOrder.lt-sm="2"
       >
         <mat-icon>menu</mat-icon>
       </button>
     </div>
   </mat-toolbar-row>
   <mat-toolbar-row
+    *ngIf="!authService.isLoggedIn()"
     fxHide.gt-xs
     fxLayout="row"
     fxLayoutAlign="end center"
     fxLayoutGap="20px"
   >
     <a
-      *ngIf="!authService.isLoggedIn()"
       mat-raised-button
       color="primary"
       [routerLink]="['/create']"
     >
       Start a Campign
     </a>
-    <a mat-button *ngIf="!authService.isLoggedIn()" [routerLink]="['/sign-in']">
+    <a mat-button  [routerLink]="['/sign-in']">
       Sign in
     </a>
   </mat-toolbar-row>

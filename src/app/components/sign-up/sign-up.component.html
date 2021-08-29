@@ -1,8 +1,9 @@
 <nav class="mat-elevation-z2">
-  <mat-toolbar [classList]="'bg-white'" fxLayout="row wrap" fxLayoutAlign="space-between center">
+  <mat-toolbar [classList]="'bg-white'" fxLayout="row wrap" fxLayoutAlign="space-around center">
     <!-- LOGO -->
     <img class="logo" [routerLink]="['/']"src="/assets/images/icon.svg"/>
 
+      <div fxFlexFill></div>
     <div>
       <div>Already have an account? <a color="primary" [routerLink]="['/sign-in']">
           Sign in

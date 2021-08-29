@@ -1,14 +1,14 @@
+<nav class="mat-elevation-z2">
+  <nav-bar></nav-bar>
+</nav >
 <main fxLayout="column">
-  <nav>
-    <nav-bar></nav-bar>
-  </nav>
 <div
   fxLayout="column"
   fxLayoutAlign="start center"
   style="margin: 30px auto"
-  fxFlex.gt-sm="50"
-  fxFlex.sm="60"
-  fxFlex.lt-sm="90"
+  [ngStyle.gt-sm]="{'width': '50%'}"
+  [ngStyle.sm]="{'width': '60%'}"
+  [ngStyle.lt-sm]="{'width': '90%'}"
 >
   <h2 class="bold">Acount settings</h2>
   <mat-progress-spinner
