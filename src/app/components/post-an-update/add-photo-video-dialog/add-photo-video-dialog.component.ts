@@ -7,10 +7,9 @@ import { AddYoutubeVideoDialogComponent } from './../add-youtube-video-dialog/ad
   templateUrl: './add-photo-video-dialog.component.html',
   styleUrls: ['./add-photo-video-dialog.component.css'],
 })
-export class AddPhotoVideoDialogComponent implements OnInit {
+export class AddPhotoVideoDialogComponent{
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {}
   openYoutubLinkDialog() {
     this.dialog
       .open(AddYoutubeVideoDialogComponent, { data: { id: 1 } })

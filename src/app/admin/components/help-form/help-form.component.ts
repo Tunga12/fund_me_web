@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Editor, Toolbar } from 'ngx-editor';
 import { Help } from 'src/app/models/help.model';
@@ -8,7 +8,7 @@ import { Help } from 'src/app/models/help.model';
   templateUrl: './help-form.component.html',
   styleUrls: ['./help-form.component.css']
 })
-export class HelpFormComponent implements OnInit {
+export class HelpFormComponent implements OnInit,OnDestroy {
   @Output() createHelp = new EventEmitter();
   @Output() editHelp = new EventEmitter();
   @Input() mode: string = 'create';

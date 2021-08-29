@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserPage } from '../../../models/fundraiser-page.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
   templateUrl: './my-fundraisers.component.html',
   styleUrls: ['./my-fundraisers.component.css']
 })
-export class MyFundraisersComponent implements OnInit {
+export class MyFundraisersComponent implements OnInit,OnDestroy {
   tabLinks=['organizer', 'team-member','beneficiary'];
   loading = true;
   myFundraisers: Fundraiser[] = [];

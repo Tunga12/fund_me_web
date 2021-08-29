@@ -11,7 +11,7 @@ import { SnackbarService } from './../../../services/snackbar/snackbar.service';
   templateUrl: './delete-account-dialog.component.html',
   styleUrls: ['./delete-account-dialog.component.css'],
 })
-export class DeleteAccountDialogComponent implements OnInit, OnDestroy {
+export class DeleteAccountDialogComponent implements OnDestroy {
   loading = false;
   errorMessage = '';
   userSub?: Subscription;
@@ -23,7 +23,6 @@ export class DeleteAccountDialogComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService
   ) {}
 
-  ngOnInit(): void {}
 
   // deletes the currently logged in user
   deleteCurrentUser() {

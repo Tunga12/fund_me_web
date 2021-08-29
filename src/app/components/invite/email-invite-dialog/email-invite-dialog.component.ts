@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './email-invite-dialog.component.html',
   styleUrls: ['./email-invite-dialog.component.css'],
 })
-export class EmailInviteDialogComponent implements OnInit {
+export class EmailInviteDialogComponent {
   emails: string[] = [];
   email = '';
   name = '';
@@ -18,8 +18,6 @@ export class EmailInviteDialogComponent implements OnInit {
       name: new FormControl(''),
     });
   }
-
-  ngOnInit(): void {}
 
   addEmail(email: string) {
     let index = this.emails.indexOf(email);

@@ -7,12 +7,11 @@ import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent  {
   show_facebook_banner = true;
   @Output() share= new EventEmitter();
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {}
   toggleBanner() {
     this.show_facebook_banner = !this.show_facebook_banner;
   }

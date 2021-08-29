@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './import-contacts-dialog.component.html',
   styleUrls: ['./import-contacts-dialog.component.css']
 })
-export class ImportContactsDialogComponent implements OnInit {
+export class ImportContactsDialogComponent  {
 email_clients=['Gmail','Yahoo','Outlook']
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+ 
 }

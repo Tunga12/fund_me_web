@@ -8,10 +8,9 @@ import { EmailInviteDialogComponent } from './../../../../invite/email-invite-di
   templateUrl: './invited-contacts-tab-content.component.html',
   styleUrls: ['./invited-contacts-tab-content.component.css'],
 })
-export class InvitedContactsTabContentComponent implements OnInit {
+export class InvitedContactsTabContentComponent  {
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {}
   openEmailInviteDialog() {
     this.dialog
       .open(EmailInviteDialogComponent, { data: { id: 1 } })

@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './add-youtube-video-dialog.component.html',
   styleUrls: ['./add-youtube-video-dialog.component.css']
 })
-export class AddYoutubeVideoDialogComponent implements OnInit {
-
+export class AddYoutubeVideoDialogComponent 
+{
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

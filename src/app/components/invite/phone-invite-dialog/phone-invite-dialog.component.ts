@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './phone-invite-dialog.component.html',
   styleUrls: ['./phone-invite-dialog.component.css']
 })
-export class PhoneInviteDialogComponent implements OnInit {
-
+export class PhoneInviteDialogComponent{
   constructor() { }
 
-  ngOnInit(): void {
-  }
 
 }
