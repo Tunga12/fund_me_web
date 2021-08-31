@@ -38,7 +38,7 @@ export class WithdrawGuard implements CanActivate, OnDestroy {
     //     this.fundraiser = fund;
     //   }
     //   )
- // withdraw component should only be activated by organizer or beneficiaryof the campign
+ // withdraw component should only be activated by organizer or beneficiaryof the campaign
  return new Promise(
   (resolve, reject)=>{
  if (

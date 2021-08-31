@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from './../../services/auth/auth.service';
+import { UserService } from './../../services/user/user.service';
+import { User } from './../../models/user.model';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -20,6 +22,7 @@ import { AuthService } from './../../services/auth/auth.service';
 export class SignInComponent implements OnInit, OnDestroy {
   loading = false;
   logInSub?: Subscription;
+  userSub?: Subscription;
   logInMessage?: string;
   hidePassword = true; // to toggle visiblity of password
   form!: FormGroup;
@@ -28,7 +31,8 @@ export class SignInComponent implements OnInit, OnDestroy {
     private authServ: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private docTitle: Title
+    private docTitle: Title,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +56,19 @@ export class SignInComponent implements OnInit, OnDestroy {
         let redirec_url = localStorage.getItem('redirect-url');
         localStorage.removeItem('redirect-url');
         this.loading = false;
-        redirec_url
-          ? this.router.navigateByUrl(redirec_url)
-          : this.router.navigateByUrl('/home-page');
+        let user: User;
+        this.userSub = this.userService.getCurrentUser().subscribe((user) => {
+          user = user;
+          if (user.isAdmin) {
+            redirec_url
+              ? this.router.navigateByUrl(redirec_url)
+              : this.router.navigateByUrl('/admin');
+          } else {
+            redirec_url
+              ? this.router.navigateByUrl(redirec_url)
+              : this.router.navigateByUrl('/home-page');
+          }
+        });
       },
       (error: HttpErrorResponse) => {
         this.loading = false;
@@ -80,5 +94,6 @@ export class SignInComponent implements OnInit, OnDestroy {
   // what to do when the component destroys
   ngOnDestroy(): void {
     this.logInSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 }

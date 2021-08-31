@@ -3,6 +3,12 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "env": {
+    "cypress/globals": true
+  },
+  "plugins": [
+    "cypress"
+  ],
   "overrides": [
     {
       "files": [
@@ -15,10 +21,17 @@
         "createDefaultProgram": true
       },
       "extends": [
+        "plugin:chai-friendly/recommended",
+        "plugin:cypress/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "cypress/no-assigning-return-values": "error",
+        "cypress/no-unnecessary-waiting": "error",
+        "cypress/assertion-before-screenshot": "warn",
+        "cypress/no-force": "warn",
+        "cypress/no-async-tests": "error",
         "@angular-eslint/directive-selector": [
           "error",
           {

@@ -28,7 +28,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('Create campign');
+    this.docTitle.setTitle('Create campaign');
     // initialise the fundriser with empty fields
     this.fundraiser = {
       goalAmount: undefined,

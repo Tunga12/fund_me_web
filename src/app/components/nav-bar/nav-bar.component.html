@@ -34,7 +34,7 @@
         color="primary"
         [routerLink]="['/create']"
       >
-        Start a Campign
+        Start a Campaign
       </a>
 
       <a
@@ -85,7 +85,7 @@
           *ngIf="authService.isLoggedIn()"
           mat-button
           [routerLink]="['/my-fundraisers/organizer']"
-          class="nav-link mat-button"
+          class="mat-menu-item"
         >
           Your fundraisers
         </a>
@@ -129,15 +129,9 @@
     fxLayoutAlign="end center"
     fxLayoutGap="20px"
   >
-    <a
-      mat-raised-button
-      color="primary"
-      [routerLink]="['/create']"
-    >
-      Start a Campign
+    <a mat-raised-button color="primary" [routerLink]="['/create']">
+      Start a Campaign
     </a>
-    <a mat-button  [routerLink]="['/sign-in']">
-      Sign in
-    </a>
+    <a mat-button [routerLink]="['/sign-in']"> Sign in </a>
   </mat-toolbar-row>
 </mat-toolbar>

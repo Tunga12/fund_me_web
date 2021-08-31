@@ -4,7 +4,7 @@
 
 <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="container" >
   <p class="text-error"> {{ errorMessage }}</p>
-  <button mat-button [routerLink]="['/my-fundraiser-detail',fundraiser?._id]" routerLinkActive="router-link-active" >
+  <button mat-stroked-button [routerLink]="['/my-fundraiser-detail',fundraiser?._id]" routerLinkActive="router-link-active" >
     <mat-icon class="mat-18">arrow_back_ios</mat-icon><span fxHide.xs>Back</span>
   </button>
 
