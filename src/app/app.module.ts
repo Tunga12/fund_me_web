@@ -92,6 +92,7 @@ import { SharedModule } from './shared/shared.module';
 import { HelpComponent } from './components/help/help.component';
 import { StatComponent } from './components/fundraiser/fundraiser-detail-public/stat/stat.component';
 import { FundraiserDetailPublicComponent } from './components/fundraiser/fundraiser-detail-public/fundraiser-detail-public.component';
+import { HelpsComponent } from './components/help/helps/helps.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { FundraiserDetailPublicComponent } from './components/fundraiser/fundrai
     ConfirmPageComponent,
     HelpComponent,
     StatComponent,
+    HelpsComponent,
   ],
   entryComponents: [],
   imports: [

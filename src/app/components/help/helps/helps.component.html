@@ -1,0 +1,16 @@
+
+<nav class="mat-elevation-z1">
+    <nav-bar></nav-bar>
+  </nav>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" class="helps">
+  <mat-expansion-panel
+    [hideToggle]="false"
+    *ngFor="let help of helps"
+    style="width: 80%"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ help.title }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-panel-description [innerHtml]="help.content"></mat-panel-description>
+  </mat-expansion-panel>
+</div>

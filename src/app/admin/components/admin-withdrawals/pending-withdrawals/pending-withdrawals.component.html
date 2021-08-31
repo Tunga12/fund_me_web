@@ -7,10 +7,10 @@
 
 <div *ngIf="!loading">
     <div class="no-data" *ngIf="dataSource.data.length===0" style="margin: 30px">
-        You have no rejected withdrawal requests yet.</div>
+        You have no pending withdrawal requests yet.</div>
 </div>
 <div *ngIf="dataSource.data.length!==0" class="table-container mat-elevation-z8">
-    <mat-table matSort [dataSource]="dataSource">
+    <mat-table matSort [dataSource]="dataSource" matSort>
         <!-- <ng-container matColumnDef="firstName">
             <mat-header-cell *matHeaderCellDef> First name
             </mat-header-cell>
@@ -30,7 +30,7 @@
         </ng-container> -->
 
         <ng-container matColumnDef="bankName">
-            <mat-header-cell *matHeaderCellDef> Bank name
+            <mat-header-cell *matHeaderCellDef  mat-sort-header> Bank name
             </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.bankName |titlecase}} </mat-cell>
         </ng-container>
@@ -61,7 +61,6 @@
                 </button> Decline
             </mat-cell>
         </ng-container>
-
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         <mat-row *matNoDataRow>No pending withdrawal requests yet.</mat-row>

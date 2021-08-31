@@ -27,6 +27,16 @@ export class HelpFormComponent implements OnInit,OnDestroy {
     ['background_color']
   ];
 
+  help_types=[
+  'Getting Started',
+  "Account management",
+  "Money management",
+  "Donor questions",
+  "Common issues",
+  "Safety & security"
+];
+
+
   constructor(
     private fb: FormBuilder,
   ) {
@@ -37,6 +47,7 @@ export class HelpFormComponent implements OnInit,OnDestroy {
     this.form = this.fb.group(
       {
         title: ['', [Validators.required, Validators.minLength(5)]],
+        category:['', Validators.required],
         content: ['', [Validators.required, Validators.minLength(10)]]
       }
     );
@@ -56,6 +67,10 @@ export class HelpFormComponent implements OnInit,OnDestroy {
 
   public get title(): AbstractControl | null {
     return this.form.get('title');
+  }
+  
+  public get category(): AbstractControl | null {
+    return this.form.get('category');
   }
 
   ngOnDestroy(): void {

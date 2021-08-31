@@ -1,7 +1,20 @@
-p{
-    text-align: center;
+p {
+  text-align: center;
 }
 
-.card{
-    background-color: #fff;
+mat-card.mat-card {
+  cursor: pointer;
+  margin-top: 10px;
+  min-height: 230px;
+}
+.container {
+  margin: 10px auto;
+  width: 80%;
+}
+
+div {
+  width: 100%;
+}
+h3 {
+  text-align: center;
 }

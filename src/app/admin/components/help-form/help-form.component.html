@@ -5,6 +5,16 @@
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="complete()">
             <mat-form-field appearance="outline">
+                <mat-label>Type of your help</mat-label>
+                <mat-select placeholder="Type of help" name="item" formControlName="category">
+                    <mat-option *ngFor="let type of help_types" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="category?.touched && category?.errors?.required">Help type is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
                 <mat-label>Title of your help</mat-label>
                 <input matInput formControlName="title" placeholder="Title of your help" type="text" required />
 
@@ -24,7 +34,7 @@
                 minimum.</mat-error>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
-                <button [disabled]="!form.valid && form.touched" mat-raised-button type="submit" color="primary">
+                <button [disabled]="form.invalid && form.touched" mat-raised-button type="submit" color="primary">
                     Complete
                 </button>
             </div>

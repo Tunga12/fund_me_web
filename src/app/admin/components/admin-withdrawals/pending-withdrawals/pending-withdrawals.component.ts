@@ -58,7 +58,7 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
       (withdrawalsPage: WithdrawalsPage) => {
         this.loading = false;
         this.pendingWithdrawals = withdrawalsPage.withdrawals;
-        this.dataSource = new MatTableDataSource<Withdrawal>(this.pendingWithdrawals);
+        this.dataSource.data=this.pendingWithdrawals;
         this.cdr.detectChanges();
         this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.sort;
@@ -93,7 +93,6 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
     this.withdrawalSub = this.withdrawalService.acceptWithdrawalRequest(withdrawal._id!).subscribe(
       () => {
         this.snacckBar.open('Request accepted', 'Close', this.snackbarService.getConfig());
-
         // this.getPendingWithdrawals();
       }
       ,

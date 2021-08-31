@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HelpsComponent } from '../components/help/helps/helps.component';
 
 import { AccountSettingComponent } from '../components/account-setting/account-setting.component';
 import { DonateComponent } from '../components/donate/donate.component';
@@ -16,7 +17,6 @@ import { WithdrawalsComponent } from '../components/fundraiser/withdrawals/withd
 import { HelpComponent } from '../components/help/help.component';
 import { HomePageComponent } from '../components/home-page/home-page.component';
 import { NotificationComponent } from '../components/notification/notification.component';
-import { SearchComponent } from '../components/search/search.component';
 import { ShareDialogComponent } from '../components/share-dialog/share-dialog.component';
 import {
   BeneficiaryFormComponent,
@@ -135,6 +135,10 @@ const routes: Routes = [
         pathMatch:'full'
       },
     ]
+  },
+  {
+    path:'help/category/:category',
+    component:HelpsComponent,
   },
   {
     path:'help',

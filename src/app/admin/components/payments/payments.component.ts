@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.css']
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent implements OnInit, OnDestroy {
   loading: boolean=false;
 
   displayedColumns = [
@@ -47,7 +47,7 @@ export class PaymentsComponent implements OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private withdrawalService: AdminWithdrawalsService,
+    // private withdrawalService: AdminWithdrawalsService,
     private pageTitle: Title,
     private fundraiserService: FundraiserService
   ) { }
@@ -55,34 +55,36 @@ export class PaymentsComponent implements OnInit {
  async ngOnInit() {
     this.pageTitle.setTitle('Admin | payments');
     // then get withdrawals
-    this.getApprovedWithdrawals();
+    // this.getApprovedWithdrawals();
 
-    await this.getAllFundraisers();
-    console.log(this.allFundraisers); 
+    // await this.getAllFundraisers();
+    // console.log(this.allFundraisers); 
   }
 
 
-  // get accepted withdrawal requests
-  getApprovedWithdrawals() {
-    this.loading=true;
-    this.withdrawalSub = this.withdrawalService.getAcceptedWithdrawals().subscribe(
-      (withdrawalsPage: WithdrawalsPage) => {
-        this.loading = false;
-        this.approvedWithdrawals = withdrawalsPage.withdrawals;
-        this.dataSource = new MatTableDataSource<Withdrawal>(this.approvedWithdrawals);
-        this.cdr.detectChanges();
-        this.dataSource.paginator = this.paginator;
-      },
-      (error: HttpErrorResponse) => {
-        this.loading = false;
-        console.log(error.error);
-        this.errorMessage =
-          error.status === 404
-            ? "You don't have any withdrawal yet."
-            : 'Unable to load your withdrawals, please try later';
-      }
-    );
- }
+//   // get accepted withdrawal requests
+//   getApprovedWithdrawals() {
+//     this.loading=true;
+//     this.withdrawalSub = this.withdrawalService.getAcceptedWithdrawals().subscribe(
+//       (withdrawalsPage: WithdrawalsPage) => {
+//         this.loading = false;
+//         console.log(withdrawalsPage);
+        
+//         this.approvedWithdrawals = withdrawalsPage.withdrawals;
+//         this.dataSource.data=this.approvedWithdrawals;
+//         this.cdr.detectChanges();
+//         this.dataSource.paginator = this.paginator;
+//       },
+//       (error: HttpErrorResponse) => {
+//         this.loading = false;
+//         console.log(error.error);
+//         this.errorMessage =
+//           error.status === 404
+//             ? "You don't have any withdrawal yet."
+//             : 'Unable to load your withdrawals, please try later';
+//       }
+//     );
+//  }
 
 
  async getAllFundraisers() {
@@ -117,10 +119,11 @@ async getFundraisers() {
     );
 }
 
-// filter donations 
+// filter fundaisers 
 filterFundraisers(){
 
 }
+
   async dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     // this.loading = true;
     let startDate = new Date(dateRangeStart.value)
@@ -129,4 +132,7 @@ filterFundraisers(){
     
   }
 
+  ngOnDestroy(){
+    this.withdrawalSub?.unsubscribe();
+  }
 }
