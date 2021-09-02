@@ -19,14 +19,23 @@ export class FundraiserService {
       `${environment.BASE_URL}/api/fundraisers/popular/?page=${page}`
     );
   }
+  // get fundraisers by page
+  async getFundraisersAsync(page: number) {
+    return await this.http
+      .get<FundraiserPage>(
+        `${environment.BASE_URL}/api/fundraisers/popular/?page=${page}`
+      )
+      .toPromise();
+  }
 
-   // get fundraisers by page
- async getFundraisersAdmin(page: number)  {
-  return await this.http.get<FundraiserPage>(
-    `${environment.BASE_URL}/api/fundraisers/?page=${page}`
-  ).toPromise();
-}
-
+  // get fundraisers by page
+  async getAdminFundraisers(page: number) {
+    return await this.http
+      .get<FundraiserPage>(
+        `${environment.BASE_URL}/api/fundraisers/?page=${page}`
+      )
+      .toPromise();
+  }
 
   // create fundiser
   createFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
@@ -50,10 +59,10 @@ export class FundraiserService {
     );
   }
   //get a single fundraiser by id
-  getFundraiserAsync(fudriserId: string){
-    return this.http.get<Fundraiser>(
-      `${environment.BASE_URL}/api/fundraisers/${fudriserId}`
-    ).toPromise();
+  getFundraiserAsync(fudriserId: string) {
+    return this.http
+      .get<Fundraiser>(`${environment.BASE_URL}/api/fundraisers/${fudriserId}`)
+      .toPromise();
   }
 
   // get fundraisers of current user
@@ -71,7 +80,7 @@ export class FundraiserService {
   }
 
   // get fundraisers for current who is beneficiary of
-  getBeneficiaryFundraisers():Observable<FundraiserPage> {
+  getBeneficiaryFundraisers(): Observable<FundraiserPage> {
     return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/beneficiary`
     );
@@ -107,6 +116,30 @@ export class FundraiserService {
   search(title: string, page: number): Observable<FundraiserPage> {
     return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/title/${title}?page=${page}`
+    );
+  }
+
+  // set beeficiary id for a fundraiser
+  setBeneficiary(
+    fundraiser: Fundraiser,
+    beneficiaryId: string
+  ): Observable<Fundraiser> {
+    let fundraiserId = fundraiser._id;
+    // remove the _id element :not needed for update
+    delete fundraiser._id;
+    delete fundraiser.__v;
+    delete fundraiser.beneficiary;
+    // update the fundraiser  since we only need id of the category
+    let customFundraiser = {
+      ...fundraiser,
+      category: fundraiser.category?._id,
+      organizer: fundraiser.organizer?._id,
+      beneficiary: beneficiaryId,
+    };
+
+    return this.http.put<Fundraiser>(
+      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
+      customFundraiser
     );
   }
 

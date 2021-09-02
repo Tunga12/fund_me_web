@@ -21,11 +21,11 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { AdminAuthGuard } from './services/admin-auth-guard/admin-auth-guard.service';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { HelpsComponent } from './components/helps/helps.component';
 import { HelpFormComponent } from './components/help-form/help-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
+import { ImportExcelComponent } from './components/import-excel/import-excel.component';
 
 const routes: Routes =
     [
@@ -74,6 +74,11 @@ const routes: Routes =
                     path: 'helps',
                     component: HelpsComponent,
                 }
+                
+                , {
+                    path: 'upload',
+                    component: ImportExcelComponent,
+                }
 
             ]
         }];
@@ -90,7 +95,8 @@ const routes: Routes =
         AdminWithdrawalsComponent,
         AdminHomeComponent,
         HelpFormComponent,
-        HelpsComponent        
+        HelpsComponent,
+        ImportExcelComponent        
     ],
 
     imports: [

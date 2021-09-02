@@ -1,6 +1,6 @@
 <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav >
+</nav>
 <main fxLayout="column">
   <div
     fxLayout="column"
@@ -10,13 +10,12 @@
     fxLayoutGap="20px"
     style="margin: 20px auto"
   >
-    <h2 class="bold">
+    <h2 class="bold" matBadge={{count}}>
       <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
       Notifications
     </h2>
     <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
-
-    <h3 *ngIf="notifications?.length===0 && !loading ">
+    <h3 *ngIf="notifications?.length === 0 && !loading">
       You have no notifications.
     </h3>
 
@@ -49,9 +48,9 @@
           <a [routerLink]="['/fundraiser-detail', notification.target]"
             >See Fundraiser</a
           >
-          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+          <!-- <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error> -->
           <ng-container
-            *ngIf="notification?.notificationType === 'Team Member'"
+            *ngIf="isTeamInvitation(notification) || isBeneficiaryInvitation(notification)"
           >
             <div
               fxLayout="row"
@@ -61,15 +60,15 @@
               <button
                 mat-raised-button
                 color="primary"
-                (click)="acceptInvitation(notification)"
+                (click)="isTeamInvitation(notification)?acceptTeamInvitation(notification): acceptBeneficiaryInvitation(notification)"
               >
-                Accept
+                Accept <span *ngIf="isBeneficiaryInvitation(notification)">and become a beneficiary</span>
               </button>
 
               <button
                 mat-raised-button
                 color="warn"
-                (click)="declineInvitation(notification)"
+                (click)="declineTeamInvitation(notification)"
               >
                 Decline
               </button>

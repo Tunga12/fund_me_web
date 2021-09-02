@@ -12,7 +12,7 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-pending-withdrawals',
+  selector: 'admin-pending-withdrawals',
   templateUrl: './pending-withdrawals.component.html',
   styleUrls: ['./pending-withdrawals.component.css']
 })

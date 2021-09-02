@@ -12,7 +12,7 @@ import { AdminUsersService } from '../../services/admin-users/admin-users.servic
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-statistics',
+  selector: 'admin-statistics',
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
@@ -84,13 +84,15 @@ export class StatisticsComponent implements OnInit {
     do {
       await this.getFundraisers();
     } while (this.currentPage < this.fundraiserPage?.totalPages!);
+    // console.log(this.allFundraisers);
+    
   }
 
   //get fundrisers of a page
   async getFundraisers() {
     this.loading = true;
     await this.fundraiserService
-      .getFundraisersAdmin(this.currentPage)
+      .getAdminFundraisers(this.currentPage)
       .then(
         (fundraiserPage: FundraiserPage) => {
           this.fundraiserPage = fundraiserPage;

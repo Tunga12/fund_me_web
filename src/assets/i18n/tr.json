@@ -1,0 +1,124 @@
+{
+    "//comment//" : "Common",
+    "click_here_text": "Click here ",
+    "not_found_text": "Not Found",
+
+    "//Comment__//": "common form ",
+    "show_button_text": "Show",
+    "hide_button_text": "Hide",
+
+    "//comment//1": "settings page",
+
+    "settings_appbar_text": "Settings",
+    "account_listitle_text": "Account",
+    "payment_methods_listitle_text": "Payment Methods",
+    "email_notificaton_listtile_text" : "Email Notification",
+    "Help_listtile_text": "Help",
+    "signout_listitle_text": "Sign out",
+    "language_listile_text": "language",
+
+    "//comment//2": "Help Page",
+
+    "how_can_I_hlep_you_text": "How can I help you",
+    "search_label_text": "Search the Legas Help Center",
+    "looking_for_fundraiser_text": "If you're looking for a Legas fundraiser.",
+    "popular_article_text": "Popular Articles",
+    "changing_phone_number_text": "Changing Your Phone Number",
+    "get_help_text": "Get Help",
+
+    "//comment//3": "Account settings page",
+    "save_button_text": "SAVE",
+    "general_settings_text": "General settings",
+    "first_name_text": "First name",
+    "last_name_text": "Last name",
+    "email_text": "Email",
+    "Password_text": "Password",
+    "change_text": "change",
+    "connected_accounts_text" : "Connected accounts",
+    "connecting_makes_it_easy_text": "Connecting makes it easy for you to share",
+    "facebook_text": "Facebook",
+    "connect_button_text": "Connect",
+    "delete_account_description_text": "Deleting your account will remove all of your activity and campaigns, and you will no longer be able to sign in with this account",
+    "delete_account_butto_text" : "Delete account ",
+
+    "//comment//4": "setting_your_password_page",
+
+    "reset_password_button_text": "Reset password",
+    "set_your_password_appbar_title_text":"Set your password",
+    "current_password_label_text": "Current Password",
+    "forgot_password_or_text": "forgot password or don't have one?",
+    "new_password_label_text":"New Password",
+    "confirm_new_password_label_text": "Confirm new password",
+    "incorrect_password_lable_text": "incorrect password",
+    "not_enough_password_error_text": "password must be atleast 8 chars",
+    "new_password_dont_match_label_text": "new password do not match",
+    "enter_your_email_address_text": "Enter your email address",
+    "enter_user_email_text": "Enter user email",
+    "send_button_text": "Send",
+    "field_required_text" : "field required",
+    "first_name_mustnot_empty_text": "First name must not empty",
+    "first_name_must_greater_than_three_text": "First name must atlest 3 chars",
+    "last_name_mustnot_empty_text": "Last name must not empty",
+    "last_name_must_greater_than_threww_text": "Last name must atleast 3 chars",
+
+    "//comment//5": "Home_page",
+    "//comment//6": "bottom_nav_bar_items",
+    "discover_label_text": "Discover",
+    "notifications_label_text": "Notifications",
+    "manage_label_text": "Manage",
+    "me_label_text": "Me",
+    
+
+    "//comment//7": "Home_body_page",
+    "home_body_search_label_text": "search",
+    "fundraise_for_peaple_text": "Fundriase for the people and causes you care about",
+    "start_a_legas_text": "Start a Legas",
+    "new_label_text": "New",
+    "join_the_legas_label_text": "Join the Legas Community",
+    "connect_with_other_label_text": "Connect with other organizers and learn about fundraising strategies in the Legas Community",
+    "visit_community_buton_text": "Visit the Community",
+    "nearby_fundraisers_text": "Nearby Fundraisers",
+    "healp_your_community_text": "Help local community. Explore the fundraisers around you",
+    "user_current_location_text": "User current location",
+    "enter_locaton_text": "or enter a location",
+    "popular_label_text": "Popular fundraisers",
+    "browse_label_text" : "Browse Legas",
+    "no_such_fundraisre_text" : "No such fundraise!",
+
+    "//comment//8": "notification_page",
+
+    "Nothing_to_see_label_text": "Nothing to see here yet",
+    "find_stories_and_cases_label_text": "find stories and cases you care about on your home feed to get relevant updates here",
+    "explore_home_feed_text": "Explore home feed",
+
+    "//comment//9": "manage_page",
+    "your_fundraisers_text" : "Your fundraisers",
+
+    "//comment//10": "signinpage",
+
+    "login_appbar_title": "Log in",
+    "login_button_text": "LOG IN",
+    "forgot_your_password_text" : "Forgot your password?",
+
+    "or_label_text": "or",
+    "continue_with_google_text": "Continue with google",
+    "dont_have_account_text": "Don't have an account? Register.",
+
+    "//comment//11": "sgnuppage",
+    
+    "register_appbar_title_text": "Register",
+    "great_job_text": "Great Job!",
+    "now_create_an_account": "Now create an account to preview and launch your fundraisers.",
+    "phone_number_text": "Phone number",
+    "confirm_password_text" : "Confirm password",
+    "register_button_text": "REGISTER",
+    "already_have_account_text" : "Already have an account?",
+    "first_name_required_text": "First name required!",
+    "last_name_required_text": "Last name required!",
+    "email_required_text": "Email required!",
+    "phone_number_required": "Phone number required!",
+    "password_required_text": "Password required!",
+    "password_too_short_text": "Password too short"
+
+    
+}

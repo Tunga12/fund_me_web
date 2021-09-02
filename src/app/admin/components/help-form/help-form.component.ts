@@ -4,7 +4,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 import { Help } from 'src/app/models/help.model';
 
 @Component({
-  selector: 'help-form',
+  selector: 'admin-help-form',
   templateUrl: './help-form.component.html',
   styleUrls: ['./help-form.component.css']
 })

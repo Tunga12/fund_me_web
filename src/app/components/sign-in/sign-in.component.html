@@ -1,4 +1,4 @@
-<nav class="mat-elevation-z2">
+<nav class="mat-elevation-z2 sticky-top-0">
   <mat-toolbar
     [classList]="'bg-white'"
     fxLayout="row wrap"
@@ -7,7 +7,7 @@
     <!-- LOGO -->
     <img [routerLink]="['/']" class="logo" src="/assets/images/icon.svg" />
     <div fxFLexFill></div>
-    <div>
+    <div data-cy="sign-up">
       Don't you have an account?<a color="primary" [routerLink]="['/sign-up']">
         Sign up
       </a>
@@ -21,14 +21,17 @@
   fxLayoutGap="10px"
 >
   <mat-card-title>
-    <h1 class="bold">Sign in</h1>
+    <h1 class="bold" data-cy="sign-in-header">Sign in</h1>
   </mat-card-title>
   <div>
     <mat-divider></mat-divider>
   </div>
 
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="signIn()">
+    <form [formGroup]="form"
+     (ngSubmit)="signIn()"
+      (keyup)="change()"
+      >
       <button mat-button class="btn-large facebook-btn">
         <mat-icon>facebook</mat-icon> Continue with Facebook
       </button>
@@ -46,13 +49,12 @@
           class="matInput"
           placeholder="Email address"
           type="email"
-          email
         />
         <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="email?.touched && email?.errors?.email"
+        <mat-error data-cy="invalid-email-error" *ngIf="email?.touched && email?.errors?.email"
           >Please enter a valid email.
         </mat-error>
-        <mat-error *ngIf="email?.touched && email?.errors?.required"
+        <mat-error data-cy="empty-email-error" *ngIf="email?.touched && email?.errors?.required"
           >Please enter your email
         </mat-error>
       </mat-form-field>
@@ -65,7 +67,6 @@
           [type]="hidePassword ? 'password' : 'text'"
           (change)="change()"
         />
-
         <mat-icon
           matSuffix
           (click)="hidePassword = !hidePassword"
@@ -73,7 +74,7 @@
           [attr.aria-pressed]="hidePassword"
           >{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon
         >
-        <mat-error *ngIf="password?.touched && password?.errors?.required"
+        <mat-error data-cy="empty-password-error" *ngIf="password?.touched && password?.errors?.required"
           >Please enter your password
         </mat-error>
       </mat-form-field>
@@ -86,6 +87,7 @@
         color="primary"
         class="btn-large"
         type="submit"
+        data-cy="sign-in-btn"
       >
         Sign in to Legas
       </button>

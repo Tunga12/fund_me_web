@@ -10,7 +10,7 @@ import { AdminWithdrawalsService } from 'src/app/admin/services/admin-withdrawal
 import { Withdrawal } from 'src/app/models/withdrawal.model';
 
 @Component({
-  selector: 'app-approved-withdrawals',
+  selector: 'admin-approved-withdrawals',
   templateUrl: './approved-withdrawals.component.html',
   styleUrls: ['./approved-withdrawals.component.css']
 })

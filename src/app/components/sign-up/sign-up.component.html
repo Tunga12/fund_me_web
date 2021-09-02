@@ -1,24 +1,28 @@
-<nav class="mat-elevation-z2">
+<nav class="mat-elevation-z2 sticky-top-0">
   <mat-toolbar
-  [classList]="'bg-white'"
-  fxLayout="row wrap"
-  fxLayoutAlign="space-around center"
->
-  <!-- LOGO -->
-  <img [routerLink]="['/']" class="logo" src="/assets/images/icon.svg" />
-  <div fxFLexFill></div>
-  <div>
-    Don't you have an account?<a color="primary" [routerLink]="['/sign-in']">
-      Sign in
-    </a>
-  </div>
-</mat-toolbar>
+    [classList]="'bg-white'"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-around center"
+  >
+    <!-- LOGO -->
+    <img [routerLink]="['/']" class="logo" src="/assets/images/icon.svg" />
+    <div fxFLexFill></div>
+    <div data-cy="log-in-option">
+      Don't you have an account?<a color="primary" [routerLink]="['/sign-in']">
+        Sign in
+      </a>
+    </div>
+  </mat-toolbar>
 </nav>
 
-<mat-card [ngStyle.gt-sm]="{ width: '40%' }" [ngStyle.sm]="{ width: '60%' }" [ngStyle.lt-sm]="{ width: '85%' }"
-  [ngStyle]="{ margin: '30px auto' }">
+<mat-card
+  [ngStyle.gt-sm]="{ width: '45%' }"
+  [ngStyle.sm]="{ width: '60%' }"
+  [ngStyle.lt-sm]="{ width: '85%' }"
+  [ngStyle]="{ margin: '30px auto' }"
+>
   <mat-card-title fxLayoutAlign="center">
-    <h1 class="headline">Sign up</h1>
+    <h1 class="headline" data-cy="sign-up-header">Sign up</h1>
   </mat-card-title>
   <div>
     <mat-divider mat-inset></mat-divider>
@@ -26,119 +30,238 @@
 
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="signUp()">
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px"
+      >
         <mat-form-field appearance="outline">
           <mat-label>First name * </mat-label>
-          <input matInput formControlName="firstName" placeholder="First name" type="text" />
-          <mat-error *ngIf="firstName?.touched && firstName?.errors?.required">Please enter your first name
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="First name"
+            type="text"
+          />
+          <mat-error
+            data-cy="fname-empty-error"
+            *ngIf="firstName?.touched && firstName?.errors?.required"
+            >Please enter your first name
           </mat-error>
 
-          <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength">First name must be
+          <mat-error
+            data-cy="fname-minlength-error"
+            *ngIf="firstName?.touched && firstName?.errors?.minlength"
+            >First name must be
             {{ firstName?.errors?.minlength.requiredLength }} minimun.
           </mat-error>
 
-          <mat-error *ngIf="firstName?.touched && firstName?.errors?.maxlength">First name must be
+          <mat-error
+            data-cy="fname-maxlength-error"
+            *ngIf="firstName?.touched && firstName?.errors?.maxlength"
+            >First name must be
             {{ firstName?.errors?.maxlength.requiredLength }} minimun.
           </mat-error>
 
-          <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace">First name cannot include whitespaces.
+          <mat-error
+            data-cy="fname-whitespace-error"
+            *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
+            >First name cannot include whitespaces.
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label> Last name *</mat-label>
-          <input matInput formControlName="lastName" placeholder="Last name" type="text" />
-          <mat-error *ngIf="lastName?.touched && lastName?.errors?.required">Please enter your last name
+          <input
+            matInput
+            formControlName="lastName"
+            placeholder="Last name"
+            type="text"
+          />
+          <mat-error
+            data-cy="lname-empty-error"
+            *ngIf="lastName?.touched && lastName?.errors?.required"
+            >Please enter your last name
           </mat-error>
 
-          <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength">Last name must be
+          <mat-error
+            data-cy="lname-minlength-error"
+            *ngIf="lastName?.touched && lastName?.errors?.minlength"
+            >Last name must be
             {{ lastName?.errors?.minlength.requiredLength }} minimun.
           </mat-error>
 
-          <mat-error *ngIf="lastName?.touched && lastName?.errors?.maxlength">Last name must be
+          <mat-error
+            data-cy="lname-maxlength-error"
+            *ngIf="lastName?.touched && lastName?.errors?.maxlength"
+            >Last name must be
             {{ lastName?.errors?.maxlength.requiredLength }} maximun.
           </mat-error>
 
-          <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace">Last name cannot include whitespaces.
+          <mat-error
+            data-cy="lname-whitespace-error"
+            *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
+            >Last name cannot include whitespaces.
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="10px"
+      >
         <mat-form-field appearance="outline">
           <mat-label> Email Address *</mat-label>
-          <input matInput formControlName="email" 
-          placeholder="Email address" type="email"
-           />
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email address"
+            type="email"
+          />
           <mat-icon matPrefix>email</mat-icon>
-          <mat-error *ngIf="email?.touched && email?.errors?.email">Please enter a valid email.
+          <mat-error
+            data-cy="email-invalid-error"
+            *ngIf="email?.touched && email?.errors?.email"
+            >Please enter a valid email.
           </mat-error>
-          <mat-error *ngIf="email?.touched && email?.errors?.required">Please enter your email
+          <mat-error
+            data-cy="email-empty-error"
+            *ngIf="email?.touched && email?.errors?.required"
+            >Please enter your email
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label> Phone number *</mat-label>
-          <input matInput formControlName="phoneNumber" placeholder="Phone number" type="tel" 
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Phone number"
+            type="tel"
           />
           <mat-icon matPrefix>phone</mat-icon>
-          <mat-error *ngIf="phone?.touched && phone?.errors?.minlength">Phone number must be
+          <mat-error
+            data-cy="phone-minlength-error"
+            *ngIf="phone?.touched && phone?.errors?.minlength"
+            >Phone number must be
             {{ phone?.errors?.minlength?.requiredLength }} digits.
           </mat-error>
-          <mat-error *ngIf="phone?.touched && phone?.errors?.required">Please enter your phone number
+          <mat-error
+            data-cy="phone-maxlength-error"
+            *ngIf="phone?.touched && phone?.errors?.maxlength"
+            >Phone number must be
+            {{ phone?.errors?.maxlength?.requiredLength }} digits.
+          </mat-error>
+          <mat-error
+            data-cy="phone-empty-error"
+            *ngIf="phone?.touched && phone?.errors?.required"
+            >Please enter your phone number
+          </mat-error>
+
+          <mat-error
+            data-cy="fname-whitespace-error"
+            *ngIf="phone?.touched && phone?.errors?.whiteSpace"
+            >Phone number cannot include whitespaces.
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="10px"
+      >
         <mat-form-field appearance="outline">
           <mat-label>Enter your password *</mat-label>
-          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
-            (change)="onPasswordChange()" 
+          <input
+            matInput
+            formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            (change)="onPasswordChange()"
             autocomplete="new-password"
-            />
-          <mat-icon matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword">{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
-          <mat-error *ngIf="password?.touched && password?.errors?.minlength">Password length must be minimum
+          />
+          <mat-icon
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+            >{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon
+          >
+          <mat-error
+            data-cy="password-minlength-error"
+            *ngIf="password?.touched && password?.errors?.minlength"
+            >Password length must be minimum
             {{ password?.errors?.minlength.requiredLength }} .
           </mat-error>
 
-          <mat-error *ngIf="password?.touched && password?.errors?.required">Please enter your password
+          <mat-error
+            data-cy="password-empty-error"
+            *ngIf="password?.touched && password?.errors?.required"
+            >Please enter your password
           </mat-error>
 
-          <mat-error *ngIf="password?.touched && password?.errors?.pattern">
+          <mat-error
+            data-cy="password-weak-error"
+            *ngIf="password?.touched && password?.errors?.pattern"
+          >
             Password must contain atleast 1 special character and 1 number.
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Confirm your password *</mat-label>
-          <input matInput formControlName="confirmPassword" [type]="hidePassword ? 'password' : 'text'"
-            [pattern]="password?.value" (change)="onPasswordChange()"
-            autocomplete="new-password" 
-            />
+          <input
+            matInput
+            formControlName="confirmPassword"
+            [type]="hidePassword ? 'password' : 'text'"
+            [pattern]="password?.value"
+            (change)="onPasswordChange()"
+            autocomplete="new-password"
+          />
           <!-- 
           <mat-icon matSuffix (click)="hidePassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hidePassword">{{
             hideConfirmPassword ? "visibility_off" : "visibility"
             }}</mat-icon> -->
-          <mat-error *ngIf="
+          <mat-error
+            data-cy="password-mismatch-error"
+            *ngIf="
               confirmPassword?.touched && confirmPassword?.errors?.mismatch
-            ">
+            "
+          >
             Password and confirm password doesn't match
           </mat-error>
 
-          <mat-error *ngIf="
+          <mat-error
+            data-cy="cpassword-empty-error"
+            *ngIf="
               confirmPassword?.touched && confirmPassword?.errors?.required
-            ">Please confirm your password
+            "
+            >Please confirm your password
           </mat-error>
         </mat-form-field>
       </div>
-      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar
+        data-cy="loader"
+        *ngIf="loading"
+        mode="indeterminate"
+      ></mat-progress-bar>
+      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="0px">
+        <mat-error>{{ errorMessage }}</mat-error>
+      </div>
 
-      <mat-error>{{ errorMessage }}</mat-error>
-
-      <button mat-raised-button [disabled]="!form.valid || loading" type="submit" color="primary" class="btn-large">
+      <button
+        data-cy="sign-up-btn"
+        mat-raised-button
+        [disabled]="!form.valid || loading"
+        type="submit"
+        color="primary"
+        class="btn-large"
+      >
         Sign up
       </button>
     </form>
@@ -147,13 +270,25 @@
     <mat-divider mat-inset></mat-divider>
   </div>
   <mat-card-footer>
-    Legas's fee is 5% from each donation you receive. The payment processor
-    fee is 2.9% + $0.30 per donation. By continuing, you agree to the Legas
-    <a link routerLink="/terms" routerLinkActive="router-link-active" color="accent">
-      terms</a>
+    Legas's fee is 5% from each donation you receive. The payment processor fee
+    is 2.9% + $0.30 per donation. By continuing, you agree to the Legas
+    <a
+      link
+      routerLink="/terms"
+      routerLinkActive="router-link-active"
+      color="accent"
+    >
+      terms</a
+    >
     and acknowledge receipt of our
-    <a link routerLink="/privacy" routerLinkActive="router-link-active" color="accent">
-      privacy</a>
+    <a
+      link
+      routerLink="/privacy"
+      routerLinkActive="router-link-active"
+      color="accent"
+    >
+      privacy</a
+    >
     policy.
   </mat-card-footer>
 </mat-card>

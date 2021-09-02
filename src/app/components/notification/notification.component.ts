@@ -6,8 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from './../../services/snackbar/snackbar.service';
 import { TeamService } from './../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { TeamMember } from 'src/app/models/team-memeber.model';
-import { async } from '@angular/core/testing';
+import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { environment } from './../../../environments/environment';
+import { SocketIoService } from './../../services/socket.io/socket.io.service';
 
 @Component({
   selector: 'app-notification',
@@ -15,11 +16,13 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit, OnDestroy {
+  count = 0;
   loading = false;
-  notifications!: Notification[];
-  errorMessage? = '';
+  notifications: Notification[] = [];
+  accepedTeamInvitations: Notification[] = [];
+  declinedTeamInvitations: Notification[] = [];
 
-  acceptanceStatusLoading = false;
+  errorMessage? = '';
 
   notificatonSub?: Subscription;
   teamSub?: Subscription;
@@ -31,18 +34,43 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private teamService: TeamService,
     private fundraiserService: FundraiserService,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    private socketService: SocketIoService
   ) {}
 
   ngOnInit(): void {
     this.getNotifications();
+    // listen to new notifications
+    this.notificatonSub=this.socketService.listen('new notification').subscribe((data: any) => {
+      this.notifications.unshift(data);
+      console.log(data);
+    });
+
+    // // listen to unread notificatios
+    this.notificatonSub=this.socketService.listen('unread notification count').subscribe((data: any) => {
+      // this.data = data;
+      this.count = data;
+      console.log(this.count);
+      console.log(data);
+    });
+
+    // // listen to read notifications
+    this.notificatonSub= this.socketService.listen('viewed notification').subscribe((data: any) => {
+      // this.data = data;
+      console.log(data);
+    });
+
+    // // listen to error
+    // this.socket.on('error', (data: any) => {
+    //   console.log(data);
+    // });
   }
 
   getNotifications() {
     this.loading = true;
     this.notificatonSub = this.notificationService.getNotifications().subscribe(
       (notifications) => {
-        this.notifications = notifications;
+        this.notifications = notifications.reverse();
         console.log(notifications);
         this.loading = false;
       },
@@ -53,24 +81,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
     );
   }
 
-  // checks if the user has already responded to this invitation or not
-  responded(notificatin: Notification): boolean {
-    let responded = false;
-    let filtered: TeamMember[] | undefined = [];
-    this.fundraiserSub = this.fundraiserService
-      .getFundraiser(notificatin.target)
-      .subscribe((fund) => {
-        // console.log(fund);
-      });
-    return responded;
-  }
-
   deleteNotifcation(notification: Notification) {
     let index = this.notifications.indexOf(notification);
     this.notificatonSub = this.notificationService
       .deleteNotification(notification)
       .subscribe(
         () => {
+          this.reset();
           this.notifications.splice(index, 1);
           this.snackBar.open(
             'Notification deleted',
@@ -85,27 +102,14 @@ export class NotificationComponent implements OnInit, OnDestroy {
       );
   }
 
-  // accept team membership invitation
-  acceptInvitation(notifiacation: Notification) {
-    this.teamSub = this.teamService
-      .acceptInvitation(notifiacation.target)
-      .subscribe(
-        () => {
-          this.markAsRead(notifiacation);
-        },
-        () => {
-          this.errorMessage = 'Unable to accept, please try later';
-        }
-      );
-  }
-
-  // mark notification as read
+  // marks a notification as read
   markAsRead(notifiacation: Notification) {
     this.notificatonSub = this.notificationService
       .readNotification(notifiacation)
       .subscribe(
         () => {
           notifiacation.viewed?.push(this.userId);
+          this.reset();
         },
         (error) => {
           this.errorMessage = error.error;
@@ -114,18 +118,145 @@ export class NotificationComponent implements OnInit, OnDestroy {
       );
   }
 
+  // accept team membership invitation
+  acceptTeamInvitation(notifiacation: Notification) {
+    this.teamSub = this.teamService
+      .acceptInvitation(notifiacation.target)
+      .subscribe(
+        () => {
+          this.markAsRead(notifiacation);
+          this.reset();
+          this.snackBar.open(
+            'Invitation accepted',
+            'close',
+            this.snackbarService.getConfig()
+          );
+        },
+        () => {
+          this.errorMessage = 'Unable to accept, please try later';
+        }
+      );
+  }
+
   // decline team membership invitation
-  declineInvitation(notifiacation: Notification) {
+  declineTeamInvitation(notifiacation: Notification) {
     this.teamSub = this.teamService
       .declineInvitation(notifiacation.target)
       .subscribe(
         () => {
           this.markAsRead(notifiacation);
+          this.reset();
+          this.snackBar.open(
+            'Team invitation declined',
+            'close',
+            this.snackbarService.getConfig()
+          );
         },
         () => {
           this.errorMessage = 'Unable to delcline, please try later';
         }
       );
+  }
+
+  // accept beneficiaryInvitation
+  async acceptBeneficiaryInvitation(notification: Notification) {
+    let fundraiser!: Fundraiser;
+    await this.fundraiserService
+      .getFundraiserAsync(notification.target)
+      .then((fund) => {
+        fundraiser = fund;
+      });
+
+    if (notification.recipients && fundraiser) {
+      this.fundraiserSub = this.fundraiserService
+        .setBeneficiary(fundraiser, notification.recipients[0])
+        .subscribe(
+          (fund) => {
+            console.log(fund);
+          },
+          (error) => {
+            this.errorMessage = error.error;
+            console.log(error);
+          }
+        );
+    }
+  }
+
+  // checks if team membership request accepted or not
+  async isMembershipRequestAccepted(notification: Notification) {
+    let fundraiser!: Fundraiser;
+    if (this.isTeamInvitation(notification)) {
+      await this.fundraiserService
+        .getFundraiserAsync(notification.target)
+        .then((fund) => {
+          fundraiser = fund;
+        });
+    }
+
+    if (notification.recipients && fundraiser && fundraiser.teams) {
+      let userId = notification.recipients[0];
+      let team = fundraiser.teams.filter((team) => {
+        return (
+          team.id.userId._id === userId &&
+          team.status.toLocaleLowerCase() === 'accepted'
+        );
+      });
+      return team ? true : false;
+    }
+    return false;
+  }
+
+  // checks if  team memebership request declined or not
+  async isMembershipRequestDeclined(notification: Notification) {
+    let fundraiser!: Fundraiser;
+    await this.fundraiserService
+      .getFundraiserAsync(notification.target)
+      .then((fund) => {
+        fundraiser = fund;
+      });
+
+    if (notification.recipients && fundraiser && fundraiser.teams) {
+      let userId = notification.recipients[0];
+      let team = fundraiser.teams.filter((team) => {
+        return (
+          team.id.userId._id === userId &&
+          team.status.toLocaleLowerCase() === 'declined'
+        );
+      });
+      return team ? true : false;
+    }
+    return false;
+  }
+
+  // checks if beneficiary invitation is accepted or not
+  async isBeneficiaryInvitationAccepted(notification: Notification) {
+    let fundraiser!: Fundraiser;
+    await this.fundraiserService
+      .getFundraiserAsync(notification.target)
+      .then((fund) => {
+        fundraiser = fund;
+      });
+
+    // the beneficiaryy field is set means beneficiary invitation is accepted
+    if (fundraiser && fundraiser.beneficiary) {
+      return true;
+    }
+    return false;
+  }
+
+  // checks if the notification is about team member invitation
+  isTeamInvitation(notification: Notification) {
+    return notification.notificationType === 'Team Member';
+  }
+
+  //  checks if the notifiation is about beneficiary invitation
+  isBeneficiaryInvitation(notification: Notification) {
+    return notification.title === 'Beneficiary invitation';
+  }
+
+  // reset to initial state
+  reset() {
+    this.errorMessage = '';
   }
 
   ngOnDestroy() {

@@ -49,19 +49,23 @@
     [fixedInViewport]="mobileQuery.matches" opened>
         <mat-nav-list dense>
             <a mat-list-item routerLink="home">
-                <mat-icon mat-list-icon class="mat-18">home</mat-icon>Home
+                <mat-icon mat-list-icon class="mat-18">home</mat-icon><span *ngIf="!icons_only"> Home</span>
             </a>
             <a mat-list-item routerLink="statistics">
-                <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon>Statistics
+                <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon><span *ngIf="!icons_only"> Statistics</span>
             </a>
             <a mat-list-item routerLink="withdrawals">
-                <mat-icon mat-list-icon class="mat-18">account_balance_wallet</mat-icon>Withdrawals
+                <mat-icon mat-list-icon class="mat-18">account_balance_wallet</mat-icon><span *ngIf="!icons_only"> Withdrawals</span>
             </a>
             <a mat-list-item routerLink="payments">
-                <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon>Payments
+                <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon><span *ngIf="!icons_only"> Payments</span>
             </a>
             <a mat-list-item routerLink="helps">
-                <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon>Helps
+                <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon><span *ngIf="!icons_only"> Helps</span>
+            </a>
+        
+            <a mat-list-item routerLink="upload">
+                <mat-icon mat-list-icon class="mat-18">upload</mat-icon><span *ngIf="!icons_only"> Upload payments</span>
             </a>
         
             <a *ngIf="authService.isLoggedIn() && currentUser" mat-button [matMenuTriggerFor]="account" fxHide.gt-xs
@@ -83,9 +87,9 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content role="main">
-        <!-- Toggle button -->
-        <a (click)="startSidenavRef.toggle()" class="toggle" fxHide.lt-sm>
-            <mat-icon mat-list-icon class="mat-18">{{ startSidenavRef.opened?'arrow_back_ios':'arrow_forward_ios'}}
+        <!-- Toggle button text -->
+        <a (click)="icons_only=!icons_only" class="toggle" fxHide.lt-sm>
+            <mat-icon mat-list-icon class="mat-18">{{ !icons_only?'arrow_back_ios':'arrow_forward_ios'}}
             </mat-icon>
         </a>
         <router-outlet></router-outlet>

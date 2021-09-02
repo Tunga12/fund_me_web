@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
-  selector: 'app-side-nav',
+  selector: 'admin-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
@@ -16,7 +16,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   accountCaret=true;
   currentUser?: User; //currently loggedd in user
   currentUserSub?: Subscription;
-
+  icons_only=false;
   constructor(
     private userService: UserService,
     public authService: AuthService,

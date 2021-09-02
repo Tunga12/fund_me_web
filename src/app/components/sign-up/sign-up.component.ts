@@ -67,6 +67,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10),
+          this.whiteSpaceValidator
         ],
       ],
       password: [

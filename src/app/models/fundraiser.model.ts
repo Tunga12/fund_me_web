@@ -25,7 +25,6 @@ export interface Fundraiser {
   isPublished?: boolean;
   totalShareCount?: number;
   likeCount?: number;
-  // link: string;
   withdraw?:Withdrawal,
  
 }

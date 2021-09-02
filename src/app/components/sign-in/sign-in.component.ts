@@ -73,7 +73,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       (error: HttpErrorResponse) => {
         this.loading = false;
         // this.password?.setValue('');
-        this.logInMessage = 'Incorrect email or Password';
+        this.logInMessage = 'Incorrect email or password';
         console.log(error.message);
       }
     );

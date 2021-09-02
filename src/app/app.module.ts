@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -93,6 +93,8 @@ import { HelpComponent } from './components/help/help.component';
 import { StatComponent } from './components/fundraiser/fundraiser-detail-public/stat/stat.component';
 import { FundraiserDetailPublicComponent } from './components/fundraiser/fundraiser-detail-public/fundraiser-detail-public.component';
 import { HelpsComponent } from './components/help/helps/helps.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -162,6 +164,13 @@ import { HelpsComponent } from './components/help/helps/helps.component';
     NgxPayPalModule,
     AdminModule,
     SharedModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
 
   providers: [
@@ -183,3 +192,6 @@ import { HelpsComponent } from './components/help/helps/helps.component';
   bootstrap: [AppComponent],
 })
 export class AppModule { }
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}

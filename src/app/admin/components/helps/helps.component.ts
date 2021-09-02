@@ -9,7 +9,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 
 @Component({
-  selector: 'app-helps',
+  selector: 'admin-helps',
   templateUrl: './helps.component.html',
   styleUrls: ['./helps.component.css']
 })

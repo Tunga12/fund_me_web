@@ -3,5 +3,6 @@ export interface Payment {
   lastName: string;
   bankName: string;
   bankAccountNo: string;
+  fundraiserId:string;
   amount: number;
 }

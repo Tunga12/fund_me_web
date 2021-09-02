@@ -23,12 +23,6 @@ body {
    height: 50px; 
 } */
 
-.nav-fixed {
-  background-color: rgb(255, 255, 255);
-  position: sticky;
-  top: 0;
-}
-
 .header {
   background: #fff;
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
@@ -223,4 +217,15 @@ div.avatar-contain {
   padding: 10px;
   min-width: 200px;
   border-radius: 6px;
+}
+
+.sticky-top-0 {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.table-container{
+  margin: 30px 20px;
+  width: 90%;
 }
