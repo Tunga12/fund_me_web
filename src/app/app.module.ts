@@ -164,13 +164,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     NgxPayPalModule,
     AdminModule,
     SharedModule,
-    TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-  })
+   
   ],
 
   providers: [
@@ -192,6 +186,3 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
   bootstrap: [AppComponent],
 })
 export class AppModule { }
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}

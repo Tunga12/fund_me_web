@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './../../services/auth/auth.service';
 import { UserService } from './../../services/user/user.service';
 import { User } from './../../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -32,11 +33,15 @@ export class SignInComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private docTitle: Title,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private translate: TranslateService,
+    ) {
+      this.translate.setDefaultLang('en');
+      this.translate.use(localStorage.getItem('lang') || 'en');
+    }
 
   ngOnInit(): void {
-    this.docTitle.setTitle('Legas | Sign in');
+    this.docTitle.setTitle('Legas | Log in');
 
     // build the form
     this.form = this.formBuilder.group({

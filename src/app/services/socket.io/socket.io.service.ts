@@ -20,6 +20,7 @@ export class SocketIoService {
     return new Observable(
       (subscriber)=>{
         this._socket.on(eventName,(data:any)=>{
+          console.log(data)
           subscriber.next(data);
         });
       }

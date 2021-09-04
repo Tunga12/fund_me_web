@@ -37,8 +37,8 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     public fundraiserServ: FundraiserService,
-    public authService: AuthService
-  ) {}
+    public authService: AuthService,
+  ){}
 
   ngOnInit(): void {
     this.docTitle.setTitle('fundraiser detail');

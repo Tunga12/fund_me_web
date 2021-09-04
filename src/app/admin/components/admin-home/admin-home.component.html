@@ -17,6 +17,7 @@
     <p class="text-error">{{ errorMessage }}</p>
 
     <!-- LIST OF FUNDRAISERS -->
+    <h2 *ngIf="searchedFundarisers.length>0">Search results</h2>
     <app-public-fund-list [fundraisers]="searchedFundarisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
     </app-public-fund-list>
 </div>

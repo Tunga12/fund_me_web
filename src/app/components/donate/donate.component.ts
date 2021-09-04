@@ -17,8 +17,6 @@ import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
-
-
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
@@ -29,8 +27,7 @@ export class DonateComponent implements OnInit, OnDestroy {
   donation: Donation = {
     amount: 0,
     tip: 10,
-    memberId: ''
-
+    memberId: '',
   };
 
   fundraiserId = '';
@@ -38,12 +35,10 @@ export class DonateComponent implements OnInit, OnDestroy {
   erorrMessage = '';
   form!: FormGroup;
   fundraiser?: Fundraiser;
-  // determines tip is from slider or not
-  custom_tip = false;
+
+  // subscriptions
   fundraiserSub?: Subscription;
   donationSub?: Subscription;
-
-
 
   public payPalConfig?: IPayPalConfig;
 
@@ -56,14 +51,13 @@ export class DonateComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private snackbarServ: SnackbarService,
     public fundraiserService: FundraiserService
-  ) { }
-
+  ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Donate');
     this.form = this.formBuilder.group({
       amount: [10, [Validators.required, Validators.min(5)]],
-      tip: [15, [Validators.required, Validators.min(15)]],
+      tip: [10, [Validators.required, Validators.min(10)]],
       // anonymous: [],
       comment: [
         '', //[Validators.required, Validators.minLength(5)]
@@ -81,34 +75,59 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   private initConfig(): void {
     this.payPalConfig = {
-      clientId: 'Aatbc1PvvGMzDDJXG_gpBOl3FKna4TAmIgtuyufjBGtsX514ZS2vLHNs-xRidfrSzxsQ9hbLawfGxlAu',
-      createOrderOnClient: (data: any) => <ICreateOrderRequest><unknown>{
-        intent: 'CAPTURE',
-        purchase_units: [{
-          amount: {
-            value: this.donation.amount + (this.donation.amount * this.donation.tip / 100),
-          },
-        }]
+      clientId:
+        'Aatbc1PvvGMzDDJXG_gpBOl3FKna4TAmIgtuyufjBGtsX514ZS2vLHNs-xRidfrSzxsQ9hbLawfGxlAu',
+      createOrderOnClient: (data: any) => <ICreateOrderRequest>(<unknown>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                value:
+                  this.donation.amount +
+                  (this.donation.amount * this.donation.tip) / 100,
+              },
+            },
+          ],
+        }),
+      advanced: {
+        extraQueryParams: [{ name: 'disable-funding', value: 'credit,card' }],
       },
-      onApprove: (data, actions) => {
-        console.log('onApprove - transaction was approved, but not authorized', data, actions);
-        actions.order.get().then((details: any) => {
-          console.log('onApprove - you can get full order details inside onApprove: ', details);
-        });
 
+      onApprove: (data, actions) => {
+        console.log(
+          'onApprove - transaction was approved, but not authorized',
+          data,
+          actions
+        );
+        actions.order.get().then((details: any) => {
+          console.log(
+            'onApprove - you can get full order details inside onApprove: ',
+            details
+          );
+        });
       },
       onClientAuthorization: (data) => {
-        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        console.log(
+          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+          data
+        );
         this.donate();
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);
-        this.snackBar.open("Donation cacelled", "close", this.snackbarServ.getConfig())
+        this.snackBar.open(
+          'Donation cacelled',
+          'close',
+          this.snackbarServ.getConfig()
+        );
       },
-      onError: err => {
+      onError: (err) => {
         console.log('OnError', err);
-        this.snackBar.open("Some thing went wrong", "close", this.snackbarServ.getConfig())
-
+        this.snackBar.open(
+          'Some thing went wrong',
+          'close',
+          this.snackbarServ.getConfig()
+        );
       },
       onClick: (data, actions) => {
         console.log('onClick', data, actions);
@@ -116,24 +135,12 @@ export class DonateComponent implements OnInit, OnDestroy {
     };
   }
 
-
-
-
   // observe the form changes to our model
   formChange() {
     this.donation = this.form.value;
-    // console.log(donation);
-
   }
 
-  // // check if this user has already donated to this fundraiser
-
-  // hasAlreadyDonated(): boolean {
-  //   let userId = localStorage.getItem('userId');
-  //   let donor = this.fundraiser?.donations?.find((donation: Donation) => donation.userId?._id === userId);
-  //   return donor ? true : false;
-  // }
-
+  /* getters for form controls*/
   public get amount(): AbstractControl | null {
     return this.form.get('amount');
   }
@@ -175,13 +182,21 @@ export class DonateComponent implements OnInit, OnDestroy {
       .createDonation(this.fundraiserId, this.form.value)
       .subscribe(
         (response: HttpResponse<any>) => {
-          this.snackBar.open("Donation successfully completed", "close", this.snackbarServ.getConfig());
+          this.snackBar.open(
+            'Donation successfully completed',
+            'close',
+            this.snackbarServ.getConfig()
+          );
           this.loading = false;
           this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
         },
         (error: HttpErrorResponse) => {
           this.erorrMessage = error.error;
-          this.snackBar.open("Donation not successfull", "close", this.snackbarServ.getConfig())
+          this.snackBar.open(
+            'Donation not successfull',
+            'close',
+            this.snackbarServ.getConfig()
+          );
           this.loading = false;
           console.log(error);
         }
@@ -213,11 +228,6 @@ export class DonateComponent implements OnInit, OnDestroy {
         this.tip = event.value > 10 ? event.value : 10;
       });
     }
-  }
-
-
-  changeTipType() {
-    this.custom_tip = !this.custom_tip;
   }
 
   ngOnDestroy(): void {

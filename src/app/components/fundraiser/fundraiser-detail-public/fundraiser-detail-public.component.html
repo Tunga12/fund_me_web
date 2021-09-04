@@ -15,13 +15,13 @@
         fxLayoutGap="5px"
       >
         <a mat-button [routerLink]="['/create']" class="nav-link">
-          Start a Campaign
+          {{"Start a Campaign"|translate}}
         </a>
         <mat-divider fxShow.gt-xs vertical style="height: 30px"></mat-divider>
-        <a mat-button [routerLink]="['/sign-in']" class="nav-link"> Sign in </a>
-        <a mat-button (click)="share()" class="styled-button share"> Share </a>
+        <a mat-button [routerLink]="['/sign-in']" class="nav-link"> {{"Log in"|translate}} </a>
+        <a mat-button (click)="share()" class="styled-button share"> {{"Share"|translate}}</a>
         <a mat-button [routerLink]="['/create']" class="styled-button donate">
-          Donate
+          {{"Donate"|translate }}
         </a>
       </div>
       <div
@@ -37,11 +37,11 @@
       </div>
 
       <mat-menu #menuRef="matMenu" [overlapTrigger]="false">
-        <a mat-menu-item routerLink="/sign-in">Sign in</a>
-        <a mat-menu-item routerLink="/create">Start a Campaign</a>
-        <a mat-menu-item (click)="share()"> Share </a>
+        <a mat-menu-item routerLink="/sign-in">{{"Log in"| translate}}</a>
+        <a mat-menu-item routerLink="/create">{{"Start a Campaign"| translate }}</a>
+        <a mat-menu-item (click)="share()"> {{"Share"|translate}} </a>
         <a mat-menu-item [routerLink]="['/donate', fundraiser?._id]">
-          Donate
+          {{"Donate"|translate}}
         </a>
       </mat-menu>
     </mat-toolbar>
@@ -102,7 +102,7 @@
                     (click)="share()"
                     class="styled-button share btn-small"
                   >
-                    <mat-icon>ios_share</mat-icon> Share
+                    <mat-icon>ios_share</mat-icon> {{"Share"| translate}}
                   </button>
                   <button
                     fxFlex="40"
@@ -110,7 +110,7 @@
                     [routerLink]="['/donate', fundraiser?._id]"
                     class="styled-button donate btn-small"
                   >
-                    <mat-icon>attach_money</mat-icon> Donate now
+                    <mat-icon>attach_money</mat-icon> {{"Donate now"|translate}}
                   </button>
                 </div>
               </div>
@@ -144,7 +144,7 @@
                       >
                         <strong class="team-fund-label">
                           <mat-icon>people</mat-icon>
-                          <span>Team fundraiser</span>
+                          <span>{{"Team fundraiser"|translate }}</span>
                         </strong>
                       </div>
                       <p>
@@ -154,7 +154,7 @@
                             fundraiser?.organizer?.lastName | titlecase
                         }}
                         <span *ngIf="hasAcceptedTeamMembers()">
-                          and
+                          {{"and" | translate}}
                           {{
                             fundraiserServ.getNumberOfAcceptedTeamMembers(
                               fundraiser!
@@ -166,7 +166,7 @@
                                 fundraiser!
                               ) === 1
                             "
-                            >other</span
+                            >{{"other"|translate}}</span
                           >
                           <span
                             *ngIf="
@@ -174,12 +174,12 @@
                                 fundraiser!
                               ) > 1
                             "
-                            >others</span
+                            >{{"others"| translate}}</span
                           >
-                          are
+                          {{"are"|translate}}
                         </span>
-                        <span *ngIf="!hasAcceptedTeamMembers()"> is </span>
-                        organizing this fundraiser
+                        <span *ngIf="!hasAcceptedTeamMembers()"> {{"is"| translate}} </span>
+                        {{"organizing this fundraiser"|translate}}
                       </p>
                     </div>
                   </div>
@@ -187,7 +187,7 @@
                 </div>
                 <div>
                   <p>
-                    {{ fundraiser?.dateCreated | timeago }} |
+                    {{ fundraiser?.dateCreated | timeago                                                                                                                                                                                                                                                               }} |
                     <a href="">{{ fundraiser?.category?.name }}</a>
                   </p>
                   <mat-divider></mat-divider>

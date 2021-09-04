@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +17,5 @@ export class AppComponent {
   //     console.log((event as NavigationEnd).url);
   //   });
   // }
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
-    translate.use(localStorage.getItem('lang')||'en');
-}
+
 }

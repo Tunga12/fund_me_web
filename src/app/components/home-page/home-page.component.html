@@ -3,10 +3,18 @@
 </nav>
 <div>
   <div fxHide.lt-md class="illustration">
-    <div fxLayout="column" fxLayoutAlign="start start">
-      <h1 class="bold mat-h1">Fundraising for the people and</h1>
-      <h1 class="bold mat-h1">causes you care about</h1>
-      <h1 class="color-gray mat-h1">Get Started Today.</h1>
+    <div
+      fxLayout="column"
+      fxLayoutAlign="start start"
+      data-cy="non-mobile-header"
+    >
+      <h1 class="bold mat-h1">
+        {{ "Fundraising for the people and" | translate }}
+      </h1>
+      <h1 class="bold mat-h1">{{ "causes you care about" | translate }}</h1>
+      <h1 data-cy="get-started" class="color-gray mat-h1">
+        {{ "Get Started Today." | translate }}
+      </h1>
     </div>
 
     <div
@@ -22,15 +30,21 @@
         mat-raised-button
         color="primary"
         [ngStyle]="{ 'max-width': '30%' }"
+        data-cy="start-btn"
       >
-        Start a Campaign
+        {{ "Start a Fundraiser" | translate }}
       </a>
       <div fxHide.lt-md>
         <mat-divider [vertical]="true" style="height: 30px"></mat-divider>
       </div>
-      <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
+      <button
+        data-cy="how-it-works-btn"
+        fxFlex.lt-sm="60"
+        mat-button
+        class="btn-large color-gray"
+      >
         <mat-icon class="mat-18">play_circle_outline</mat-icon>
-        See how Legas works
+        {{ "See how Legas works" | translate }}
       </button>
     </div>
   </div>
@@ -40,32 +54,41 @@
     fxLayout="column"
     fxLayoutAlign="start center"
     fxLayoutGap="20px"
+    data-cy="mobile"
   >
-    <div class="full-width">
+    <div class="full-width" data-cy="mobile-image">
       <img
         class="img-mobile"
         src="/assets/images/gofundme-homepage-illustration-1920w.png"
       />
     </div>
 
-    <div class="mobile-header">
+    <div class="mobile-header" data-cy="mobile-header">
       <h1 class="bold mat-h1">
-        Fundraising for the people and causes you care about
+        {{ "Fundraising for the people and causes you care about" | translate }}
       </h1>
     </div>
-    <h1 class="color-gray mat-h1">Get Started Today.</h1>
+    <h1 class="color-gray mat-h1" data-cy="get-started-mobile">
+      {{ "Get Started Today" | translate }}.
+    </h1>
     <a
       routerLink="/create"
       mat-raised-button
       color="primary"
       class="btn-large"
       [ngStyle.lt-sm]="{ 'max-width': '60%' }"
+      data-cy="start-btn-mobile"
     >
-      Start a Campaign
+      {{ "Start a Campaign" | translate }}
     </a>
-    <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
+    <button
+      fxFlex.lt-sm="60"
+      mat-button
+      class="btn-large color-gray"
+      data-cy="how-it-works-btn-mobile"
+    >
       <mat-icon class="mat-18">play_circle_outline</mat-icon>
-      See how Legas works
+      {{"See how Legas works"|translate}
     </button>
   </div>
 </div>
@@ -76,7 +99,9 @@
   style="width: 80%; margin: 50px auto"
   [ngStyle.lt-md]="{ width: '96%', margin: '0px auto' }"
 >
-  <h2 class="bold mat-h2">Top fundraisers</h2>
+  <h2 class="bold mat-h2" data-cy="top-fundraisers-header">
+    {{ "Top fundraisers" | translate }}
+  </h2>
   <div *ngIf="loading">
     <mat-progress-spinner
       mode="indeterminate"
@@ -91,6 +116,7 @@
 
   <!-- LIST OF FUNDRAISERS -->
   <app-public-fund-list
+    data-cy="fundraisers-list"
     [fundraisers]="fundraisers"
     [hasNext]="hasNext()"
     (nextEvent)="nextPage()"
@@ -98,13 +124,13 @@
   </app-public-fund-list>
 </div>
 
-<div style="background-color: #fbf8f6; padding: 20px">
+<div style="background-color: #fbf8f6; padding: 20px" data-cy="trending-topic">
   <div
     fxLayout="column"
     style="width: 80%; margin: 30px auto"
     [ngStyle.lt-md]="{ width: '98%', margin: '30px auto' }"
   >
-    <span class="bold trending-topic">TRENDING TOPIC</span>
+    <span class="bold trending-topic">{{ "TRENDING TOPIC" | translate }}</span>
     <h2 class="bold mat-h2">Fundraising for coronavirus relief</h2>
     <div
       fxLayout="row"
@@ -157,7 +183,7 @@
   fxLayoutGap="30px"
   style="margin: 100px auto; width: 80%"
 >
-  <h2 class="bold mat-h2">The leader in online fundraising</h2>
+  <h2 class="bold mat-h2">{{"The leader in online fundraising"| translate}}</h2>
   <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="30px">
     <div
       *ngFor="let item of [1, 2, 4, 5, 6, 44]"
@@ -168,19 +194,19 @@
     >
       <mat-icon color="primary">phone_android</mat-icon>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-        <h3 class="bold mat-h3">Mobile app</h3>
+        <h3 class="bold mat-h3">{{"Mobile app"|translate}}</h3>
         <div
           fxLayout="column"
           fxLayoutAlign="start start"
           fxLayoutGap="0px"
           class="color-gray"
         >
-          <span> The Legas app makes it</span>
-          <span>simple to launch and manage your</span>
-          <span>fundraiser on the go. </span>
+          <span> {{"The Legas app makes it simple to launch and manage your fundraiser on the go."| translate }} </span>
         </div>
       </div>
     </div>
   </div>
-  <a routerLink="/create" mat-raised-button color="primary">Start a Campaign </a>
+  <a routerLink="/create" mat-raised-button color="primary"
+    >{{ "Start a Campaign" | translate }}
+  </a>
 </div>

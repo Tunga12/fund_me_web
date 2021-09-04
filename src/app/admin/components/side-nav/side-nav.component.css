@@ -43,3 +43,8 @@ height: 100%;
   mat-sidenav-content.mat-sidenav-content{
     margin: 20px 20px;
   }
+
+  .active{
+    border-bottom: 2px solid green;
+    background-color: gainsboro;
+  }

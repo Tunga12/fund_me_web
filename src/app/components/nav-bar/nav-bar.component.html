@@ -1,13 +1,13 @@
 <mat-toolbar [classList]="'bg-white'">
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-around center">
-    <div fxFlexOrder.lt-sm="1">
+      <div fxFlexOrder.lt-sm="1">
       <!-- search field -->
-      <input
+      <input data-cy="search-field"
         class="search"
         matInput
         #key
         type="search"
-        placeholder="Search fundraisers"
+        [placeholder]="'Search fundraisers' | translate"
         (keyup.enter)="search(key.value)"
       />
     </div>
@@ -18,14 +18,32 @@
       src="/assets/images/icon.svg"
       class="logo"
     />
+    <div>
+     <mat-form-field appearance="outline">
+       <mat-label>{{"Language"|translate}}</mat-label>
+      <mat-select
+      placeholder="Language"
+      (selectionChange)="changeLang($event)"
+      name="language"
+      [(value)]="selectedLanguage"
+    >
+      <mat-option [value]="'en'">English </mat-option>
+      <mat-option [value]="'am'"> አማርኛ </mat-option>
+      <mat-option [value]="'or'"> Oromiffa </mat-option>
+      <mat-option [value]="'tr'"> Tigrigna </mat-option>
+    </mat-select>     
+  </mat-form-field>
+    </div>
+
     <div fxFlexOrder.lt-sm="2">
       <a
         fxHide.lt-sm
         mat-button
         *ngIf="!authService.isLoggedIn()"
         [routerLink]="['/sign-in']"
+        data-cy="sign-in-btn"
       >
-        Sign in
+       {{" Log in"|translate}}
       </a>
       <a
         fxHide.lt-sm
@@ -33,8 +51,9 @@
         mat-stroked-button
         color="primary"
         [routerLink]="['/create']"
-      >
-        Start a Campaign
+      data-cy="start-a-campign-btn"
+        >
+        {{"Start a Campaign"|translate}}
       </a>
 
       <a
@@ -43,8 +62,10 @@
         mat-button
         [routerLink]="['/my-fundraisers/organizer']"
         class="nav-link mat-button"
+        data-cy="your-fundraisers-btn"
       >
-        Your fundraisers
+        {{ "Your fundraisers" | translate }}
+        
       </a>
 
       <!-- USER account MENU -->
@@ -56,6 +77,7 @@
         (onMenuClose)="accountCaret = !accountCaret"
         (onMenuOpen)="accountCaret = !accountCaret"
         class="nav-link mat-button"
+        data-cy="account-btn"
       >
         <div
           fxLayout="row"
@@ -76,10 +98,16 @@
           }}</mat-icon>
         </div>
       </a>
+      <mat-icon 
+      fxHide.lt-md
+      matBadge="5">notifications</mat-icon>
+
       <mat-menu #account="matMenu">
-        <a mat-menu-item routerLink="/notification" class="mat-menu-item">
+        <a 
+        fxHide.gt-sm
+        mat-menu-item routerLink="/notification" class="mat-menu-item" data-cy="notifications-link">
           <mat-icon matBadge="5">notifications</mat-icon>
-          Notifications
+          {{"Notifications"| translate}}
         </a>
         <a
           fxHide.gt-sm
@@ -87,27 +115,28 @@
           mat-button
           [routerLink]="['/my-fundraisers/organizer']"
           class="mat-menu-item"
+          data-cy="your-fundraisers-link"
         >
-          Your fundraisers
+          {{"Your fundraisers"| translate }}
         </a>
         <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
-          Donations you've made
+          {{"Donations you've made" | translate}}
         </a>
-        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
-          Account settings
+        <a data-cy="account-seetings-link" mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+          {{"Account settings"| translate}}
         </a>
-        <a mat-menu-item routerLink="/help" class="mat-menu-item"> Helps </a>
-        <a mat-menu-item routerLink="/create" class="mat-menu-item">
-          Start a new fundraiser
+        <a data-cy="helps-link" mat-menu-item routerLink="/help" class="mat-menu-item"> {{"Helps"|translate}} </a>
+        <a data-cy="create-lnk" mat-menu-item routerLink="/create" class="mat-menu-item">
+          {{"Start a new fundraiser" | translate}}
         </a>
 
         <mat-divider></mat-divider>
-        <a
+        <a data-cy="sign-out-link"
           mat-menu-item
           fxLayoutAlign="center"
           routerLink="/sign-in"
           (click)="authService.logOut()"
-          >Sign out</a
+          >{{"Sign out"| translate}}</a
         >
       </mat-menu>
 
@@ -118,6 +147,7 @@
         fxShow="true"
         fxHide.gt-sm
         fxFlexOrder.lt-sm="2"
+        data-cy="menu-btn"
       >
         <mat-icon>menu</mat-icon>
       </button>
@@ -130,9 +160,9 @@
     fxLayoutAlign="end center"
     fxLayoutGap="20px"
   >
-    <a mat-raised-button color="primary" [routerLink]="['/create']">
-      Start a Campaign
+    <a mat-raised-button data-cy="start-a-comign-btn-lt-sm" color="primary" [routerLink]="['/create']">
+      {{"Start a Fundraiser"|translate}}
     </a>
-    <a mat-button [routerLink]="['/sign-in']"> Sign in </a>
+    <a data-cy="sign-in-btn-lt-sm" mat-button [routerLink]="['/sign-in']"> {{"Log in" | translate}} </a>
   </mat-toolbar-row>
 </mat-toolbar>

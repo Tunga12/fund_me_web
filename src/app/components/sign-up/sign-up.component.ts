@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.validator.directive';
 import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,7 +24,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   errorMessage = '';
   hidePassword = true; // to toggle the visiblity of password
   // hideConfirmPassword = true; // to toggle the visiblity of confirmPassword
-  signUpSecussful = false; // to know the succefullness of sign up and show and hide spinner
+  signUpSecussful = false; // to know the succefullness of register and show and hide spinner
   form!: FormGroup;
   // subsctiption
   private signUpSub?: Subscription;
@@ -35,11 +36,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private authServ: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private docTitle: Title
-  ) {}
-
+    private docTitle: Title,
+    private translate: TranslateService,
+    ) {
+      this.translate.setDefaultLang('en');
+      this.translate.use(localStorage.getItem('lang') || 'en');
+    }
   ngOnInit(): void {
-    this.docTitle.setTitle('Legas | Sign up');
+    this.docTitle.setTitle('Legas | Register');
     // create the form
     this.form = this.formBuilder.group({
       firstName: [

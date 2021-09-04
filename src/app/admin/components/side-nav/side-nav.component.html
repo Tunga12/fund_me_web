@@ -48,23 +48,23 @@
     <mat-sidenav role="navigation" fixedTopGap="56" #startSidenavRef [mode]="mobileQuery.matches ? 'over' : 'side'"
     [fixedInViewport]="mobileQuery.matches" opened>
         <mat-nav-list dense>
-            <a mat-list-item routerLink="home">
+            <a mat-list-item routerLink="home" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">home</mat-icon><span *ngIf="!icons_only"> Home</span>
             </a>
-            <a mat-list-item routerLink="statistics">
+            <a mat-list-item routerLink="statistics" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon><span *ngIf="!icons_only"> Statistics</span>
             </a>
-            <a mat-list-item routerLink="withdrawals">
+            <a mat-list-item routerLink="withdrawals" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">account_balance_wallet</mat-icon><span *ngIf="!icons_only"> Withdrawals</span>
             </a>
-            <a mat-list-item routerLink="payments">
+            <a mat-list-item routerLink="payments" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon><span *ngIf="!icons_only"> Payments</span>
             </a>
-            <a mat-list-item routerLink="helps">
+            <a mat-list-item routerLink="helps"routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon><span *ngIf="!icons_only"> Helps</span>
             </a>
         
-            <a mat-list-item routerLink="upload">
+            <a mat-list-item routerLink="upload" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">upload</mat-icon><span *ngIf="!icons_only"> Upload payments</span>
             </a>
         

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  // sign in using email and password
+  // log in using email and password
   signIn(emailAndPassword: {
     email: string;
     password: string;

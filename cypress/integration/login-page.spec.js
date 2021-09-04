@@ -9,7 +9,7 @@ describe("Login page", () => {
         //checks the expects option and the label to exist
         cy.getByDataCy('sign-up').should('exist')
             .find('a')
-            .should('contain', 'Sign up');
+            .should('contain', 'Register');
 
         cy.getByDataCy('sign-in-header')
             .should('exist')

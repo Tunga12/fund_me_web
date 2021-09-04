@@ -8,8 +8,9 @@
     <img [routerLink]="['/']" class="logo" src="/assets/images/icon.svg" />
     <div fxFLexFill></div>
     <div data-cy="log-in-option">
-      Don't you have an account?<a color="primary" [routerLink]="['/sign-in']">
-        Sign in
+      {{ "Already have an account?" | translate
+      }}<a color="primary" [routerLink]="['/sign-in']">
+        {{ "Log in" | translate }}
       </a>
     </div>
   </mat-toolbar>
@@ -22,7 +23,9 @@
   [ngStyle]="{ margin: '30px auto' }"
 >
   <mat-card-title fxLayoutAlign="center">
-    <h1 class="headline" data-cy="sign-up-header">Sign up</h1>
+    <h1 class="headline" data-cy="sign-up-header">
+      {{ "Register" | translate }}
+    </h1>
   </mat-card-title>
   <div>
     <mat-divider mat-inset></mat-divider>
@@ -37,17 +40,18 @@
         fxLayoutGap="10px"
       >
         <mat-form-field appearance="outline">
-          <mat-label>First name * </mat-label>
+          <mat-label>{{ "First name" | translate }} * </mat-label>
           <input
             matInput
             formControlName="firstName"
-            placeholder="First name"
+            [placeholder]="'First name' | translate"
             type="text"
+            autocomplete="given-name"
           />
           <mat-error
             data-cy="fname-empty-error"
             *ngIf="firstName?.touched && firstName?.errors?.required"
-            >Please enter your first name
+            >{{ "Please enter your first name" | translate }}
           </mat-error>
 
           <mat-error
@@ -67,22 +71,24 @@
           <mat-error
             data-cy="fname-whitespace-error"
             *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
-            >First name cannot include whitespaces.
+            >{{ "First name" | translate }}
+            {{ "cannot include whitespaces." | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label> Last name *</mat-label>
+          <mat-label> {{ "Last name" | translate }} *</mat-label>
           <input
             matInput
             formControlName="lastName"
-            placeholder="Last name"
+            [placeholder]="'Last name' | translate"
             type="text"
+            autocomplete="family-name"
           />
           <mat-error
             data-cy="lname-empty-error"
             *ngIf="lastName?.touched && lastName?.errors?.required"
-            >Please enter your last name
+            >{{ "Please enter your last name" | translate }}
           </mat-error>
 
           <mat-error
@@ -102,7 +108,8 @@
           <mat-error
             data-cy="lname-whitespace-error"
             *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
-            >Last name cannot include whitespaces.
+            >{{ "Last name" | translate }}
+            {{ "cannot include whitespaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -114,33 +121,35 @@
         fxLayoutGap="10px"
       >
         <mat-form-field appearance="outline">
-          <mat-label> Email Address *</mat-label>
+          <mat-label> {{ "Email Address" | translate }} *</mat-label>
           <input
             matInput
             formControlName="email"
-            placeholder="Email address"
+            [placeholder]="'Email Address' | translate"
+            autocomplete="email"
             type="email"
           />
           <mat-icon matPrefix>email</mat-icon>
           <mat-error
             data-cy="email-invalid-error"
             *ngIf="email?.touched && email?.errors?.email"
-            >Please enter a valid email.
+            >{{ "Please enter a valid email." | translate }}
           </mat-error>
           <mat-error
             data-cy="email-empty-error"
             *ngIf="email?.touched && email?.errors?.required"
-            >Please enter your email
+            >{{ "Please enter your email" | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label> Phone number *</mat-label>
+          <mat-label> {{ "Phone number" | translate }} *</mat-label>
           <input
             matInput
             formControlName="phoneNumber"
-            placeholder="Phone number"
+            [placeholder]="'Phone number' | translate"
             type="tel"
+            autocomplete="tel"
           />
           <mat-icon matPrefix>phone</mat-icon>
           <mat-error
@@ -158,13 +167,14 @@
           <mat-error
             data-cy="phone-empty-error"
             *ngIf="phone?.touched && phone?.errors?.required"
-            >Please enter your phone number
+            >{{ "Please enter your phone number" | translate }}
           </mat-error>
 
           <mat-error
             data-cy="fname-whitespace-error"
             *ngIf="phone?.touched && phone?.errors?.whiteSpace"
-            >Phone number cannot include whitespaces.
+            >{{ "Phone number" | translate }}
+            {{ "cannot include whitespaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -176,13 +186,15 @@
         fxLayoutGap="10px"
       >
         <mat-form-field appearance="outline">
-          <mat-label>Enter your password *</mat-label>
+          <mat-label>{{ "Enter your password" | translate }} *</mat-label>
           <input
             matInput
             formControlName="password"
             [type]="hidePassword ? 'password' : 'text'"
             (change)="onPasswordChange()"
             autocomplete="new-password"
+        [placeholder]="'Password' | translate"
+
           />
           <mat-icon
             matSuffix
@@ -201,19 +213,19 @@
           <mat-error
             data-cy="password-empty-error"
             *ngIf="password?.touched && password?.errors?.required"
-            >Please enter your password
+            >{{"Please enter your password"|translate}}
           </mat-error>
 
           <mat-error
             data-cy="password-weak-error"
-            *ngIf="password?.touched && password?.errors?.pattern"
+            *ngIf="password?.touched && password?.errors?.pattern && !password?.errors?.minlength"
           >
-            Password must contain atleast 1 special character and 1 number.
+            {{"Password must contain atleast 1 special character, 1 letter and 1 number."|translate}}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Confirm your password *</mat-label>
+          <mat-label>{{ "Confirm your password" | translate }} *</mat-label>
           <input
             matInput
             formControlName="confirmPassword"
@@ -233,7 +245,7 @@
               confirmPassword?.touched && confirmPassword?.errors?.mismatch
             "
           >
-            Password and confirm password doesn't match
+            {{ "Password and confirm password doesn't match" | translate }}
           </mat-error>
 
           <mat-error
@@ -241,7 +253,7 @@
             *ngIf="
               confirmPassword?.touched && confirmPassword?.errors?.required
             "
-            >Please confirm your password
+            >{{ "Please confirm your password" | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -262,7 +274,7 @@
         color="primary"
         class="btn-large"
       >
-        Sign up
+        {{ "Register" | translate }}
       </button>
     </form>
   </mat-card-content>
@@ -270,8 +282,8 @@
     <mat-divider mat-inset></mat-divider>
   </div>
   <mat-card-footer>
-    Legas's fee is 5% from each donation you receive. The payment processor fee
-    is 2.9% + $0.30 per donation. By continuing, you agree to the Legas
+    Legas's fee is 10% from each donation you receive. The payment processor fee
+    is 1% + $0.30 per donation. By continuing, you agree to the Legas
     <a
       link
       routerLink="/terms"
