@@ -16,7 +16,12 @@
       />
     </label>
   </button>
-  <button mat-raised-button color="primary" (click)="uploadPayments()">
+  <button
+    [disabled]="!fileChosen"
+    mat-raised-button
+    color="primary"
+    (click)="uploadPayments()"
+  >
     Submit
   </button>
 </div>
@@ -31,7 +36,9 @@
   </mat-progress-spinner>
 </div>
 
-<p *ngIf="!loading" class="text-error">{{ errorMessage }}</p>
+<p *ngIf="!loading" class="text-error" style="text-align: center">
+  {{ errorMessage }}
+</p>
 <div
   *ngIf="result"
   fxLayout="column"
@@ -42,11 +49,7 @@
   <h1>
     <mat-icon color="primary" class="bold">check</mat-icon>Upload completed
   </h1>
-  <div
-    fxLayout="row wrap"
-    fxLayoutAlign="center start"
-    fxLayoutGap="10px"
-  >
+  <div fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px">
     <h4>Total: {{ totalUploads }}</h4>
     <h4 style="color: green">
       Successful: {{ totalUploads - failedPayments.length }}

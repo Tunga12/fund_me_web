@@ -24,7 +24,9 @@
   </mat-progress-spinner>
 </div>
 
-<p *ngIf="!loading" class="text-error">{{ errorMessage }}</p>
+  <p *ngIf="!loading" class="text-error" style="text-align: center;">
+    {{ errorMessage }}
+  </p>
 
 <div *ngIf="!loading" fxLayout="row" fxLayoutAlign="center start">
   <div class="no-data" *ngIf="dataSource.data.length === 0">

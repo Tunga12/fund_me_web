@@ -22,6 +22,7 @@ import { ExcelService } from '../../services/excel/excel.service';
 export class ImportExcelComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   result: boolean = false;
+  fileChosen=false;
   totalUploads = 0;
   displayedColumns = [
     'firstName',
@@ -54,7 +55,10 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
     this.dataSource.data = [];
     this.cdr.detectChanges();
     const target: DataTransfer = <DataTransfer>evt.target;
-    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+    if (target.files.length !== 1) {
+      this.errorMessage = 'Cannot use multiple files';
+      throw new Error('Cannot use multiple files');
+    }
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
@@ -83,6 +87,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
       this.dataSource.sort = this.sort;
     };
     reader.readAsBinaryString(target.files[0]);
+    this.fileChosen=true;
   }
 
   uploadPayments() {
