@@ -1,0 +1,9 @@
+main{
+    min-width:100% !important;
+    height: unset;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

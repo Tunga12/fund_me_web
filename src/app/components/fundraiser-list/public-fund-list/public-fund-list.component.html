@@ -9,7 +9,7 @@
         fxFlex.gt-sm="31"
         >
         <div class="mat-image-container">
-            <img [src]="fundraiser.image" />
+            <img [src]="fundraiser.image" onerror="this.src='./assets/images/placeholder.png'" />
         </div>
         <mat-card-content fxLayout="column" fxLayoutAlign="start start" [ngStyle.xs]="{ height: '130px' }">
             <strong>{{ fundraiser.title }}</strong>

@@ -3,6 +3,13 @@ import { Router } from '@angular/router';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageService } from './../../../../services/image/image.service';
+import {
+  base64ToFile,
+  ImageCroppedEvent,
+  LoadedImage,
+} from 'ngx-image-cropper';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageCropperComponent } from './../../../image-cropper/image-cropper.component';
 
 @Component({
   selector: 'set-fundraiser-media',
@@ -10,7 +17,10 @@ import { ImageService } from './../../../../services/image/image.service';
   styleUrls: ['./set-fundraiser-media.component.css'],
 })
 export class SetFundraiserMediaComponent implements OnInit {
-  imageSrc!: string;
+  original_image: any;
+  croppedImage: any;
+
+  imageSrc: string = '';
   errorMessage = '';
   loading = false;
   @Input()
@@ -18,36 +28,26 @@ export class SetFundraiserMediaComponent implements OnInit {
   form!: FormGroup;
   @Output() next = new EventEmitter();
   constructor(
-    private imageService: ImageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private imageCroperDialog: MatDialog
+    ,private imageService:ImageService
   ) {}
 
   ngOnInit(): void {
-
     this.form = this.formBuilder.group({
-      image: ['',Validators.required],
+      image: ['', Validators.required],
     });
   }
+ 
+  // upload the image and go to next step
   nextStep() {
-    console.log(this.form.value);
-    console.log(this.fundraiser);
-
-    // this.fundraiser = { ...this.fundraiser, ...this.form.value }
-    console.log(this.fundraiser);
-    this.next.emit(this.fundraiser);
-  }
-
-  onImageChoosen(event: any) {
-    this.loading = true;
-    var file = event.target.files[0];
+    let file = base64ToFile(this.croppedImage);
     const formData: FormData = new FormData();
-    formData.append('image', file, file.name);
-
+    formData.append('image', file);
     this.imageService.upload(formData).subscribe(
-      (response) => {
-        this.imageSrc = response;
-        this.fundraiser.image = response;
+      () => {
         this.loading = false;
+        this.next.emit(this.fundraiser);
       },
       (error) => {
         console.log(error.error);
@@ -55,5 +55,42 @@ export class SetFundraiserMediaComponent implements OnInit {
         this.loading = false;
       }
     );
+
+  }
+
+  // remove the selaected image
+  removeImage() {
+    this.imageSrc = '';
+  }
+
+  editImage() {
+    let blob = base64ToFile(this.croppedImage);
+    var file = new File([blob], 'my_image.png', {
+      type: 'image/png',
+      lastModified: new Date().getTime(),
+    });
+    this.form.get('image')?.setValue(file);
+    // let fl=new DataTransfer();
+    // fl.items.add(file);
+    // console.log(fl);
+    // this.original_image.target.files=fl
+    console.log(this.original_image.srcElement.files);
+    this.onImageChoosen(this.original_image);
+  }
+
+  onImageChoosen(event: any) {
+    this.original_image = event;
+    this.imageCroperDialog
+      .open(ImageCropperComponent, { data: { image: event } })
+      .afterClosed()
+      .subscribe((croppedImage) => {
+        console.log(croppedImage);
+        if (croppedImage) {
+          
+          this.imageSrc = croppedImage;
+          this.fundraiser.image = croppedImage;
+          this.croppedImage = croppedImage;
+        }
+      });
   }
 }

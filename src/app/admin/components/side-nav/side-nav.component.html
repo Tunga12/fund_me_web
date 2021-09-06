@@ -86,7 +86,7 @@
         </a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content role="main">
+    <mat-sidenav-content role="main" [style.marginLeft]="icons_only?'80px':'168px'">
         <!-- Toggle button text -->
         <a (click)="icons_only=!icons_only" class="toggle" fxHide.lt-sm>
             <mat-icon mat-list-icon class="mat-18">{{ !icons_only?'arrow_back_ios':'arrow_forward_ios'}}

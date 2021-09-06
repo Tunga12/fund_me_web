@@ -9,6 +9,8 @@ import { Help } from 'src/app/models/help.model';
   styleUrls: ['./help-form.component.css']
 })
 export class HelpFormComponent implements OnInit,OnDestroy {
+  //currently selected help
+  selected_help='';
   @Output() createHelp = new EventEmitter();
   @Output() editHelp = new EventEmitter();
   @Input() mode: string = 'create';
@@ -28,12 +30,12 @@ export class HelpFormComponent implements OnInit,OnDestroy {
   ];
 
   help_types=[
-  'Getting Started',
-  "Account management",
-  "Money management",
-  "Donor questions",
-  "Common issues",
-  "Safety & security"
+  'getting started',
+  "account management",
+  "money management",
+  "donor questions",
+  "common issues",
+  "safety & security"
 ];
 
 
@@ -52,7 +54,9 @@ export class HelpFormComponent implements OnInit,OnDestroy {
       }
     );
     this.help&&this.mode==='edit' ? this.form.patchValue(this.help) : "";
+    this.selected_help
   }
+
   //create help
   complete() {
     this.mode.toLowerCase() === 'edit' ?

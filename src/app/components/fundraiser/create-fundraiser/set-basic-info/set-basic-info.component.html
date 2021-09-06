@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <mat-form-field appearance="outline">
     <mat-label>Choose category of your fundraiser *</mat-label>
-    <mat-select formControlName="category">
+    <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="selected_category">
       <mat-option>Choose category</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
         category.name
@@ -20,6 +20,7 @@
       class="matInput"
       placeholder="Enter goal amount"
       type="number"
+      min="1"
     />
     <mat-icon matPrefix>monetization_on</mat-icon>
     <span matSuffix>.00 USD</span>

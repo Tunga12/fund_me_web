@@ -41,24 +41,30 @@ export class NotificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getNotifications();
     // listen to new notifications
-    this.notificatonSub=this.socketService.listen('new notification').subscribe((data: any) => {
-      this.notifications.unshift(data);
-      console.log(data);
-    });
+    this.notificatonSub = this.socketService
+      .listen('new notification')
+      .subscribe((data: any) => {
+        this.notifications.unshift(data);
+        console.log(data);
+      });
 
     // // listen to unread notificatios
-    this.notificatonSub=this.socketService.listen('unread notification count').subscribe((data: any) => {
-      // this.data = data;
-      this.count = data;
-      console.log(this.count);
-      console.log(data);
-    });
+    this.notificatonSub = this.socketService
+      .listen('unread notification count')
+      .subscribe((data: any) => {
+        // this.data = data;
+        this.count = data;
+        console.log(this.count);
+        console.log(data);
+      });
 
     // // listen to read notifications
-    this.notificatonSub= this.socketService.listen('viewed notification').subscribe((data: any) => {
-      // this.data = data;
-      console.log(data);
-    });
+    this.notificatonSub = this.socketService
+      .listen('viewed notification')
+      .subscribe((data: any) => {
+        // this.data = data;
+        console.log(data);
+      });
 
     // // listen to error
     // this.socket.on('error', (data: any) => {
@@ -102,20 +108,22 @@ export class NotificationComponent implements OnInit, OnDestroy {
       );
   }
 
-  // marks a notification as read
+  // marks a notification as read if not already read
   markAsRead(notifiacation: Notification) {
-    this.notificatonSub = this.notificationService
-      .readNotification(notifiacation)
-      .subscribe(
-        () => {
-          notifiacation.viewed?.push(this.userId);
-          this.reset();
-        },
-        (error) => {
-          this.errorMessage = error.error;
-          console.log(error.error);
-        }
-      );
+    !notifiacation.viewed?.includes(localStorage.getItem('userId')!)
+      ? (this.notificatonSub = this.notificationService
+          .readNotification(notifiacation)
+          .subscribe(
+            () => {
+              notifiacation.viewed?.push(this.userId);
+              this.reset();
+            },
+            (error) => {
+              this.errorMessage = error.error;
+              console.log(error.error);
+            }
+          ))
+      : '';
   }
 
   // accept team membership invitation
@@ -132,7 +140,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
             this.snackbarService.getConfig()
           );
         },
-        () => {
+        (error) => {
+          console.log(error.error);
           this.errorMessage = 'Unable to accept, please try later';
         }
       );
@@ -152,7 +161,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
             this.snackbarService.getConfig()
           );
         },
-        () => {
+        (error) => {
+          console.log(error.error);
           this.errorMessage = 'Unable to delcline, please try later';
         }
       );
@@ -176,72 +186,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
           },
           (error) => {
             this.errorMessage = error.error;
-            console.log(error);
+            console.log(error.error);
           }
         );
     }
-  }
-
-  // checks if team membership request accepted or not
-  async isMembershipRequestAccepted(notification: Notification) {
-    let fundraiser!: Fundraiser;
-    if (this.isTeamInvitation(notification)) {
-      await this.fundraiserService
-        .getFundraiserAsync(notification.target)
-        .then((fund) => {
-          fundraiser = fund;
-        });
-    }
-
-    if (notification.recipients && fundraiser && fundraiser.teams) {
-      let userId = notification.recipients[0];
-      let team = fundraiser.teams.filter((team) => {
-        return (
-          team.id.userId._id === userId &&
-          team.status.toLocaleLowerCase() === 'accepted'
-        );
-      });
-      return team ? true : false;
-    }
-    return false;
-  }
-
-  // checks if  team memebership request declined or not
-  async isMembershipRequestDeclined(notification: Notification) {
-    let fundraiser!: Fundraiser;
-    await this.fundraiserService
-      .getFundraiserAsync(notification.target)
-      .then((fund) => {
-        fundraiser = fund;
-      });
-
-    if (notification.recipients && fundraiser && fundraiser.teams) {
-      let userId = notification.recipients[0];
-      let team = fundraiser.teams.filter((team) => {
-        return (
-          team.id.userId._id === userId &&
-          team.status.toLocaleLowerCase() === 'declined'
-        );
-      });
-      return team ? true : false;
-    }
-    return false;
-  }
-
-  // checks if beneficiary invitation is accepted or not
-  async isBeneficiaryInvitationAccepted(notification: Notification) {
-    let fundraiser!: Fundraiser;
-    await this.fundraiserService
-      .getFundraiserAsync(notification.target)
-      .then((fund) => {
-        fundraiser = fund;
-      });
-
-    // the beneficiaryy field is set means beneficiary invitation is accepted
-    if (fundraiser && fundraiser.beneficiary) {
-      return true;
-    }
-    return false;
   }
 
   // checks if the notification is about team member invitation

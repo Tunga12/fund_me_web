@@ -1,8 +1,9 @@
 <mat-toolbar [classList]="'bg-white'">
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-around center">
-      <div fxFlexOrder.lt-sm="1">
+    <div fxFlexOrder.lt-sm="1">
       <!-- search field -->
-      <input data-cy="search-field"
+      <input
+        data-cy="search-field"
         class="search"
         matInput
         #key
@@ -19,20 +20,20 @@
       class="logo"
     />
     <div>
-     <mat-form-field appearance="outline">
-       <mat-label>{{"Language"|translate}}</mat-label>
-      <mat-select
-      placeholder="Language"
-      (selectionChange)="changeLang($event)"
-      name="language"
-      [(value)]="selectedLanguage"
-    >
-      <mat-option [value]="'en'">English </mat-option>
-      <mat-option [value]="'am'"> አማርኛ </mat-option>
-      <mat-option [value]="'or'"> Oromiffa </mat-option>
-      <mat-option [value]="'tr'"> Tigrigna </mat-option>
-    </mat-select>     
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ "Language" | translate }}</mat-label>
+        <mat-select
+          placeholder="Language"
+          (selectionChange)="changeLang($event)"
+          name="language"
+          [(value)]="selectedLanguage"
+        >
+          <mat-option [value]="'en'">English </mat-option>
+          <mat-option [value]="'am'"> አማርኛ </mat-option>
+          <mat-option [value]="'or'"> Oromiffa </mat-option>
+          <mat-option [value]="'tr'"> Tigrigna </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <div fxFlexOrder.lt-sm="2">
@@ -43,7 +44,7 @@
         [routerLink]="['/sign-in']"
         data-cy="sign-in-btn"
       >
-       {{" Log in"|translate}}
+        {{ " Log in" | translate }}
       </a>
       <a
         fxHide.lt-sm
@@ -51,9 +52,9 @@
         mat-stroked-button
         color="primary"
         [routerLink]="['/create']"
-      data-cy="start-a-campign-btn"
-        >
-        {{"Start a Campaign"|translate}}
+        data-cy="start-a-campign-btn"
+      >
+        {{ "Start a Campaign" | translate }}
       </a>
 
       <a
@@ -65,7 +66,6 @@
         data-cy="your-fundraisers-btn"
       >
         {{ "Your fundraisers" | translate }}
-        
       </a>
 
       <!-- USER account MENU -->
@@ -98,16 +98,22 @@
           }}</mat-icon>
         </div>
       </a>
-      <mat-icon 
-      fxHide.lt-md
-      matBadge="5">notifications</mat-icon>
+      <button fxHide.lt-md mat-icon-button
+      routerLink="/notification"
+      >
+        <mat-icon matBadge="5">notifications</mat-icon>
+      </button>
 
       <mat-menu #account="matMenu">
-        <a 
-        fxHide.gt-sm
-        mat-menu-item routerLink="/notification" class="mat-menu-item" data-cy="notifications-link">
+        <a
+          fxHide.gt-sm
+          mat-menu-item
+          routerLink="/notification"
+          class="mat-menu-item"
+          data-cy="notifications-link"
+        >
           <mat-icon matBadge="5">notifications</mat-icon>
-          {{"Notifications"| translate}}
+          {{ "Notifications" | translate }}
         </a>
         <a
           fxHide.gt-sm
@@ -117,26 +123,44 @@
           class="mat-menu-item"
           data-cy="your-fundraisers-link"
         >
-          {{"Your fundraisers"| translate }}
+          {{ "Your fundraisers" | translate }}
         </a>
         <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
-          {{"Donations you've made" | translate}}
+          {{ "Donations you've made" | translate }}
         </a>
-        <a data-cy="account-seetings-link" mat-menu-item routerLink="/account-setting" class="mat-menu-item">
-          {{"Account settings"| translate}}
+        <a
+          data-cy="account-seetings-link"
+          mat-menu-item
+          routerLink="/account-setting"
+          class="mat-menu-item"
+        >
+          {{ "Account settings" | translate }}
         </a>
-        <a data-cy="helps-link" mat-menu-item routerLink="/help" class="mat-menu-item"> {{"Helps"|translate}} </a>
-        <a data-cy="create-lnk" mat-menu-item routerLink="/create" class="mat-menu-item">
-          {{"Start a new fundraiser" | translate}}
+        <a
+          data-cy="helps-link"
+          mat-menu-item
+          routerLink="/help"
+          class="mat-menu-item"
+        >
+          {{ "Helps" | translate }}
+        </a>
+        <a
+          data-cy="create-lnk"
+          mat-menu-item
+          routerLink="/create"
+          class="mat-menu-item"
+        >
+          {{ "Start a new fundraiser" | translate }}
         </a>
 
         <mat-divider></mat-divider>
-        <a data-cy="sign-out-link"
+        <a
+          data-cy="sign-out-link"
           mat-menu-item
           fxLayoutAlign="center"
           routerLink="/sign-in"
           (click)="authService.logOut()"
-          >{{"Sign out"| translate}}</a
+          >{{ "Sign out" | translate }}</a
         >
       </mat-menu>
 
@@ -160,9 +184,16 @@
     fxLayoutAlign="end center"
     fxLayoutGap="20px"
   >
-    <a mat-raised-button data-cy="start-a-comign-btn-lt-sm" color="primary" [routerLink]="['/create']">
-      {{"Start a Fundraiser"|translate}}
+    <a
+      mat-raised-button
+      data-cy="start-a-comign-btn-lt-sm"
+      color="primary"
+      [routerLink]="['/create']"
+    >
+      {{ "Start a Fundraiser" | translate }}
     </a>
-    <a data-cy="sign-in-btn-lt-sm" mat-button [routerLink]="['/sign-in']"> {{"Log in" | translate}} </a>
+    <a data-cy="sign-in-btn-lt-sm" mat-button [routerLink]="['/sign-in']">
+      {{ "Log in" | translate }}
+    </a>
   </mat-toolbar-row>
 </mat-toolbar>

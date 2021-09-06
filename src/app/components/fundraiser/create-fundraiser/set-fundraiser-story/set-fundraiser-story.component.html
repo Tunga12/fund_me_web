@@ -11,7 +11,7 @@
   <story-text-area [form]="form"></story-text-area>
   <mat-error *ngIf="story?.touched && story?.errors?.required">Story is required.</mat-error>
   <mat-error *ngIf="story?.touched && story?.errors?.minlength">Story should be {{
-    story?.errors?.minlength.requiredLength }} characters
+    story?.errors?.minlength.requiredLength }} letters
     minimum.</mat-error>
 
   <button [disabled]="!form.valid" mat-raised-button color="primary" (click)="nextStep()" class="btn-large">

@@ -25,7 +25,7 @@
         "
       ></div>
     </div>
-    <h2 class="bold">Let’s start with the basics</h2>
+    <h2 class="bold">{{currentStep===1?"Let’s start with the basics":currentStep===2?"Set fundraiser media":"Set fundraiser story"}}</h2>
     <form>
       <span [ngSwitch]="currentStep">
         <set-basic-info

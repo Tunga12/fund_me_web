@@ -87,21 +87,10 @@ export class FundraiserService {
   }
 
   //Edit a fundraiser by id
-  editFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
-    let fundraiserId = fundraiser._id;
-    // remove the _id element :not needed for update
-    delete fundraiser._id;
-    delete fundraiser.__v;
-    delete fundraiser.beneficiary;
-    // update the fundraiser  since we only need id of the category
-    let customFundraiser = {
-      ...fundraiser,
-      category: fundraiser.category?._id,
-      organizer: fundraiser.organizer?._id,
-    };
+  editFundraiser(fundraiserId:string,fundraiser: Fundraiser): Observable<Fundraiser> {
     return this.http.put<Fundraiser>(
       `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
-      customFundraiser
+      fundraiser
     );
   }
 

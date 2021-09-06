@@ -1,24 +1,28 @@
 <form [formGroup]="form">
-  <input
-    type="file"
-    name="image"
-    accept="image/jpeg,image/png,image/gif, image/bmp"
-    formControlName="image"
-    (change)="onImageChoosen($event)"
-  />
+  <p>
+    A high-quality photo or video will help tell your story and build trust with
+    donors.
+  </p>
 
- <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; max-width:500px;min-width: 400px">  <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
-  <div *ngIf="loading">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="100"
-      color="primary"
-      class="loading-spinner"
-    ></mat-progress-spinner>
-  </div>
-
-   <p class="text-error">{{ errorMessage }}</p>
-  <!-- <div class="or-divider">
+  <ng-container *ngIf="imageSrc === '' && !loading; else elseTemplate">
+    <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
+    <button id="image-chooser">
+      <label for="image" id="image-label">
+        <input
+          id="image"
+          hidden
+          type="file"
+          accept="image/jpeg,image/png,image/gif, image/bmp"
+          formControlName="image"
+          (change)="onImageChoosen($event)"
+        />
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
+          <mat-icon>add</mat-icon>
+          <p>upload a photo that best represents your fundraiser</p>
+        </div>
+      </label>
+    </button>
+    <!-- <div class="or-divider">
     <p class="bar"></p>
     <p style="font-weight: 600">or</p>
     <p class="bar"></p>
@@ -30,13 +34,48 @@
     <input matInput placeholder="Enter goal amount" link />
     <mat-icon matPrefix>link&nbsp;</mat-icon>
   </mat-form-field> -->
-  <button
-    mat-raised-button
-    [disabled]="!form.valid || loading"
-    color="primary"
-    (click)="nextStep()"
-    class="btn-large"
-  >
-    Next
-  </button>
+  </ng-container>
+
+  <ng-template #elseTemplate>
+    <div
+      fxLayout="column"
+      fxLayoutAlign="start start"
+      fxLayoutGap="0px"
+      [ngStyle]="{ width: '96%' }"
+    >
+      <img
+        [src]="imageSrc"
+        *ngIf="imageSrc"
+        style="height: 300px; width: 100%"
+      />
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="20px"
+        [ngStyle]="{ width: '94%' }"
+      >
+        <button [disabled]="!form.valid || loading" (click)="editImage()" mat-icon-button>
+          <mat-icon>edit</mat-icon>Edit
+        </button>
+        <button
+          [disabled]="!form.valid || loading"
+          mat-icon-button
+          color="warn"
+          (click)="removeImage()"
+        >
+          <mat-icon>delete</mat-icon>Delete
+        </button>
+      </div>
+    </div>
+
+    <button
+      mat-raised-button
+      [disabled]="!form.valid || loading"
+      color="primary"
+      (click)="nextStep()"
+      class="btn-large"
+    >
+      Next
+    </button>
+  </ng-template>
 </form>

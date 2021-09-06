@@ -57,15 +57,13 @@
           <mat-error
             data-cy="fname-minlength-error"
             *ngIf="firstName?.touched && firstName?.errors?.minlength"
-            >First name must be
-            {{ firstName?.errors?.minlength.requiredLength }} minimun.
+            >{{"First name must be letters minimum." | translate:{minlength:firstName?.errors?.minlength.requiredLength} }}
           </mat-error>
 
           <mat-error
             data-cy="fname-maxlength-error"
             *ngIf="firstName?.touched && firstName?.errors?.maxlength"
-            >First name must be
-            {{ firstName?.errors?.maxlength.requiredLength }} minimun.
+            >{{"First name must be maximun."| translate:{maxlength:firstName?.errors?.maxlength.requiredLength} }}
           </mat-error>
 
           <mat-error
@@ -94,15 +92,13 @@
           <mat-error
             data-cy="lname-minlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.minlength"
-            >Last name must be
-            {{ lastName?.errors?.minlength.requiredLength }} minimun.
+            >{{"Last name must be minimun."| translate:{ minlength:lastName?.errors?.minlength.requiredLength} }}
           </mat-error>
 
           <mat-error
             data-cy="lname-maxlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.maxlength"
-            >Last name must be
-            {{ lastName?.errors?.maxlength.requiredLength }} maximun.
+            >{{"Last name must be maximun."| translate:{maxlength:lastName?.errors?.maxlength.requiredLength } }}
           </mat-error>
 
           <mat-error
@@ -154,16 +150,10 @@
           <mat-icon matPrefix>phone</mat-icon>
           <mat-error
             data-cy="phone-minlength-error"
-            *ngIf="phone?.touched && phone?.errors?.minlength"
-            >Phone number must be
-            {{ phone?.errors?.minlength?.requiredLength }} digits.
+            *ngIf="phone?.touched && phone?.errors?.minlength || phone?.touched && phone?.errors?.minlength"
+            >{{"Phone number must be digits." | translate: { length: phone?.errors?.minlength?.requiredLength} }}
           </mat-error>
-          <mat-error
-            data-cy="phone-maxlength-error"
-            *ngIf="phone?.touched && phone?.errors?.maxlength"
-            >Phone number must be
-            {{ phone?.errors?.maxlength?.requiredLength }} digits.
-          </mat-error>
+          
           <mat-error
             data-cy="phone-empty-error"
             *ngIf="phone?.touched && phone?.errors?.required"
@@ -206,8 +196,7 @@
           <mat-error
             data-cy="password-minlength-error"
             *ngIf="password?.touched && password?.errors?.minlength"
-            >Password length must be minimum
-            {{ password?.errors?.minlength.requiredLength }} .
+            >{{"Password length must be minimum." | translate:{length:password?.errors?.minlength.requiredLength} }}
           </mat-error>
 
           <mat-error

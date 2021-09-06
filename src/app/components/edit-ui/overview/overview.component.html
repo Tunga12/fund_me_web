@@ -41,7 +41,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Choose category of your fundraiser</mat-label>
-    <mat-select formControlName="category" [(value)]="fundraiser.category">
+    <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="fundraiser.category">
       <mat-option>Choose category</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
         category.name
@@ -141,7 +141,7 @@ previous link
 
   <div class="save">
     <button
-      [disabled]="form.invalid || form.touched || loading"
+      [disabled]="form.invalid || !form.touched || loading"
       color="primary"
       mat-raised-button
       class="btn-large"

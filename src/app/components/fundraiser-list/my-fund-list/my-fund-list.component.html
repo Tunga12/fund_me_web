@@ -13,7 +13,7 @@
     [routerLink]="['/my-fundraiser-detail', fundraiser._id]"
   >
     <div class="mat-image-container">
-      <img [src]="fundraiser.image" />
+      <img [src]="fundraiser.image" onerror="this.src='./assets/images/placeholder.png'" />
     </div>
     <mat-card-content
       fxLayout="column"

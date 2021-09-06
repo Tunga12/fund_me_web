@@ -13,6 +13,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
   styleUrls: ['./set-basic-info.component.css'],
 })
 export class SetBasicInfoComponent implements OnInit, OnDestroy {
+  selected_category!: Category;
   @Input() fundraiser!: Fundraiser;
   form!: FormGroup;
   @Output() next = new EventEmitter();
@@ -27,9 +28,12 @@ export class SetBasicInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       category: [undefined, [Validators.required]],
-      goalAmount: [undefined, [Validators.required, Validators.min(50)]],
+      goalAmount: [undefined, [Validators.required, Validators.min(1)]],
     });
     this.getCategories();
+
+    this.form.patchValue(this.fundraiser);
+    this.selected_category=this.fundraiser.category!;
   }
 
   // get categories
@@ -41,23 +45,27 @@ export class SetBasicInfoComponent implements OnInit, OnDestroy {
       });
   }
 
-  get goalAmount(): AbstractControl | null
-{
-    return this.form.get('goalAmount');
-}
-
+  // compare two objects
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.name === o2.name && o1.id === o2.id;
+  }  
   
-  get category(): AbstractControl | null
-{
-    return this.form.get('category');
-  }
+  // go to the next form
   
   nextStep() {
     this.fundraiser = { ...this.fundraiser, ...this.form.value };
     this.next.emit(this.fundraiser);
   }
-
+  
   // getters for form controls
+  get goalAmount(): AbstractControl | null
+{
+    return this.form.get('goalAmount');
+}
+get category(): AbstractControl | null
+{
+  return this.form.get('category');
+}
 
   ngOnDestroy(): void {
     this.categorySub?.unsubscribe();

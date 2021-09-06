@@ -1,5 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
@@ -52,14 +57,27 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // post edit
   editFundraiser() {
     this.loading = true;
+    
+    let fundraiser={...this.fundraiser,...this.form.value,
+      category: this.fundraiser.category?._id,
+      organizer: this.fundraiser.organizer?._id,}
+    let fundraiserId = this.fundraiser._id!;
+    // remove the unnecessary elements: not needed for update
+    delete fundraiser._id;
+    delete fundraiser.__v;
+    delete fundraiser.beneficiary;
+    
     this.fundraiserSub = this.fundraiserService
-      .editFundraiser(this.fundraiser)
+      .editFundraiser(fundraiserId, fundraiser)
       .subscribe(
         (fundraiser) => {
-          this.fundraiser = fundraiser;
           this.loading = false;
+          this.fundraiser = fundraiser;
+          console.log(this.fundraiser);
+
+          this.form.patchValue(this.fundraiser);
           this.snackbar.open(
-            'Edit completed sccessfly',
+            'Edit completed sccessfully',
             'close',
             this.snackbarService.getConfig()
           );
@@ -101,6 +119,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // open delete connfirmation dialog
   openDeleteDialog() {
     this.dialog.open(DeleteDialogComponent, { data: this.fundraiser });
+  }
+
+  // compare two objects
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.name === o2.name || o1.id === o2.id;
   }
 
   ngOnDestroy(): void {

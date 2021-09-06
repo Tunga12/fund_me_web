@@ -84,7 +84,10 @@
               <mat-icon class="mat-18">attach_money</mat-icon>
             </span>
             <mat-error *ngIf="amount?.touched && amount?.errors?.required"
-              >{{"Please enter amount you want to donate"| translate}}
+              >{{"Please enter the amount you want to donate"| translate}}
+            </mat-error>
+            <mat-error *ngIf="amount?.touched && amount?.errors?.min"
+            >{{"The minimum amount to doante is" | translate:{min:amount?.errors?.min?.min} }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -137,8 +140,8 @@
             <textarea matInput formControlName="comment" type="text"></textarea>
           </mat-form-field>
           <mat-error *ngIf="comment?.touched && comment?.errors?.minlength"
-            >Tip should be
-            {{ comment?.errors?.minlength.requiredLength }} characters
+            >Comment should be
+            {{ comment?.errors?.minlength.requiredLength }} letters
             minimum</mat-error
           >
         </div>
@@ -163,7 +166,7 @@
           Donate now
         </button>  -->
       </div>
-      <ngx-paypal [fxHide]="form.invalid" [config]="payPalConfig"></ngx-paypal>
+      <ngx-paypal aria-disabled="form.invalid" [config]="payPalConfig"></ngx-paypal>
     </form>
     <mat-card [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>

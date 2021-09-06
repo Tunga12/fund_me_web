@@ -37,8 +37,8 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     public fundraiserServ: FundraiserService,
-    public authService: AuthService,
-  ){}
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.docTitle.setTitle('fundraiser detail');
@@ -56,16 +56,27 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   increaseShareCount() {
     this.loading = true;
     this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
-    this.fundSub = this.fundraiserServ
-      .editFundraiser(this.fundraiser!)
-      .subscribe(
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+    let fundraiser = {
+      ...this.fundraiser,
+      category: this.fundraiser?.category?._id,
+      organizer: this.fundraiser?.organizer?._id,
+    };
+    let fundraiserId = this.fundraiser?._id!;
+    // remove the unnecessary elements: not needed for update
+    delete fundraiser._id;
+    delete fundraiser.__v;
+    delete fundraiser.beneficiary;
+
+    // this.fundSub = this.fundraiserServ
+    //   .editFundraiser(fundraiserId, fundraiser)
+    //   .subscribe(
+    //     () => {
+    //       this.loading = false;
+    //     },
+    //     () => {
+    //       this.loading = false;
+    //     }
+    //   );
   }
 
   // get fundriser using id
@@ -142,7 +153,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   share() {
     let data: ShareArgs = {
-      url: `http://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `https://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I havae created a fundraiser on gofundme ${

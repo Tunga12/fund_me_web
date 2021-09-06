@@ -6,9 +6,9 @@
         <form [formGroup]="form" (ngSubmit)="complete()">
             <mat-form-field appearance="outline">
                 <mat-label>Type of your help</mat-label>
-                <mat-select placeholder="Type of help" name="item" formControlName="category">
+                <mat-select placeholder="Type of help" [(value)]="selected_help" formControlName="category">
                     <mat-option *ngFor="let type of help_types" [value]="type">
-                        {{type}}
+                        {{type| titlecase}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="category?.touched && category?.errors?.required">Help type is required.</mat-error>
@@ -20,7 +20,7 @@
 
                 <mat-error *ngIf="title?.touched && title?.errors?.required">Title is required.</mat-error>
                 <mat-error *ngIf="title?.touched && title?.errors?.minlength">Content should be {{
-                    title?.errors?.minlength.requiredLength }} characters
+                    title?.errors?.minlength.requiredLength }} letters
                     minimum.</mat-error>
             </mat-form-field>
 
@@ -30,7 +30,7 @@
             </ngx-editor>
             <mat-error *ngIf="content?.touched && content?.errors?.required">Content is required.</mat-error>
             <mat-error *ngIf="content?.touched && content?.errors?.minlength">Content should be {{
-                content?.errors?.minlength.requiredLength }} characters
+                content?.errors?.minlength.requiredLength }} letters
                 minimum.</mat-error>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">

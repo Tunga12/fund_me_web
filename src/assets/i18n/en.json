@@ -43,5 +43,12 @@
   "Donate now": "Donate now",
   "Share": "Share",
   "Donate": "Donate",
-  "Team fundraiser":"Team fundraiser"
+  "Team fundraiser":"Team fundraiser",
+  "The minimum amount to doante is":"The minimum amount to doante is {{min}}",
+  "First name must be letters minimum":"First name must be {{ minlength }} letters minimum",
+  "First name must be letters maximum.":"First name must {{maxlength}} be letters maximum.",
+  "Last name must be letters minimum.":"Last name must be {{minlength}} letters minimum.",
+  "Last name must be letters maximum.":"Last name must be {{maxlength}} letters maximum.",
+  "Phone number must be digits.":"Phone number must be {length} digits.",
+  "Password length must be minimum.":"Password length must be minimum {{length}}."
 }

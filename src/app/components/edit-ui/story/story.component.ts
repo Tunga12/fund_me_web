@@ -1,5 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
@@ -32,6 +37,7 @@ export class StoryComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       story: ['', [Validators.required, Validators.minLength(20)]],
     });
+    this.form.patchValue(this.fundraiser);
   }
 
   public get story(): AbstractControl | null {
@@ -40,8 +46,20 @@ export class StoryComponent implements OnInit, OnDestroy {
 
   // post edit
   editStory() {
+    let fundraiser = {
+      ...this.fundraiser,
+      ...this.form.value,
+      category: this.fundraiser.category?._id,
+      organizer: this.fundraiser.organizer?._id,
+    };
+    let fundraiserId = this.fundraiser._id!;
+    // remove the unnecessary elements: not needed for update
+    delete fundraiser._id;
+    delete fundraiser.__v;
+    delete fundraiser.beneficiary;
+
     this.fundraiserSub = this.fundraiserService
-      .editFundraiser(this.fundraiser)
+      .editFundraiser(fundraiserId, fundraiser)
       .subscribe(
         (fundraiser) => {
           this.fundraiser = fundraiser;

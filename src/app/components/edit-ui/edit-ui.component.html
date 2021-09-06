@@ -1,6 +1,6 @@
 <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav >
+</nav>
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"
@@ -12,9 +12,7 @@
 
 <div *ngIf="!loading">
   <header fxHide.lt-md>
-    <div
-      [ngStyle.gt-sm]="{ width: '80%', margin: '20px auto' }"
-    >
+    <div [ngStyle.gt-sm]="{ width: '80%', margin: '20px auto' }">
       <div class="back-btn">
         <button
           (click)="backToDetailPage()"
@@ -66,24 +64,36 @@
       >
         <overview [fundraiser]="fundraiser"></overview>
       </div>
-      <div *ngIf="index === 1" class="tab-content">
-        <div style="width: 100%">
-          <img [src]="fundraiser.image" width="100%" height="100%" />
-        </div>
+      <div
+        *ngIf="index === 1"
+        class="tab-content"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        <img [src]="fundraiser.image" onerror="this.src='./assets/images/placeholder.png'" width="50%" height="50%" />
         <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-        <div>
-          <mat-label>Change photo</mat-label>
-          <input type="file" (change)="uploadImage($event)" />
-          <!-- <button
+
+        <form
+          [formGroup]="form"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <mat-label for="image">Change photo </mat-label>
+          <input
+            id="image"
+            formControlName="image"
+            type="file"
+            accept="image/jpeg,image/png,image/gif, image/bmp"
+            (change)="onImageChoosen($event)"
+          />
+          <button
             mat-raised-button
             color="primary"
-            class="btn-primary btn-large"
-            style="width: 30% !important"
-            (click)="editFundraiser()"
+            (click)="uploadImage()"
           >
             Save change
-          </button> -->
-        </div>
+          </button>
+        </form>
       </div>
 
       <div *ngIf="index === 2" class="tab-content">

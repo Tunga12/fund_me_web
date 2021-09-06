@@ -1,11 +1,14 @@
-.add-media {
-    border: 2px dashed #adadad;
-    border-radius: 4px;
-    box-sizing: border-box;
-    cursor: pointer;
-    width: 96%;
-    min-height: 250px;
+#image-chooser {
+  border: 2px dashed #adadad;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 98%;
+  min-height: 250px;
+  margin-bottom: 20px;
 }
 
-
-
+#image-label {
+  padding: 100%;
+  cursor: pointer;
+}

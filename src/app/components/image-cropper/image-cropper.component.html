@@ -1,0 +1,31 @@
+<!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
+<main>
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+      <button mat-icon-button color="warn" [mat-dialog-close]="''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="done()">
+        <mat-icon>check</mat-icon>Done
+      </button>
+    </div>
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 3"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+    <!-- <img [src]="croppedImage" /> -->
+    <p class="text-error">{{ errorMessage }}</p>
+    <div *ngIf="loading">
+      <mat-progress-spinner
+        mode="indeterminate"
+        [value]="100"
+        color="primary"
+        class="loading-spinner"
+      ></mat-progress-spinner>
+    </div>  
+</main>
