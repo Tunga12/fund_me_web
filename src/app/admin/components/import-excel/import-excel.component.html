@@ -32,9 +32,31 @@
 </div>
 
 <p *ngIf="!loading" class="text-error">{{ errorMessage }}</p>
+<div
+  *ngIf="result"
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  fxLayoutGap="0px"
+  class="mat-typography"
+>
+  <h1>
+    <mat-icon color="primary" class="bold">check</mat-icon>Upload completed
+  </h1>
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="center start"
+    fxLayoutGap="10px"
+  >
+    <h4>Total: {{ totalUploads }}</h4>
+    <h4 style="color: green">
+      Successful: {{ totalUploads - failedPayments.length }}
+    </h4>
+    <h4 style="color: red">Failed: {{ failedPayments.length }}</h4>
+  </div>
+</div>
 
 <div
-  *ngIf="dataSource.data.length > 0"
+  *ngIf="dataSource.data.length > 0 && !loading"
   class="table-container mat-elevation-z8"
 >
   <div
@@ -54,21 +76,6 @@
       Retry
     </button>
   </div>
-
-  <div
-    *ngIf="result"
-    fxLayout="row"
-    fxLayoutAlign="center start"
-    fxLayoutGap="10px"
-    class="mat-typography"
-  >
-    <h4>Total: {{ totalUploads }}</h4>
-    <h4 color="primary">
-      Successful: {{ totalUploads - failedPayments.length }}
-    </h4>
-    <h4 color="warn">Failed: {{ failedPayments.length }}</h4>
-  </div>
-
   <mat-table
     matSort
     [dataSource]="dataSource"

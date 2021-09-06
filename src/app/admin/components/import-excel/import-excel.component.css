@@ -1,3 +1,7 @@
 .table-container{
     margin-top: 0px;
 }
+
+.mat-primary.mat-raised-button{
+    margin: 0px;
+}
