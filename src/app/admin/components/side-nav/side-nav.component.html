@@ -1,98 +1,162 @@
 <div class="container">
-<nav class="mat-elevation-z14">
-    <mat-toolbar class="toolbar elevation-mat28" [classList]="'bg-white'" fxLayout="row"
-        fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <div fxLayout="row">
-            <button fxHide.gt-xs mat-icon-button (click)="startSidenavRef.toggle()">
-                <mat-icon>menu</mat-icon>
-            </button>
+  <nav class="mat-elevation-z14">
+    <mat-toolbar
+      class="toolbar elevation-mat28"
+      [classList]="'bg-white'"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="20px"
+    >
+      <div fxLayout="row">
+        <button fxHide.gt-xs mat-icon-button (click)="startSidenavRef.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <!-- LOGO -->
+      <img
+        [routerLink]="['/']"
+        class="logo"
+        routerLinkActive="router-link-active"
+        src="/assets/images/icon.svg"
+      />
+
+      <!-- USER account MENU -->
+      <a
+        *ngIf="authService.isLoggedIn() && currentUser"
+        fxHide.lt-sm
+        mat-button
+        [matMenuTriggerFor]="account"
+        (onMenuClose)="accountCaret = !accountCaret"
+        (onMenuOpen)="accountCaret = !accountCaret"
+        class="nav-link mat-button"
+      >
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="3px"
+        >
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+            <div class="avatar-contain">
+              {{ currentUser?.firstName?.charAt(0) | titlecase }}
+              {{ currentUser?.lastName?.charAt(0) | titlecase }}
+            </div>
+            <span>
+              {{ currentUser?.firstName | titlecase }}
+            </span>
+          </div>
+          <mat-icon>{{
+            accountCaret ? "expand_more" : "expand_less"
+          }}</mat-icon>
         </div>
-        <!-- LOGO -->
-        <img [routerLink]="['/']" class="logo" routerLinkActive="router-link-active" src="/assets/images/icon.svg">
-           
+      </a>
 
-        <!-- USER account MENU -->
-        <a *ngIf="authService.isLoggedIn() && currentUser" fxHide.lt-sm mat-button [matMenuTriggerFor]="account"
-            (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"
-            class="nav-link mat-button">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
-                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
-                    <div class="avatar-contain">
-                        {{ currentUser?.firstName?.charAt(0) | titlecase }}
-                        {{ currentUser?.lastName?.charAt(0) | titlecase }}
-                    </div>
-                    <span>
-                        {{ currentUser?.firstName |titlecase}}
-                    </span>
-                </div>
-                <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
-            </div>
+      <mat-menu #account="matMenu">
+        <a mat-menu-item routerLink="/notification" class="mat-menu-item">
+          Notifications
         </a>
 
-        <mat-menu #account="matMenu">
-            <a mat-menu-item routerLink="/notification" class="mat-menu-item">
-                Notifications
-            </a>
-
-            <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
-                Account settings
-            </a>
-            <mat-divider></mat-divider>
-            <a mat-menu-item fxLayoutAlign="center" routerLink="/sign-in" (click)="authService.logOut()">Sign out</a>
-        </mat-menu>
+        <a mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+          Account settings
+        </a>
+        <mat-divider></mat-divider>
+        <a
+          mat-menu-item
+          fxLayoutAlign="center"
+          routerLink="/sign-in"
+          (click)="authService.logOut()"
+          >Sign out</a
+        >
+      </mat-menu>
     </mat-toolbar>
-</nav>
+  </nav>
 
-<mat-sidenav-container class="sidenav-container"
-[style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav role="navigation" fixedTopGap="56" #startSidenavRef [mode]="mobileQuery.matches ? 'over' : 'side'"
-    [fixedInViewport]="mobileQuery.matches" opened>
-        <mat-nav-list dense>
-            <a mat-list-item routerLink="home" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">home</mat-icon><span *ngIf="!icons_only"> Home</span>
-            </a>
-            <a mat-list-item routerLink="statistics" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon><span *ngIf="!icons_only"> Statistics</span>
-            </a>
-            <a mat-list-item routerLink="withdrawals" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">account_balance_wallet</mat-icon><span *ngIf="!icons_only"> Withdrawals</span>
-            </a>
-            <a mat-list-item routerLink="payments" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon><span *ngIf="!icons_only"> Payments</span>
-            </a>
-            <a mat-list-item routerLink="upload" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">upload</mat-icon><span *ngIf="!icons_only"> Upload payments</span>
-            </a>
-            <a mat-list-item routerLink="helps"routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon><span *ngIf="!icons_only"> Helps</span>
-            </a>
-        
-        
-            <a *ngIf="authService.isLoggedIn() && currentUser" mat-button [matMenuTriggerFor]="account" fxHide.gt-xs
-            (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"
-            class="nav-link mat-button">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
-                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
-                    <div class="avatar-contain">
-                        {{ currentUser?.firstName?.charAt(0) | titlecase }}
-                        {{ currentUser?.lastName?.charAt(0) | titlecase }}
-                    </div>
-                    <span>
-                        {{ currentUser?.firstName |titlecase}}
-                    </span>
-                </div>
-                <mat-icon>{{ accountCaret ? "expand_more" : "expand_less" }}</mat-icon>
+  <mat-sidenav-container
+    class="sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+  >
+    <mat-sidenav
+      role="navigation"
+      fixedTopGap="56"
+      #startSidenavRef
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      opened
+    >
+      <mat-nav-list dense>
+        <a mat-list-item routerLink="home" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">home</mat-icon
+          ><span *ngIf="!icons_only"> Home</span>
+        </a>
+        <a mat-list-item routerLink="statistics" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">trending_up</mat-icon
+          ><span *ngIf="!icons_only"> Statistics</span>
+        </a>
+        <a mat-list-item routerLink="withdrawals" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18"
+            >account_balance_wallet</mat-icon
+          ><span *ngIf="!icons_only"> Withdrawals</span>
+        </a>
+        <a mat-list-item routerLink="payments" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon
+          ><span *ngIf="!icons_only"> Payments</span>
+        </a>
+        <a mat-list-item routerLink="upload" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">upload</mat-icon
+          ><span *ngIf="!icons_only"> Upload payments</span>
+        </a>
+        <a mat-list-item routerLink="helps" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon
+          ><span *ngIf="!icons_only"> Helps</span>
+        </a>
+
+        <a
+          *ngIf="authService.isLoggedIn() && currentUser"
+          mat-button
+          [matMenuTriggerFor]="account"
+          fxHide.gt-xs
+          (onMenuClose)="accountCaret = !accountCaret"
+          (onMenuOpen)="accountCaret = !accountCaret"
+          class="nav-link mat-button"
+        >
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            fxLayoutGap="3px"
+          >
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+              <div class="avatar-contain">
+                {{ currentUser?.firstName?.charAt(0) | titlecase }}
+                {{ currentUser?.lastName?.charAt(0) | titlecase }}
+              </div>
+              <span>
+                {{ currentUser?.firstName | titlecase }}
+              </span>
             </div>
+            <mat-icon>{{
+              accountCaret ? "expand_more" : "expand_less"
+            }}</mat-icon>
+          </div>
         </a>
-        </mat-nav-list>
+      </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content role="main" [style.marginLeft]="icons_only?'80px':'168px'">
-        <!-- Toggle button text -->
-        <a (click)="icons_only=!icons_only" class="toggle" fxHide.lt-sm>
-            <mat-icon mat-list-icon class="mat-18">{{ !icons_only?'arrow_back_ios':'arrow_forward_ios'}}
-            </mat-icon>
-        </a>
-        <router-outlet></router-outlet>
+    <mat-sidenav-content
+      role="main"
+      [style.marginLeft]="icons_only ? '80px' : '168px'"
+    >
+      <!-- Toggle button text -->
+      <a
+        (click)="icons_only = !icons_only"
+        class="toggle"
+        fxHide.lt-sm
+        fxFlex="2"
+      >
+        <mat-icon mat-list-icon class="mat-18"
+          >{{ !icons_only ? "arrow_back_ios" : "arrow_forward_ios" }}
+        </mat-icon>
+      </a>
+      <main fxFlex="98">
+          <router-outlet></router-outlet>
+      </main>
     </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-sidenav-container>
 </div>
