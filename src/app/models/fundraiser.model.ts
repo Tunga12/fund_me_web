@@ -26,5 +26,10 @@ export interface Fundraiser {
   totalShareCount?: number;
   likeCount?: number;
   withdraw?:Withdrawal,
- 
+  totalWithdraw?: Withdraw[]
+}
+
+interface Withdraw{
+  date:Date,
+  amount:number
 }

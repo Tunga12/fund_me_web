@@ -28,8 +28,11 @@
 
 <div *ngIf="!loading" fxLayout="row" fxLayoutAlign="center start">
   <div class="no-data" *ngIf="dataSource.data.length === 0">
-   {{ date_chosen?'You have no payments in this date range.':'Please choose a date range.'}}
-   
+    {{
+      date_chosen
+        ? "You have no payments in this date range."
+        : "Please choose a date range."
+    }}
   </div>
 </div>
 
@@ -92,7 +95,7 @@
         Amount</mat-header-cell
       >
       <mat-cell *matCellDef="let element">
-        {{ element.amount | number:'.2'}}
+        {{ element.amount | number: ".2" }}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="fundraiserId">

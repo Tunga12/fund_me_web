@@ -1,4 +1,9 @@
-<div>
+<div
+  *ngIf="!result"
+  fxLayout="row"
+  fxLayoutAlign="space-around end"
+  fxLayoutGap="22px"
+>
   <button mat-raised-button color="primary">
     <label>
       Import successful payments
@@ -11,11 +16,59 @@
       />
     </label>
   </button>
+  <button mat-raised-button color="primary" (click)="uploadPayments()">
+    Submit
+  </button>
 </div>
 
-<div *ngIf="dataSource.data.length > 0"
-  class="table-container mat-elevation-z8"
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
   >
+  </mat-progress-spinner>
+</div>
+
+<p *ngIf="!loading" class="text-error">{{ errorMessage }}</p>
+
+<div
+  *ngIf="dataSource.data.length > 0"
+  class="table-container mat-elevation-z8"
+>
+  <div
+    *ngIf="result"
+    fxLayout="row"
+    fxLayoutAlign="space-around start"
+    fxLayoutGap="22px"
+  >
+    <button
+      mat-raised-button
+      (click)="exporter.exportTable('xlsx')"
+      color="primary"
+    >
+      Export
+    </button>
+    <button mat-raised-button color="primary" (click)="uploadPayments()">
+      Retry
+    </button>
+  </div>
+
+  <div
+    *ngIf="result"
+    fxLayout="row"
+    fxLayoutAlign="center start"
+    fxLayoutGap="10px"
+    class="mat-typography"
+  >
+    <h4>Total: {{ totalUploads }}</h4>
+    <h4 color="primary">
+      Successful: {{ totalUploads - failedPayments.length }}
+    </h4>
+    <h4 color="warn">Failed: {{ failedPayments.length }}</h4>
+  </div>
+
   <mat-table
     matSort
     [dataSource]="dataSource"

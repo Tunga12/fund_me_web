@@ -60,13 +60,13 @@
             <a mat-list-item routerLink="payments" routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">account_balance</mat-icon><span *ngIf="!icons_only"> Payments</span>
             </a>
+            <a mat-list-item routerLink="upload" routerLinkActive="active">
+                <mat-icon mat-list-icon class="mat-18">upload</mat-icon><span *ngIf="!icons_only"> Upload payments</span>
+            </a>
             <a mat-list-item routerLink="helps"routerLinkActive="active">
                 <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon><span *ngIf="!icons_only"> Helps</span>
             </a>
         
-            <a mat-list-item routerLink="upload" routerLinkActive="active">
-                <mat-icon mat-list-icon class="mat-18">upload</mat-icon><span *ngIf="!icons_only"> Upload payments</span>
-            </a>
         
             <a *ngIf="authService.isLoggedIn() && currentUser" mat-button [matMenuTriggerFor]="account" fxHide.gt-xs
             (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"

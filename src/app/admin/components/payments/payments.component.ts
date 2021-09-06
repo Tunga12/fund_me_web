@@ -15,7 +15,6 @@ import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Payment } from '../../models/payment.model';
 import { User } from 'src/app/models/user.model';
-import { ExcelService } from './../../services/excel/excel.service';
 @Component({
   selector: 'admin-payments',
   templateUrl: './payments.component.html',
@@ -53,7 +52,6 @@ export class PaymentsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private pageTitle: Title,
     private fundraiserService: FundraiserService,
-    private excelSrv:ExcelService
   ) {}
 
   async ngOnInit() {
