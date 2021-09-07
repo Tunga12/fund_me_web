@@ -15,13 +15,17 @@
         fxLayoutGap="5px"
       >
         <a mat-button [routerLink]="['/create']" class="nav-link">
-          {{"Start a Campaign"|translate}}
+          {{ "Start a Campaign" | translate }}
         </a>
         <mat-divider fxShow.gt-xs vertical style="height: 30px"></mat-divider>
-        <a mat-button [routerLink]="['/sign-in']" class="nav-link"> {{"Log in"|translate}} </a>
-        <a mat-button (click)="share()" class="styled-button share"> {{"Share"|translate}}</a>
+        <a mat-button [routerLink]="['/sign-in']" class="nav-link">
+          {{ "Log in" | translate }}
+        </a>
+        <a mat-button (click)="share()" class="styled-button share">
+          {{ "Share" | translate }}</a
+        >
         <a mat-button [routerLink]="['/create']" class="styled-button donate">
-          {{"Donate"|translate }}
+          {{ "Donate" | translate }}
         </a>
       </div>
       <div
@@ -37,11 +41,13 @@
       </div>
 
       <mat-menu #menuRef="matMenu" [overlapTrigger]="false">
-        <a mat-menu-item routerLink="/sign-in">{{"Log in"| translate}}</a>
-        <a mat-menu-item routerLink="/create">{{"Start a Campaign"| translate }}</a>
-        <a mat-menu-item (click)="share()"> {{"Share"|translate}} </a>
+        <a mat-menu-item routerLink="/sign-in">{{ "Log in" | translate }}</a>
+        <a mat-menu-item routerLink="/create">{{
+          "Start a Campaign" | translate
+        }}</a>
+        <a mat-menu-item (click)="share()"> {{ "Share" | translate }} </a>
         <a mat-menu-item [routerLink]="['/donate', fundraiser?._id]">
-          {{"Donate"|translate}}
+          {{ "Donate" | translate }}
         </a>
       </mat-menu>
     </mat-toolbar>
@@ -89,8 +95,12 @@
 
               <div fxHide.md fxLayout.xs="column">
                 <h1 class="bold">{{ fundraiser?.title }}</h1>
-               <app-stat fxHide.gt-sm [fundraiser]="fundraiser!" [ngStyle]="{'width': '100%'}"></app-stat>
-              
+                <app-stat
+                  fxHide.gt-sm
+                  [fundraiser]="fundraiser!"
+                  [ngStyle]="{ width: '100%' }"
+                ></app-stat>
+
                 <div
                   fxLayout="row wrap"
                   fxLayoutAlign="space-between center"
@@ -102,7 +112,7 @@
                     (click)="share()"
                     class="styled-button share btn-small"
                   >
-                    <mat-icon>ios_share</mat-icon> {{"Share"| translate}}
+                    <mat-icon>ios_share</mat-icon> {{ "Share" | translate }}
                   </button>
                   <button
                     fxFlex="40"
@@ -110,7 +120,8 @@
                     [routerLink]="['/donate', fundraiser?._id]"
                     class="styled-button donate btn-small"
                   >
-                    <mat-icon>attach_money</mat-icon> {{"Donate now"|translate}}
+                    <mat-icon>attach_money</mat-icon>
+                    {{ "Donate now" | translate }}
                   </button>
                 </div>
               </div>
@@ -144,7 +155,7 @@
                       >
                         <strong class="team-fund-label">
                           <mat-icon>people</mat-icon>
-                          <span>{{"Team fundraiser"|translate }}</span>
+                          <span>{{ "Team fundraiser" | translate }}</span>
                         </strong>
                       </div>
                       <p>
@@ -154,7 +165,7 @@
                             fundraiser?.organizer?.lastName | titlecase
                         }}
                         <span *ngIf="hasAcceptedTeamMembers()">
-                          {{"and" | translate}}
+                          {{ "and" | translate }}
                           {{
                             fundraiserServ.getNumberOfAcceptedTeamMembers(
                               fundraiser!
@@ -166,7 +177,7 @@
                                 fundraiser!
                               ) === 1
                             "
-                            >{{"other"|translate}}</span
+                            >{{ "other" | translate }}</span
                           >
                           <span
                             *ngIf="
@@ -174,12 +185,14 @@
                                 fundraiser!
                               ) > 1
                             "
-                            >{{"others"| translate}}</span
+                            >{{ "others" | translate }}</span
                           >
-                          {{"are"|translate}}
+                          {{ "are" | translate }}
                         </span>
-                        <span *ngIf="!hasAcceptedTeamMembers()"> {{"is"| translate}} </span>
-                        {{"organizing this fundraiser"|translate}}
+                        <span *ngIf="!hasAcceptedTeamMembers()">
+                          {{ "is" | translate }}
+                        </span>
+                        {{ "organizing this fundraiser" | translate }}
                       </p>
                     </div>
                   </div>
@@ -187,7 +200,7 @@
                 </div>
                 <div>
                   <p>
-                    {{ fundraiser?.dateCreated | timeago                                                                                                                                                                                                                                                               }} |
+                    {{ fundraiser?.dateCreated | timeago }} |
                     <a href="">{{ fundraiser?.category?.name }}</a>
                   </p>
                   <mat-divider></mat-divider>
@@ -373,7 +386,7 @@
                   <!-- TODO -->
                   <!-- <a href="">See older updates</a> -->
                 </div>
-                <div
+                <!-- <div
                   fxLayout="row wrap"
                   fxLayoutAlign="space-between center"
                   style="position: sticky; top: 0"
@@ -394,7 +407,7 @@
                   >
                     <mat-icon>attach_money</mat-icon> Donate now
                   </button>
-                </div>
+                </div> -->
 
                 <!-- Fudrising team section -->
                 <div
@@ -534,6 +547,7 @@
                 <div>
                   <mat-divider></mat-divider>
                 </div>
+                <h1 *ngIf="getNumberOfComments()===0">No comments to show</h1>
                 <div
                   *ngFor="
                     let donation of fundraiser?.donations;
@@ -596,7 +610,10 @@
                 fxLayoutAlign="start start"
                 fxLayoutGap="8px"
               >
-               <app-stat [fundraiser]="fundraiser!" [ngStyle]="{'width': '100%'}"></app-stat>
+                <app-stat
+                  [fundraiser]="fundraiser!"
+                  [ngStyle]="{ width: '100%' }"
+                ></app-stat>
                 <button
                   mat-raised-button
                   (click)="share()"

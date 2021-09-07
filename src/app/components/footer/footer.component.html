@@ -1,53 +1,55 @@
-<footer class="bg-gray footer">
-  <div class="content bg-gray">
+<footer class="bg-gray">
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="space-around start"
+    fxLayoutAlign.lt-md="center center"
+    fxLayoutGap="10px"
+    class="content"
+  >
     <div
-      fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutAlign="space-around start"
-      fxLayoutAlign.lt-md="center start"
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      fxFlex="20"
       fxLayoutGap="10px"
     >
-      <div
-        fxLayout="column"
-        fxLayoutAlign="center start"
-        fxFlex="20"
-        fxLayoutGap="10px"
-      >
-        <img src="/assets/images/icon.svg" alt="" width="100" height="50" />
-        <mat-form-field appearance="outline">
-          <mat-label>{{ "Language" | translate }}</mat-label>
-          <mat-select
-            placeholder="Language"
-            (selectionChange)="changeLang($event)"
-            name="language"
-            [(value)]="selectedLanguage"
-          >
-            <mat-option [value]="'en'">English </mat-option>
-            <mat-option [value]="'am'"> አማርኛ </mat-option>
-            <mat-option [value]="'or'"> Oromiffa </mat-option>
-            <mat-option [value]="'tr'"> Tigrigna </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
-        <strong>Fundraise for</strong>
-        <a>Medical</a>
-        <a>Emergency</a>
-        <a>Memorial</a>
-        <a>Education</a>
-        <a>Nonprofit</a>
-      </div>
-      <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
-        <strong>Resources</strong>
-        <a [routerLink]="['/help']" routerLinkActive="router-link-active"
-          >Help center</a
+      <img src="/assets/images/icon.svg" alt="" width="100" height="50" />
+      <mat-form-field appearance="outline">
+        <mat-label>{{ "Language" | translate }}</mat-label>
+        <mat-select
+          placeholder="Language"
+          (selectionChange)="changeLang($event)"
+          name="language"
+          [(value)]="selectedLanguage"
         >
-      </div>
+          <mat-option [value]="'en'">English </mat-option>
+          <mat-option [value]="'am'"> አማርኛ </mat-option>
+          <mat-option [value]="'or'"> Oromiffa </mat-option>
+          <mat-option [value]="'tr'"> Tigrigna </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
+      <strong>Fundraise for</strong>
+      <a>Medical</a>
+      <a>Emergency</a>
+      <a>Memorial</a>
+      <a>Education</a>
+      <a>Nonprofit</a>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
+      <strong>Resources</strong>
+      <a [routerLink]="['/help']" routerLinkActive="router-link-active"
+        >Help center</a
+      >
     </div>
   </div>
 
+  <div><mat-divider>
+  </mat-divider></div>
+
   <div
-    class="content color-gray footer"
+    class="content color-gray"
     fxLayout="row"
     fxLayout.xs="column"
     fxLayoutAlign="space-around center"
@@ -56,7 +58,7 @@
     <div
       fxLayout="row"
       fxLayout.xs="column"
-      fxLayoutAlign="start start"
+      fxLayoutAlign="start center"
       fxLayoutGap="20px"
       fxFlexOrder.xs="1"
     >
