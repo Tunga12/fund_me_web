@@ -1,0 +1,16 @@
+mat-icon.mat-icon#fb-icon{
+    color:#0000ff;
+}
+
+mat-icon.mat-icon#tg-icon{
+    color:#1d9bf0;
+}
+
+.footer{
+    padding: 20px;
+    border-top: solid #e4e4e4 1px;
+}
+
+.content{
+    margin: 30px auto;
+}

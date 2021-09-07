@@ -15,8 +15,6 @@ import { CategoryService } from './../../services/category/category.service';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-    // selected language
-    selectedLanguage?: string;
   // the following 3 fields are
   //to toggle the carets upward and downward based on
   // the close and open state of dropdowns
@@ -45,8 +43,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.translate.use(localStorage.getItem('lang') || 'en');
   }
   ngOnInit(): void {
-        // get the selected language
-        this.selectedLanguage = localStorage.getItem('lang') || 'en';
 
     // this.getCategories();
     if (this.authService.isLoggedIn()) {
@@ -76,13 +72,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
       });
   }
 
-  changeLang(event: any) {
-    let lang = event.value;
-    this.selectedLanguage = lang;
-    console.log(this.selectedLanguage);
-    localStorage.setItem('lang', lang);
-    location.reload();
-  }
 
   ngOnDestroy(): void {
     if (this.currentUserSub) this.currentUserSub.unsubscribe();

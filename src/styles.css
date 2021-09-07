@@ -225,7 +225,12 @@ div.avatar-contain {
   z-index: 100;
 }
 
-.table-container{
+.table-container {
   margin: 30px 20px;
   width: 90%;
+}
+
+.bg-gray {
+  background-color: #fbf8f6;
+  padding: 20px;
 }

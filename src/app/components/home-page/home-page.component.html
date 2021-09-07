@@ -88,7 +88,7 @@
       data-cy="how-it-works-btn-mobile"
     >
       <mat-icon class="mat-18">play_circle_outline</mat-icon>
-      {{"See how Legas works"|translate}
+      {{ "See how Legas works" | translate }}
     </button>
   </div>
 </div>
@@ -124,7 +124,7 @@
   </app-public-fund-list>
 </div>
 
-<div style="background-color: #fbf8f6; padding: 20px" data-cy="trending-topic">
+<div class="bg-gray" data-cy="trending-topic">
   <div
     fxLayout="column"
     style="width: 80%; margin: 30px auto"
@@ -181,32 +181,124 @@
   fxLayout="column"
   fxLayoutAlign="center center"
   fxLayoutGap="30px"
-  style="margin: 100px auto; width: 80%"
+  ngStyle.xs="margin: 100px auto; width: 94%"
+  ngStyle.gt-sm="margin: 100px auto; width: 80%"
 >
-  <h2 class="bold mat-h2">{{"The leader in online fundraising"| translate}}</h2>
-  <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="30px">
+  <h2 class="bold mat-h2">
+    {{ "The leader in online fundraising" | translate }}
+  </h2>
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="30px"
+    style="min-width: 100%"
+  >
     <div
-      *ngFor="let item of [1, 2, 4, 5, 6, 44]"
       fxLayout="row"
       fxLayoutAlign="start start"
       fxLayoutGap="20px"
-      style="margin: 30px"
+      fxFlex="30"
     >
-      <mat-icon color="primary">phone_android</mat-icon>
+      <svg viewBox="0 0 19 19" class="norma-icon--large">
+        <g stroke="none" fill="green">
+          <path
+            d="M5.25 13.75h8.5v-8.5h-8.5zm8.5 1h-8.5v1.533c0 .258.206.467.45.467h7.6c.244 0 .45-.21.45-.467zm-8.5-10.5h8.5v-.533a.461.461 0 0 0-.45-.467H5.7c-.244 0-.45.21-.45.467zm8.05 13.5H5.7c-.8 0-1.45-.66-1.45-1.467V3.717c0-.806.65-1.467 1.45-1.467h7.6c.8 0 1.45.66 1.45 1.467v12.566c0 .806-.65 1.467-1.45 1.467zM9.5 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM10 11H9a1.5 1.5 0 0 0-1.415 1h3.83A1.5 1.5 0 0 0 10 11zm-3.5 2v-.5A2.5 2.5 0 0 1 9 10h1a2.5 2.5 0 0 1 2.5 2.5v.5z"
+            fill-rule="evenodd"
+          ></path>
+        </g>
+      </svg>
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
+        <strong class="bold mat-h3">{{ "Mobile app" | translate }}</strong>
+
+        <span class="color-gray" fxHide.xs>
+          {{
+            "The Legas app makes it simple to launch and manage your fundraiser on the go."
+              | translate
+          }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      fxFlex="30"
+    >
+      <svg viewBox="0 0 19 19" class="norma-icon--large">
+        <g stroke="none" fill="green">
+          <path
+            d="M2.824 11h5.992L5.834 6.527l.832-.554L10.018 11h6.158a6.75 6.75 0 1 0-13.353 0zm.227 1a6.753 6.753 0 0 0 12.898 0zM9.5 17.75a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5z"
+            fill-rule="evenodd"
+          ></path>
+        </g>
+      </svg>
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
+        <strong class="bold mat-h3">{{ "Simple setup" | translate }}</strong>
+        <span class="color-gray" fxHide.xs>
+          {{
+            "The Legas app makes it simple to launch and manage your fundraiser on the go."
+              | translate
+          }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      fxFlex="30"
+    >
+      <svg viewBox="0 0 19 19" class="norma-icon--large">
+        <g stroke="none" fill="green">
+          <path
+            d="M12.998 3.25H11v-1h4v4h-1V3.677L9.241 8.198 6.77 5.726 4.872 7.834l-.744-.668 2.603-2.892 2.528 2.528zM8.5 11.5v5.25h2V11.5zm3-1v7.25h-4V10.5zm-8.25 3.75v2.5h2v-2.5zm3-1v4.5h-4v-4.5zm7.5-4.75v8.25h2V8.5zm3-1v10.25h-4V7.5z"
+            fill-rule="evenodd"
+          ></path>
+        </g>
+      </svg>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-        <h3 class="bold mat-h3">{{"Mobile app"|translate}}</h3>
-        <div
-          fxLayout="column"
-          fxLayoutAlign="start start"
-          fxLayoutGap="0px"
-          class="color-gray"
-        >
-          <span> {{"The Legas app makes it simple to launch and manage your fundraiser on the go."| translate }} </span>
-        </div>
+        <strong class="bold mat-h3">{{ "Social reach" | translate }}</strong>
+        <span class="color-gray" fxHide.xs>
+          {{
+            "The Legas app makes it simple to launch and manage your fundraiser on the go."
+              | translate
+          }}
+        </span>
       </div>
     </div>
   </div>
   <a routerLink="/create" mat-raised-button color="primary"
     >{{ "Start a Campaign" | translate }}
   </a>
+</div>
+<div class="bg-gray">
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="center start"
+    fxLayoutGap.gt-sm="30px"
+    ngStyle.xs="margin: 20px auto; width: 94%"
+    ngStyle.gt-sm="margin: 20px auto; width: 80%"
+  >
+    <img src="assets/images/mobile-app-users.jpg" alt="" fxFlex.gt-sm="58" 
+    [ngStyle.xs]="{'width': '100%'}"
+    />
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+      <span class="bold">Available now</span>
+      <h1 class="bold">The Legas app</h1>
+      <p class="color-gray">
+        Start and manage fundraisers, engage with supporters, and discover
+        important causes — all on the go
+      </p>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <!-- <a target="_" href="https://apps.apple.com/app/apple-store/id734130700"><img src="/assets/images/img-app-store.png" alt=""></a> -->
+        <a href="https://play.google.com/store/apps/details?id=com.Legas.Legas"
+           target="_"><img src="/assets/images/img-play-store.png" alt=""
+        /></a>
+      </div>
+    </div>
+  </div>
 </div>

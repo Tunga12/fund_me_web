@@ -78,5 +78,8 @@
     "Last name must be letters maximum.": "የአባት ስም ቢበዛ {{maxlength}} ፊደሎች መሆን አለበት።",
     "Phone number must be digits.": "ስልክ ቁጥር {{length}} አሃዞች መሆን አለበት።",
     "Please enter your phone number":"እባክዎ ስልክ ቁጥርዎን ያስገቡ",
-    "Password length must be minimum.":"የይለፍ ቃል ርዝመት ቢያንስ {{length}} መሆን አለበት።"
+    "Password length must be minimum.":"የይለፍ ቃል ርዝመት ቢያንስ {{length}} መሆን አለበት።",
+    "Simple setup":"ቀላል ቅንብር",
+    "Social reach":"ማህበራዊ ተደራሽነት",
+    "Secure":"ደህንነቱ የተጠበቀ"
 }

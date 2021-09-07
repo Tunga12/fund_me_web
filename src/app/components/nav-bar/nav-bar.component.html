@@ -19,23 +19,7 @@
       src="/assets/images/icon.svg"
       class="logo"
     />
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>{{ "Language" | translate }}</mat-label>
-        <mat-select
-          placeholder="Language"
-          (selectionChange)="changeLang($event)"
-          name="language"
-          [(value)]="selectedLanguage"
-        >
-          <mat-option [value]="'en'">English </mat-option>
-          <mat-option [value]="'am'"> አማርኛ </mat-option>
-          <mat-option [value]="'or'"> Oromiffa </mat-option>
-          <mat-option [value]="'tr'"> Tigrigna </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
+    
     <div fxFlexOrder.lt-sm="2">
       <a
         fxHide.lt-sm

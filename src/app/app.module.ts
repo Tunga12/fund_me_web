@@ -69,6 +69,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { ImageCropperComponent } from './components/image-cropper/image-cropper.
     StatComponent,
     HelpsComponent,
     ImageCropperComponent,
+    FooterComponent,
   ],
   entryComponents: [],
   imports: [
