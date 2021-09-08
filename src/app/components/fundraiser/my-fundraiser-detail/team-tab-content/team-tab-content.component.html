@@ -1,23 +1,48 @@
-<div *ngIf="isOrganizer()" fxLayout="row" fxLayoutAlign="space-between center" style="padding-top: 20px" fxLayoutGap="20px">
+<div
+  *ngIf="isOrganizer()"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  style="padding-top: 20px"
+  fxLayoutGap="20px"
+>
   <a *ngIf="hasAcceptedTeamMembers()" (click)="openAddTeamMembersDialog()">
-    <mat-icon class="mat-18">add_circle_outline</mat-icon> {{"Add team members"|translate}}
+    <mat-icon class="mat-18">add_circle_outline</mat-icon>
+    {{ "Add team members" | translate }}
   </a>
   <a [routerLink]="['/edit', fundraiser?._id]">
     <mat-icon> settings </mat-icon>
-    {{"Team settings"| translate}}
+    {{ "Team settings" | translate }}
   </a>
-  <button *ngIf="isOrganizer() && fundraiser?.teams?.length===0" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-    {{"Add team members"| translate}}
-   </button>
+  <button
+    *ngIf="
+      isOrganizer() &&
+      (fundraiser?.teams?.length === 1 || fundraiser?.teams?.length === 0)
+    "
+    (click)="openAddTeamMembersDialog()"
+    mat-raised-button
+    color="primary"
+  >
+    {{ "Add team members" | translate }}
+  </button>
 </div>
 
 <!-- Fudrising team section -->
 <div *ngIf="hasAcceptedTeamMembers()" fxLayout="column" fxLayoutGap="20px">
   <div>
-    <div fxLayout="row" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <h2 class="bold">{{"Fundrising team members"| translate}}</h2>
-      <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-       {{"Add team members"| translate}}
+    <div
+      fxLayout="row"
+      fxLayout="column"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="20px"
+    >
+      <h2 class="bold">{{ "Fundrising team members" | translate }}</h2>
+      <button
+        *ngIf="isOrganizer()"
+        (click)="openAddTeamMembersDialog()"
+        mat-raised-button
+        color="primary"
+      >
+        {{ "Add team members" | translate }}
       </button>
     </div>
     <div>
@@ -27,15 +52,23 @@
 
   <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
     <div fxFlex="25" *ngFor="let team of fundraiser.teams">
-      <div *ngIf="team.status !== 'pending'" fxLayout="row" fxLayoutGap="20px" style="margin: 20px 0px">
-        <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
+      <div
+        *ngIf="team.status !== 'pending'"
+        fxLayout="row"
+        fxLayoutGap="20px"
+        style="margin: 20px 0px"
+      >
+        <img
+          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+        />
         <div fxLayout="column">
           <span class="bold">
             {{
-            team?.id?.userId?.firstName + " " + team?.id?.userId?.lastName
-            | titlecase
-            }}</span>
-          <span class="text-small">{{"team member"|translate}}</span>
+              team?.id?.userId?.firstName + " " + team?.id?.userId?.lastName
+                | titlecase
+            }}</span
+          >
+          <span class="text-small">{{ "team member" | translate }}</span>
         </div>
       </div>
     </div>
@@ -44,42 +77,74 @@
 
 <div *ngIf="hasPendingTeamMembers()" style="margin: 20px">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <p class="bold">{{"Pending requests"| translate}}</p>
-    <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-     {{"Add team members"| translate}}
+    <p class="bold">{{ "Pending requests" | translate }}</p>
+    <button
+      *ngIf="isOrganizer()"
+      (click)="openAddTeamMembersDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      {{ "Add team members" | translate }}
     </button>
   </div>
 
-  <div *ngFor="let team of fundraiser.teams; let last = last" fxLayout="column" fxLayoutAlign="center"
-    style="margin: 10px auto">
-    <div *ngIf="team.status === 'pending'" fxLayout="row" fxLayoutAlign="space-between center">
+  <div
+    *ngFor="let team of fundraiser.teams; let last = last"
+    fxLayout="column"
+    fxLayoutAlign="center"
+    style="margin: 10px auto"
+  >
+    <div
+      *ngIf="team.status === 'pending'"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
       <p>
         {{ team?.id?.userId?.email }}
       </p>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px">
         <!-- <a href=""> Resend request</a> -->
-        <mat-icon *ngIf="isOrganizer()" class="more" mat-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
+        <mat-icon
+          *ngIf="isOrganizer()"
+          class="more"
+          mat-button
+          [matMenuTriggerFor]="menu"
+          >more_vert</mat-icon
+        >
         <mat-menu #menu="matMenu">
-          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item>{{"Contact invitee"| translate}}</a>
+          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item>{{
+            "Contact invitee" | translate
+          }}</a>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="deleteInvitation(team)">
-            {{"Delete invitation"| translate}}
+            {{ "Delete invitation" | translate }}
           </button>
         </mat-menu>
       </div>
     </div>
-    <div>
+    <div *ngIf="!last">
       <mat-divider></mat-divider>
     </div>
   </div>
 </div>
 
-<div *ngIf="fundraiser?.teams?.length! === 0 && isOrganizer()" class="tab-content">
+<div
+  *ngIf="fundraiser?.teams?.length! === 0 && isOrganizer()"
+  class="tab-content"
+>
   <div>
-    <h3 class="tab-content-header">{{"You haven’t added team members yet."| translate}}</h3>
-    <h3>{{"Keep your supporters up to date on your fundraisers!"| translate}}</h3>
-    <button (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-     {{"Add team members"| translate}}
+    <h3 class="tab-content-header">
+      {{ "You haven’t added team members yet." | translate }}
+    </h3>
+    <h3>
+      {{ "Keep your supporters up to date on your fundraisers!" | translate }}
+    </h3>
+    <button
+      (click)="openAddTeamMembersDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      {{ "Add team members" | translate }}
     </button>
   </div>
   <!-- <div class="or-divider">
@@ -98,6 +163,9 @@
     team.
   </p> -->
 </div>
-<div *ngIf="fundraiser?.teams?.length! === 0 && !isOrganizer()" class="tab-content">
-  <h3>{{"No team members."| translate}}</h3>
+<div
+  *ngIf="fundraiser?.teams?.length! === 0 && !isOrganizer()"
+  class="tab-content"
+>
+  <h3>{{ "No team members." | translate }}</h3>
 </div>

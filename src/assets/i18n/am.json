@@ -149,5 +149,10 @@
     "Delete invitation":"ግብዣን ሰርዝ",
     "Contact invitee":"ተጋባዥን ያነጋግሩ",
     "Pending requests":"በመጠባበቅ ላይ ያሉ ጥያቄዎች",
-    "Team settings":"የቡድን ቅንብሮች"
+    "Team settings":"የቡድን ቅንብሮች",
+    "Please enter email of the invitee":"እባክዎን የግብዣውን ኢሜል ያስገቡ",
+    "Please enter valid email":"እባክዎ የሚሰራ ኢሜል ያስገቡ",
+    "Import your email contacts":"የኢሜል አድራሻዎችዎን ያስመጡ",
+    "Add member":"አባል አክል",
+    "Search by email":"በኢሜል ይፈልጉ"
 }

@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-  <h4 matDialogTitle style="display: inline">Add team members</h4>
+  <h4 matDialogTitle style="display: inline">{{"Add team members"|translate}}</h4>
   <span mat-dialog-close class="close-dialog">X</span>
 </div>
 <mat-divider></mat-divider>
@@ -11,14 +11,14 @@
         matInput
         formControlName="email"
         type="link"
-        placeholder="Search by email"
+        [placeholder]="'Search by email'|translate"
       />
       <!-- <span matPrefix><mat-icon>search</mat-icon></span> -->
       <mat-error *ngIf="email?.touched && email?.errors?.required"
-        >Please enter email of the invitee
+        >{{"Please enter email of the invitee"|translate}}
       </mat-error>
       <mat-error *ngIf="email?.touched && email?.errors?.email"
-        >Please enter valid email
+        >{{"Please enter valid email"| translate}}
       </mat-error>
       <!-- <mat-error *ngIf="email?.touched && email?.errors?.minlength"
         >Email should be {{ email?.errors?.minlength.requiredLength }}
@@ -67,7 +67,7 @@
       </mat-list-item>
     </mat-list> -->
     <p>
-      <a (click)="openImportContactsDialog()"> Import your email contacts</a>
+      <a (click)="openImportContactsDialog()"> {{"Import your email contacts"| translate}}</a>
     </p>
     <mat-progress-bar *ngIf="loading" mode="indeterminate" [value]="100" color="primary"></mat-progress-bar>
     <mat-error *ngIf="errorMessage"> {{ errorMessage }} </mat-error>
@@ -78,7 +78,7 @@
         color="primary"
         class="btn-large"
       >
-        Add member
+        {{"Add member"| translate}}
       </button>
     </p>
   </form>
