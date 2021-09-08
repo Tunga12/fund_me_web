@@ -35,7 +35,7 @@
                 donation?.userId?.firstName! + " " + donation?.userId?.lastName
                 | titlecase
                 }}</span>
-              <strong>${{ donation.amount }}</strong></span>
+              <strong>{{ donation.amount | currency }}</strong></span>
             <span> {{ donation.date | timeago }} </span>
           </div>
           <p #comment>{{ donation.comment?.slice(0,20) }}
