@@ -1,20 +1,23 @@
-<div *ngIf="isOrganizer()" fxLayout="row" style="padding-top: 20px" fxLayoutGap="20px">
+<div *ngIf="isOrganizer()" fxLayout="row" fxLayoutAlign="space-between center" style="padding-top: 20px" fxLayoutGap="20px">
   <a *ngIf="hasAcceptedTeamMembers()" (click)="openAddTeamMembersDialog()">
-    <mat-icon class="mat-18">add_circle_outline</mat-icon> Add team member
+    <mat-icon class="mat-18">add_circle_outline</mat-icon> {{"Add team members"|translate}}
   </a>
   <a [routerLink]="['/edit', fundraiser?._id]">
     <mat-icon> settings </mat-icon>
-    Team settings
+    {{"Team settings"| translate}}
   </a>
+  <button *ngIf="isOrganizer() && fundraiser?.teams?.length===0" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
+    {{"Add team members"| translate}}
+   </button>
 </div>
 
 <!-- Fudrising team section -->
 <div *ngIf="hasAcceptedTeamMembers()" fxLayout="column" fxLayoutGap="20px">
   <div>
     <div fxLayout="row" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <h2 class="bold">Fundrising team members</h2>
+      <h2 class="bold">{{"Fundrising team members"| translate}}</h2>
       <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-        Add team members
+       {{"Add team members"| translate}}
       </button>
     </div>
     <div>
@@ -32,7 +35,7 @@
             team?.id?.userId?.firstName + " " + team?.id?.userId?.lastName
             | titlecase
             }}</span>
-          <span class="text-small">team member</span>
+          <span class="text-small">{{"team member"|translate}}</span>
         </div>
       </div>
     </div>
@@ -41,9 +44,9 @@
 
 <div *ngIf="hasPendingTeamMembers()" style="margin: 20px">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <p class="bold">Pending Requests</p>
+    <p class="bold">{{"Pending requests"| translate}}</p>
     <button *ngIf="isOrganizer()" (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-      Add team members
+     {{"Add team members"| translate}}
     </button>
   </div>
 
@@ -57,10 +60,10 @@
         <!-- <a href=""> Resend request</a> -->
         <mat-icon *ngIf="isOrganizer()" class="more" mat-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
         <mat-menu #menu="matMenu">
-          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item>Contact invitee</a>
+          <a href="mailto:{{ team.id.userId.email }}" mat-menu-item>{{"Contact invitee"| translate}}</a>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="deleteInvitation(team)">
-            Delete invitation
+            {{"Delete invitation"| translate}}
           </button>
         </mat-menu>
       </div>
@@ -73,18 +76,19 @@
 
 <div *ngIf="fundraiser?.teams?.length! === 0 && isOrganizer()" class="tab-content">
   <div>
-    <h3 class="tab-content-header">You haven’t added team members yet.</h3>
-    <h3>Keep your supporters up to date on your fundraisers!</h3>
+    <h3 class="tab-content-header">{{"You haven’t added team members yet."| translate}}</h3>
+    <h3>{{"Keep your supporters up to date on your fundraisers!"| translate}}</h3>
     <button (click)="openAddTeamMembersDialog()" mat-raised-button color="primary">
-      Add team members
+     {{"Add team members"| translate}}
     </button>
   </div>
-  <div class="or-divider">
+  <!-- <div class="or-divider">
     <p class="bar"></p>
     <p style="font-weight: 600">or</p>
     <p class="bar"></p>
-  </div>
-  <mat-form-field appearance="fill">
+  </div> -->
+
+  <!-- <mat-form-field appearance="fill">
     <input matInput type="text" value="https://fund.mem.com/blalbsl/fff" [disabled]="true" />
   </mat-form-field>
   <button mat-raised-button color="primary">Copy link</button>
@@ -92,8 +96,8 @@
   <p style="text-align: center">
     Only share this invite link with people you want to join your fundraising
     team.
-  </p>
+  </p> -->
 </div>
 <div *ngIf="fundraiser?.teams?.length! === 0 && !isOrganizer()" class="tab-content">
-  <h3>No teamm members</h3>
+  <h3>{{"No team members."| translate}}</h3>
 </div>

@@ -32,7 +32,7 @@
       style="margin: 20px 0px"
     >
       <mat-icon class="mat-18"> arrow_back_ios </mat-icon>
-      <span fxHide.lt-sm> Back </span>
+      <span fxHide.lt-sm> {{"Back"| translate}} </span>
     </button>
     <div fxLayout="row" fxLayoutAlign="space-between start">
       <div
@@ -46,6 +46,7 @@
       >
         <img
           [src]="fundraiser.image"
+          onerror="this.src='/assets/images/placeholder.png'"
           height="126px"
           width="176px"
           [ngStyle.lt-sm]="{ width: '100%', margin: 'auto' }"
@@ -64,14 +65,14 @@
               fxLayoutAlign="start center"
               [routerLink]="['/edit', fundraiser._id]"
             >
-              <mat-icon> edit </mat-icon> <span>Edit & Settings</span>
+              <mat-icon> edit </mat-icon> <span>{{"Edit & Settings"| translate}}</span>
             </a>
             <a
               fxLayout="row"
               fxLayoutAlign="start center"
               [routerLink]="['/fundraiser-detail', fundraiser._id]"
             >
-              <mat-icon>visibility </mat-icon> <span>View fundraiser</span>
+              <mat-icon>visibility </mat-icon> <span>{{"View fundraiser"| translate}}</span>
             </a>
           </div>
           <mat-progress-bar
@@ -79,7 +80,7 @@
             [value]="percentage"
             color="primary"
           ></mat-progress-bar>
-          <p>Total raised: ${{ fundraiser.totalRaised }}</p>
+          <p>{{"Total raised:"| translate }} {{ fundraiser.totalRaised| currency }}</p>
         </div>
       </div>
 
@@ -99,7 +100,7 @@
           <div class="bg-green-avatar">
             <mat-icon> ios_share </mat-icon>
           </div>
-          <span class="text-md">Share</span>
+          <span class="text-md">{{"Share"| translate}}</span>
         </a>
         <a
           (click)="openUpdateDialog()"
@@ -110,7 +111,7 @@
           <div class="green-outline-avatar">
             <mat-icon> update </mat-icon>
           </div>
-          <span class="text-md">Update</span>
+          <span class="text-md">{{"Update"| translate}}</span>
         </a>
         <a
           *ngIf="isOrganizer() || isBeneficiary()"
@@ -122,7 +123,7 @@
           <div class="green-outline-avatar">
             <mat-icon> account_balance </mat-icon>
           </div>
-          <span class="text-md">Withdraw</span>
+          <span class="text-md">{{"Withdraw"| translate }}</span>
         </a>
       </div>
     </div>
@@ -138,7 +139,7 @@
   <!-- main area -->
   <mat-tab-group mat-align-tabs="start" [disableRipple]="false">
     <mat-tab
-      label="{{ index === 0 ? 'Donors' : index === 1 ? 'Team' : 'Updates' }}"
+      label="{{ index === 0 ? ('Donors'|translate) : index === 1 ? ('Team'|translate) : 'Updates' | translate}}"
       *ngFor="let tab of tabs; let index = index"
     >
       <div *ngIf="index === 0">
@@ -146,12 +147,10 @@
           [fundraiser]="fundraiser"
         ></app-donors-tab-content>
       </div>
-
       <!-- Team tab -->
       <div *ngIf="index === 1">
         <team-tab-content [fundraiser]="fundraiser"></team-tab-content>
       </div>
-
       <!-- Updates tab -->
       <div class="tab-content" *ngIf="index === 2">
         <updates-tab-content

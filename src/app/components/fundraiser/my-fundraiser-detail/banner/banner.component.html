@@ -13,8 +13,8 @@
     >
       <mat-icon color="blue" style="color: blue">facebook</mat-icon>
       <p>
-        <strong>Did you know?</strong> Sharing on Facebook can increase your
-        donations as much as 350%. <a (click)="openShareDialog()"> <strong>Share on Facebook </strong></a>
+        <strong>{{ "Did you know?"| translate }}</strong> {{"Sharing on Facebook can increase your donations as much as 350%."| translate}}
+         <a (click)="openShareDialog()"> <strong>{{"Share on Facebook"| translate}} </strong></a>
       </p>
     </div>
     <div
@@ -25,9 +25,8 @@
     >
       <mat-icon color="blue">announcement</mat-icon>
       <p>
-        <strong>Let your supporters know your progress.</strong> An update can
-        help increase momentum and encourage supporters to share or donate
-        again. <a (click)="openUpdateDialog()">  <strong> Post an update. </strong></a>
+        <strong>{{ "Let your supporters know your progress." | translate }} </strong>
+         {{"An update can help increase momentum and encourage supporters to share or donate again." | translate }} <a (click)="openUpdateDialog()">  <strong> {{"Post an update."| translate}} </strong></a>
       </p>
     </div>
 
