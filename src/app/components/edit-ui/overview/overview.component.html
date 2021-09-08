@@ -6,7 +6,7 @@
     fxLayoutGap="10px"
   >
     <mat-form-field appearance="outline">
-      <mat-label>Title </mat-label>
+      <mat-label>{{"Title"|translate}}</mat-label>
       <input
         matInput
         formControlName="title"
@@ -14,15 +14,15 @@
         type="text"
       />
       <mat-error *ngIf="title?.touched && title?.errors?.required"
-        >Title is required.</mat-error
+        >{{"Title is required!"|translate}}</mat-error
       >
       <mat-error *ngIf="title?.touched && title?.errors?.max"
-        >TItle must be maximum {{ title?.errors?.max.max }} charaters.</mat-error
+        >{{"Title must be maximum letters."| translate:{length:title?.errors?.max.max} }}</mat-error
       >
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label> Goal </mat-label>
+      <mat-label> {{"Goal"|translate}} </mat-label>
       <input
         matInput
         formControlName="goalAmount"
@@ -31,24 +31,24 @@
       />
       <mat-icon matPrefix>monetization_on</mat-icon>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
-        Fundraiser goal is required
+        {{"Fundraiser goal is required!"|translate}}
       </mat-error>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-        The minimun allowed goal is {{ goalAmount?.errors?.min.min | currency }}
+        {{"The minimun allowed goal is"|translate :{min:goalAmount?.errors?.min.min | currency} }}
       </mat-error>
     </mat-form-field>
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>Choose category of your fundraiser</mat-label>
+    <mat-label>{{"Category of your fundraiser"|translate}}</mat-label>
     <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="fundraiser.category">
-      <mat-option>Choose category</mat-option>
+      <mat-option>{{"Choose category"|translate}}</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
         category.name
       }}</mat-option>
     </mat-select>
     <mat-error *ngIf="category?.touched && category?.errors?.required">
-      Category is required
+      {{"Category is required!"|translate}}
     </mat-error>
   </mat-form-field>
 
@@ -147,7 +147,7 @@ previous link
       class="btn-large"
       style="width: 50% !important"
     >
-      Save
+      {{"Save"|translate}}
     </button>
     <!-- </div> -->
   </div>
@@ -155,15 +155,15 @@ previous link
 
 <div class="setting">
   <div>
-    <h2 class="bold">Delete my fundraiser</h2>
+    <h2 class="bold">{{"Delete my fundraiser"|translate}}</h2>
     <div class="info-text">
       <span>
-        You will no longer have access to this fundraiser after deleting. If you
-        received donations, your donors will still be able to view a summary.
+        {{"You will no longer have access to this fundraiser after deleting. If you
+        received donations, your donors will still be able to view a summary."|translate}}
       </span>
     </div>
   </div>
   <button class="delete-btn bold" (click)="openDeleteDialog()" mat-button>
-    Delete Fundraiser
+    {{"Delete Fundraiser"|translate}}
   </button>
 </div>

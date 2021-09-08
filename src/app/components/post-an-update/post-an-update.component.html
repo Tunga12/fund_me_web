@@ -1,6 +1,8 @@
 <div>
   <div mat-dialog-title>
-    <h4 matDialogTitle style="display: inline">{{ mode }} an update</h4>
+    <h4 matDialogTitle style="display: inline">
+      {{ (mode+" an update") | translate}}
+    </h4>
     <span mat-dialog-close class="close-dialog">X</span>
   </div>
   <mat-divider></mat-divider>
@@ -13,85 +15,42 @@
         <textarea
           formControlName="content"
           matInput
-          placeholder="Share your news here"
+          [placeholder]="'Share your news here'| translate"
         ></textarea>
+
+        <mat-error *ngIf="content?.touched && content?.errors?.required">
+          {{ "Please write content for your update." | translate }}
+        </mat-error>
+        <mat-error *ngIf="content?.touched && content?.errors?.minlength">
+          {{
+            "Content of an update should be letters minimum."
+              | translate: { value: content?.errors?.minlength.requiredLength }
+          }}
+        </mat-error>
       </mat-form-field>
-      <label for="id">Add a photo </label>
-
+      <label for="image">{{ "Add a photo" | translate }} </label>
+      
       <input
-        id="image"
-        (change)="uploadImage($event)"
-        type="file"
-        color="primary"
-        formControlName="image"
+      id="image"
+      (change)="uploadImage($event)"
+      type="file"
+      color="primary"
+      formControlName="image"
         value=" Add a photo or video"
-      />
-
-      <img *ngIf="update" [src]="update.image" />
-
+        />
+        
+      <img *ngIf="update" [src]="update.image"  onerror="this.src='/assets/images/placeholder.png'" />
+      
       <mat-progress-bar
-        *ngIf="loading"
-        mode="indeterminate"
-        fxFlexAlign="center"
+      *ngIf="loading"
+      mode="indeterminate"
+      fxFlexAlign="center"
       ></mat-progress-bar>
-
-      <mat-error *ngIf="content?.touched && content?.errors?.required">
-        Please write content for your update.
-      </mat-error>
+      
       <mat-error *ngIf="errorMessage">
         {{ errorMessage }}
       </mat-error>
 
-      <!-- <mat-error *ngIf="image?.errors?.required">
-        Please choose an image for your update.
-      </mat-error> -->
-
-      <mat-error *ngIf="content?.touched && content?.errors?.minlength">
-        Content of an update should be
-        {{ content?.errors?.minlength.requiredLength }} letters minimum.
-      </mat-error>
-      <!-- (click)="openAddPhotoOrVedioDialog()" -->
-      <!-- > -->
-
-      <!-- </button> -->
-      <!-- <h3 class="bold" style="margin: 10px -5px 0px">Send updates to</h3>
-      <mat-divider></mat-divider>
-      <div class="media">
-        <p>
-          <mat-checkbox
-            formControlName="campign_page"
-            value="here"
-            color="primary"
-            >Campaign page(Default)</mat-checkbox
-          >
-        </p>
-        <p>
-          <mat-checkbox
-            formControlName="donors_followers"
-            value="donors & followers"
-            color="primary"
-            >Donors and Folowers</mat-checkbox
-          >
-        </p>
-
-        <p>
-          <mat-checkbox
-            formControlName="facebook"
-            value="facebook"
-            color="primary"
-            >Facebook</mat-checkbox
-          >
-        </p>
-        <p>
-          <mat-checkbox
-            formControlName="twitter"
-            value="twitter"
-            color="primary"
-            >Twitter</mat-checkbox
-          >
-        </p>
-        <mat-divider></mat-divider>
-      </div> -->
       <button
         [disabled]="form.invalid || loading"
         mat-raised-button
@@ -99,7 +58,7 @@
         color="primary"
         class="btn-large"
       >
-        {{ mode }} an update
+        {{ (mode+" an update") | translate}}
       </button>
     </form>
   </mat-dialog-content>

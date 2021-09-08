@@ -48,7 +48,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       title: [, [Validators.required, Validators.minLength(5)]],
       category: [undefined, [Validators.required]],
-      goalAmount: [undefined, [Validators.required, Validators.min(50)]],
+      goalAmount: [undefined, [Validators.required, Validators.min(1)]],
     });
     this.getCategories();
     this.form.patchValue(this.fundraiser);

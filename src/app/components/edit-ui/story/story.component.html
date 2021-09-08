@@ -7,11 +7,11 @@
   <story-text-area  fxFlex="100" [form]="form"></story-text-area>
   <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     <mat-error *ngIf="story?.touched && story?.errors?.required"
-    >Story is required.</mat-error
+    >{{"Story is required!"|translate}}</mat-error
   >
   <mat-error *ngIf="story?.touched && story?.errors?.minlength"
-    >Story should be {{ story?.errors?.minlength.requiredLength }} letters
-    minimum.</mat-error
+    >{{"Story should be letters
+    minimum!"|translate:{length:story?.errors?.minlength.requiredLength} }}</mat-error
   >
   <button
     mat-raised-button
@@ -21,6 +21,6 @@
     class="btn-large"
     style="width: 30% !important"
   >
-    Save
+    {{"Save"|translate}}
   </button>
 </form>

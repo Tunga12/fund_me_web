@@ -20,7 +20,7 @@
           class="bold"
           style="margin: 20px 0px"
         >
-          <mat-icon class="mat-18">arrow_back_ios</mat-icon> Back
+          <mat-icon class="mat-18">arrow_back_ios</mat-icon> {{"Back"|translate}}
         </button>
       </div>
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
@@ -29,9 +29,10 @@
           class="title"
           [ngStyle.xs]="{ width: '100%', height: '200px' }"
           [src]="fundraiser.image"
+          onerror="this.src='/assets/images/placeholder.png'"
         />
         <div>
-          <h2 style="padding: 0px !important; margin: 0px">Edit & Settings</h2>
+          <h2 style="padding: 0px !important; margin: 0px">{{"Edit & Settings"|translate}}</h2>
           <p>{{ fundraiser.title }}</p>
         </div>
       </div>
@@ -47,13 +48,13 @@
   >
     <mat-tab
       label="{{
-        index === 0
+        (index === 0
           ? 'Overview'
           : index === 1
           ? 'Photo'
           : index === 2
           ? 'Story'
-          : 'Notification'
+          : 'Notification') |translate
       }}"
       *ngFor="let tab of tabs; let index = index"
     >
@@ -78,7 +79,7 @@
           fxLayout="column"
           fxLayoutAlign="center center"
         >
-          <mat-label for="image">Change photo </mat-label>
+          <mat-label for="image">{{"Change photo"|translate }} </mat-label>
           <input
             id="image"
             formControlName="image"
@@ -91,7 +92,7 @@
             color="primary"
             (click)="uploadImage()"
           >
-            Save change
+            {{"Save change"|translate}}
           </button>
         </form>
       </div>
@@ -128,7 +129,7 @@
           class="btn-large"
           style="width: 30% !important"
         >
-          Save changes
+          {{"Save change"|translate}}
         </button>
       </div>
     </mat-tab>
