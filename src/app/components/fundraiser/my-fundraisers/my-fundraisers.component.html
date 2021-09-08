@@ -9,17 +9,17 @@
   <nav fxLayout="column" class="nav-sticky">
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start" style="width: 100%">
       <h1 class="bold" fxFlexAlign="start start" style="margin-right: auto">
-        Your fundraisers
+        {{"Your fundraisers"| translate }}
       </h1>
       <button (click)="createFundraiser()" mat-raised-button color="primary">
-        Start a new fundraiser
+        {{"Start a new fundraiser"| translate}}
       </button>
     </div>
   </nav>
   <nav mat-tab-nav-bar>
     <a matTabLink *ngFor="let tabLink of tabLinks" [routerLink]="tabLink" routerLinkActive #rlaRef="routerLinkActive"
       [active]="rlaRef.isActive">
-      {{ tabLink | titlecase}}
+      {{ tabLink | translate | titlecase }}
     </a>
   </nav>
   <router-outlet></router-outlet>

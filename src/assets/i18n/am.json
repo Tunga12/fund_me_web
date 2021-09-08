@@ -110,5 +110,15 @@
     "No updates to show.":"የሚታዩ ዝማኔዎች የሉም።",
     "Updates":"ዝማኔዎች",
     "by":"በ",
-    "organizing this fundraiser":"ይህንን የገንዘብ ማሰባሰብ ያደራጃሉ"
+    "organizing this fundraiser":"ይህንን የገንዘብ ማሰባሰብ ያደራጃሉ",
+    "organizer":"አደራጅ",
+    "team-member":"የቡድን አባል",
+    "beneficiary":"ተጠቃሚ",
+    "Manage":"አስተዳድር",
+    "Campaigns you are beneficiary of":"እርስዎ ተጠቃሚ የሆኑባቸው ዘመቻዎች",
+    "You have no fundraisers":"ገንዘብ ማሰባሰብ የለዎትም",
+    "Campaigns you are organizer of":"እርስዎ አደራጅ የሆኑባቸው ዘመቻዎች",
+    "Campaigns you are a team member of":"እርስዎ የቡድን አባል የሆኑባችው ዘመቻዎች",
+    "Create now":"አሁን ፍጠር"
+    
 }
