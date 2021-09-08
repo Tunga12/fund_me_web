@@ -82,7 +82,9 @@
           }}</mat-icon>
         </div>
       </a>
-      <button fxHide.lt-md mat-icon-button
+      <button 
+      *ngIf="authService.isLoggedIn()"
+      fxHide.lt-md mat-icon-button
       routerLink="/notification"
       >
         <mat-icon matBadge="5">notifications</mat-icon>
