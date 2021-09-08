@@ -1,0 +1,54 @@
+<div *ngIf="fundraiser?.beneficiary">
+  <div>
+    <h2 class="bold">{{"Organizer and beneficiary"| translate}}</h2>
+    <mat-divider> </mat-divider>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayout.lt-sm="column"
+    fxLayoutAlign="space-between start"
+    fxLayoutAlign.xs="space-between center"
+    style="margin: 20px 0px"
+    fxLayoutGap="20px"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      style="width: fit-content"
+    >
+      <img matCardAvatar src="/assets/images/logo.svg" />
+      <div fxLayout="column" style="width: fit-content">
+        <span
+          >{{ fundraiser?.organizer?.firstName | titlecase }}
+          {{ fundraiser?.organizer?.lastName | titlecase }}</span
+        >
+        <span>{{"Organizer"| translate}}</span>
+        <!-- <span>Atlanta, GA</span> -->
+      </div>
+    </div>
+
+    <mat-icon
+      *ngIf="fundraiser?.organizer?._id != fundraiser?.beneficiary?._id"
+      fxHide.xs
+    >
+      arrow_forward
+    </mat-icon>
+    <div
+      *ngIf="fundraiser?.organizer?._id != fundraiser?.beneficiary?._id"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      style="width: fit-content"
+    >
+      <mat-icon color="primary">volunteer_activism</mat-icon>
+      <div fxLayout="column">
+        <span
+          >{{ fundraiser?.beneficiary?.firstName | titlecase }}
+          {{ fundraiser?.beneficiary?.lastName | titlecase }}</span
+        >
+        <span>{{"Beneficiary"| translate}}</span>
+      </div>
+    </div>
+  </div>
+</div>

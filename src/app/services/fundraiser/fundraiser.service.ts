@@ -161,7 +161,7 @@ export class FundraiserService {
   //to know if a fundraiser has a team (accepted mambers)
   hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {
     let team = fundraiser?.teams?.filter((member: TeamMember) => {
-      if (member.status !== 'pending') return true;
+      if (member.status !== 'pending' &&  member.id.userId._id! !=fundraiser.organizer?._id!) return true;
       return false;
     });
     return team?.length! > 0;

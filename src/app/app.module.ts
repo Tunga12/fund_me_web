@@ -70,6 +70,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TeamAndOrganizerSectionComponent } from './components/fundraiser/fundraiser-detail-public/team-and-organizer-section/team-and-organizer-section.component';
+import { CommentSectionComponent } from './components/fundraiser/fundraiser-detail-public/comment-section/comment-section.component';
+import { OrganizerAndBeneficiarySectionComponent } from './components/fundraiser/fundraiser-detail-public/organizer-and-beneficiary-section/organizer-and-beneficiary-section.component';
+import { HighlightCardComponent } from './components/fundraiser/fundraiser-detail-public/highlight-card/highlight-card.component';
+import { UpdatesSectionComponent } from './components/fundraiser/fundraiser-detail-public/updates-section/updates-section.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +128,11 @@ import { FooterComponent } from './components/footer/footer.component';
     HelpsComponent,
     ImageCropperComponent,
     FooterComponent,
+    TeamAndOrganizerSectionComponent,
+    CommentSectionComponent,
+    OrganizerAndBeneficiarySectionComponent,
+    HighlightCardComponent,
+    UpdatesSectionComponent
   ],
   entryComponents: [],
   imports: [

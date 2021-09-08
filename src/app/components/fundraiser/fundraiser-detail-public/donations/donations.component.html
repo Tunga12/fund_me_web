@@ -6,7 +6,7 @@
       fxLayoutAlign="space-between start"
       fxLayoutGap="30px"
     >
-      <h2 class="bold" matDialogTitle>{{ type }}<span fxHide.lt-md>donations</span></h2>
+      <h2 class="bold" matDialogTitle>{{ type| translate }}<span fxHide.lt-md>{{"donations"| translate}}</span></h2>
       <div fxLayout="row" fxLayoutGap="20px">
         <button
           mat-stroked-button
@@ -14,7 +14,7 @@
           style="border-radius: 20px"
         >
           <mat-icon *ngIf="type === 'All'" class="mat-18">sort</mat-icon>
-          {{ topButtonLabel }} <span fxHide.lt-md>donations</span>
+          {{ topButtonLabel|translate }} <span fxHide.lt-md>{{"donations"|translate}}</span>
         </button>
         <span mat-dialog-close class="close-dialog">
           <mat-icon class="mat-18">close</mat-icon>
@@ -26,7 +26,7 @@
       (click)="gotoDonatePage()"
       class="styled-button donate btn-large"
     >
-      <mat-icon>attach_money</mat-icon> Donate now
+      <mat-icon>attach_money</mat-icon> {{"Donate now"| translate}}
     </button>
   </div>
   <mat-divider></mat-divider>
@@ -42,7 +42,7 @@
             fxLayoutAlign="start start"
             fxLayoutGap="10px"
           >
-            <span *ngIf="donation?.isAnonymous">Anonymous</span>
+            <span *ngIf="donation?.isAnonymous">{{"Anonymous"|translate}}</span>
             <span *ngIf="!donation?.isAnonymous">{{
               donation?.userId?.firstName! + " " + donation?.userId?.lastName
                 | titlecase

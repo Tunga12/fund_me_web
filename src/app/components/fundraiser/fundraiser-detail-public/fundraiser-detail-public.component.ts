@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Donation } from 'src/app/models/donation.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { ShareArgs } from 'src/app/models/share-buttons-args';
 
@@ -27,9 +26,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   fundraiserId: string = '';
   fundraiser?: Fundraiser;
 
-  topDonation?: Donation;
-  recentDonation?: Donation;
-  firstDonation?: Donation;
+
 
   fundSub?: Subscription;
   constructor(
@@ -86,9 +83,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
-        this.getFirstDonation();
-        this.getTopDonation();
-        this.getRecentDonation();
+     
         this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(this.fundraiser);
         console.log(
@@ -111,46 +106,6 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     );
   }
 
-  // check if the current user has donated to this fundraiser
-  hasDonated(): boolean {
-    return this.fundraiserServ.hasDonated(this.fundraiser!, this.userId);
-  }
-
-  // get the donation amount I made to a fundraiser
-  getMyDonationAmount(): number {
-    return this.fundraiserServ.myDonation(this.fundraiser!, this.userId);
-  }
-
-  // get the number of comments of thos fundraiser
-  getNumberOfComments() {
-    return this.fundraiserServ.getNumberOfComments(this.fundraiser!);
-  }
-
-  // get the first donation of this fundraiser
-  getFirstDonation() {
-    this.firstDonation = this.fundraiserServ.getFirstDonation(
-      this.fundraiser?.donations!
-    );
-  }
-
-  // checks if this fundraiser has team members that have a status not 'pending'
-  hasAcceptedTeamMembers(): boolean {
-    return this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser!);
-  }
-
-  // get top donation of this fundraiser
-  getTopDonation() {
-    this.topDonation = this.fundraiserServ.getTopDonation(
-      this.fundraiser?.donations!
-    );
-  }
-  // get recent donation of this fudraiser
-  getRecentDonation() {
-    this.recentDonation = this.fundraiserServ.getRecentDonation(
-      this.fundraiser?.donations!
-    );
-  }
-
   share() {
     let data: ShareArgs = {
       url: `https://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
@@ -169,6 +124,13 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
+ 
+  
+  // checks if this fundraiser has team members that have a status not 'pending'
+  hasAcceptedTeamMembers(): boolean {
+    return this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser!);
+  }
+  
 
   // open all donations dialog
   donations(type: string) {

@@ -51,4 +51,8 @@
   "Last name must be letters maximum.":"Last name must be {{maxlength}} letters maximum.",
   "Phone number must be digits.":"Phone number must be {length} digits.",
   "Password length must be minimum.":"Password length must be minimum {{length}}."
+  ,
+  "donated":"donated {{ value }}",
+  "You've donated":"You've donated {{amount}}",
+  "raised of goal":"raised of {{goal}} goal"
 }

@@ -1,0 +1,60 @@
+<div *ngIf="hasAcceptedTeamMembers()" fxLayout="column" fxLayoutGap="20px">
+  <div>
+    <h2 class="bold">
+      {{"Fundrising team"| translate}}
+    </h2>
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="20px"
+      style="width: fit-content"
+    >
+      <img matCardAvatar src="/assets/images/step2.jpg" />
+      <div fxLayout="column" style="width: fit-content">
+        <span class="bold">
+          {{
+            fundraiser?.organizer?.firstName +
+              " " +
+              fundraiser?.organizer?.lastName | titlecase
+          }}</span
+        >
+        <span>{{"Organizer"| translate}}</span>
+
+        <!-- TODO adress of the organiser -->
+        <!-- <span>Atlanta, GA</span> -->
+      </div>
+    </div>
+  </div>
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+    <div fxFlex="25" *ngFor="let member of fundraiser?.teams">
+      <div
+        *ngIf="member.status !== 'pending' && member.id.userId._id! !=fundraiser.organizer?._id!"
+        fxLayout="row"
+        fxLayoutGap="20px"
+        style="margin: 20px 0px"
+      >
+        <img
+          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
+        />
+        <div fxLayout="column">
+          <span class="bold"
+            >{{
+              member.id.userId.firstName + " " + member.id.userId.lastName
+                | titlecase
+            }}
+          </span>
+          <span class="text-small">{{"team member"| translate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
