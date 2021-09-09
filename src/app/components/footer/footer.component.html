@@ -30,23 +30,22 @@
       </mat-form-field>
     </div>
     <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
-      <strong>Fundraise for</strong>
-      <a>Medical</a>
-      <a>Emergency</a>
-      <a>Memorial</a>
-      <a>Education</a>
-      <a>Nonprofit</a>
+      <strong>{{ "Fundraise for" | translate }}</strong>
+      <a>{{ "Medical" | translate }}</a>
+      <a>{{ "Emergency" | translate }}</a>
+      <a>{{ "Memorial" | translate }}</a>
+      <a>{{ "Education" | translate }}</a>
+      <a>{{ "Nonprofit" | translate }}</a>
     </div>
     <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
-      <strong>Resources</strong>
-      <a [routerLink]="['/help']" routerLinkActive="router-link-active"
-        >Help center</a
-      >
+      <strong>{{ "Resources" | translate }}</strong>
+      <a [routerLink]="['/help']" routerLinkActive="router-link-active">{{
+        "Help center" | translate
+      }}</a>
     </div>
   </div>
 
-  <div><mat-divider>
-  </mat-divider></div>
+  <div><mat-divider> </mat-divider></div>
 
   <div
     class="content color-gray"
@@ -62,16 +61,16 @@
       fxLayoutGap="20px"
       fxFlexOrder.xs="1"
     >
-      <p>&copy; 2020-2021 Legas</p>
+      <p>&copy; 2020-2021 {{"Legas"|translate}}</p>
       <div
         fxLayout="row"
         fxLayout.xs="column"
         fxLayoutAlign="space-around start"
         fxLayoutGap="10px"
       >
-        <p>Terms</p>
-        <p>Privacy</p>
-        <p>Legal</p>
+        <p>{{"Terms"|translate}}</p>
+        <p>{{"Privacy"|translate}}</p>
+        <p>{{"Legal"|translate}}</p>
       </div>
     </div>
     <div
