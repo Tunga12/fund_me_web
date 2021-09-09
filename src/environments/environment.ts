@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'https://shrouded-bastion-52038.herokuapp.com',
+  BASE_URL: 'http://178.62.55.81',
 };
 
 /*
