@@ -10,13 +10,13 @@
     fxLayoutGap="20px"
     style="margin: 20px auto"
   >
-    <h2 class="bold" matBadge={{count}}>
+    <h2 class="bold" matBadge="{{ count }}">
       <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
-      Notifications
+      {{ "Notifications" | translate }}
     </h2>
     <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
     <h3 *ngIf="notifications?.length === 0 && !loading">
-      You have no notifications.
+      {{ "You have no notifications." | translate }}
     </h3>
 
     <div *ngIf="loading" fxFlexAlign="center">
@@ -45,12 +45,15 @@
           <p>
             {{ notification.content }}
           </p>
-          <a [routerLink]="['/fundraiser-detail', notification.target]"
-            >See Fundraiser</a
-          >
+          <a [routerLink]="['/fundraiser-detail', notification.target]">{{
+            "See fundraiser" | translate
+          }}</a>
           <!-- <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error> -->
           <ng-container
-            *ngIf="isTeamInvitation(notification) || isBeneficiaryInvitation(notification)"
+            *ngIf="
+              isTeamInvitation(notification) ||
+              isBeneficiaryInvitation(notification)
+            "
           >
             <div
               fxLayout="row"
@@ -60,9 +63,16 @@
               <button
                 mat-raised-button
                 color="primary"
-                (click)="isTeamInvitation(notification)?acceptTeamInvitation(notification): acceptBeneficiaryInvitation(notification)"
+                (click)="
+                  isTeamInvitation(notification)
+                    ? acceptTeamInvitation(notification)
+                    : acceptBeneficiaryInvitation(notification)
+                "
               >
-                Accept <span *ngIf="isBeneficiaryInvitation(notification)">and become a beneficiary</span>
+                {{ "Accept" | translate }}
+                <span *ngIf="isBeneficiaryInvitation(notification)"
+                  >{{"and become a beneficiary"|translate}}</span
+                >
               </button>
 
               <button
@@ -70,7 +80,7 @@
                 color="warn"
                 (click)="declineTeamInvitation(notification)"
               >
-                Decline
+                {{ "Decline" | translate }}
               </button>
             </div>
           </ng-container>
@@ -81,6 +91,8 @@
         color="warn"
         class="actions"
         (click)="deleteNotifcation(notification)"
+        matTooltip="Delete notification"
+        title="Delete notification"
       >
         <mat-icon>delete</mat-icon>
       </button>

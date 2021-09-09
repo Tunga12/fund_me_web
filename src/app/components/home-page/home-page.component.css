@@ -47,7 +47,3 @@ position: -webkit-sticky;
 top: 0;
 z-index: 2;
 }
-
-mat-icon.mat-icon , .norma-icon--large {
-  font-size: 2em;
-}

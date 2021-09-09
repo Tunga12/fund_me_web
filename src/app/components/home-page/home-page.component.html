@@ -280,23 +280,29 @@
     fxLayout.xs="column"
     fxLayoutAlign="center start"
     fxLayoutGap.gt-sm="30px"
+    fxLayoutGap.sm="20px"
     ngStyle.xs="margin: 20px auto; width: 94%"
     ngStyle.gt-sm="margin: 20px auto; width: 80%"
   >
-    <img src="assets/images/mobile-app-users.jpg" alt="" fxFlex.gt-sm="58" 
-    [ngStyle.xs]="{'width': '100%'}"
+    <img
+      src="assets/images/mobile-app-users.jpg"
+      alt=""
+      fxFlex="58"
+      fxFlex.sm="50"
+      [ngStyle.xs]="{ width: '100%' }"
     />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-      <span class="bold">Available now</span>
-      <h1 class="bold">The Legas app</h1>
+      <span class="bold">{{"Available now"|translate}}</span>
+      <h1 class="bold">{{"The Legas app"|translate}}</h1>
       <p class="color-gray">
-        Start and manage fundraisers, engage with supporters, and discover
-        important causes — all on the go
+        {{"Start and manage fundraisers, engage with supporters, and discover important causes — all on the go"|translate}}
       </p>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
         <!-- <a target="_" href="https://apps.apple.com/app/apple-store/id734130700"><img src="/assets/images/img-app-store.png" alt=""></a> -->
-        <a href="https://play.google.com/store/apps/details?id=com.Legas.Legas"
-           target="_"><img src="/assets/images/img-play-store.png" alt=""
+        <a
+          href="https://play.google.com/store/apps/details?id=com.Legas.Legas"
+          target="_"
+          ><img src="/assets/images/img-play-store.png" alt=""
         /></a>
       </div>
     </div>
