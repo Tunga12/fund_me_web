@@ -20,7 +20,8 @@
           class="bold"
           style="margin: 20px 0px"
         >
-          <mat-icon class="mat-18">arrow_back_ios</mat-icon> {{"Back"|translate}}
+          <mat-icon class="mat-18">arrow_back_ios</mat-icon>
+          {{ "Back" | translate }}
         </button>
       </div>
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
@@ -32,7 +33,9 @@
           onerror="this.src='/assets/images/placeholder.png'"
         />
         <div>
-          <h2 style="padding: 0px !important; margin: 0px">{{"Edit & Settings"|translate}}</h2>
+          <h2 style="padding: 0px !important; margin: 0px">
+            {{ "Edit & Settings" | translate }}
+          </h2>
           <p>{{ fundraiser.title }}</p>
         </div>
       </div>
@@ -54,7 +57,8 @@
           ? 'Photo'
           : index === 2
           ? 'Story'
-          : 'Notification') |translate
+          : 'Notification'
+        ) | translate
       }}"
       *ngFor="let tab of tabs; let index = index"
     >
@@ -71,30 +75,7 @@
         fxLayout="column"
         fxLayoutAlign="center center"
       >
-        <img [src]="fundraiser.image" onerror="this.src='./assets/images/placeholder.png'" width="50%" height="50%" />
-        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-
-        <form
-          [formGroup]="form"
-          fxLayout="column"
-          fxLayoutAlign="center center"
-        >
-          <mat-label for="image">{{"Change photo"|translate }} </mat-label>
-          <input
-            id="image"
-            formControlName="image"
-            type="file"
-            accept="image/jpeg,image/png,image/gif, image/bmp"
-            (change)="onImageChoosen($event)"
-          />
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="uploadImage()"
-          >
-            {{"Save change"|translate}}
-          </button>
-        </form>
+       <app-photo-tab-content [fundraiser]="fundraiser!"></app-photo-tab-content> 
       </div>
 
       <div *ngIf="index === 2" class="tab-content">
@@ -129,7 +110,7 @@
           class="btn-large"
           style="width: 30% !important"
         >
-          {{"Save changes"|translate}}
+          {{ "Save changes" | translate }}
         </button>
       </div>
     </mat-tab>
