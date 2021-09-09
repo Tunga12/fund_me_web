@@ -206,5 +206,9 @@
     "Title must be minimum letters!": "ርዕስ ቢያንስ {{length}} ፊደላት መሆን አለበት!",
     "Enter story here...": "እዚህ ታሪክ ያስገቡ...",
     "Edit": "አርትዕ",
-    "Delete": "ሰርዝ"
+    "Delete": "ሰርዝ",
+    "Cancel":"ሰርዝ",
+    "Are you sure to delete?":"እርግጠኛ ነዎት መሰረዝ?",
+    "Fundraiser":"ገንዘብ አሰባሳቢ"
+    
 }
