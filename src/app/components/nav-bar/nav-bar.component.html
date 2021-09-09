@@ -1,17 +1,5 @@
 <mat-toolbar [classList]="'bg-white'">
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-around center">
-    <div fxFlexOrder.lt-sm="1">
-      <!-- search field -->
-      <input
-        data-cy="search-field"
-        class="search"
-        matInput
-        #key
-        type="search"
-        [placeholder]="'Search fundraisers' | translate"
-        (keyup.enter)="search(key.value)"
-      />
-    </div>
     <!-- LOGO -->
     <img
       fxFlexOrder.lt-sm="0"
@@ -19,7 +7,20 @@
       src="/assets/images/icon.svg"
       class="logo"
     />
-    
+    <div fxFlexOrder.lt-sm="1" class="search-container">
+      <!-- search field -->
+        <input
+          data-cy="search-field"
+          id="search-field"
+          matInput
+          #key
+          type="search"
+          [placeholder]="'Search fundraisers' | translate"
+          (keyup.enter)="search(key.value)"
+          />
+          <span id="search-icon" matSuffix> <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon></span>
+    </div>
+
     <div fxFlexOrder.lt-sm="2">
       <a
         fxHide.lt-sm
@@ -82,10 +83,11 @@
           }}</mat-icon>
         </div>
       </a>
-      <button 
-      *ngIf="authService.isLoggedIn()"
-      fxHide.lt-md mat-icon-button
-      routerLink="/notification"
+      <button
+        *ngIf="authService.isLoggedIn()"
+        fxHide.lt-md
+        mat-icon-button
+        routerLink="/notification"
       >
         <mat-icon matBadge="5">notifications</mat-icon>
       </button>

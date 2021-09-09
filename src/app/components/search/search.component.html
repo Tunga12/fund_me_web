@@ -1,7 +1,7 @@
 <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
 </nav >
-<div>
+<main>
   <div fxFlex.gt-xs="80" fxFlex.lt-xs="98" class="container">
     <div *ngIf="loading">
       <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
@@ -12,4 +12,4 @@
     <app-public-fund-list [fundraisers]="searchedFundarisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
     </app-public-fund-list>
   </div>
-</div>
+</main>

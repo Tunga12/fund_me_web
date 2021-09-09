@@ -1,0 +1,19 @@
+#search-field {
+  outline: none;
+  padding: 10px 15px 10px 3px;
+  margin-left: 1rem;
+  /* background: transparent url() center left norepeat; */
+}
+
+.search-container {
+  border-radius: 25px;
+  position: relative;
+  box-shadow: 0 1px 6px 0 rgb(32 33 36 / 12%);
+  z-index: 2147483647 !important;
+  padding-right: 50px;
+}
+
+#search-icon {
+  margin-left: -1rem;
+  cursor: pointer;
+}

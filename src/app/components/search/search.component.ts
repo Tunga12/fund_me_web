@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit , OnDestroy{
         (error: HttpErrorResponse) => {
           this.loading = false;
           console.log(error.error);
-          this.errorMessage = 'Unable to load fundraisers';
+          this.errorMessage = error.status===404?'':'Unable to load fundraisers';
         }
       );
   }

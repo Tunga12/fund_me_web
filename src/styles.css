@@ -212,13 +212,6 @@ div.avatar-contain {
   height: 70px;
 }
 
-.search {
-  margin-left: 10px;
-  min-width: 200px;
-  border-radius: 6px;
-  border: 1px solid black !important;
-}
-
 .sticky-top-0 {
   position: sticky;
   top: 0;
