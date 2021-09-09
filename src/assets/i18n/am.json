@@ -207,8 +207,10 @@
     "Enter story here...": "እዚህ ታሪክ ያስገቡ...",
     "Edit": "አርትዕ",
     "Delete": "ሰርዝ",
-    "Cancel":"ሰርዝ",
-    "Are you sure to delete?":"እርግጠኛ ነዎት መሰረዝ?",
-    "Fundraiser":"ገንዘብ አሰባሳቢ"
-    
+    "Cancel": "ሰርዝ",
+    "Are you sure to delete?": "እርግጠኛ ነዎት መሰረዝ?",
+    "Fundraiser": "ገንዘብ አሰባሳቢ",
+    "Save image": "ምስል አስቀምጥ",
+    "Drag, zoom or rotate photo": "ፎቶን ይጎትቱ ፣ ያጉሉ ወይም ያሽከርክሩ",
+    "Position yor photo": "የፎቶ ቦታዎ"
 }

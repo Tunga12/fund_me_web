@@ -76,6 +76,7 @@ import { OrganizerAndBeneficiarySectionComponent } from './components/fundraiser
 import { HighlightCardComponent } from './components/fundraiser/fundraiser-detail-public/highlight-card/highlight-card.component';
 import { UpdatesSectionComponent } from './components/fundraiser/fundraiser-detail-public/updates-section/updates-section.component';
 import { PhotoTabContentComponent } from './components/edit-ui/photo-tab-content/photo-tab-content.component';
+import { UpdateImageCropperComponent } from './components/post-an-update/update-image-cropper/update-image-cropper.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import { PhotoTabContentComponent } from './components/edit-ui/photo-tab-content
     OrganizerAndBeneficiarySectionComponent,
     HighlightCardComponent,
     UpdatesSectionComponent,
-    PhotoTabContentComponent
+    PhotoTabContentComponent,
+    UpdateImageCropperComponent
   ],
   entryComponents: [],
   imports: [

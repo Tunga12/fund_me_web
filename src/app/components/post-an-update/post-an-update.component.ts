@@ -1,5 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog,
+} from '@angular/material/dialog';
 import {
   AbstractControl,
   FormControl,
@@ -13,29 +17,35 @@ import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { base64ToFile } from 'ngx-image-cropper';
+import { UpdateImageCropperComponent } from './update-image-cropper/update-image-cropper.component';
 
 @Component({
   selector: 'app-post-an-update',
   templateUrl: './post-an-update.component.html',
   styleUrls: ['./post-an-update.component.css'],
 })
-export class PostAnUpdateComponent implements OnInit {
+export class PostAnUpdateComponent implements OnInit, OnDestroy {
   loading = false;
   update: Update = { content: '', image: '' };
   form!: FormGroup;
   errorMessage = '';
   mode = '';
-  updateSub?: Subscription;
   fundraiser!: Fundraiser;
 
+  updateSub?: Subscription;
+
   constructor(
-    private imageService: ImageService,
     private updateService: UpdateService,
     private dialogRef: MatDialogRef<PostAnUpdateComponent>,
     private snackbarService: SnackbarService,
     private snackBar: MatSnackBar,
+    private imageCropperDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+  ngOnDestroy(): void {
+    this.updateSub?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -57,27 +67,6 @@ export class PostAnUpdateComponent implements OnInit {
     this.fundraiser = this.data.fundraiser;
   }
 
-  // upload the image chosen by the user
-  uploadImage(event: any) {
-    this.loading = true;
-    var file = event.target.files[0];
-    const formData: FormData = new FormData();
-    formData.append('image', file, file.name);
-
-    this.imageService.upload(formData).subscribe(
-      (response) => {
-        // this.imageSrc = response;
-        this.loading = false;
-        this.update.image = response;
-      },
-      (error) => {
-        console.log(error.error);
-        this.errorMessage = error.error;
-        this.loading = false;
-      }
-    );
-  }
-
   // post update
   postUpdate() {
     this.loading = true;
@@ -91,7 +80,7 @@ export class PostAnUpdateComponent implements OnInit {
         (update) => {
           this.loading = false;
           // update = update;
-          this.fundraiser.updates?.push(update);
+          this.fundraiser.updates?.unshift(update);
           console.log(update);
           this.dialogRef.close();
           this.snackBar.open(
@@ -129,7 +118,7 @@ export class PostAnUpdateComponent implements OnInit {
         let index = this.fundraiser.updates?.indexOf(update);
         this.fundraiser.updates?.splice(index!, 1, newUpdate);
         this.snackBar.open(
-          'Update Edited successfuly!',
+          'Update edited successfully!',
           'Close',
           this.snackbarService.getConfig()
         );
@@ -147,6 +136,21 @@ export class PostAnUpdateComponent implements OnInit {
     );
   }
 
+  onImageChoosen(event: any) {
+    this.errorMessage = '';
+    this.imageCropperDialog
+      .open(UpdateImageCropperComponent, { data: { image: event,mode:this.mode } })
+      .afterClosed()
+      .subscribe((croppedImage: any) => {
+        console.log(croppedImage);
+        
+        if (croppedImage) {
+          this.update.image = croppedImage;
+          console.log(croppedImage);
+        }
+      });
+  }
+
   public get content(): AbstractControl | null {
     return this.form.get('content');
   }
@@ -154,11 +158,4 @@ export class PostAnUpdateComponent implements OnInit {
   public get image(): AbstractControl | null {
     return this.form.get('image');
   }
-
-  // openAddPhotoOrVedioDialog() {
-  //   this.dialog
-  //     .open(AddPhotoVideoDialogComponent)
-  //     .afterClosed()
-  //     .subscribe((close_result) => console.log(close_result));
-  // }
 }

@@ -22,3 +22,8 @@ img {
   max-width: 100%;
   max-height: 200px;
 }
+
+#add-photo-label{
+  color: green; border: green solid 2px; border-radius: 5px; padding: 5px 10px; cursor: pointer;
+  font-weight: 300;
+}

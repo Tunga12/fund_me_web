@@ -1,65 +1,72 @@
-<div>
-  <div mat-dialog-title>
-    <h4 matDialogTitle style="display: inline">
-      {{ (mode+" an update") | translate}}
-    </h4>
-    <span mat-dialog-close class="close-dialog">X</span>
-  </div>
+<div mat-dialog-title>
+  <h2 matDialogTitle style="display: inline">
+    {{ mode + " an update" | translate }}
+  </h2>
+  <span mat-dialog-close class="close-dialog">X</span>
   <mat-divider></mat-divider>
-  <mat-dialog-content>
-    <form
-      [formGroup]="form"
-      (ngSubmit)="mode === 'Edit' ? editUpdate(update) : postUpdate()"
-    >
-      <mat-form-field appearance="outline">
-        <textarea
-          formControlName="content"
-          matInput
-          [placeholder]="'Share your news here'| translate"
-        ></textarea>
+</div>
+<mat-dialog-content>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="mode === 'Edit' ? editUpdate(update) : postUpdate()"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    fxLayoutGap="10px"
+  >
+    <mat-form-field appearance="outline">
+      <textarea
+        formControlName="content"
+        matInput
+        [placeholder]="'Share your news here' | translate"
+      ></textarea>
 
-        <mat-error *ngIf="content?.touched && content?.errors?.required">
-          {{ "Please write content for your update." | translate }}
-        </mat-error>
-        <mat-error *ngIf="content?.touched && content?.errors?.minlength">
-          {{
-            "Content of an update should be letters minimum."
-              | translate: { value: content?.errors?.minlength.requiredLength }
-          }}
-        </mat-error>
-      </mat-form-field>
-      <label for="image">{{ "Add a photo" | translate }} </label>
-      
+      <mat-error *ngIf="content?.touched && content?.errors?.required">
+        {{ "Please write content for your update." | translate }}
+      </mat-error>
+      <mat-error *ngIf="content?.touched && content?.errors?.minlength">
+        {{
+          "Content of an update should be letters minimum."
+            | translate: { value: content?.errors?.minlength.requiredLength }
+        }}
+      </mat-error>
+    </mat-form-field>
+    <label matLabel for="image" color="primary" id="add-photo-label">
       <input
-      id="image"
-      (change)="uploadImage($event)"
-      type="file"
-      color="primary"
-      formControlName="image"
-        value=" Add a photo or video"
-        />
-        
-      <img *ngIf="update" [src]="update.image"  onerror="this.src='/assets/images/placeholder.png'" />
-      
-      <mat-progress-bar
+        id="image"
+        hidden
+        formControlName="image"
+        type="file"
+        accept="image/jpeg,image/png,image/gif, image/bmp"
+        (change)="onImageChoosen($event)"
+      />
+      {{ "Add photo" | translate }}
+    </label>
+
+    <img
+      *ngIf="update.image!=''"
+      [src]="update.image"
+      width="100%"
+      onerror="this.src='/assets/images/placeholder.png'"
+    />
+
+    <mat-progress-bar
       *ngIf="loading"
       mode="indeterminate"
       fxFlexAlign="center"
-      ></mat-progress-bar>
-      
-      <mat-error *ngIf="errorMessage">
-        {{ errorMessage }}
-      </mat-error>
+    ></mat-progress-bar>
 
-      <button
-        [disabled]="form.invalid || loading"
-        mat-raised-button
-        type="submit"
-        color="primary"
-        class="btn-large"
-      >
-        {{ (mode+" an update") | translate}}
-      </button>
-    </form>
-  </mat-dialog-content>
-</div>
+    <mat-error *ngIf="errorMessage">
+      {{ errorMessage }}
+    </mat-error>
+
+    <button
+      [disabled]="form.invalid || loading"
+      mat-raised-button
+      type="submit"
+      color="primary"
+      class="btn-large"
+    >
+      {{ mode + " an update" | translate }}
+    </button>
+  </form>
+</mat-dialog-content>
