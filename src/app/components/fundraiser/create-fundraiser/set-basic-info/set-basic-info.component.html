@@ -1,44 +1,43 @@
 <form [formGroup]="form">
   <mat-form-field appearance="outline">
-    <mat-label>Choose category of your fundraiser *</mat-label>
+    <mat-label>{{"Category of your fundraiser"|translate}}</mat-label>
     <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="selected_category">
-      <mat-option>Choose category</mat-option>
+      <mat-option>{{"Choose category"|translate}}</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
         category.name
       }}</mat-option>
     </mat-select>
     <mat-error *ngIf="category?.touched && category?.errors?.required">
-      Category is required
+      {{"Category is required!"|translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>How much would you like to rise? *</mat-label>
+    <mat-label>{{"How much would you like to rise?"|translate}}</mat-label>
     <input
       matInput
       formControlName="goalAmount"
       class="matInput"
-      placeholder="Enter goal amount"
+      [placeholder]="'Enter goal amount'|translate"
       type="number"
       min="1"
     />
     <mat-icon matPrefix>monetization_on</mat-icon>
     <span matSuffix>.00 USD</span>
     <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
-      Fundraiser goal is required
+      {{"Fundraiser goal is required!"|translate}}
     </mat-error>
     <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-      The minimun allowed goal is {{ goalAmount?.errors?.min.min | currency }}
+      {{"The minimun allowed goal is"|translate:{min: goalAmount?.errors?.min.min | currency} }}
     </mat-error>
   </mat-form-field>
   <p>
-    Keep in mind that transaction fees, including credit and debit charges, are
-    deducted from each donation.
+   {{"Keep in mind that transaction fees, including credit and debit charges, are deducted from each donation." | translate }}
   </p>
   <div id="note">
-    <p>After money raised, please make sure the person withdrawing has:</p>
+    <p>{{"After money raised, please make sure the person withdrawing has"|translate}}:</p>
     <ul>
-      <li>A bank account</li>
+      <li>{{"A bank account"|translate}}t</li>
     </ul>
   </div>
 
@@ -49,6 +48,6 @@
     class="btn-large"
     (click)="nextStep()"
   >
-    Next
+    {{"Next"|translate}}
   </button>
 </form>

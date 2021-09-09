@@ -1,20 +1,17 @@
 <form [formGroup]="form">
   <mat-form-field appearance="outline">
-    <mat-label>Title of your fundraiser </mat-label>
-    <input matInput formControlName="title" placeholder="Title of your fundriser" type="text" required />
+    <mat-label>{{"Title of your fundraiser"|translate}}</mat-label>
+    <input matInput formControlName="title" [placeholder]="'Title of your fundraiser'|translate" type="text" required />
 
-    <mat-error *ngIf="title?.touched && title?.errors?.required">Title is required.</mat-error>
-    <mat-error *ngIf="title?.touched && title?.errors?.minlength">TItle must be minimum {{
-      title?.errors?.minlength.requiredLength }} charaters.</mat-error>
+    <mat-error *ngIf="title?.touched && title?.errors?.required">{{"Title is required!"|translate}}</mat-error>
+    <mat-error *ngIf="title?.touched && title?.errors?.minlength">{{"Title must be minimum letters!"|translate:{length:title?.errors?.minlength.requiredLength} }}</mat-error>
   </mat-form-field>
 
   <story-text-area [form]="form"></story-text-area>
-  <mat-error *ngIf="story?.touched && story?.errors?.required">Story is required.</mat-error>
-  <mat-error *ngIf="story?.touched && story?.errors?.minlength">Story should be {{
-    story?.errors?.minlength.requiredLength }} letters
-    minimum.</mat-error>
+  <mat-error *ngIf="story?.touched && story?.errors?.required">{{"Story is required!"|translate}}</mat-error>
+  <mat-error *ngIf="story?.touched && story?.errors?.minlength">{{"Story should be letters minimum!"|translate:{length:story?.errors?.minlength.requiredLength} }}.</mat-error>
 
   <button [disabled]="!form.valid" mat-raised-button color="primary" (click)="nextStep()" class="btn-large">
-    Complete fundraiser
+    {{"Complete fundraiser"|translate}}
   </button>
 </form>

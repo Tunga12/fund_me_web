@@ -25,7 +25,7 @@
         "
       ></div>
     </div>
-    <h2 class="bold">{{currentStep===1?"Let’s start with the basics":currentStep===2?"Set fundraiser media":"Set fundraiser story"}}</h2>
+    <h2 class="bold">{{(currentStep===1?"Let’s start with the basics":currentStep===2?"Set fundraiser media":"Set fundraiser story")|translate}}</h2>
     <form>
       <span [ngSwitch]="currentStep">
         <set-basic-info
@@ -53,7 +53,7 @@
         class="btn-large"
         (click)="previousStep()"
       >
-        Back
+        {{"Back"|translate}}
       </button>
     </form>
     <p *ngIf="currentStep === 1">

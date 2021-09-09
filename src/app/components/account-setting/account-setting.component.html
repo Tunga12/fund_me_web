@@ -1,158 +1,181 @@
 <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav >
+</nav>
 <main fxLayout="column">
-<div
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  style="margin: 30px auto"
-  [ngStyle.gt-sm]="{'width': '50%'}"
-  [ngStyle.sm]="{'width': '60%'}"
-  [ngStyle.lt-sm]="{'width': '90%'}"
->
-  <h2 class="bold">Acount settings</h2>
-  <mat-progress-spinner
-    *ngIf="loading"
-    fxFlexAlign="center center"
-    mode="indeterminate"
-    color="primary"
-  ></mat-progress-spinner>
-  <form
-    *ngIf="!loading"
-    [formGroup]="form"
-    (ngSubmit)="$event.preventDefault()"
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    style="margin: 30px auto"
+    [ngStyle.gt-sm]="{ width: '50%' }"
+    [ngStyle.sm]="{ width: '60%' }"
+    [ngStyle.lt-sm]="{ width: '90%' }"
   >
-    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-    <div
-      style="width: 100%"
-      fxLayout="row"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="10px"
-    >
-      <mat-form-field floatPlaceholder="auto" appearance="outline">
-        <mat-label>First name *</mat-label>
-        <input
-          matInput
-          formControlName="firstName"
-          type="text"
-          placeholder="First name"
-        />
-        <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
-          >Please enter your first name
-        </mat-error>
-        <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
-          >First name must be
-          {{ firstName?.errors?.minlength.requiredLength }} minimun.
-        </mat-error>
-
-        <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
-          >First name cannot include whitespaces.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field floatPlaceholder="auto" appearance="outline">
-        <mat-label>Last name *</mat-label>
-        <input
-          matInput
-          formControlName="lastName"
-          type="text"
-          placeholder="Last name"
-        />
-        <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
-          >Please enter your last name
-        </mat-error>
-        <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
-          >Last name must be
-          {{ lastName?.errors?.minlength.requiredLength }} minimun.
-        </mat-error>
-
-        <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
-          >Last name cannot include whitespaces.
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div
-      fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="10px"
-    >
-      <mat-form-field appearance="outline">
-        <mat-label> Email Address *</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          placeholder="Email address"
-          type="email"
-          email
-        />
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="email?.touched && email?.errors?.email"
-          >Please enter a valid email.
-        </mat-error>
-        <mat-error *ngIf="email?.touched && email?.errors?.required"
-          >Please enter your email
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label> Phone number *</mat-label>
-        <input
-          matInput
-          formControlName="phoneNumber"
-          placeholder="Phone number"
-          type="tel"
-        />
-        <mat-icon matPrefix>phone</mat-icon>
-        <mat-error
-          *ngIf="
-            phone?.touched &&
-            (phone?.errors?.minlength || phone?.errors?.maxlength)
-          "
-          >Phone number must be
-          {{ phone?.errors?.minlength.requiredLength }} digits.
-        </mat-error>
-        <mat-error *ngIf="phone?.touched && phone?.errors?.required"
-          >Please enter your phone number
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- start: Error display -->
-    <mat-error>{{ errorMessage }}</mat-error>
-    <!--end: Error display -->
-
-    <button
-      mat-stroked-button
+    <h2 class="bold">{{"Acount settings"|translate}}</h2>
+    <mat-progress-spinner
+      *ngIf="loading"
+      fxFlexAlign="center center"
+      mode="indeterminate"
       color="primary"
-      (click)="openChangePasswordDialog()"
+    ></mat-progress-spinner>
+    <form
+      *ngIf="!loading"
+      [formGroup]="form"
+      (ngSubmit)="$event.preventDefault()"
     >
-      Update your password
-    </button>
-    <div><mat-divider></mat-divider></div>
-    <div
-      fxLayout="row wrap"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="30px"
-    >
-      <p>
-        Deleting your account will remove all of your activity and campaigns,
-        and you will no longer be able to log in with this account.
-      </p>
-      <button color="warn" mat-button (click)="openDeleteAccountDialog()">
-        Delete Account
-      </button>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <button
-        type="submit"
-        color="primary"
-        [disabled]="form.invalid || !form.dirty || loading"
-        mat-raised-button
-        (click)="save()"
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <div
+        style="width: 100%"
+        fxLayout="row"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="10px"
       >
-        Save Changes
+        <mat-form-field floatPlaceholder="auto" appearance="outline">
+          <mat-label>{{ "First name" | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="firstName"
+            type="text"
+            placeholder="First name"
+          />
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.required"
+            >{{ "Please enter your first name" | translate }}
+          </mat-error>
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
+            >{{
+              "First name must be minimun."
+                | translate
+                  : { minlength: firstName?.errors?.minlength.requiredLength }
+            }}
+          </mat-error>
+
+          <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
+            >{{ "First name cannot include whitespaces." | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="auto" appearance="outline">
+          <mat-label>{{ "Last name" | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="lastName"
+            type="text"
+            placeholder="Last name"
+          />
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.required"
+            >{{ "Please enter your last name" | translate }}
+          </mat-error>
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
+            >{{
+              "Last name must be minimum."
+                | translate
+                  : { minlength: lastName?.errors?.minlength.requiredLength }
+            }}
+          </mat-error>
+
+          <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
+            >{{ "Last name cannot include whitespaces." | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label> {{ "Email Address" | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email address"
+            type="email"
+            email
+          />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="email?.touched && email?.errors?.email"
+            >{{ "Please enter a valid email." | translate }}
+          </mat-error>
+          <mat-error *ngIf="email?.touched && email?.errors?.required"
+            >{{ "Please enter your email" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label> {{ "Phone number" | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Phone number"
+            type="tel"
+          />
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-error
+            data-cy="phone-minlength-error"
+            *ngIf="
+              (phone?.touched && phone?.errors?.minlength) ||
+              (phone?.touched && phone?.errors?.minlength)
+            "
+            >{{
+              "Phone number must be digits."
+                | translate
+                  : { length: phone?.errors?.minlength?.requiredLength }
+            }}
+          </mat-error>
+
+          <mat-error
+            data-cy="phone-empty-error"
+            *ngIf="phone?.touched && phone?.errors?.required"
+            >{{ "Please enter your phone number" | translate }}
+          </mat-error>
+
+          <mat-error
+            data-cy="fname-whitespace-error"
+            *ngIf="phone?.touched && phone?.errors?.whiteSpace"
+            >{{ "Phone number" | translate }}
+            {{ "cannot include whitespaces." | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- start: Error display -->
+      <mat-error>{{ errorMessage }}</mat-error>
+      <!--end: Error display -->
+
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openChangePasswordDialog()"
+      >
+        {{ "Update your password" | translate }}
       </button>
-    </div>
-  </form>
-</div>
+      <div><mat-divider></mat-divider></div>
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="30px"
+      >
+        <p>
+          {{
+            "Deleting your account will remove all of your activity and campaigns,
+          and you will no longer be able to log in with this account."
+              | translate
+          }}
+        </p>
+        <button color="warn" mat-button (click)="openDeleteAccountDialog()">
+          {{ "Delete account" | translate }}
+        </button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
+        <button
+          type="submit"
+          color="primary"
+          [disabled]="form.invalid || !form.dirty || loading"
+          mat-raised-button
+          (click)="save()"
+        >
+          {{ "Save changes" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
 </main>

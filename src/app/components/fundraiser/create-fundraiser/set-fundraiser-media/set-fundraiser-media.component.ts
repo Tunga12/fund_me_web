@@ -29,8 +29,8 @@ export class SetFundraiserMediaComponent implements OnInit {
   @Output() next = new EventEmitter();
   constructor(
     private formBuilder: FormBuilder,
-    private imageCroperDialog: MatDialog
-    ,private imageService:ImageService
+    private imageCroperDialog: MatDialog,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -38,24 +38,27 @@ export class SetFundraiserMediaComponent implements OnInit {
       image: ['', Validators.required],
     });
   }
- 
+
   // upload the image and go to next step
   nextStep() {
-    let file = base64ToFile(this.croppedImage);
-    const formData: FormData = new FormData();
-    formData.append('image', file);
-    this.imageService.upload(formData).subscribe(
-      () => {
-        this.loading = false;
-        this.next.emit(this.fundraiser);
-      },
-      (error) => {
-        console.log(error.error);
-        this.errorMessage = error.error;
-        this.loading = false;
-      }
-    );
-
+    if (this.croppedImage) {
+      let file = base64ToFile(this.croppedImage);
+      const formData: FormData = new FormData();
+      formData.append('image', file);
+      this.imageService.upload(formData).subscribe(
+        () => {
+          this.loading = false;
+          this.next.emit(this.fundraiser);
+        },
+        (error) => {
+          console.log(error.error);
+          this.errorMessage = error.error;
+          this.loading = false;
+        }
+      );
+    } else {
+      this.next.emit(this.fundraiser);
+    }
   }
 
   // remove the selaected image
@@ -86,7 +89,6 @@ export class SetFundraiserMediaComponent implements OnInit {
       .subscribe((croppedImage) => {
         console.log(croppedImage);
         if (croppedImage) {
-          
           this.imageSrc = croppedImage;
           this.fundraiser.image = croppedImage;
           this.croppedImage = croppedImage;

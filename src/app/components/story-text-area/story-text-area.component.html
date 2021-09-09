@@ -2,7 +2,7 @@
 <form [formGroup]="form">
   <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
   <ngx-editor
-    [placeholder]="'Enter story here...'"
+    [placeholder]="'Enter story here...'|translate"
     [editor]="editor"
     formControlName="story"
   >

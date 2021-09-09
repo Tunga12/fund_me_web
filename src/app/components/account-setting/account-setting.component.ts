@@ -37,7 +37,6 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private snackBar: MatSnackBar,
-    private router: Router,
     private dialog: MatDialog,
     private title: Title,
     private snackbarService: SnackbarService

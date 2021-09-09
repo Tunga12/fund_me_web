@@ -1,7 +1,10 @@
 <form [formGroup]="form">
   <p>
-    A high-quality photo or video will help tell your story and build trust with
-    donors.
+    {{
+      "A high-quality photo or video will help tell your story and build trust with
+    donors."
+        | translate
+    }}
   </p>
 
   <ng-container *ngIf="imageSrc === '' && !loading; else elseTemplate">
@@ -18,7 +21,11 @@
         />
         <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
           <mat-icon>add</mat-icon>
-          <p>upload a photo that best represents your fundraiser</p>
+          <p>
+            {{
+              "upload a photo that best represents your fundraiser" | translate
+            }}
+          </p>
         </div>
       </label>
     </button>
@@ -54,8 +61,12 @@
         fxLayoutGap="20px"
         [ngStyle]="{ width: '94%' }"
       >
-        <button [disabled]="!form.valid || loading" (click)="editImage()" mat-icon-button>
-          <mat-icon>edit</mat-icon>Edit
+        <button
+          [disabled]="!form.valid || loading"
+          (click)="editImage()"
+          mat-icon-button
+        >
+          <mat-icon>edit</mat-icon>{{ "Edit" | translate }}
         </button>
         <button
           [disabled]="!form.valid || loading"
@@ -63,7 +74,7 @@
           color="warn"
           (click)="removeImage()"
         >
-          <mat-icon>delete</mat-icon>Delete
+          <mat-icon>delete</mat-icon>{{ "Delete" | translate }}
         </button>
       </div>
     </div>
