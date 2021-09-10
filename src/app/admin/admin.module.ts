@@ -27,6 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
 import { ImportExcelComponent } from './components/import-excel/import-excel.component';
 import { UsersComponent } from './components/users/users.component';
+import { ReportedFundraisersComponent } from './components/reported-fundraisers/reported-fundraisers.component';
 
 const routes: Routes =
     [
@@ -84,6 +85,11 @@ const routes: Routes =
                     path:'users',
                     component:UsersComponent
                 }
+                ,
+                {
+                    path:'reports',
+                    component:ReportedFundraisersComponent
+                }
 
             ]
         }];
@@ -102,7 +108,8 @@ const routes: Routes =
         HelpFormComponent,
         HelpsComponent,
         ImportExcelComponent,
-        UsersComponent        
+        UsersComponent,
+        ReportedFundraisersComponent        
     ],
 
     imports: [

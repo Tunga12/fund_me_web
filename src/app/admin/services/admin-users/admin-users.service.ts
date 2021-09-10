@@ -24,10 +24,13 @@ export class AdminUsersService {
     delete user.__v;
     delete user.paymentMethods;
 
-    let verifiedUser={...user, isVerified:true}
+    let verifiedUser = { ...user, isVerified: true };
     console.log(verifiedUser);
-    
-    return this.http.put<User>(`${environment.BASE_URL}/api/users/${id}`, verifiedUser);
+
+    return this.http.put<User>(
+      `${environment.BASE_URL}/api/users/${id}`,
+      verifiedUser
+    );
   }
 
   // get currently logged in user
@@ -36,4 +39,5 @@ export class AdminUsersService {
       .get<User>(`${environment.BASE_URL}/api/users/me`)
       .toPromise();
   }
+
 }

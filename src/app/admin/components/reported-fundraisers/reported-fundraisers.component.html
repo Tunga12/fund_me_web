@@ -1,0 +1,70 @@
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  >
+  </mat-progress-spinner>
+</div>
+
+<p class="text-error">{{ errorMessage }}</p>
+
+<div *ngIf="!loading">
+  <div
+    class="no-data"
+    *ngIf="dataSource.data.length === 0"
+    style="margin: 30px"
+  >
+    You have no reported fudraisers yet.
+  </div>
+</div>
+<div
+  *ngIf="dataSource.data.length !== 0"
+  class="table-container mat-elevation-z8"
+>
+  <mat-table matSort [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Fundraiser title
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.fundraiser.title | titlecase }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <mat-header-cell *matHeaderCellDef> Report reason</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.report.reason | titlecase }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalRaised">
+      <mat-header-cell *matHeaderCellDef> Total raised</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.fundraiser.totalRaised }}
+      </mat-cell>
+    </ng-container>
+   
+    <ng-container matColumnDef="view">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['/fundraiser-detail', element.fundraiser._id]" color="primary" >
+                <mat-icon class="mat-18">visibility</mat-icon>
+            </button> View
+        </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row  *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <mat-row *matNoDataRow>No reports yet.</mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>
