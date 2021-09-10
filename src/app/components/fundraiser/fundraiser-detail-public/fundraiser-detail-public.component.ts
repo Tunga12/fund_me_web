@@ -11,6 +11,11 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { FundraiserService } from '../../../services/fundraiser/fundraiser.service';
 import { DonationsComponent } from './donations/donations.component';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
+import { SnackbarService } from './../../../services/snackbar/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-fundraiser-detail-public',
@@ -19,7 +24,7 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 })
 export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId') || '';
-
+  user!: User;
   errorMessage = '';
   loading = true; // to show a loading spinner
   percentage = 0;
@@ -27,13 +32,15 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   fundraiserId: string = '';
   fundraiser?: Fundraiser;
 
-
-
   fundSub?: Subscription;
+  userSub?: Subscription;
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
+    private snackBar: MatSnackBar,
+    private userService: UserService,
+    private snackbarService: SnackbarService,
     public fundraiserServ: FundraiserService,
     public authService: AuthService
   ) {}
@@ -49,8 +56,17 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
     // get the fundraiser with this id
     this.getFundriser(this.fundraiserId);
+
+    // get current user
+    this.getUser()
   }
 
+  // get current user to know admin or not
+  getUser() {
+    this.userSub = this.userService.getCurrentUser().subscribe((user) => {
+      this.user = user;
+    });
+  }
   increaseShareCount() {
     this.loading = true;
     this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
@@ -84,7 +100,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
-     
+
         this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(this.fundraiser);
         console.log(
@@ -125,13 +141,11 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
- 
-  
+
   // checks if this fundraiser has team members that have a status not 'pending'
   hasAcceptedTeamMembers(): boolean {
     return this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser!);
   }
-  
 
   // open all donations dialog
   donations(type: string) {
@@ -144,14 +158,37 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   }
 
   // opens the report fundraiser dialog
-  openReportDialog(){
-    this.dialog.open(
-      ReportDialogComponent,{data:{fundraiserId:this.fundraiserId}}
-    );
+  openReportDialog() {
+    this.dialog.open(ReportDialogComponent, {
+      data: { fundraiserId: this.fundraiserId },
+    });
   }
 
+  blockFundraiser(fundraiser: Fundraiser) {
+    this.fundraiserServ
+      .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
+      .subscribe(
+        () => {
+          this.snackBar.open(
+            'Fundriser blocked succesfully',
+            'close',
+            this.snackbarService.getConfig()
+          );
+        },
+        (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Unable to block fundraiser',
+            'close',
+            this.snackbarService.getConfig()
+          );
+          this.errorMessage = error.error;
+          console.log(error.error);
+        }
+      );
+  }
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 }

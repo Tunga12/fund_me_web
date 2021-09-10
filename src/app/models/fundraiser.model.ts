@@ -26,7 +26,8 @@ export interface Fundraiser {
   totalShareCount?: number;
   likeCount?: number;
   withdraw?:Withdrawal,
-  totalWithdraw?: Withdraw[]
+  totalWithdraw?: Withdraw[],
+  isBlocked?:boolean;
 }
 
 interface Withdraw{
