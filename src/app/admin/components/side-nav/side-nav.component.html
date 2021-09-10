@@ -104,6 +104,10 @@
           <mat-icon mat-list-icon class="mat-18">upload</mat-icon
           ><span *ngIf="!icons_only"> Upload payments</span>
         </a>
+        <a mat-list-item routerLink="users" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">people_outline</mat-icon
+          ><span *ngIf="!icons_only"> Users</span>
+        </a>
         <a mat-list-item routerLink="helps" routerLinkActive="active">
           <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon
           ><span *ngIf="!icons_only"> Helps</span>
@@ -155,7 +159,7 @@
         </mat-icon>
       </a>
       <main fxFlex="98">
-          <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
       </main>
     </mat-sidenav-content>
   </mat-sidenav-container>

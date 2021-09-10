@@ -8,6 +8,8 @@ export interface User {
   emailNotification?: boolean;
   isDeactivated?: boolean;
   isAdmin?: boolean;
+  isVerified?:boolean;
   __v?:string;
   date?: string;
+  phoneNumber?:string;
 }

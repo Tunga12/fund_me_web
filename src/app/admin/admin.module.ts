@@ -26,6 +26,7 @@ import { HelpFormComponent } from './components/help-form/help-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
 import { ImportExcelComponent } from './components/import-excel/import-excel.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes =
     [
@@ -78,6 +79,10 @@ const routes: Routes =
                 , {
                     path: 'upload',
                     component: ImportExcelComponent,
+                },
+                {
+                    path:'users',
+                    component:UsersComponent
                 }
 
             ]
@@ -96,7 +101,8 @@ const routes: Routes =
         AdminHomeComponent,
         HelpFormComponent,
         HelpsComponent,
-        ImportExcelComponent        
+        ImportExcelComponent,
+        UsersComponent        
     ],
 
     imports: [

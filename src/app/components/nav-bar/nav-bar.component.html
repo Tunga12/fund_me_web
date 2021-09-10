@@ -7,18 +7,22 @@
       src="/assets/images/icon.svg"
       class="logo"
     />
+    <!-- search field -->
     <div fxFlexOrder.lt-sm="1" class="search-container">
-      <!-- search field -->
-        <input
-          data-cy="search-field"
-          id="search-field"
-          matInput
-          #key
-          type="search"
-          [placeholder]="'Search fundraisers' | translate"
-          (keyup.enter)="search(key.value)"
-          />
-          <span id="search-icon" matSuffix> <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon></span>
+      <input
+        data-cy="search-field"
+        id="search-field"
+        matInput
+        #key
+        type="search"
+        [placeholder]="'Search fundraisers' | translate"
+        (keyup.enter)="search(key.value)"
+      />
+      <span id="search-icon" matSuffix>
+        <mat-icon class="mat-18" (click)="search(key.value)"
+          >search</mat-icon
+        ></span
+      >
     </div>
 
     <div fxFlexOrder.lt-sm="2">

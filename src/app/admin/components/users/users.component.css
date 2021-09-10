@@ -1,0 +1,31 @@
+#search-field {
+    outline: none;
+    padding: 10px 5px 10px 3px;
+    margin-left: 1rem;
+    background: white center left norepeat;
+  }
+  
+  .search-container {
+    border-radius: 25px;
+    position: relative;
+    border: 1px solid tan;
+    box-shadow: 0 1px 6px 0 rgb(32 33 36 / 12%);
+    z-index: 2147483647 !important;
+    padding-right: 10px;
+    margin:0px  auto;
+  }
+
+  .user-info{
+      padding: 20px;
+      border-radius: .5rem;
+      min-width:50%;
+  }
+
+  .verified{
+      cursor: default;
+  }
+  
+  #search-icon {
+    cursor: pointer;
+  }
+  
