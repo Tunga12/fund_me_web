@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+  <h2 matDialogTitle>Report fundraiser</h2>
+  <button mat-icon-button matDialogClose>
+    <mat-icon class="mat-18">close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-radio-group formControlName="reason" [attr.align]="'start'" fxLayout="column" fxLayoutGap="6px">
+      <mat-radio-button
+        *ngFor="let choice of choices"
+        name="reason"
+        [value]="choice"
+      >
+        {{ choice }}
+      </mat-radio-button>
+    </mat-radio-group>
+</form>
+</mat-dialog-content>
+<mat-progress-bar
+data-cy="loader"
+*ngIf="loading"
+mode="indeterminate"
+></mat-progress-bar>
+<div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="0px">
+<mat-error>{{ errorMessage }}</mat-error>
+</div>
+<mat-dialog-actions [attr.align]="'end'">
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button type="submit" (click)="report()">Report</button>
+</mat-dialog-actions>
+

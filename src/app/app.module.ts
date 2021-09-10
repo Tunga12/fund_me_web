@@ -77,6 +77,7 @@ import { HighlightCardComponent } from './components/fundraiser/fundraiser-detai
 import { UpdatesSectionComponent } from './components/fundraiser/fundraiser-detail-public/updates-section/updates-section.component';
 import { PhotoTabContentComponent } from './components/edit-ui/photo-tab-content/photo-tab-content.component';
 import { UpdateImageCropperComponent } from './components/post-an-update/update-image-cropper/update-image-cropper.component';
+import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail-public/report-dialog/report-dialog.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +137,8 @@ import { UpdateImageCropperComponent } from './components/post-an-update/update-
     HighlightCardComponent,
     UpdatesSectionComponent,
     PhotoTabContentComponent,
-    UpdateImageCropperComponent
+    UpdateImageCropperComponent,
+    ReportDialogComponent
   ],
   entryComponents: [],
   imports: [

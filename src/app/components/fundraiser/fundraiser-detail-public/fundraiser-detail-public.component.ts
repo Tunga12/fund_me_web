@@ -10,6 +10,7 @@ import { ShareDialogComponent } from '../../share-dialog/share-dialog.component'
 import { AuthService } from '../../../services/auth/auth.service';
 import { FundraiserService } from '../../../services/fundraiser/fundraiser.service';
 import { DonationsComponent } from './donations/donations.component';
+import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 @Component({
   selector: 'app-fundraiser-detail-public',
@@ -141,6 +142,14 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));
   }
+
+  // opens the report fundraiser dialog
+  openReportDialog(){
+    this.dialog.open(
+      ReportDialogComponent,{data:{fundraiserId:this.fundraiserId}}
+    );
+  }
+
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();

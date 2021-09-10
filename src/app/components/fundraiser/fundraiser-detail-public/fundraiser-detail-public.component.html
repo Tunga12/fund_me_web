@@ -119,68 +119,94 @@
           fxFlex.lt-md="98"
         >
           <div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-              <!-- organiser image or icon -->
-              <img matCardAvatar src="/assets/images/logo.png" />
-              <!-- <mat-icon color="primary"> volunteer_activism </mat-icon> -->
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              fxLayoutGap="20px"
+            >
               <div
-                fxLayout="column"
-                fxLayoutAlign="start start"
-                fxLayoutGap="0px"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="20px"
               >
                 <div
-                  *ngIf="hasAcceptedTeamMembers()"
-                  fxLayout="row"
-                  fxLayoutAlign="start start"
+                  fxLayout="column"
+                  fxLayoutAlign="center start"
+                  fxLayoutGap="0px"
                 >
-                  <strong class="team-fund-label">
-                    <mat-icon>people</mat-icon>
-                    <span>{{ "Team fundraiser" | translate }}</span>
-                  </strong>
+                  <div
+                    *ngIf="hasAcceptedTeamMembers()"
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                  >
+                    <strong class="team-fund-label">
+                      <mat-icon>people</mat-icon>
+                      <span>{{ "Team fundraiser" | translate }}</span>
+                    </strong>
+                  </div>
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="2px"
+                  >
+                    <mat-icon
+                      *ngIf="fundraiser?.organizer?.isVerified"
+                      color="primary"
+                      class="verified-icon"
+                      >check</mat-icon
+                    >
+                    <span>
+                      {{
+                        fundraiser?.organizer?.firstName +
+                          " " +
+                          fundraiser?.organizer?.lastName | titlecase
+                      }}
+                      <span *ngIf="hasAcceptedTeamMembers()">
+                        {{ "and" | translate }}
+                        {{
+                          fundraiserServ.getNumberOfAcceptedTeamMembers(
+                            fundraiser!
+                          )
+                        }}
+                        <span
+                          *ngIf="
+                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) === 1
+                          "
+                          >{{ "other" | translate }}</span
+                        >
+                        <span
+                          *ngIf="
+                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) > 1
+                          "
+                          >{{ "others" | translate }}</span
+                        >
+                        {{ "are" | translate }}
+                      </span>
+                      <span *ngIf="!hasAcceptedTeamMembers()">
+                        {{ "is" | translate }}
+                      </span>
+                      {{ "organizing this fundraiser" | translate }}
+                    </span>
+                  </div>
                 </div>
-                <p>
-                  {{
-                    fundraiser?.organizer?.firstName +
-                      " " +
-                      fundraiser?.organizer?.lastName | titlecase
-                  }}
-                  <span *ngIf="hasAcceptedTeamMembers()">
-                    {{ "and" | translate }}
-                    {{
-                      fundraiserServ.getNumberOfAcceptedTeamMembers(fundraiser!)
-                    }}
-                    <span
-                      *ngIf="
-                        fundraiserServ.getNumberOfAcceptedTeamMembers(
-                          fundraiser!
-                        ) === 1
-                      "
-                      >{{ "other" | translate }}</span
-                    >
-                    <span
-                      *ngIf="
-                        fundraiserServ.getNumberOfAcceptedTeamMembers(
-                          fundraiser!
-                        ) > 1
-                      "
-                      >{{ "others" | translate }}</span
-                    >
-                    {{ "are" | translate }}
-                  </span>
-                  <span *ngIf="!hasAcceptedTeamMembers()">
-                    {{ "is" | translate }}
-                  </span>
-                  {{ "organizing this fundraiser" | translate }}
-                </p>
               </div>
+              <button mat-button (click)="openReportDialog()">
+                <mat-icon class="mat-18">flag</mat-icon> report
+              </button>
             </div>
-            <mat-divider></mat-divider>
+            <div>
+              <mat-divider></mat-divider>
+            </div>
           </div>
 
           <div>
             <p>
               {{ fundraiser?.dateCreated | timeago }} |
-              <a href="">{{ fundraiser?.category?.name }}</a>
+              <a href="">{{ fundraiser?.category?.name! | translate }}</a>
             </p>
             <mat-divider></mat-divider>
           </div>
