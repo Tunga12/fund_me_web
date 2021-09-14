@@ -32,7 +32,7 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   fundraiserId = '';
   loading = true; // to show/hide loading spinner
-  erorrMessage = '';
+  errorMessage = '';
   form!: FormGroup;
   fundraiser?: Fundraiser;
 
@@ -49,7 +49,7 @@ export class DonateComponent implements OnInit, OnDestroy {
     private router: Router,
     private title: Title,
     private snackBar: MatSnackBar,
-    private snackbarServ: SnackbarService,
+    private snackbarService: SnackbarService,
     public fundraiserService: FundraiserService
   ) {}
 
@@ -116,9 +116,9 @@ export class DonateComponent implements OnInit, OnDestroy {
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);
         this.snackBar.open(
-          'Donation cacelled',
+          'Donation cancelled',
           'close',
-          this.snackbarServ.getConfig()
+          this.snackbarService.getConfig()
         );
       },
       onError: (err) => {
@@ -126,7 +126,7 @@ export class DonateComponent implements OnInit, OnDestroy {
         this.snackBar.open(
           'Some thing went wrong',
           'close',
-          this.snackbarServ.getConfig()
+          this.snackbarService.getConfig()
         );
       },
       onClick: (data, actions) => {
@@ -170,7 +170,7 @@ export class DonateComponent implements OnInit, OnDestroy {
     return (number: number) => number + '%';
   }
 
-  // make donation to a fundriser
+  // make donation to a fundraiser
   donate() {
     this.loading = true;
     this.donation = this.form.value;
@@ -185,17 +185,17 @@ export class DonateComponent implements OnInit, OnDestroy {
           this.snackBar.open(
             'Donation successfully completed',
             'close',
-            this.snackbarServ.getConfig()
+            this.snackbarService.getConfig()
           );
           this.loading = false;
           this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
         },
         (error: HttpErrorResponse) => {
-          this.erorrMessage = error.error;
+          this.errorMessage = error.error;
           this.snackBar.open(
-            'Donation not successfull',
+            'Donation not successful',
             'close',
-            this.snackbarServ.getConfig()
+            this.snackbarService.getConfig()
           );
           this.loading = false;
           console.log(error);
@@ -212,10 +212,10 @@ export class DonateComponent implements OnInit, OnDestroy {
           this.fundraiser = fund;
           this.loading = false;
         },
-        (eror) => {
+        (error) => {
           // TODO handle error
           this.loading = false;
-          this.erorrMessage = eror.error;
+          this.errorMessage = error.error;
         }
       );
   }

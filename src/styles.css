@@ -227,3 +227,7 @@ div.avatar-contain {
   background-color: #fbf8f6;
   padding: 20px;
 }
+
+main{
+  height: 100%;
+}

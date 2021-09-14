@@ -22,12 +22,12 @@ export class MyFundraisersComponent implements OnInit,OnDestroy {
 
   constructor(
     private router: Router,
-    private fundraiserServ: FundraiserService,
+    private fundraiserService: FundraiserService,
     private docTitle: Title
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('My fundaisers');
+    this.docTitle.setTitle('My fundraisers');
     // then get fundraisers
     this.getMyFundraisers();
   }
@@ -38,7 +38,7 @@ export class MyFundraisersComponent implements OnInit,OnDestroy {
 
   // get fundraisers of current user
   getMyFundraisers() {
-    this.fundraiserSUb = this.fundraiserServ.getMyFundraisers().subscribe(
+    this.fundraiserSUb = this.fundraiserService.getMyFundraisers().subscribe(
       (fundraisersPage:FundraiserPage) => {
         this.loading = false;
         this.myFundraisers = fundraisersPage.fundraisers;

@@ -87,7 +87,7 @@
               >{{"Please enter the amount you want to donate"| translate}}
             </mat-error>
             <mat-error *ngIf="amount?.touched && amount?.errors?.min"
-            >{{"The minimum amount to doante is" | translate:{min:amount?.errors?.min?.min} }}
+            >{{"The minimum amount to donate is" | translate:{min:amount?.errors?.min?.min} }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -119,7 +119,7 @@
           *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)"
           appearance="outline"
         >
-          <mat-label>{{"Referer: Who inavited you to this campaign?"| translate }}</mat-label>
+          <mat-label>{{"Referer: Who invited you to this campaign?"| translate }}</mat-label>
           <mat-select formControlName="memberId">
             <mat-option>{{"Select a team member"| translate}}</mat-option>
             <ng-container *ngFor="let member of fundraiser!.teams">
@@ -155,7 +155,7 @@
           </mat-checkbox>
         </div>
 
-        <div class="text-error">{{ erorrMessage }}</div>
+        <div class="text-error">{{ errorMessage }}</div>
         <!-- <button
           [disabled]="form.invalid"
           mat-raised-button
@@ -167,6 +167,9 @@
         </button>  -->
       </div>
       <ngx-paypal aria-disabled="form.invalid" [config]="payPalConfig"></ngx-paypal>
+      <button class="telebirr-btn" mat-raised-button>
+        <img class="telebirr-img" title="Telebirr" src="/assets/images/telebirr-logo.svg"/>
+      </button>
     </form>
     <mat-card [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>
