@@ -39,7 +39,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.getFundraisers();
   }
 
-  //get fundrisers of a page
+  //get fundraisers of a page
   getFundraisers() {
     this.loading = true;
     this.fundraiserSub = this.fundraiserService

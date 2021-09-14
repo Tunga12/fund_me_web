@@ -174,6 +174,7 @@ export class DonateComponent implements OnInit, OnDestroy {
   donate() {
     this.loading = true;
     this.donation = this.form.value;
+    // remove the memberId field if its value is empty
     if (!this.memberId || !this.memberId!.value) {
       delete this.donation['memberId'];
     }
@@ -213,7 +214,6 @@ export class DonateComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         (error) => {
-          // TODO handle error
           this.loading = false;
           this.errorMessage = error.error;
         }
