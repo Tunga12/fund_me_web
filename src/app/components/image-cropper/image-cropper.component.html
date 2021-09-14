@@ -1,13 +1,14 @@
 <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
 <main>
-    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-      <button mat-icon-button color="warn" [mat-dialog-close]="''">
-        <mat-icon>close</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" (click)="done()">
-        <mat-icon>check</mat-icon>Done
-      </button>
-    </div>
+  <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
+    <button mat-icon-button color="warn" [mat-dialog-close]="''">
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="done()">
+      <mat-icon>check</mat-icon>Done
+    </button>
+  </div>
+  <mat-dialog-content>
     <image-cropper
       [imageChangedEvent]="imageChangedEvent"
       [maintainAspectRatio]="true"
@@ -17,6 +18,13 @@
       (imageLoaded)="imageLoaded()"
       (cropperReady)="cropperReady()"
       (loadImageFailed)="loadImageFailed()"
+      [onlyScaleDown]="true"
+      [roundCropper]="false"
+      [canvasRotation]="canvasRotation"
+      [transform]="transform"
+      [alignImage]="'left'"
+      [resizeToWidth]="256"
+
     ></image-cropper>
     <!-- <img [src]="croppedImage" /> -->
     <p class="text-error">{{ errorMessage }}</p>
@@ -27,5 +35,12 @@
         color="primary"
         class="loading-spinner"
       ></mat-progress-spinner>
-    </div>  
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions [attr.align]="'center'">
+      <button mat-button title="rotate" (click)="rotateRight()" ><mat-icon class="mat-18">rotate_right</mat-icon></button>
+      <button mat-button title="zoom out" (click)="zoomOut()" ><mat-icon class="mat-18">zoom_out</mat-icon></button>
+      <button mat-button title="zoom in" (click)="zoomIn()" ><mat-icon class="mat-18">zoom_in</mat-icon></button>
+  </mat-dialog-actions>
 </main>

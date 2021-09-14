@@ -36,7 +36,7 @@ export class SetFundraiserStoryComponent implements OnInit {
           Validators.maxLength(50),
         ],
       ],
-      story: ['', [Validators.required, Validators.minLength(20)]],
+      story: ['', [Validators.required, Validators.minLength(30)]],
     });
   }
 

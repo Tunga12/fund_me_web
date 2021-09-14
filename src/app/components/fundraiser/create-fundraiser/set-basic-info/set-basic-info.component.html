@@ -4,7 +4,7 @@
     <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="selected_category">
       <mat-option>{{"Choose category"|translate}}</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
-        category.name
+        category.name|translate
       }}</mat-option>
     </mat-select>
     <mat-error *ngIf="category?.touched && category?.errors?.required">

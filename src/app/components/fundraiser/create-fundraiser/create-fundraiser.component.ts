@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./create-fundraiser.component.css'],
 })
 export class CreateFundraiserComponent implements OnInit, OnDestroy {
-  currentStep = 1; // keep trrack of steps
+  currentStep = 1; // keep track of steps
   fundraiser!: Fundraiser;
   // location info
   locationSub?: Subscription;
@@ -21,15 +21,15 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
   errorMessage = '';
 
   constructor(
-    private locationServ: LocationService,
-    private fundraiserServ: FundraiserService,
+    private locationService: LocationService,
+    private fundraiserService: FundraiserService,
     private router: Router,
     private docTitle: Title
   ) {}
 
   ngOnInit(): void {
     this.docTitle.setTitle('Create campaign');
-    // initialise the fundriser with empty fields
+    // initialize the fundraiser with empty fields
     this.fundraiser = {
       goalAmount: undefined,
       category: undefined,
@@ -44,13 +44,10 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
     this.getCurrentLocation();
   }
 
-  // subit the form to create teh fundraiser
+  // submit the form to create teh fundraiser
   submit(fundraiser: Fundraiser) {
-    if (!fundraiser.image) {
-      delete fundraiser.image;
-    }
     // post fundraiser
-    this.fundraiserSub = this.fundraiserServ
+    this.fundraiserSub = this.fundraiserService
       .createFundraiser(fundraiser)
       .subscribe(
         (fund) => {
@@ -65,18 +62,19 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
 
   // get current location of the user in terms of latitude and longitude
   getCurrentLocation() {
-    this.locationSub = this.locationServ
+    this.locationSub = this.locationService
       .getPosition()
       .subscribe((currentLocation) => {
         this.fundraiser.location = currentLocation;
       });
   }
+
   //function to return list of numbers from 0 to n-1
   numSequence(n: number): Array<number> {
     return Array(n);
   }
 
-  // navigate to previos step
+  // navigate to previous step
   previousStep() {
     if (this.currentStep > 1) this.currentStep -= 1;
   }

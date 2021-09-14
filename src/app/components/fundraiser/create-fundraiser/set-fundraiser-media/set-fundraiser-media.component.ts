@@ -29,7 +29,7 @@ export class SetFundraiserMediaComponent implements OnInit {
   @Output() next = new EventEmitter();
   constructor(
     private formBuilder: FormBuilder,
-    private imageCroperDialog: MatDialog,
+    private imageCropperDialog: MatDialog,
     private imageService: ImageService
   ) {}
 
@@ -61,7 +61,7 @@ export class SetFundraiserMediaComponent implements OnInit {
     }
   }
 
-  // remove the selaected image
+  // remove the selected image
   removeImage() {
     this.imageSrc = '';
   }
@@ -78,12 +78,12 @@ export class SetFundraiserMediaComponent implements OnInit {
     // console.log(fl);
     // this.original_image.target.files=fl
     console.log(this.original_image.srcElement.files);
-    this.onImageChoosen(this.original_image);
+    this.onImageChosen(this.original_image);
   }
 
-  onImageChoosen(event: any) {
+  onImageChosen(event: any) {
     this.original_image = event;
-    this.imageCroperDialog
+    this.imageCropperDialog
       .open(ImageCropperComponent, { data: { image: event } })
       .afterClosed()
       .subscribe((croppedImage) => {

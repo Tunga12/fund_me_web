@@ -17,7 +17,7 @@
           type="file"
           accept="image/jpeg,image/png,image/gif, image/bmp"
           formControlName="image"
-          (change)="onImageChoosen($event)"
+          (change)="onImageChosen($event)"
         />
         <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
           <mat-icon>add</mat-icon>
@@ -34,10 +34,10 @@
     <p style="font-weight: 600">or</p>
     <p class="bar"></p>
   </div>
-  <p>Add a yotube video link</p>
+  <p>Add a youtube video link</p>
   <mat-form-field appearance="outline">
     <mat-label>YouTube video link </mat-label>
-    <label for="amount">How much would yyou like to rise?</label>
+    <label for="amount">How much would you like to rise?</label>
     <input matInput placeholder="Enter goal amount" link />
     <mat-icon matPrefix>link&nbsp;</mat-icon>
   </mat-form-field> -->
@@ -81,7 +81,7 @@
 
     <button
       mat-raised-button
-      [disabled]="!form.valid || loading"
+      [disabled]="(form.touched && !form.valid)|| loading"
       color="primary"
       (click)="nextStep()"
       class="btn-large"
