@@ -1,9 +1,13 @@
 <div>
-  <h2 class="bold">{{"Comments"|translate}}({{ getNumberOfComments() }})</h2>
+  <h2 class="bold">
+    {{ "Comments" | translate }}({{ getNumberOfComments() }})
+  </h2>
   <div>
     <mat-divider></mat-divider>
   </div>
-  <h3 *ngIf="getNumberOfComments() === 0">{{"No comments to show"|translate}}</h3>
+  <h3 *ngIf="getNumberOfComments() === 0">
+    {{ "No comments to show" | translate }}
+  </h3>
   <div *ngFor="let donation of fundraiser?.donations; let last = last">
     <div
       *ngIf="donation?.comment"
@@ -17,20 +21,23 @@
       />
       <div fxLayout="column">
         <span class="bold">
-          <span *ngIf="donation.isAnonymous">{{"Anonymous"|translate}}</span>
+          <strong #value hidden>{{ donation.amount | currency }}</strong>
+          <span *ngIf="donation.isAnonymous">{{
+            "Anonymous" | translate
+          }}</span>
           <span *ngIf="!donation.isAnonymous">{{
             donation.userId?.firstName + " " + donation.userId?.lastName
               | titlecase
           }}</span>
-          {{"donated"|translate:{value: value.innerHTML } }}
-          <strong #value hidden>{{ donation.amount  | currency }}</strong></span>
+          {{ "donated" | translate: { value: value.innerHTML } }}
+        </span>
         <p #comment>
           {{ donation.comment?.slice(0, 20) }}
           <a
             #more
             *ngIf="comment?.textContent?.length! > 20"
             (click)="comment.textContent = donation?.comment!"
-            >...{{"more"|translate}}</a
+            >...{{ "more" | translate }}</a
           >
         </p>
       </div>
