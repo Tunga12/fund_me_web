@@ -17,6 +17,7 @@
         type="search"
         [placeholder]="'Search fundraisers' | translate"
         (keyup.enter)="search(key.value)"
+        [value]="searchWord??''"
       />
       <span id="search-icon" matSuffix>
         <mat-icon class="mat-18" (click)="search(key.value)"
@@ -41,7 +42,7 @@
         mat-stroked-button
         color="primary"
         [routerLink]="['/create']"
-        data-cy="start-a-campign-btn"
+        data-cy="start-a-campaign-btn"
       >
         {{ "Start a Campaign" | translate }}
       </a>
@@ -121,7 +122,7 @@
           {{ "Donations you've made" | translate }}
         </a>
         <a
-          data-cy="account-seetings-link"
+          data-cy="account-settings-link"
           mat-menu-item
           routerLink="/account-setting"
           class="mat-menu-item"
@@ -178,7 +179,7 @@
   >
     <a
       mat-raised-button
-      data-cy="start-a-comign-btn-lt-sm"
+      data-cy="start-a-campaign-btn-lt-sm"
       color="primary"
       [routerLink]="['/create']"
     >

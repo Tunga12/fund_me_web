@@ -1,5 +1,5 @@
 <h3 *ngIf="myFundraisers.length>0">{{"Campaigns you are a team member of"| translate}}</h3>
-<h3 *ngIf="myFundraisers.length ===0 && !loading">{{"You have no fundraisers."| translate}}</h3>
+<h3 *ngIf="myFundraisers.length ===0 && !loading">{{"You have no fundraisers"| translate}}</h3>
 <div *ngIf="loading">
     <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
     </mat-progress-spinner>

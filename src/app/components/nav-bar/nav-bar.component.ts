@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
@@ -15,21 +15,16 @@ import { CategoryService } from './../../services/category/category.service';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-  // the following 3 fields are
-  //to toggle the carets upward and downward based on
-  // the close and open state of dropdowns
-  discoverCaret = true;
-  fundraiseCaret = true;
-  accountCaret = true;
+  accountCaret = true; //to toggle the carets upward and downward based on
 
-  searchword = '';
+  searchWord = '';
   // list of all categories
   categories: Category[] = [];
 
   // subscription to unsubscribe on destroy of this component
   categorySub?: Subscription;
 
-  currentUser?: User; //currently loggedd in user
+  currentUser?: User; //currently logged in user
   currentUserSub?: Subscription;
 
   constructor(
@@ -38,16 +33,21 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     private translate: TranslateService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.translate.setDefaultLang('en');
     this.translate.use(localStorage.getItem('lang') || 'en');
   }
   ngOnInit(): void {
-
     // this.getCategories();
     if (this.authService.isLoggedIn()) {
       this.getCurrentUser();
     }
+
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.searchWord = params['q'];
+      console.log(this.searchWord);
+    });
   }
 
   search(keyword: string) {
@@ -71,7 +71,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
         localStorage.setItem('userId', this.currentUser?._id || '');
       });
   }
-
 
   ngOnDestroy(): void {
     if (this.currentUserSub) this.currentUserSub.unsubscribe();
