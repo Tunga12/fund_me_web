@@ -1,4 +1,6 @@
-<nav-bar *ngIf="authService.isLoggedIn()" class="mat-elevation-z1"> </nav-bar>
+<nav class="mat-elevation-z1">
+  <nav-bar *ngIf="authService.isLoggedIn()"> </nav-bar>
+</nav>
 <nav
   class="mat-elevation-z1"
   *ngIf="!authService.isLoggedIn()"
@@ -92,9 +94,20 @@
         fxFlex.xs="98"
         [ngStyle.gt-sm]="{ 'padding-right': '20px' }"
       >
-        <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <div
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="10px"
+        >
           <h1 fxHide.lt-sm class="bold">{{ fundraiser?.title }}</h1>
-          <button *ngIf="user?.isAdmin" (click)="blockFundraiser(fundraiser!)" mat-raised-button color="warn"> <mat-icon class="mat-18">block</mat-icon> Block</button>
+          <button
+            *ngIf="user?.isAdmin"
+            (click)="blockFundraiser(fundraiser!)"
+            mat-raised-button
+            color="warn"
+          >
+            <mat-icon class="mat-18">block</mat-icon> Block
+          </button>
         </div>
         <div>
           <img
@@ -167,13 +180,13 @@
                       <span *ngIf="hasAcceptedTeamMembers()">
                         {{ "and" | translate }}
                         {{
-                          fundraiserServ.getNumberOfAcceptedTeamMembers(
+                          fundraiserService.getNumberOfAcceptedTeamMembers(
                             fundraiser!
                           )
                         }}
                         <span
                           *ngIf="
-                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                            fundraiserService.getNumberOfAcceptedTeamMembers(
                               fundraiser!
                             ) === 1
                           "
@@ -181,7 +194,7 @@
                         >
                         <span
                           *ngIf="
-                            fundraiserServ.getNumberOfAcceptedTeamMembers(
+                            fundraiserService.getNumberOfAcceptedTeamMembers(
                               fundraiser!
                             ) > 1
                           "
@@ -228,13 +241,13 @@
           <!-- Updates section -->
           <app-updates-section [fundraiser]="fundraiser!"></app-updates-section>
 
-          <!-- Fudrising team section -->
+          <!-- Fundraising team section -->
           <app-team-and-organizer-section
             [fundraiser]="fundraiser!"
           ></app-team-and-organizer-section>
-          <!-- end of fundrising team section -->
+          <!-- end of fundraising team section -->
 
-          <!-- Organiser and beneficiary section -->
+          <!-- Organizer and beneficiary section -->
           <app-organizer-and-beneficiary-section
             [fundraiser]="fundraiser!"
           ></app-organizer-and-beneficiary-section>

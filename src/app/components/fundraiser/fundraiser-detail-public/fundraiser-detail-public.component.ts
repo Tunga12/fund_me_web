@@ -41,7 +41,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private snackbarService: SnackbarService,
-    public fundraiserServ: FundraiserService,
+    public fundraiserService: FundraiserService,
     public authService: AuthService
   ) {}
 
@@ -55,7 +55,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     });
 
     // get the fundraiser with this id
-    this.getFundriser(this.fundraiserId);
+    this.getFundraiser(this.fundraiserId);
 
     // get current user
     this.getUser()
@@ -81,7 +81,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     delete fundraiser.__v;
     delete fundraiser.beneficiary;
 
-    // this.fundSub = this.fundraiserServ
+    // this.fundSub = this.fundraiserService
     //   .editFundraiser(fundraiserId, fundraiser)
     //   .subscribe(
     //     () => {
@@ -93,18 +93,18 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     //   );
   }
 
-  // get fundriser using id
-  getFundriser(fundriserId: string) {
+  // get fundraiser using id
+  getFundraiser(fundraiserId: string) {
     let ref; // id for the user who shared this fundraiser
-    this.fundSub = this.fundraiserServ.getFundraiser(fundriserId).subscribe(
+    this.fundSub = this.fundraiserService.getFundraiser(fundraiserId).subscribe(
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
 
-        this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
+        this.percentage = this.fundraiserService.getPercentage(this.fundraiser);
         console.log(this.fundraiser);
         console.log(
-          this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser)
+          this.fundraiserService.hasAcceptedTeamMembers(this.fundraiser)
         );
 
         // if there is a referer id increase share count
@@ -118,7 +118,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       (error) => {
         this.loading = false;
         console.log(error);
-        this.errorMessage = 'Unable to get this fundriser';
+        this.errorMessage = 'Unable to get this fundraiser';
       }
     );
   }
@@ -128,7 +128,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       url: `https://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
-      description: `Hi, I havae created a fundraiser on gofundme ${
+      description: `Hi, I have created a fundraiser on legas ${
         this.fundraiser?.beneficiary
           ? 'to help' + this.fundraiser.beneficiary.firstName
           : ''
@@ -144,7 +144,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   // checks if this fundraiser has team members that have a status not 'pending'
   hasAcceptedTeamMembers(): boolean {
-    return this.fundraiserServ.hasAcceptedTeamMembers(this.fundraiser!);
+    return this.fundraiserService.hasAcceptedTeamMembers(this.fundraiser!);
   }
 
   // open all donations dialog
@@ -165,12 +165,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   }
 
   blockFundraiser(fundraiser: Fundraiser) {
-    this.fundraiserServ
+    this.fundraiserService
       .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
       .subscribe(
         () => {
           this.snackBar.open(
-            'Fundriser blocked succesfully',
+            'Fundraiser blocked successfully',
             'close',
             this.snackbarService.getConfig()
           );
