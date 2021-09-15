@@ -21,7 +21,7 @@ export class ReportDialogComponent implements OnInit, OnDestroy {
     'spam or misleading',
     "doesn't represent myself",
     'not a company person',
-    'infirges my rights',
+    'infringes my rights',
   ];
   fundraiserId = '';
   form!: FormGroup;
