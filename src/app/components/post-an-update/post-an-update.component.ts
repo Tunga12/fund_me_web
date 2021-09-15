@@ -62,7 +62,7 @@ export class PostAnUpdateComponent implements OnInit, OnDestroy {
         ? this.data?.update
         : { content: '', image: '' };
     this.mode = this.data.mode;
-    // if the dialoge is in edit mode update the fields with available values
+    // if the dialogue is in edit mode update the fields with available values
     this.mode === 'Edit' ? this.form.patchValue(this.update!) : '';
     this.fundraiser = this.data.fundraiser;
   }
@@ -84,7 +84,7 @@ export class PostAnUpdateComponent implements OnInit, OnDestroy {
           console.log(update);
           this.dialogRef.close();
           this.snackBar.open(
-            'Update added successfuly!',
+            'Update added successfully!',
             'Close',
             this.snackbarService.getConfig()
           );
@@ -136,19 +136,26 @@ export class PostAnUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  onImageChoosen(event: any) {
+  onImageChosen(event: any) {
     this.errorMessage = '';
-    this.imageCropperDialog
-      .open(UpdateImageCropperComponent, { data: { image: event,mode:this.mode } })
-      .afterClosed()
-      .subscribe((croppedImage: any) => {
-        console.log(croppedImage);
-        
-        if (croppedImage) {
-          this.update.image = croppedImage;
+    // open the dialog only if image is chosen
+    if (event.target.value) {
+      this.imageCropperDialog
+        .open(UpdateImageCropperComponent, {
+          data: { image: event, mode: this.mode },
+        })
+        .afterClosed()
+        .subscribe((croppedImage: any) => {
           console.log(croppedImage);
-        }
-      });
+
+          if (croppedImage) {
+            this.update.image = croppedImage;
+            console.log(croppedImage);
+          }
+        });
+    } else {
+      this.errorMessage = 'No image chosen.';
+    }
   }
 
   public get content(): AbstractControl | null {

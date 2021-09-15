@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { base64ToFile, ImageCroppedEvent } from 'ngx-image-cropper';
+import {
+  base64ToFile,
+  ImageCroppedEvent,
+  ImageTransform,
+} from 'ngx-image-cropper';
 import { ImageService } from 'src/app/services/image/image.service';
 
 @Component({
@@ -12,7 +16,12 @@ export class UpdateImageCropperComponent implements OnInit {
   loading: boolean = false;
   errorMessage: any;
   croppedImageFile!: File;
-  mode='Add';
+  mode = 'Add';
+
+  canvasRotation = 0;
+  scale: number = 1;
+  transform: ImageTransform = {};
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private imageService: ImageService,
@@ -21,16 +30,16 @@ export class UpdateImageCropperComponent implements OnInit {
 
   ngOnInit(): void {
     this.fileChangeEvent(this.data.image);
-    this.mode=this.data.mode;
+    this.mode = this.data.mode;
+    this.loading=true;
   }
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  // coplete croping
+  // complete cropping
   saveImage() {
-    // this.dialogRef.close(this.croppedImage);
-    this.loading=true;
+    this.loading = true;
     let file = base64ToFile(this.croppedImage);
     const formData: FormData = new FormData();
     formData.append('image', file);
@@ -38,7 +47,6 @@ export class UpdateImageCropperComponent implements OnInit {
       (response) => {
         this.loading = false;
         this.dialogRef.close(response);
-        console.log(response);
       },
       (error) => {
         console.log(error.error);
@@ -48,7 +56,7 @@ export class UpdateImageCropperComponent implements OnInit {
     );
   }
 
-  // croper funcs
+  // cropper funcs
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     console.log(this.imageChangedEvent);
@@ -59,14 +67,48 @@ export class UpdateImageCropperComponent implements OnInit {
   }
 
   imageLoaded() {
+    this.loading=false;
     // show cropper
     console.log('image loaded');
   }
+
   cropperReady() {
     // cropper ready
-    console.log('croper ready');
+    console.log('cropper ready');
   }
+
   loadImageFailed() {
-    console.log('unable toload image');
+    console.log('unable to load image');
+  }
+
+  rotateRight() {
+    this.canvasRotation++;
+    this.flipAfterRotate();
+  }
+
+  private flipAfterRotate() {
+    const flippedH = this.transform.flipH;
+    const flippedV = this.transform.flipV;
+    this.transform = {
+      ...this.transform,
+      flipH: flippedV,
+      flipV: flippedH,
+    };
+  }
+
+  zoomOut() {
+    this.scale -= 0.1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale,
+    };
+  }
+
+  zoomIn() {
+    this.scale += 0.1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale,
+    };
   }
 }

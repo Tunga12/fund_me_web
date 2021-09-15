@@ -1,0 +1,8 @@
+.controls{
+    z-index: 2147483649 !important;
+    background-color: #fff;
+}
+
+mat-dialog-content.mat-dialog-content{
+    min-height: max-content;
+}

@@ -37,13 +37,13 @@
         formControlName="image"
         type="file"
         accept="image/jpeg,image/png,image/gif, image/bmp"
-        (change)="onImageChoosen($event)"
+        (change)="onImageChosen($event)"
       />
       {{ "Add photo" | translate }}
     </label>
 
     <img
-      *ngIf="update.image!=''"
+      *ngIf="update.image != ''"
       [src]="update.image"
       width="100%"
       onerror="this.src='/assets/images/placeholder.png'"

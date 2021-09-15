@@ -62,9 +62,10 @@
       fxLayout="row"
       fxLayout.xs="column"
       fxLayoutAlign="start start"
+      fxLayoutAlign.xs="start center"
       fxLayoutGap="30px"
     >
-      <img *ngIf="update.image" [src]="update.image" fxFlex.xs="100" />
+      <img onerror="this.src='/assets/images/placeholder.png'" *ngIf="update.image" [src]="update.image"  fxFlex.xs="100" />
       <p>
         {{ update.content }}
       </p>

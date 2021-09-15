@@ -12,11 +12,11 @@ export class ImageCropperComponent implements OnInit {
   errorMessage: any;
 
   canvasRotation = 0;
+  scale: number=1;
+  transform: ImageTransform = {};
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  scale: number=1;
-    transform: ImageTransform = {};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,

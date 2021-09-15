@@ -30,7 +30,7 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private updateService: UpdateService,
     private dialog: MatDialog,
-    private snackbarServ:SnackbarService,
+    private snackbarService:SnackbarService,
     private docTitle: Title
   ) {}
 
@@ -38,7 +38,7 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
     this.docTitle.setTitle('Manage updates');
   }
 
-  //  opendialog for update
+  //  open dialog for update
   openEditDialog(update: Update) {
     this.dialog.open(PostAnUpdateComponent, {
       data: { mode: 'Edit', update: update, fundraiser: this.fundraiser },
@@ -53,7 +53,7 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
   deleteUpdate(update: any) {
         this.updateSub = this.updateService.deleteUpdate(update).subscribe(
           () => {
-            this.snackBar.open('Update deleted successfuly!', 'Close',this.snackbarServ.getConfig());
+            this.snackBar.open('Update deleted successfully!', 'Close',this.snackbarService.getConfig());
             let index = this.fundraiser.updates!.indexOf(update);
             this.fundraiser.updates?.splice(index, 1);
           },
@@ -62,7 +62,7 @@ export class UpdatesTabContentComponent implements OnInit, OnDestroy {
             this.snackBar.open(
               error.error,
               'Close',
-              this.snackbarServ.getConfig()
+              this.snackbarService.getConfig()
             );
           }
         );

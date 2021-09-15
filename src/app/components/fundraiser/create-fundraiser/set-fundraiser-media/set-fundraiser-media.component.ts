@@ -41,6 +41,7 @@ export class SetFundraiserMediaComponent implements OnInit {
 
   // upload the image and go to next step
   nextStep() {
+    this.loading = true;
     if (this.croppedImage) {
       let file = base64ToFile(this.croppedImage);
       const formData: FormData = new FormData();
@@ -82,17 +83,22 @@ export class SetFundraiserMediaComponent implements OnInit {
   }
 
   onImageChosen(event: any) {
+    // open the cropper only if image is chosen
     this.original_image = event;
-    this.imageCropperDialog
-      .open(ImageCropperComponent, { data: { image: event } })
-      .afterClosed()
-      .subscribe((croppedImage) => {
-        console.log(croppedImage);
-        if (croppedImage) {
-          this.imageSrc = croppedImage;
-          this.fundraiser.image = croppedImage;
-          this.croppedImage = croppedImage;
-        }
-      });
+    if (event.target.value) {
+      this.imageCropperDialog
+        .open(ImageCropperComponent, { data: { image: event } })
+        .afterClosed()
+        .subscribe((croppedImage) => {
+          console.log(croppedImage);
+          if (croppedImage) {
+            this.imageSrc = croppedImage;
+            this.fundraiser.image = croppedImage;
+            this.croppedImage = croppedImage;
+          }
+        });
+    }else{
+      this.errorMessage="No image chosen."
+    }
   }
 }

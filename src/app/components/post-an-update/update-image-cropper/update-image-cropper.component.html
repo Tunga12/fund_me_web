@@ -15,12 +15,26 @@
     <mat-divider> </mat-divider>
   </div>
 
-  <mat-dialog-content>
-    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="0px">
+  <mat-dialog-content fxLayout="column"  fxFlexAlign="start center">
+    <!-- <div class="">
       <h2>{{ "Position yor photo" | translate }}</h2>
-      <div>
-        <mat-divider [inset]="true"> </mat-divider>
-      </div>
+      <mat-divider [inset]="true"> </mat-divider>
+    </div> -->
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-around start"
+      fxLayoutGap="10px"
+      class="controls"
+    >
+      <button mat-button title="rotate" (click)="rotateRight()">
+        <mat-icon class="mat-18">rotate_right</mat-icon>
+      </button>
+      <button mat-button title="zoom out" (click)="zoomOut()">
+        <mat-icon class="mat-18">zoom_out</mat-icon>
+      </button>
+      <button mat-button title="zoom in" (click)="zoomIn()">
+        <mat-icon class="mat-18">zoom_in</mat-icon>
+      </button>
     </div>
     <image-cropper
       [imageChangedEvent]="imageChangedEvent"
@@ -31,26 +45,31 @@
       (imageLoaded)="imageLoaded()"
       (cropperReady)="cropperReady()"
       (loadImageFailed)="loadImageFailed()"
+      [onlyScaleDown]="true"
+      [roundCropper]="false"
+      [canvasRotation]="canvasRotation"
+      [transform]="transform"
+      [alignImage]="'left'"
+      [resizeToWidth]="256"
     ></image-cropper>
-    <!-- <img [src]="croppedImage" /> -->
-
-    <mat-dialog-actions [attr.align]="'center'">
-      <p class="text-error">{{ errorMessage }}</p>
-      <mat-progress-bar
-        *ngIf="loading"
-        mode="indeterminate"
-        fxFlexAlign="center"
-      ></mat-progress-bar>
-
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3px">
-        <button mat-raised-button color="primary" (click)="saveImage()">
-          {{ "Save image" | translate }}
-        </button>
-        <p>{{ "Drag, zoom or rotate photo" | translate }}</p>
-        <button mat-button mat-dialog-close>
-          {{ "Back" | translate }}
-        </button>
-      </div>
-    </mat-dialog-actions>
   </mat-dialog-content>
+
+  <mat-dialog-actions [attr.align]="'center'" fxLayout="column">
+    <p class="text-error">{{ errorMessage }}</p>
+    <mat-progress-bar
+      *ngIf="loading"
+      mode="indeterminate"
+      fxFlexAlign="center"
+    ></mat-progress-bar>
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3px">
+      <button mat-raised-button color="primary" (click)="saveImage()">
+        {{ "Save image" | translate }}
+      </button>
+      <p>{{ "Drag, zoom or rotate photo" | translate }}</p>
+      <button mat-button mat-dialog-close>
+        {{ "Back" | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
 </main>
