@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-  <h2 data-cy="report-title" matDialogTitle>Report fundraiser</h2>
+  <h2 data-cy="report-title" matDialogTitle>{{"Report fundraiser"|translate}}</h2>
   <button data-cy="close-btn" mat-icon-button matDialogClose>
     <mat-icon class="mat-18">close</mat-icon>
   </button>
@@ -20,7 +20,7 @@
         name="reason"
         [value]="choice"
       >
-        {{ choice }}
+        {{ choice|translate }}
       </mat-radio-button>
     </mat-radio-group>
   </form>
@@ -34,8 +34,8 @@
   <mat-error>{{ errorMessage }}</mat-error>
 </div>
 <mat-dialog-actions [attr.align]="'end'">
-  <button data-cy="cancel-btn" mat-button matDialogClose>Cancel</button>
+  <button data-cy="cancel-btn" mat-button matDialogClose>{{"Cancel"|translate}}</button>
   <button data-cy="submit-btn" mat-button type="submit" (click)="report()">
-    Report
+    {{"Report"|translate}}
   </button>
 </mat-dialog-actions>

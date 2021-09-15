@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
 import { ReportService } from './../../../../services/report/report.service';
 import { Subscription } from 'rxjs';
 import { Report } from './../../../../models/report.model';
