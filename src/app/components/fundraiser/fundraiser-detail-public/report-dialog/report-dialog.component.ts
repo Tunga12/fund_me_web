@@ -51,7 +51,7 @@ export class ReportDialogComponent implements OnInit, OnDestroy {
       () => {
         this.loading = false;
         this.snackBar.open(
-          'Report succesfull',
+          'Report successful',
           'close',
           this.snackbarSrv.getConfig()
         );
