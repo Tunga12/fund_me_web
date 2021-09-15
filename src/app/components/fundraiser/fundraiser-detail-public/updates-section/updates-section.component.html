@@ -1,13 +1,13 @@
 <div>
   <div>
-    <h2 class="bold">{{"Updates"| translate}}({{ fundraiser?.updates?.length }})</h2>
+    <h2 data-cy="update-header" class="bold">{{"Updates"| translate}}({{ fundraiser?.updates?.length }})</h2>
     <mat-divider></mat-divider>
   </div>
   <div *ngIf="fundraiser?.updates?.length === 0">
-    <h3>{{"No updates to show."| translate}}</h3>
+    <h3 data-cy="no-updates" >{{"No updates to show."| translate}}</h3>
   </div>
-  <div *ngFor="let update of fundraiser?.updates; let last = last">
-    <p>
+  <div data-cy="updates" *ngFor="let update of fundraiser?.updates; let last = last">
+    <p data-cy="update-info">
       <Strong>{{ update.dateCreated | timeago }}</Strong>
       <span class="text-small color-gray">
         {{"by"| translate}}
@@ -16,7 +16,7 @@
         }}, {{ (update.userId?._id===fundraiser?.organizer?._id ? "Organizer":'')| translate }}</span
       >
     </p>
-    <p>{{ update.content }}</p>
+    <p data-cy="update-content">{{ update.content }}</p>
     <div *ngIf="!last">
       <mat-divider></mat-divider>
     </div>

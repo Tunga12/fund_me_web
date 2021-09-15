@@ -1,14 +1,21 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-  <h2 matDialogTitle>Report fundraiser</h2>
-  <button mat-icon-button matDialogClose>
+  <h2 data-cy="report-title" matDialogTitle>Report fundraiser</h2>
+  <button data-cy="close-btn" mat-icon-button matDialogClose>
     <mat-icon class="mat-18">close</mat-icon>
   </button>
 </div>
 
 <mat-dialog-content>
   <form [formGroup]="form">
-    <mat-radio-group formControlName="reason" [attr.align]="'start'" fxLayout="column" fxLayoutGap="6px">
+    <mat-radio-group
+      formControlName="reason"
+      [attr.align]="'start'"
+      fxLayout="column"
+      fxLayoutGap="6px"
+      data-cy="radio-group"
+    >
       <mat-radio-button
+        data-cy="option"
         *ngFor="let choice of choices"
         name="reason"
         [value]="choice"
@@ -16,18 +23,19 @@
         {{ choice }}
       </mat-radio-button>
     </mat-radio-group>
-</form>
+  </form>
 </mat-dialog-content>
 <mat-progress-bar
-data-cy="loader"
-*ngIf="loading"
-mode="indeterminate"
+  data-cy="loader"
+  *ngIf="loading"
+  mode="indeterminate"
 ></mat-progress-bar>
 <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="0px">
-<mat-error>{{ errorMessage }}</mat-error>
+  <mat-error>{{ errorMessage }}</mat-error>
 </div>
 <mat-dialog-actions [attr.align]="'end'">
-  <button mat-button matDialogClose>Cancel</button>
-  <button mat-button type="submit" (click)="report()">Report</button>
+  <button data-cy="cancel-btn" mat-button matDialogClose>Cancel</button>
+  <button data-cy="submit-btn" mat-button type="submit" (click)="report()">
+    Report
+  </button>
 </mat-dialog-actions>
-

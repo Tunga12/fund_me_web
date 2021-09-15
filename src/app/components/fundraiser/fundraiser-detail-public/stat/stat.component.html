@@ -5,24 +5,24 @@
   style="margin-bottom: -15px"
 >
   <h2>
-    <span class="bold">{{ fundraiser?.totalRaised | currency }} </span>
-    <sub class="text-small color-gray">{{
+    <span data-cy="goal" class="bold">{{ fundraiser?.totalRaised | currency }} </span>
+    <sub  data-cy="total-raised" class="text-small color-gray">{{
       "raised of goal" | translate: { goal: fundraiser?.goalAmount | currency }
     }}</sub>
   </h2>
 </div>
-<mat-progress-bar color="primary" [value]="percentage"> </mat-progress-bar>
+<mat-progress-bar data-cy="progress" color="primary" [value]="percentage"> </mat-progress-bar>
 <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-  <a fxLayout="column" href="">
+  <a data-cy="donors" fxLayout="column" href="">
     <span class="bold">{{ fundraiser?.donations?.length }}</span>
     <mat-hint>{{"donors"| translate}}</mat-hint>
   </a>
 
-  <div fxLayout="column">
+  <div data-cy="shares" fxLayout="column">
     <span class="bold">{{ fundraiser?.totalShareCount }}</span>
     <mat-hint>{{"shares"| translate}}</mat-hint>
   </div>
-  <div fxLayout="column">
+  <div data-cy="followers" fxLayout="column">
     <span class="bold">{{ fundraiser?.likeCount }}</span>
     <mat-hint>{{"followers"| translate}}</mat-hint>
   </div>
