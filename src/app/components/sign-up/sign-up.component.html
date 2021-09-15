@@ -149,8 +149,8 @@
           />
           <mat-icon matPrefix>phone</mat-icon>
           <mat-error
-            data-cy="phone-minlength-error"
-            *ngIf="phone?.touched && phone?.errors?.minlength || phone?.touched && phone?.errors?.minlength"
+            data-cy="phone-length-error"
+            *ngIf="phone?.touched && (phone?.errors?.minlength ||  phone?.errors?.maxlength)"
             >{{"Phone number must be digits." | translate: { length: phone?.errors?.minlength?.requiredLength} }}
           </mat-error>
           
@@ -207,7 +207,7 @@
 
           <mat-error
             data-cy="password-weak-error"
-            *ngIf="password?.touched && password?.errors?.pattern && !password?.errors?.minlength"
+            *ngIf="password?.touched &&(password?.errors?.pattern || !password?.errors?.minlength)"
           >
             {{"Password must contain atleast 1 special character, 1 letter and 1 number."|translate}}
           </mat-error>

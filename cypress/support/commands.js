@@ -1,7 +1,7 @@
-Cypress.Commands.add('getByFCName', formContolName => {
-    return cy.get(`[formControlName=${formContolName}]`);
+Cypress.Commands.add('getByFCName', formControlName => {
+    return cy.get(`[formControlName=${formControlName}]`);
 });// fc=>form control
 
 Cypress.Commands.add('getByDataCy', dataCy => {
     return cy.get(`[data-cy=${dataCy}]`);
-});// fc=>form control
+});

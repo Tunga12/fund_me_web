@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 beforeEach('', () => {
-    cy.visit('/sign-in');//since i setp the baseUrl
+    cy.visit('/sign-in');//since we have setup the baseUrl
 });
 
 describe("Login page", () => {

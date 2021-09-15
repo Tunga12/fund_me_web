@@ -8,7 +8,7 @@ before('', () => {
 describe('Home page for not logged in users', () => {
     it('finds all public elements on the nav bar', () => {
         cy.getByDataCy('search-field').should('be.visible');
-        cy.getByDataCy('start-a-campign-btn').should('be.visible');
+        cy.getByDataCy('start-a-campaign-btn').should('be.visible');
         cy.getByDataCy('sign-in-btn').should('be.visible');
     });
 
@@ -18,7 +18,7 @@ describe('Home page for not logged in users', () => {
     });
 
     it('shouldn\'t find links visible only to large devices', () => {
-        cy.getByDataCy('start-a-comign-btn-gt-xs').should('not.exist');
+        cy.getByDataCy('start-a-campaign-btn-gt-xs').should('not.exist');
         cy.getByDataCy('sign-in-btn-gt-xs').should('not.exist');
     });
 
@@ -38,7 +38,7 @@ describe('Home page for logged in users', () => {
     });
 
     it('shouldn\'t find protected links visible only to xs devices', () => {
-        cy.getByDataCy('start-a-comign-btn-lt-xs').should('not.exist');
+        cy.getByDataCy('start-a-campaign-btn-lt-xs').should('not.exist');
         cy.getByDataCy('sign-in-btn-lt-xs').should('not.exist');
     });
 
@@ -50,7 +50,7 @@ describe('Home page for logged in users', () => {
 
 
 describe('Home page body', () => {
-    it('should show elments visible on small devices on samsun s1', () => {
+    it('should show elements visible on small devices on samsun s1', () => {
         cy.viewport('samsung-s10');
         cy.getByDataCy('mobile-header').should('exist');
         cy.getByDataCy('mobile').should('be.visible');
@@ -60,7 +60,7 @@ describe('Home page body', () => {
         cy.getByDataCy('how-it-works-btn-mobile').should('be.visible');
     });
 
-    it('should show elments visible on large devices', () => {
+    it('should show elements visible on large devices', () => {
         cy.getByDataCy('non-mobile-header').should('be.visible');
         cy.getByDataCy('get-started').should('be.visible');
         cy.getByDataCy('start-btn').should('be.visible');
@@ -70,7 +70,7 @@ describe('Home page body', () => {
         cy.getByDataCy('trending-topic').should('be.visible');
     });
 
-    it('should\'t show elments visible on small devices', () => {
+    it('should\'t show elements visible on small devices', () => {
         cy.getByDataCy('mobile-header').should('not.be.visible');
         cy.getByDataCy('mobile').should('not.be.visible');
         cy.getByDataCy('mobile-image').should('not.be.visible');

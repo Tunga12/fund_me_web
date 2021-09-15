@@ -23,7 +23,7 @@ mat-card.mat-card {
   border-color: B#c5912c;
 }
 
-#buttons-container{
-    width: 100%;
+.buttons-container{
+    width: 100% !important;
     z-index: 2;
 }

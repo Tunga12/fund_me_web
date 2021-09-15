@@ -70,7 +70,7 @@ describe('signup page', () => {
             .getByFCName('email').focus();
         cy.getByDataCy('fname-maxlength-error').should('exist')
         cy.getByDataCy('lname-maxlength-error').should('exist');
-        cy.getByDataCy('phone-maxlength-error').should('exist');
+        cy.getByDataCy('phone-length-error').should('exist');
         cy.getByDataCy('sign-up-btn').should('have.attr', 'disabled');
     });
 
