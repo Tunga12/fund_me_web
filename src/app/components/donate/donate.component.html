@@ -23,7 +23,9 @@
       mat-stroked-button
       [routerLink]="['/fundraiser-detail', fundraiser?._id]"
     >
-      <mat-icon class="mat-18">arrow_back_ios</mat-icon> {{"Back"|translate }} <span fxHide.xs> {{"to fundraiser"| translate}}</span>
+      <mat-icon class="mat-18">arrow_back_ios</mat-icon>
+      {{ "Back" | translate }}
+      <span fxHide.xs> {{ "to fundraiser" | translate }}</span>
     </button>
   </div>
 
@@ -44,10 +46,11 @@
     />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
       <p>
-        {{"You're supporting፡" | translate }} <strong>{{ fundraiser?.title }}</strong>
+        {{ "You're supporting፡" | translate }}
+        <strong>{{ fundraiser?.title }}</strong>
       </p>
       <span class="color-gray text-small" *ngIf="fundraiser?.beneficiary">
-        {{"Your donation will benefit"|translate}}
+        {{ "Your donation will benefit" | translate }}
         <strong>
           {{ fundraiser?.beneficiary?.firstName | titlecase }}
           {{ fundraiser?.beneficiary?.lastName | titlecase }}
@@ -63,16 +66,15 @@
   >
     <form
       [formGroup]="form"
-      (ngSubmit)="donate()"
       style="width: 60%"
       [ngStyle.xs]="{ width: '98%' }"
       (change)="formChange()"
     >
-      <h2 class="bold">{{"Enter your donation"| translate}}</h2>
+      <h2 class="bold">{{ "Enter your donation" | translate }}</h2>
       <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
         <div>
           <mat-form-field appearance="outline">
-            <mat-label>{{"Donation amount"| translate }}</mat-label>
+            <mat-label>{{ "Donation amount" | translate }}</mat-label>
             <input
               class="bold"
               matInput
@@ -84,21 +86,21 @@
               <mat-icon class="mat-18">attach_money</mat-icon>
             </span>
             <mat-error *ngIf="amount?.touched && amount?.errors?.required"
-              >{{"Please enter the amount you want to donate"| translate}}
+              >{{ "Please enter the amount you want to donate" | translate }}
             </mat-error>
             <mat-error *ngIf="amount?.touched && amount?.errors?.min"
-            >{{"The minimum amount to donate is" | translate:{min:amount?.errors?.min?.min} }}
+              >{{
+                "The minimum amount to donate is"
+                  | translate: { min: amount?.errors?.min?.min }
+              }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!-- Tip amount -->
         <div>
-          <h3 class="bold">{{"Tip amount"| translate}}</h3>
-          <div
-            fxLayout="column"
-            fxLayoutAlign="start center"
-          >
+          <h3 class="bold">{{ "Tip amount" | translate }}</h3>
+          <div fxLayout="column" fxLayoutAlign="start center">
             <!-- Add a tooltip here -->
             <mat-slider
               color="primary"
@@ -119,9 +121,11 @@
           *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)"
           appearance="outline"
         >
-          <mat-label>{{"Referer: Who invited you to this campaign?"| translate }}</mat-label>
+          <mat-label>{{
+            "Referer: Who invited you to this campaign?" | translate
+          }}</mat-label>
           <mat-select formControlName="memberId">
-            <mat-option>{{"Select a team member"| translate}}</mat-option>
+            <mat-option>{{ "Select a team member" | translate }}</mat-option>
             <ng-container *ngFor="let member of fundraiser!.teams">
               <mat-option
                 *ngIf="member.status !== 'pending'"
@@ -136,7 +140,7 @@
         </mat-form-field>
         <div>
           <mat-form-field appearance="outline">
-            <mat-label>{{"Comment" | translate}}</mat-label>
+            <mat-label>{{ "Comment" | translate }}</mat-label>
             <textarea matInput formControlName="comment" type="text"></textarea>
           </mat-form-field>
           <mat-error *ngIf="comment?.touched && comment?.errors?.minlength"
@@ -151,7 +155,7 @@
             [indeterminate]="false"
             color="primary"
           >
-            {{"Don't display my name publicly on the campaign." | translate}}
+            {{ "Don't display my name publicly on the campaign." | translate }}
           </mat-checkbox>
         </div>
 
@@ -166,14 +170,23 @@
           Donate now
         </button>  -->
       </div>
-      <ngx-paypal aria-disabled="form.invalid" [config]="payPalConfig"></ngx-paypal>
-      <button class="telebirr-btn" mat-raised-button>
-        <img class="telebirr-img" title="Telebirr" src="/assets/images/telebirr-logo.svg"/>
+      <ngx-paypal
+        aria-disabled="form.invalid"
+        [config]="payPalConfig"
+      ></ngx-paypal>
+      <button
+      (click)="goToPayPal()"
+      class="telebirr-btn" mat-raised-button>
+        <img
+          class="telebirr-img"
+          title="Telebirr"
+          src="/assets/images/telebirr-logo.svg"
+        />
       </button>
     </form>
     <mat-card [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>
-        <h2 class="bold">{{"Your donation" | translate}}</h2>
+        <h2 class="bold">{{ "Your donation" | translate }}</h2>
         <div
           fxLayout="column"
           fxLayout.xs="row"
@@ -186,7 +199,7 @@
             fxLayout.xs="column"
             fxLayoutAlign="space-between start"
           >
-            <p>{{"Your donation"|translate}}</p>
+            <p>{{ "Your donation" | translate }}</p>
             <p class="bold">${{ amount!.value }}</p>
           </div>
 
@@ -196,7 +209,7 @@
             fxLayout.xs="column"
             fxLayoutAlign="space-between start"
           >
-            <p>{{"Legas tip"| translate}}</p>
+            <p>{{ "Legas tip" | translate }}</p>
             <p class="bold">${{ tip_percentage }}</p>
           </div>
           <div>
@@ -209,7 +222,10 @@
             fxLayoutAlign="space-between start"
             class="bold"
           >
-            <p>{{"Total"|translate}} <span fxHide.xs> {{"due today"| translate}}</span></p>
+            <p>
+              {{ "Total" | translate }}
+              <span fxHide.xs> {{ "due today" | translate }}</span>
+            </p>
             <p>{{ amount!.value + tip_percentage }}</p>
           </div>
         </div>

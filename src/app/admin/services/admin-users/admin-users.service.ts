@@ -22,7 +22,6 @@ export class AdminUsersService {
     let id = user._id;
     delete user._id;
     delete user.__v;
-    delete user.paymentMethods;
 
     let verifiedUser = { ...user, isVerified: true };
     console.log(verifiedUser);

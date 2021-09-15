@@ -8,17 +8,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DonationService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   // create donation
-  createDonation(fundraiseId: string, donation: Donation): Observable<HttpResponse<any>> {
+  createDonation(
+    fundraiserId: string,
+    donation: Donation
+  ): Observable<HttpResponse<any>> {
     if (donation.comment?.trim() === '') {
       delete donation.comment;
     }
     return this.httpClient.post(
-      `${environment.BASE_URL}/api/donations/${fundraiseId}`,
+      `${environment.BASE_URL}/api/donations/${fundraiserId}`,
       donation,
-      { observe: 'response',responseType:'text'}    
+      { observe: 'response', responseType: 'text' }
+    );
+  }
+
+  // go to paypal
+  goToPayPal(fundraiserId : string,donation: Donation) {    
+    return this.httpClient.post(
+      `${environment.BASE_URL}/api/donation/pay/${fundraiserId}`,
+      donation
     );
   }
 }

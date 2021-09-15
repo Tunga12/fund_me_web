@@ -10,7 +10,11 @@ import { FundraiserService } from './../../services/fundraiser/fundraiser.servic
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Subscription } from 'rxjs';
 import { DonationService } from './../../services/donation/donation.service';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Donation } from 'src/app/models/donation.model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
@@ -28,6 +32,7 @@ export class DonateComponent implements OnInit, OnDestroy {
     amount: 0,
     tip: 10,
     memberId: '',
+    paymentMethod: 'PayPal',
   };
 
   fundraiserId = '';
@@ -71,6 +76,8 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.getFundraiser();
 
     this.initConfig();
+
+    this.donation = { ...this.donation, ...this.form.value };
   }
 
   private initConfig(): void {
@@ -137,7 +144,7 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   // observe the form changes to our model
   formChange() {
-    this.donation = this.form.value;
+    this.donation = { ...this.donation, ...this.form.value };
   }
 
   /* getters for form controls*/
@@ -170,17 +177,36 @@ export class DonateComponent implements OnInit, OnDestroy {
     return (number: number) => number + '%';
   }
 
+  // go to paypal page
+  goToPayPal() {
+    // remove the memberId field if its value is empty
+    if (!this.memberId || !this.memberId!.value) {
+      delete this.donation['memberId'];
+    }
+    if (!this.donation.comment) {
+      delete this.donation['comment'];
+    }
+    this.donationService.goToPayPal(this.fundraiserId, this.donation).subscribe(
+      (result) => {
+        console.log(result);
+      },
+      (error) => {
+        console.log(error.error);
+      }
+    );
+  }
+
   // make donation to a fundraiser
   donate() {
     this.loading = true;
-    this.donation = this.form.value;
+    this.donation = { ...this.donation, ...this.form.value };
     // remove the memberId field if its value is empty
     if (!this.memberId || !this.memberId!.value) {
       delete this.donation['memberId'];
     }
 
     this.donationSub = this.donationService
-      .createDonation(this.fundraiserId, this.form.value)
+      .createDonation(this.fundraiserId, this.donation)
       .subscribe(
         (response: HttpResponse<any>) => {
           this.snackBar.open(

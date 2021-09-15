@@ -9,4 +9,5 @@ export interface Donation
   tip: number;
   isAnonymous?: boolean;
   memberId?:string;
+  paymentMethod:string;
 }
