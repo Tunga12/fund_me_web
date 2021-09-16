@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 
 const ROUTES: Routes = [
-  { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
+  { path: '404', component: PageNotFoundComponent }, // Wildcard route for a 404 page
+  { path: '**', redirectTo:"404", pathMatch:"full" }, // Wildcard route for a 404 page
 ];
 
 @NgModule({

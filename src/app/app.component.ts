@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'go-fund-me';
-  no_footer_pages = ['/account', '/create', '/admin', '/notification', '/sign'];
+  no_footer_pages = ['/account', '/create', '/admin', '/notification', '/sign','/404'];
 
   hide_footer = false;
 
