@@ -22,7 +22,6 @@ import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { StoryTextAreaComponent } from '../components/story-text-area/story-text-area.component';
 import { MyMaterialModule } from '../modules/material.module';
-import { AppRoutesModule } from '../modules/routes.module';
 
 
 const ROUTES: Routes = [
@@ -38,7 +37,6 @@ const ROUTES: Routes = [
     path: 's',
     component: SearchComponent,
   },
-  // { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
 ]
 
 @NgModule({
@@ -59,7 +57,6 @@ const ROUTES: Routes = [
     ),
     RouterModule.forChild(ROUTES),
     MyMaterialModule,
-    AppRoutesModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -83,7 +80,6 @@ const ROUTES: Routes = [
     ReactiveFormsModule,
     SearchComponent,
     NavBarComponent,
-    AppRoutesModule,
     AccountSettingComponent,
     PasswordResetComponent,
     TimeagoModule,

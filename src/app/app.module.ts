@@ -1,4 +1,4 @@
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {  HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -76,6 +76,8 @@ import { PhotoTabContentComponent } from './components/edit-ui/photo-tab-content
 import { UpdateImageCropperComponent } from './components/post-an-update/update-image-cropper/update-image-cropper.component';
 import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail-public/report-dialog/report-dialog.component';
 import { DonationsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-content/donations-tab-content.component';
+import { AppRoutesModule } from './modules/routes.module';
+import { NotFoundModule } from './modules/not-found.module';
 
 @NgModule({
   declarations: [
@@ -136,7 +138,7 @@ import { DonationsTabContentComponent } from './components/fundraiser/my-fundrai
     UpdatesSectionComponent,
     PhotoTabContentComponent,
     UpdateImageCropperComponent,
-    ReportDialogComponent
+    ReportDialogComponent,
   ],
   entryComponents: [],
   imports: [
@@ -145,7 +147,6 @@ import { DonationsTabContentComponent } from './components/fundraiser/my-fundrai
     BrowserModule,
     BrowserAnimationsModule,
     MyMaterialModule,
-    RouterModule,
     ShareButtonsModule.withConfig({
       debug: true,
     }),
@@ -154,6 +155,8 @@ import { DonationsTabContentComponent } from './components/fundraiser/my-fundrai
     ImageCropperModule,
     AdminModule,
     SharedModule,
+    AppRoutesModule,
+    NotFoundModule,
   ],
 
   providers: [

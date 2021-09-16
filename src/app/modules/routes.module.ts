@@ -18,21 +18,19 @@ import { HelpComponent } from '../components/help/help.component';
 import { HomePageComponent } from '../components/home-page/home-page.component';
 import { NotificationComponent } from '../components/notification/notification.component';
 import { ShareDialogComponent } from '../components/share-dialog/share-dialog.component';
-import {
-  BeneficiaryFormComponent,
-} from '../components/withdrawal/beneficiary-form/beneficiary-form/beneficiary-form.component';
-import {
-  PersonalInfoSummaryComponent,
-} from '../components/withdrawal/personal-info-summary/personal-info-summary.component';
+import { BeneficiaryFormComponent } from '../components/withdrawal/beneficiary-form/beneficiary-form/beneficiary-form.component';
+import { PersonalInfoSummaryComponent } from '../components/withdrawal/personal-info-summary/personal-info-summary.component';
 import { PersonalInfoComponent } from '../components/withdrawal/personal-info/personal-info.component';
 import { SuccessPageComponent } from '../components/withdrawal/success-page/success-page.component';
 import { WithdrawalComponent } from '../components/withdrawal/withdrawal.component';
 import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
 import { EditGuard } from '../services/route-guards/edit-guard/edit-guard.service';
 import { WithdrawGuard } from '../services/route-guards/withdraw-guard/withdraw-guard.service';
+import { NotFoundModule } from './not-found.module';
+import { AdminModule } from '../admin/admin.module';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
- 
   {
     path: 'create',
     component: CreateFundraiserComponent,
@@ -54,7 +52,8 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditUiComponent,
-    canActivate: [AuthGuard, 
+    canActivate: [
+      AuthGuard,
       // EditGuard
     ],
   },
@@ -84,22 +83,23 @@ const routes: Routes = [
 
   {
     path: 'withdrawal/setup/complete/:id',
-    component: SuccessPageComponent
+    component: SuccessPageComponent,
   },
 
   {
     path: 'withdrawal/:id',
     component: WithdrawalComponent,
-    canActivate: [AuthGuard,
+    canActivate: [
+      AuthGuard,
       //  WithdrawGuard
-      ],
+    ],
   },
-
 
   {
     path: 'my-fundraiser/withdrawals/:id/:tab',
     component: WithdrawalsComponent,
-    canActivate: [AuthGuard, 
+    canActivate: [
+      AuthGuard,
       // WithdrawGuard
     ],
   },
@@ -122,41 +122,46 @@ const routes: Routes = [
       {
         path: 'organizer',
         component: OrganizerComponent,
-      }, {
+      },
+      {
         path: 'team-member',
         component: TeamMemberComponent,
-      }, {
+      },
+      {
         path: 'beneficiary',
         component: BeneficiaryComponent,
       },
       {
         path: '',
-        redirectTo:'organizer',
-        pathMatch:'full'
+        redirectTo: 'organizer',
+        pathMatch: 'full',
       },
-    ]
+    ],
   },
   {
-    path:'help/category/:category',
-    component:HelpsComponent,
+    path: 'help/category/:category',
+    component: HelpsComponent,
   },
   {
-    path:'help',
-    component:HelpComponent,
+    path: 'help',
+    component: HelpComponent,
   },
   {
     path: 'account-setting',
     component: AccountSettingComponent,
     canActivate: [AuthGuard],
   },
-  
+
   { path: '', redirectTo: '/home-page', pathMatch: 'full' }, // redirect to `home page`
 ];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(routes),
-],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(routes),
+  ],
+
   exports: [RouterModule],
 })
-export class AppRoutesModule { }
+export class AppRoutesModule {}
