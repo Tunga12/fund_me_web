@@ -8,7 +8,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-withdrawals',
   templateUrl: './withdrawals.component.html',
-  styleUrls: ['./withdrawals.component.css']
+  styleUrls: ['./withdrawals.component.scss']
 })
 export class WithdrawalsComponent implements OnInit, OnDestroy {
   isOrganizer = false;

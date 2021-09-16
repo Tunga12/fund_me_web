@@ -18,7 +18,7 @@ import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'admin-payments',
   templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.css'],
+  styleUrls: ['./payments.component.scss'],
 })
 export class PaymentsComponent implements OnInit {
   loading: boolean = false;
@@ -40,7 +40,7 @@ export class PaymentsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
 
-  //datasource for the table
+  //data source for the table
   dataSource = new MatTableDataSource<Payment>();
 
   @ViewChild('epltable', { static: false }) epltable?: ElementRef;
@@ -74,7 +74,7 @@ export class PaymentsComponent implements OnInit {
 
     console.log(this.filterFundraisers(startDate, endDate));
 
-  // filter fundaisers that have accepted withdrawal status and donations in the given date range
+  // filter fundraisers that have accepted withdrawal status and donations in the given date range
     this.filterFundraisers(startDate, endDate).forEach((fund) =>
       this.addToPayments(fund, startDate, endDate)
     );
@@ -82,7 +82,7 @@ export class PaymentsComponent implements OnInit {
     console.log(this.payments);
     this.loading = false;
 
-    // assign the payments array to our datasource
+    // assign the payments array to our data source
     this.dataSource.data = this.payments;
     this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
@@ -117,7 +117,7 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  // filter fundaisers that have accepted withdrawal status and donations in the given date range
+  // filter fundraisers that have accepted withdrawal status and donations in the given date range
   filterFundraisers(startDate: Date, endDate: Date) {
     let filteredFunds = this.fundsWithFullData.filter((fund) => {
       let donations = fund.donations?.filter((donation) => {

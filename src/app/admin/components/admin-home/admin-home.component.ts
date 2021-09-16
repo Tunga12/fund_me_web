@@ -10,13 +10,13 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css']
+  styleUrls: ['./admin-home.component.scss']
 })
 export class AdminHomeComponent implements OnInit ,OnDestroy{
   loading = false; // to show loading spinner till the fundraisers are available
   errorMessage = '';
 
-  searchedFundarisers: Fundraiser[] = [];
+  searchedFundraisers: Fundraiser[] = [];
 
   fundraiserSub?: Subscription;
 
@@ -40,7 +40,7 @@ export class AdminHomeComponent implements OnInit ,OnDestroy{
     );
   }
 
-  //search fundrisers of the current page
+  //search fundraisers of the current page
   searchFundraisers() {
     this.loading=true;
     let title = this.form.controls['title'].value;
@@ -49,8 +49,7 @@ export class AdminHomeComponent implements OnInit ,OnDestroy{
       .subscribe(
         (fundraiserHome: FundraiserPage) => {
           this.fundraiserHome = fundraiserHome;
-          this.searchedFundarisers = [
-            // ...this.searchedFundarisers,
+          this.searchedFundraisers = [
             ...fundraiserHome.fundraisers,
           ];
           this.loading = false;

@@ -14,7 +14,7 @@ import { ImageCropperComponent } from './../../../image-cropper/image-cropper.co
 @Component({
   selector: 'set-fundraiser-media',
   templateUrl: './set-fundraiser-media.component.html',
-  styleUrls: ['./set-fundraiser-media.component.css'],
+  styleUrls: ['./set-fundraiser-media.component.scss'],
 })
 export class SetFundraiserMediaComponent implements OnInit {
   original_image: any;

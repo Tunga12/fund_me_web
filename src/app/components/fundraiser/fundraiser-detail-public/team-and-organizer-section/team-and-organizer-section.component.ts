@@ -5,7 +5,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-team-and-organizer-section',
   templateUrl: './team-and-organizer-section.component.html',
-  styleUrls: ['./team-and-organizer-section.component.css']
+  styleUrls: ['./team-and-organizer-section.component.scss']
 })
 export class TeamAndOrganizerSectionComponent implements OnInit {
   @Input() fundraiser!: Fundraiser;

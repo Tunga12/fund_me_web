@@ -19,7 +19,7 @@ import { SnackbarService } from './../../../../services/snackbar/snackbar.servic
 @Component({
   selector: 'updates-tab-content',
   templateUrl: './updates-tab-content.component.html',
-  styleUrls: ['./updates-tab-content.component.css'],
+  styleUrls: ['./updates-tab-content.component.scss'],
 })
 export class UpdatesTabContentComponent implements OnInit, OnDestroy {
   @Input() fundraiser!: Fundraiser;

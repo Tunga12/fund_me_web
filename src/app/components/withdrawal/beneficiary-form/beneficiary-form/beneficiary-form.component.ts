@@ -11,7 +11,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
 @Component({
   selector: 'app-beneficiary-form',
   templateUrl: './beneficiary-form.component.html',
-  styleUrls: ['./beneficiary-form.component.css']
+  styleUrls: ['./beneficiary-form.component.scss']
 })
 export class BeneficiaryFormComponent implements OnInit, OnDestroy {
   beneficiary: User = { firstName: '', lastName: '', email: '' };

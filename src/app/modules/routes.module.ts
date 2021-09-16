@@ -26,7 +26,7 @@ import {
 } from '../components/withdrawal/personal-info-summary/personal-info-summary.component';
 import { PersonalInfoComponent } from '../components/withdrawal/personal-info/personal-info.component';
 import { SuccessPageComponent } from '../components/withdrawal/success-page/success-page.component';
-import { WithdrwalComponent } from '../components/withdrawal/withdrwal.component';
+import { WithdrawalComponent } from '../components/withdrawal/withdrawal.component';
 import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.service';
 import { EditGuard } from '../services/route-guards/edit-guard/edit-guard.service';
 import { WithdrawGuard } from '../services/route-guards/withdraw-guard/withdraw-guard.service';
@@ -89,7 +89,7 @@ const routes: Routes = [
 
   {
     path: 'withdrawal/:id',
-    component: WithdrwalComponent,
+    component: WithdrawalComponent,
     canActivate: [AuthGuard,
       //  WithdrawGuard
       ],

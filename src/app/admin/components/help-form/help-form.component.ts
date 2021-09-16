@@ -6,7 +6,7 @@ import { Help } from 'src/app/models/help.model';
 @Component({
   selector: 'admin-help-form',
   templateUrl: './help-form.component.html',
-  styleUrls: ['./help-form.component.css']
+  styleUrls: ['./help-form.component.scss']
 })
 export class HelpFormComponent implements OnInit,OnDestroy {
   //currently selected help

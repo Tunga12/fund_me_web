@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'youtube-video-player',
   templateUrl: './youtube-video-player.component.html',
-  styleUrls: ['./youtube-video-player.component.css']
+  styleUrls: ['./youtube-video-player.component.scss']
 })
 export class YoutubeVideoPlayerComponent implements OnInit {
 

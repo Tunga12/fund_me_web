@@ -10,7 +10,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-my-fundraisers',
   templateUrl: './my-fundraisers.component.html',
-  styleUrls: ['./my-fundraisers.component.css']
+  styleUrls: ['./my-fundraisers.component.scss']
 })
 export class MyFundraisersComponent implements OnInit,OnDestroy {
   tabLinks=['organizer', 'team-member','beneficiary'];

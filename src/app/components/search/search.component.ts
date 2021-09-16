@@ -10,7 +10,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit , OnDestroy{
   param = '';

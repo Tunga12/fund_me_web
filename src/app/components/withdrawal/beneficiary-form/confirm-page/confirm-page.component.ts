@@ -10,7 +10,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 @Component({
   selector: 'app-confirm-page',
   templateUrl: './confirm-page.component.html',
-  styleUrls: ['./confirm-page.component.css']
+  styleUrls: ['./confirm-page.component.scss']
 })
 export class ConfirmPageComponent implements OnInit, OnDestroy {
 

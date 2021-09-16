@@ -9,7 +9,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-organizer',
   templateUrl: './organizer.component.html',
-  styleUrls: ['./organizer.component.css']
+  styleUrls: ['./organizer.component.scss']
 
 })
 export class OrganizerComponent implements OnInit, OnDestroy {

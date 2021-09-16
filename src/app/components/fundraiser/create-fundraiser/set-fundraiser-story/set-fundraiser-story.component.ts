@@ -16,7 +16,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 @Component({
   selector: 'set-fundraiser-story',
   templateUrl: './set-fundraiser-story.component.html',
-  styleUrls: ['./set-fundraiser-story.component.css'],
+  styleUrls: ['./set-fundraiser-story.component.scss'],
 })
 export class SetFundraiserStoryComponent implements OnInit {
   @Input() fundraiser!: Fundraiser;

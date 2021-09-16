@@ -11,7 +11,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-public-fund-list',
   templateUrl: './public-fund-list.component.html',
-  styleUrls: ['./public-fund-list.component.css']
+  styleUrls: ['./public-fund-list.component.scss']
 })
 export class PublicFundListComponent {
   @Input() fundraisers!:Fundraiser[];

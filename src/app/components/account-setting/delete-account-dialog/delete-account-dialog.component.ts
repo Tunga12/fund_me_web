@@ -9,7 +9,7 @@ import { SnackbarService } from './../../../services/snackbar/snackbar.service';
 @Component({
   selector: 'app-delete-account-dialog',
   templateUrl: './delete-account-dialog.component.html',
-  styleUrls: ['./delete-account-dialog.component.css'],
+  styleUrls: ['./delete-account-dialog.component.scss'],
 })
 export class DeleteAccountDialogComponent implements OnDestroy {
   loading = false;

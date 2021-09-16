@@ -10,7 +10,7 @@ interface HelpCategory{
 @Component({
   selector: 'app-help',
   templateUrl: './help.component.html',
-  styleUrls: ['./help.component.css'],
+  styleUrls: ['./help.component.scss'],
 })
 export class HelpComponent{
     

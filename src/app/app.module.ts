@@ -27,8 +27,7 @@ import { SetFundraiserStoryComponent } from './components/fundraiser/create-fund
 import { DonationsComponent } from './components/fundraiser/fundraiser-detail-public/donations/donations.component';
 
 import { BannerComponent } from './components/fundraiser/my-fundraiser-detail/banner/banner.component';
-import { DonationsTabConntentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-conntent/donations-tab-conntent.component';
-import { DonorsTabConntentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donors-tab-content.component';
+import { DonorsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donors-tab-content.component';
 import { InvitedContactsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/invited-contacts-tab-content/invited-contacts-tab-content.component';
 import { MyFundraiserDetailComponent } from './components/fundraiser/my-fundraiser-detail/my-fundraiser-detail.component';
 import { AddTeamMembersDialogComponent } from './components/fundraiser/my-fundraiser-detail/team-tab-content/add-team-members-dialog/add-team-members-dialog.component';
@@ -55,7 +54,7 @@ import { ConfirmPageComponent } from './components/withdrawal/beneficiary-form/c
 import { PersonalInfoSummaryComponent } from './components/withdrawal/personal-info-summary/personal-info-summary.component';
 import { PersonalInfoComponent } from './components/withdrawal/personal-info/personal-info.component';
 import { SuccessPageComponent } from './components/withdrawal/success-page/success-page.component';
-import { WithdrwalComponent } from './components/withdrawal/withdrwal.component';
+import { WithdrawalComponent } from './components/withdrawal/withdrawal.component';
 import { YoutubeVideoPlayerComponent } from './components/youtube-video-player/youtube-video-player.component';
 import { HttpErrorsInterceptor } from './interceptors/http-errors.interceptor';
 import { HttpHeaderInterceptor } from './interceptors/http-headers.interceptor';
@@ -65,8 +64,6 @@ import { HelpComponent } from './components/help/help.component';
 import { StatComponent } from './components/fundraiser/fundraiser-detail-public/stat/stat.component';
 import { FundraiserDetailPublicComponent } from './components/fundraiser/fundraiser-detail-public/fundraiser-detail-public.component';
 import { HelpsComponent } from './components/help/helps/helps.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -78,6 +75,7 @@ import { UpdatesSectionComponent } from './components/fundraiser/fundraiser-deta
 import { PhotoTabContentComponent } from './components/edit-ui/photo-tab-content/photo-tab-content.component';
 import { UpdateImageCropperComponent } from './components/post-an-update/update-image-cropper/update-image-cropper.component';
 import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail-public/report-dialog/report-dialog.component';
+import { DonationsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-content/donations-tab-content.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +96,7 @@ import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail
     ImportContactsDialogComponent,
     EditUiComponent,
     YoutubeVideoPlayerComponent,
-    WithdrwalComponent,
+    WithdrawalComponent,
     PersonalInfoComponent,
     PersonalInfoSummaryComponent,
     BeneficiaryFormComponent,
@@ -106,9 +104,9 @@ import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail
     DonateComponent,
     DonationsComponent,
     BannerComponent,
-    DonationsTabConntentComponent,
+    DonationsTabContentComponent,
     InvitedContactsTabContentComponent,
-    DonorsTabConntentComponent,
+    DonorsTabContentComponent,
     TeamTabContentComponent,
     UpdatesTabContentComponent,
     NotificationComponent,

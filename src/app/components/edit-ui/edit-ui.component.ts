@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-edit-ui',
   templateUrl: './edit-ui.component.html',
-  styleUrls: ['./edit-ui.component.css'],
+  styleUrls: ['./edit-ui.component.scss'],
 })
 export class EditUiComponent implements OnInit, OnDestroy {
   loading = true;

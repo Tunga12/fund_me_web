@@ -5,7 +5,7 @@ import { AddYoutubeVideoDialogComponent } from './../add-youtube-video-dialog/ad
 @Component({
   selector: 'app-add-photo-video-dialog',
   templateUrl: './add-photo-video-dialog.component.html',
-  styleUrls: ['./add-photo-video-dialog.component.css'],
+  styleUrls: ['./add-photo-video-dialog.component.scss'],
 })
 export class AddPhotoVideoDialogComponent{
   constructor(private dialog: MatDialog) {}

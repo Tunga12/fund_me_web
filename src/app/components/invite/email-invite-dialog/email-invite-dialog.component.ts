@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-email-invite-dialog',
   templateUrl: './email-invite-dialog.component.html',
-  styleUrls: ['./email-invite-dialog.component.css'],
+  styleUrls: ['./email-invite-dialog.component.scss'],
 })
 export class EmailInviteDialogComponent {
   emails: string[] = [];

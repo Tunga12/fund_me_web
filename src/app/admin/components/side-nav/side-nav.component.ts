@@ -8,13 +8,13 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'admin-side-nav',
   templateUrl: './side-nav.component.html',
-  styleUrls: ['./side-nav.component.css']
+  styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit, OnDestroy {
   mobileQuery:MediaQueryList;
   private _mobileQueryListener:()=>void;
   accountCaret=true;
-  currentUser?: User; //currently loggedd in user
+  currentUser?: User; //currently logged in user
   currentUserSub?: Subscription;
   icons_only=false;
   constructor(

@@ -8,7 +8,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-personal-info-summary',
   templateUrl: './personal-info-summary.component.html',
-  styleUrls: ['./personal-info-summary.component.css'],
+  styleUrls: ['./personal-info-summary.component.scss'],
 })
 export class PersonalInfoSummaryComponent implements OnInit {
 

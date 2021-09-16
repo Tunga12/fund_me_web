@@ -9,7 +9,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-beneficiary',
   templateUrl: './beneficiary.component.html',
-  styleUrls: ['./beneficiary.component.css']
+  styleUrls: ['./beneficiary.component.scss']
 })
 export class BeneficiaryComponent implements OnInit, OnDestroy {
   loading = true;

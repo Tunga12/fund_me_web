@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-delete-dialog',
   templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.css'],
+  styleUrls: ['./delete-dialog.component.scss'],
 })
 export class DeleteDialogComponent implements OnInit, OnDestroy {
   loading = false; //to show a loading indiacater

@@ -5,7 +5,7 @@ import { PostAnUpdateComponent } from 'src/app/components/post-an-update/post-an
 @Component({
   selector: 'banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.css'],
+  styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent  {
   show_facebook_banner = true;

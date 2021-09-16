@@ -4,7 +4,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 @Component({
   selector: 'my-fund-list',
   templateUrl: './my-fund-list.component.html',
-  styleUrls: ['./my-fund-list.component.css']
+  styleUrls: ['./my-fund-list.component.scss']
 })
 export class MyFundListComponent{
   @Input() fundraisers!: Fundraiser[];

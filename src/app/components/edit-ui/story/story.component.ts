@@ -15,7 +15,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 @Component({
   selector: 'story',
   templateUrl: './story.component.html',
-  styleUrls: ['./story.component.css'],
+  styleUrls: ['./story.component.scss'],
 })
 export class StoryComponent implements OnInit, OnDestroy {
   @Input() fundraiser!: Fundraiser;

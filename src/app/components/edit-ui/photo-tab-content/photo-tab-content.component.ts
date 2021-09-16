@@ -14,7 +14,7 @@ import { ImageCropperComponent } from '../../image-cropper/image-cropper.compone
 @Component({
   selector: 'app-photo-tab-content',
   templateUrl: './photo-tab-content.component.html',
-  styleUrls: ['./photo-tab-content.component.css'],
+  styleUrls: ['./photo-tab-content.component.scss'],
 })
 export class PhotoTabContentComponent implements OnInit, OnDestroy {
   loading = false;

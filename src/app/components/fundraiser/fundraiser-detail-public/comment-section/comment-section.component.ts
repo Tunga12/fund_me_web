@@ -5,7 +5,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
-  styleUrls: ['./comment-section.component.css']
+  styleUrls: ['./comment-section.component.scss']
 })
 export class CommentSectionComponent implements OnInit {
   @Input() fundraiser!:Fundraiser;

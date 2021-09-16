@@ -13,7 +13,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 @Component({
   selector: 'team-tab-content',
   templateUrl: './team-tab-content.component.html',
-  styleUrls: ['./team-tab-content.component.css'],
+  styleUrls: ['./team-tab-content.component.scss'],
 })
 export class TeamTabContentComponent implements OnInit {
   userId=localStorage.getItem('userId');

@@ -10,7 +10,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 @Component({
   selector: 'set-basic-info',
   templateUrl: './set-basic-info.component.html',
-  styleUrls: ['./set-basic-info.component.css'],
+  styleUrls: ['./set-basic-info.component.scss'],
 })
 export class SetBasicInfoComponent implements OnInit, OnDestroy {
   selected_category!: Category;

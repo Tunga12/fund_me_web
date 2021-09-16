@@ -12,7 +12,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 @Component({
   selector: 'story-text-area',
   templateUrl: './story-text-area.component.html',
-  styleUrls: ['./story-text-area.component.css'],
+  styleUrls: ['./story-text-area.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class StoryTextAreaComponent implements OnDestroy {

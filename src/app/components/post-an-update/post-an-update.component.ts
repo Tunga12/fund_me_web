@@ -23,7 +23,7 @@ import { UpdateImageCropperComponent } from './update-image-cropper/update-image
 @Component({
   selector: 'app-post-an-update',
   templateUrl: './post-an-update.component.html',
-  styleUrls: ['./post-an-update.component.css'],
+  styleUrls: ['./post-an-update.component.scss'],
 })
 export class PostAnUpdateComponent implements OnInit, OnDestroy {
   loading = false;

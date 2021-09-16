@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'admin-statistics',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  styleUrls: ['./statistics.component.scss']
 })
 export class StatisticsComponent implements OnInit {
   coinIcon= faCoins;

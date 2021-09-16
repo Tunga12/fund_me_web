@@ -20,7 +20,7 @@ import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-acc
 @Component({
   selector: 'app-account-setting',
   templateUrl: './account-setting.component.html',
-  styleUrls: ['./account-setting.component.css'],
+  styleUrls: ['./account-setting.component.scss'],
 })
 export class AccountSettingComponent implements OnInit, OnDestroy {
   loading = false;

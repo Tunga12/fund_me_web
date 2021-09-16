@@ -5,9 +5,9 @@ import { Fundraiser } from '../../../../models/fundraiser.model';
 @Component({
   selector: 'app-donors-tab-content',
   templateUrl: './donors-tab-content.component.html',
-  styleUrls: ['./donors-tab-content.component.css'],
+  styleUrls: ['./donors-tab-content.component.scss'],
 })
-export class DonorsTabConntentComponent {
+export class DonorsTabContentComponent {
   @Input() fundraiser!: Fundraiser;
   constructor() {}
 

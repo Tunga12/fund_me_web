@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'create-fundraiser',
   templateUrl: './create-fundraiser.component.html',
-  styleUrls: ['./create-fundraiser.component.css'],
+  styleUrls: ['./create-fundraiser.component.scss'],
 })
 export class CreateFundraiserComponent implements OnInit, OnDestroy {
   currentStep = 1; // keep track of steps

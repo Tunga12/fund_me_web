@@ -5,7 +5,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from '@angular/core';
-import { ReportedFundsService } from '../../services/reported-funds/reporeted-funds.service';
+import { ReportedFundsService } from '../../services/reported-funds/reported';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -32,7 +32,7 @@ export class ReportedFundraisersComponent implements OnInit, OnDestroy {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
-  //datasource for the table
+  //data source for the table
   dataSource = new MatTableDataSource<ReportedFundraiser>();
 
   reports: Report[] = []; // reports

@@ -22,7 +22,7 @@ import { TeamMember } from './../../../../../models/team-memeber.model';
 @Component({
   selector: 'app-add-team-members-dialog',
   templateUrl: './add-team-members-dialog.component.html',
-  styleUrls: ['./add-team-members-dialog.component.css'],
+  styleUrls: ['./add-team-members-dialog.component.scss'],
 })
 export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   // emails: string[] = [];

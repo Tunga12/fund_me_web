@@ -10,7 +10,7 @@ import { DonationsComponent } from '../donations/donations.component';
 @Component({
   selector: 'app-highlight-card',
   templateUrl: './highlight-card.component.html',
-  styleUrls: ['./highlight-card.component.css'],
+  styleUrls: ['./highlight-card.component.scss'],
 })
 export class HighlightCardComponent implements OnInit {
   userId = localStorage.getItem('userId') || '';
@@ -71,7 +71,7 @@ export class HighlightCardComponent implements OnInit {
 
   share() {
     let data: ShareArgs = {
-      url: `https://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `https://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I havae created a fundraiser on gofundme ${

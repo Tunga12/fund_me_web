@@ -12,7 +12,7 @@ interface InputDatFormat {
 @Component({
   selector: 'app-doantions',
   templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.css'],
+  styleUrls: ['./donations.component.scss'],
 })
 export class DonationsComponent implements OnInit {
   donations!: Donation[];

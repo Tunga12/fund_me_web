@@ -12,7 +12,7 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
 @Component({
   selector: 'admin-rejected-withdrawals',
   templateUrl: './rejected-withdrawals.component.html',
-  styleUrls: ['./rejected-withdrawals.component.css']
+  styleUrls: ['./rejected-withdrawals.component.scss']
 })
 export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
   displayedColumns = [
@@ -30,7 +30,7 @@ export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
 
-  //datasource for the table
+  //data source for the table
   dataSource=new MatTableDataSource<Withdrawal>();
 
   // subscriptions

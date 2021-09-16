@@ -4,7 +4,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 @Component({
   selector: 'app-withdrawals-overview',
   templateUrl: './withdrawals-overview.component.html',
-  styleUrls: ['./withdrawals-overview.component.css']
+  styleUrls: ['./withdrawals-overview.component.scss']
 })
 export class WithdrawalsOverviewComponent  {
   isOrganizer = false;

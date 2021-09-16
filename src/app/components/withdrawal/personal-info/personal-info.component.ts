@@ -12,7 +12,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.css'],
+  styleUrls: ['./personal-info.component.scss'],
 })
 export class PersonalInfoComponent implements OnInit,OnDestroy {
   form!: FormGroup;

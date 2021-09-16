@@ -14,7 +14,7 @@ import { Update } from './../../../models/update.model';
 @Component({
   selector: 'app-detail',
   templateUrl: './my-fundraiser-detail.component.html',
-  styleUrls: ['./my-fundraiser-detail.component.css'],
+  styleUrls: ['./my-fundraiser-detail.component.scss'],
 })
 export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId');
@@ -81,7 +81,7 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  //  opendialog for update
+  //  open dialog for update
   openUpdateDialog() {
     this.dialog.open(PostAnUpdateComponent, {
       data: { mode: 'Post', update: this.update, fundraiser: this.fundraiser },
@@ -90,10 +90,10 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
 
   openShareDialog() {
     let data: ShareArgs = {
-      url: `http://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `http://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
-      description: `Hi, I havae created a fundraiser on gofundme ${
+      description: `Hi, I have created a fundraiser on legas ${
         this.fundraiser?.beneficiary
           ? 'to help' + this.fundraiser.beneficiary.firstName
           : ''

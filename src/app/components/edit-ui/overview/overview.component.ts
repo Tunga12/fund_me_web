@@ -19,7 +19,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css'],
+  styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
   form!: FormGroup;

@@ -6,7 +6,7 @@ import { EmailInviteDialogComponent } from './../../../../invite/email-invite-di
 @Component({
   selector: 'invited-contacts-tab-content',
   templateUrl: './invited-contacts-tab-content.component.html',
-  styleUrls: ['./invited-contacts-tab-content.component.css'],
+  styleUrls: ['./invited-contacts-tab-content.component.scss'],
 })
 export class InvitedContactsTabContentComponent  {
   constructor(private dialog: MatDialog) {}

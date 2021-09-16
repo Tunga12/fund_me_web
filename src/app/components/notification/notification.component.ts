@@ -13,7 +13,7 @@ import { SocketIoService } from './../../services/socket.io/socket.io.service';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css'],
+  styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   count = 0;

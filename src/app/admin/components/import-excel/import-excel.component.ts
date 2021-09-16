@@ -17,7 +17,7 @@ import { ExcelService } from '../../services/excel/excel.service';
 @Component({
   selector: 'admin-import-excel',
   templateUrl: './import-excel.component.html',
-  styleUrls: ['./import-excel.component.css'],
+  styleUrls: ['./import-excel.component.scss'],
 })
 export class ImportExcelComponent implements OnInit, OnDestroy {
   loading: boolean = false;
@@ -37,7 +37,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   failedPayments: Payment[] = [];
 
-  //datasource for the table
+  //data source for the table
   dataSource = new MatTableDataSource<Payment>();
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;

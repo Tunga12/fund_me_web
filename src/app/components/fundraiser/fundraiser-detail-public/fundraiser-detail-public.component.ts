@@ -20,7 +20,7 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-fundraiser-detail-public',
   templateUrl: './fundraiser-detail-public.component.html',
-  styleUrls: ['./fundraiser-detail-public.component.css'],
+  styleUrls: ['./fundraiser-detail-public.component.scss'],
 })
 export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId') || '';
@@ -125,7 +125,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   share() {
     let data: ShareArgs = {
-      url: `https://localhost:4200/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `https://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I have created a fundraiser on legas ${

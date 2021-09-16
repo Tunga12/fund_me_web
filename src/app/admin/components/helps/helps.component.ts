@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 @Component({
   selector: 'admin-helps',
   templateUrl: './helps.component.html',
-  styleUrls: ['./helps.component.css']
+  styleUrls: ['./helps.component.scss']
 })
 export class HelpsComponent implements OnInit, OnDestroy {
   showForm = false;

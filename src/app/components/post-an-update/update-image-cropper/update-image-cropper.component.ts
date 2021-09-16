@@ -10,7 +10,7 @@ import { ImageService } from 'src/app/services/image/image.service';
 @Component({
   selector: 'app-update-image-cropper',
   templateUrl: './update-image-cropper.component.html',
-  styleUrls: ['./update-image-cropper.component.css'],
+  styleUrls: ['./update-image-cropper.component.scss'],
 })
 export class UpdateImageCropperComponent implements OnInit {
   loading: boolean = false;
