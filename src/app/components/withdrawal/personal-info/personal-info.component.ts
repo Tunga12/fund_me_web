@@ -16,7 +16,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
 })
 export class PersonalInfoComponent implements OnInit,OnDestroy {
   form!: FormGroup;
-  // validate the existance of whitesaces in our input
+  // validate the existence of white spaces in our input
   whiteSpaceValidator = new WhiteSpaceValidatorDirective();
   fundId = '';
   fundraiser!: Fundraiser;
@@ -25,7 +25,7 @@ export class PersonalInfoComponent implements OnInit,OnDestroy {
   loading=false;
   errorMessage='';
   
-  // subscrriptions
+  // subscriptions
   activatedRouteSub?: Subscription;
   withdrawalSub?: Subscription;
   fundraiserSub?: Subscription;
@@ -91,7 +91,7 @@ export class PersonalInfoComponent implements OnInit,OnDestroy {
         (error: HttpErrorResponse) => {
           this.errorMessage = error.error;
         this.loading=false;
-        console.log('Error wihle getting fundraiser:', error.error);
+        console.log('Error while getting fundraiser:', error.error);
         }
       );
   }

@@ -44,7 +44,7 @@
         </mat-error>
 
         <mat-error *ngIf="bankName?.touched && bankName?.errors?.minlength">Bank name must be
-          {{ bankName?.errors?.minlength.requiredLength }} minimun.
+          {{ bankName?.errors?.minlength.requiredLength }} minimum.
         </mat-error>
       </mat-form-field>
 
@@ -56,10 +56,10 @@
           number
         </mat-error>
         <mat-error *ngIf="bankAccountNo?.touched && bankAccountNo?.errors?.minlength">Bank account number must be
-          {{ bankAccountNo?.errors?.minlength.requiredLength }} minimun.
+          {{ bankAccountNo?.errors?.minlength.requiredLength }} minimum.
         </mat-error>
         <mat-error *ngIf="bankAccountNo?.touched && bankAccountNo?.errors?.whiteSpace">Bank account number cannot
-          include whitespaces.
+          include white spaces.
         </mat-error>
       </mat-form-field>
 

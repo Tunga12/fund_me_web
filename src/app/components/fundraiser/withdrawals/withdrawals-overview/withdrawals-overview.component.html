@@ -6,7 +6,7 @@
     [ngStyle.xs]="{ 'max-width': '90%' }"
     [ngStyle.gt-xs]="{ 'max-width': '50%' }"
   >
-    <p>Total raised from this funraiser(after fees)</p>
+    <p>Total raised from this fundraiser(after fees)</p>
     <h2 class="bold">{{ fundraiser.totalRaised | currency }}</h2>
     <div class="alert" *ngIf="fundraiser?.withdraw?.status === 'pending'">
       <strong>Campaign Alert!</strong> Your campaign is currently under review

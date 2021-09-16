@@ -12,7 +12,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-            <p>You are about to give <strong>ALL</strong> of this compign's money to:</p>
+            <p>You are about to give <strong>ALL</strong> of this campaign's money to:</p>
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>{{ beneficiary.firstName + ' '+ beneficiary.lastName |titlecase }}</mat-card-title>
@@ -26,7 +26,7 @@
             <mat-error *ngIf="errorMessage && !loading">{{ errorMessage }}</mat-error>
 
             <div style="width: 100%">
-                <button (click)="inviteBeficiary()" mat-raised-button fxFlex="100" color="primary">Invite
+                <button (click)="inviteBeneficiary()" mat-raised-button fxFlex="100" color="primary">Invite
                     beneficiary</button>
             </div>
             <div style="width: 100%"> <button [routerLink]="['/withdrawal',fundId]" mat-button

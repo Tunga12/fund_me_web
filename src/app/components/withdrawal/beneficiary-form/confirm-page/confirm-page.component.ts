@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { UserWithdrawalService } from 'src/app/services/user-withdrawal/use-withdrawal.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -25,6 +26,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
   // subscriptions
   beneficiarySub?: Subscription;
   activatedRouteSub?: Subscription;
+  withdrawalSub?: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,6 +34,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: MatSnackBar,
     private snackbarServ: SnackbarService,
+    private withdrawalService:UserWithdrawalService
   ) { }
 
   ngOnInit(): void {
@@ -45,28 +48,52 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
 
   }
 
-  // invite beneficiary for a fundriaser
-  inviteBeficiary() {
+  // invite beneficiary for a fundraiser
+  inviteBeneficiary() {
     this.loading = true;
     this.beneficiarySub = this.beneficiaryService
       .inviteBeneficiary(this.fundId, this.beneficiary)
       .subscribe(
         () => {
           this.loading = false;
+          // this.createWithdrawal();
+          this.snackBar.open("Invitation successful", 'close', this.snackbarServ.getConfig())
           this.router.navigate(['/my-fundraiser/withdrawals', this.fundId,'overview']);
-          this.snackBar.open("Invitation suuccessful", 'close', this.snackbarServ.getConfig())
         },
         (error: HttpErrorResponse) => {
-          console.error("Inviting benefiiaryy", error.error);
+          console.error("Inviting beneficiary", error.error);
           this.loading = false;
           this.errorMessage = error.error;
         }
       );
   }
+
+    // // create withdrawal
+    // createWithdrawal() {
+    //   this.loading=true;
+    //   this.withdrawalSub = this.withdrawalService.createWithdrawal(
+    //     this.fundId, {}
+    //   ).subscribe(
+    //     () => {
+    //       console.log("withdrawal created");
+    //       this.loading=false;
+    //     }
+    //     , (error: HttpErrorResponse) => {
+    //       this.loading=false;
+    //       this.errorMessage="Unable to create withdrawal"
+    //       console.log('error:',error.error);
+  
+    //     }
+    //   );
+    // }
+
+  
   
   ngOnDestroy(): void {
     this.beneficiarySub?.unsubscribe();
     this.activatedRouteSub?.unsubscribe();
+    this.withdrawalSub
+    ?.unsubscribe()
   }
 
 }

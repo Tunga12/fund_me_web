@@ -12,7 +12,7 @@
     <form #form="ngForm" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-form-field appearance="outline">
         <mat-label>Who will withdraw the money?</mat-label>
-        <mat-select [(value)]="withdrawer" required>
+        <mat-select required [(value)]="withdrawer" required>
           <mat-option>Who will withdraw the money?</mat-option>
           <mat-option value="me"> Me </mat-option>
           <mat-option value="some_one"> Someone else </mat-option>
@@ -20,9 +20,9 @@
         <mat-hint>Must be 18+ with valid ID.</mat-hint>
       </mat-form-field>
       <p></p>
-      <mat-form-field *ngIf="withdrawer!=='me' && withdrawer!==''" appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>What type of saving withdrawal is right for you?</mat-label>
-        <mat-select [(value)]="saving_type" required>
+        <mat-select required [(value)]="saving_type" required>
           <mat-option>What type of withdrawal is right for you?</mat-option>
           <mat-option value="personal"> Personal </mat-option>
           <mat-option value="company"> Company </mat-option>
@@ -47,22 +47,24 @@
         </p>
       </div>
 
-      <mat-hint *ngIf="withdrawer!=='me' && withdrawer!==''" #textContent id="read-more">
+      <mat-hint id="read-more">
         If this is confusing, we want to understand what kind of bank account
-        you are withdrawing to Read more here.
+        you are withdrawing to Read more <a (click)="moreData=!moreData">here</a>.
         <p></p>
-        Accounts can belong to a person or an organization (501(c)(3), business,
-        trust, etc.) For organizations, the individual withdrawing must be a
+       <p *ngIf="moreData">
+        Accounts can belong to a person or an organization, business,
+        trust, etc. For organizations, the individual withdrawing must be a
         beneficial owner, someone with significant responsibility to control,
         manage, or direct the organization (e.g., a Chief Executive Officer,
         Vice President, Treasurer, or a controller).
+       </p>
       </mat-hint>
       <div class="read-more-link">
         <!-- <a readMore [readMore-length]="200" [readMore-element]="textContent"> 
           <span class="less">less</span><span class="more">more</span>
         </a> -->
       </div>
-      <button mat-raised-button [disabled]="form.invalid" [fxFlexAlign]="'center'" class="btn-large" color="primary"
+      <button mat-raised-button [disabled]="!form.touched && form.invalid" [fxFlexAlign]="'center'" class="btn-large" color="primary"
         (click)="openNextForm()">
         Next
       </button>

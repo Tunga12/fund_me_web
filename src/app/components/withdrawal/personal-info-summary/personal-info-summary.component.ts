@@ -49,12 +49,10 @@ export class PersonalInfoSummaryComponent implements OnInit {
         (fund: Fundraiser) => {
           this.fundraiser = fund;
           this.loading = false;
-          // if this fundraiser has a withdrawal info linked, show it
-
         },
         (error: HttpErrorResponse) => {
           this.loading = false;
-          console.log('Error wihle getting fundraiser:', error.error);
+          console.log('Error while getting fundraiser:', error.error);
           this.errorMessage = error.error;
         }
       );

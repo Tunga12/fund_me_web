@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 })
 export class WithdrawalComponent implements OnInit, OnDestroy {
 
+  moreData=false;
+
   saving_type='';
   withdrawer='';
   fundId = '';//id of the fundraiser
