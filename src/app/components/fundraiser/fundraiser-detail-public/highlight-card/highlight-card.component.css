@@ -25,9 +25,12 @@ mat-card.mat-card {
 
 .buttons-container {
   width: 100% !important;
-  z-index: 2;
 }
 
 .full-width {
   width: 100%;
+}
+
+.actions{
+  z-index: 100;
 }

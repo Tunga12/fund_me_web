@@ -8,7 +8,9 @@
       class="logo"
     />
     <!-- search field -->
-    <div fxFlexOrder.lt-sm="1" class="search-container">
+    <div 
+    fxHide.lt-sm
+    fxFlexOrder.lt-sm="1" class="search-container">
       <input
         data-cy="search-field"
         id="search-field"
@@ -17,7 +19,7 @@
         type="search"
         [placeholder]="'Search fundraisers' | translate"
         (keyup.enter)="search(key.value)"
-        [value]="searchWord??''"
+        [value]="searchWord ?? ''"
       />
       <span id="search-icon" matSuffix>
         <mat-icon class="mat-18" (click)="search(key.value)"
@@ -168,6 +170,32 @@
       >
         <mat-icon>menu</mat-icon>
       </button>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row
+    *ngIf="!authService.isLoggedIn()"
+    fxHide.gt-xs
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="20px"
+  >
+    <div fxFlexOrder.lt-sm="1" class="search-container">
+      <input
+        data-cy="search-field"
+        id="search-field"
+        matInput
+        #key
+        type="search"
+        [placeholder]="'Search fundraisers' | translate"
+        (keyup.enter)="search(key.value)"
+        [value]="searchWord ?? ''"
+      />
+      <span id="search-icon" matSuffix>
+        <mat-icon class="mat-18" (click)="search(key.value)"
+          >search</mat-icon
+        ></span
+      >
     </div>
   </mat-toolbar-row>
   <mat-toolbar-row
