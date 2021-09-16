@@ -178,7 +178,7 @@
     "Title": "ርዕስ",
     "Goal": "ግብ",
     "Title must be maximum letters.": "ርዕስ ከፍተኛ {{ length}} ፊደላት መሆን አለበት።",
-    "The minimun allowed goal is": "የተፈቀደለት አነስተኛ ግብ {{min}} ነው",
+    "The minimum allowed goal is": "የተፈቀደለት አነስተኛ ግብ {{min}} ነው",
     "Story is required!": "ታሪክ ያስፈልጋል!",
     "Story should be letters minimum!": "ታሪኩ ቢያንስ {{length}} ፊደሎች መሆን አለበት!",
     "Your fundraiser story": "የእርስዎ የገንዘብ ማሰባሰብ ታሪክ",

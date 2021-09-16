@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <p>
+  <p data-cy="intro-message">
     {{
       "A high-quality photo or video will help tell your story and build trust with
     donors."
@@ -10,16 +10,17 @@
   <ng-container *ngIf="imageSrc === '' && !loading; else elseTemplate">
     <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
     <button id="image-chooser">
-      <label for="image" id="image-label">
+      <label data-cy="image-label" for="image" id="image-label">
         <input
           id="image"
+          data-cy="image"
           hidden
           type="file"
           accept="image/jpeg,image/png,image/gif, image/bmp"
           formControlName="image"
           (change)="onImageChosen($event)"
         />
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
+        <div data-cy="label-text" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
           <mat-icon>add</mat-icon>
           <p>
             {{
@@ -80,6 +81,7 @@
     </div>
 
     <button
+    data-cy="next-btn"
       mat-raised-button
       [disabled]="(form.touched && !form.valid)|| loading"
       color="primary"

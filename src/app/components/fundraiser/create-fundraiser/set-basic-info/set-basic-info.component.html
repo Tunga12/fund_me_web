@@ -1,20 +1,21 @@
 <form [formGroup]="form">
   <mat-form-field appearance="outline">
-    <mat-label>{{"Category of your fundraiser"|translate}}</mat-label>
-    <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="selected_category">
-      <mat-option>{{"Choose category"|translate}}</mat-option>
-      <mat-option *ngFor="let category of categories" [value]="category">{{
+    <mat-label data-cy="category-label">{{"Category of your fundraiser"|translate}}</mat-label>
+    <mat-select data-cy="category"  formControlName="category" [compareWith]="compareObjects" [(value)]="selected_category">
+      <mat-option data-cy="default-category">{{"Choose category"|translate}}</mat-option>
+      <mat-option data-cy="categories" *ngFor="let category of categories" [value]="category">{{
         category.name|translate
       }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="category?.touched && category?.errors?.required">
+    <mat-error data-cy="category-required-error" *ngIf="category?.touched && category?.errors?.required">
       {{"Category is required!"|translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>{{"How much would you like to rise?"|translate}}</mat-label>
+    <mat-label data-cy="goal-label">{{"How much would you like to rise?"|translate}}</mat-label>
     <input
+    data-cy="goal"
       matInput
       formControlName="goalAmount"
       class="matInput"
@@ -24,14 +25,14 @@
     />
     <mat-icon matPrefix>monetization_on</mat-icon>
     <span matSuffix>.00 USD</span>
-    <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
+    <mat-error data-cy="goal-required-error" *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
       {{"Fundraiser goal is required!"|translate}}
     </mat-error>
-    <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-      {{"The minimun allowed goal is"|translate:{min: goalAmount?.errors?.min.min | currency} }}
+    <mat-error data-cy="goal-min-error" *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
+      {{"The minimum allowed goal is"|translate:{min: goalAmount?.errors?.min.min | currency} }}
     </mat-error>
   </mat-form-field>
-  <p>
+  <p data-cy="info">
    {{"Keep in mind that transaction fees, including credit and debit charges, are deducted from each donation." | translate }}
   </p>
   <div id="note">
@@ -41,7 +42,7 @@
     </ul>
   </div>
 
-  <button
+  <button data-cy="next-btn"
     [disabled]="!form.valid"
     mat-raised-button
     color="primary"
