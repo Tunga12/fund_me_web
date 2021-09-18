@@ -11,11 +11,9 @@
   </mat-progress-spinner>
 </div>
 
-<div>
-  <mat-error *ngIf="errorMessage" fxFlexAlign="center">
+  <mat-error fxAlign="center" *ngIf="errorMessage && !loading" fxFlexAlign="center">
     {{ errorMessage }}
   </mat-error>
-</div>
 <div
   *ngIf="fundraiser"
   fxLayout="column"
