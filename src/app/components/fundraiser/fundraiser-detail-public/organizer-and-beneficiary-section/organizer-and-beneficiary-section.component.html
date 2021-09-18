@@ -1,6 +1,6 @@
 <div *ngIf="fundraiser?.beneficiary">
   <div>
-    <h2 class="bold">{{"Organizer and beneficiary"| translate}}</h2>
+    <h2 class="bold">{{ "Organizer and beneficiary" | translate }}</h2>
     <mat-divider> </mat-divider>
   </div>
   <div
@@ -17,13 +17,16 @@
       fxLayoutGap="20px"
       style="width: fit-content"
     >
-      <img matCardAvatar src="/assets/images/logo.svg" />
+      <div class="avatar-contain">
+        {{ fundraiser?.organizer?.firstName?.charAt(0) | titlecase }}
+        {{ fundraiser?.organizer?.lastName?.charAt(0) | titlecase }}
+      </div>
       <div fxLayout="column" style="width: fit-content">
         <span
           >{{ fundraiser?.organizer?.firstName | titlecase }}
           {{ fundraiser?.organizer?.lastName | titlecase }}</span
         >
-        <span>{{"Organizer"| translate}}</span>
+        <span>{{ "Organizer" | translate }}</span>
         <!-- <span>Atlanta, GA</span> -->
       </div>
     </div>
@@ -47,7 +50,7 @@
           >{{ fundraiser?.beneficiary?.firstName | titlecase }}
           {{ fundraiser?.beneficiary?.lastName | titlecase }}</span
         >
-        <span>{{"Beneficiary"| translate}}</span>
+        <span>{{ "Beneficiary" | translate }}</span>
       </div>
     </div>
   </div>
