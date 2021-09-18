@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'go-fund-me';
+  title = 'Legas';
   no_footer_pages = ['/account', '/create', '/admin', '/notification', '/sign','/404'];
 
   hide_footer = false;

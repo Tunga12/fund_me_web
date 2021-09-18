@@ -164,28 +164,28 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     });
   }
 
-  blockFundraiser(fundraiser: Fundraiser) {
-    this.fundraiserService
-      .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
-      .subscribe(
-        () => {
-          this.snackBar.open(
-            'Fundraiser blocked successfully',
-            'close',
-            this.snackbarService.getConfig()
-          );
-        },
-        (error: HttpErrorResponse) => {
-          this.snackBar.open(
-            'Unable to block fundraiser',
-            'close',
-            this.snackbarService.getConfig()
-          );
-          this.errorMessage = error.error;
-          console.log(error.error);
-        }
-      );
-  }
+  // blockFundraiser(fundraiser: Fundraiser) {
+  //   this.fundraiserService
+  //     .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
+  //     .subscribe(
+  //       () => {
+  //         this.snackBar.open(
+  //           'Fundraiser blocked successfully',
+  //           'close',
+  //           this.snackbarService.getConfig()
+  //         );
+  //       },
+  //       (error: HttpErrorResponse) => {
+  //         this.snackBar.open(
+  //           'Unable to block fundraiser',
+  //           'close',
+  //           this.snackbarService.getConfig()
+  //         );
+  //         this.errorMessage = error.error;
+  //         console.log(error.error);
+  //       }
+  //     );
+  // }
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();

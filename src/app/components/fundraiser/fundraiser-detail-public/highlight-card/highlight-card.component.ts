@@ -74,7 +74,7 @@ export class HighlightCardComponent implements OnInit {
       url: `https://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
-      description: `Hi, I havae created a fundraiser on gofundme ${
+      description: `Hi, I have created a fundraiser on legas ${
         this.fundraiser?.beneficiary
           ? 'to help' + this.fundraiser.beneficiary.firstName
           : ''

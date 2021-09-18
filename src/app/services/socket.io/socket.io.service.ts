@@ -1,30 +1,18 @@
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketIoService {
-  private _socket: any;
+  constructor(
+      private socket:Socket
+  ){}
 
-  constructor() {
-
-    let token = localStorage.getItem('x-auth-token');
-    // Connect Socket with server URL
-    this._socket = io.io(`${environment.BASE_URL}?token=${token}`);
-   }
-
-   listen(eventName: string):Observable<any>{
-    return new Observable(
-      (subscriber)=>{
-        this._socket.on(eventName,(data:any)=>{
-          console.log(data)
-          subscriber.next(data);
-        });
-      }
-    );
-   }
-
+  	// listen event
+	onUnreadNotificationCount() {
+        console.log('hello friend');
+        
+		return this.socket.fromEvent('unread notification count');
+	}
 }

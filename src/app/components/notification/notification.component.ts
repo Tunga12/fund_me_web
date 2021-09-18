@@ -7,8 +7,11 @@ import { SnackbarService } from './../../services/snackbar/snackbar.service';
 import { TeamService } from './../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { environment } from './../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { SocketIoConfig } from 'ngx-socket-io';
 import { SocketIoService } from './../../services/socket.io/socket.io.service';
+import { Socket } from 'ngx-socket-io';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification',
@@ -16,15 +19,15 @@ import { SocketIoService } from './../../services/socket.io/socket.io.service';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  count = 0;
+  count: any = 0;
   loading = false;
   notifications: Notification[] = [];
-  accepedTeamInvitations: Notification[] = [];
+  acceptedTeamInvitations: Notification[] = [];
   declinedTeamInvitations: Notification[] = [];
 
   errorMessage? = '';
 
-  notificatonSub?: Subscription;
+  notificationSub?: Subscription;
   teamSub?: Subscription;
   fundraiserSub?: Subscription;
   userId = localStorage.getItem('userId')!;
@@ -34,62 +37,56 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private teamService: TeamService,
     private fundraiserService: FundraiserService,
-    public notificationService: NotificationService,
-    private socketService: SocketIoService
+    private socket: Socket,
+    // private socketIoService: SocketIoService,
+    public notificationService: NotificationService // private socketService: SocketIoService
   ) {}
 
   ngOnInit(): void {
     this.getNotifications();
-    // listen to new notifications
-    this.notificatonSub = this.socketService
-      .listen('new notification')
-      .subscribe((data: any) => {
-        this.notifications.unshift(data);
-        console.log(data);
-      });
 
-    // // listen to unread notificatios
-    this.notificatonSub = this.socketService
-      .listen('unread notification count')
-      .subscribe((data: any) => {
-        // this.data = data;
-        this.count = data;
-        console.log(this.count);
-        console.log(data);
-      });
-
-    // // listen to read notifications
-    this.notificatonSub = this.socketService
-      .listen('viewed notification')
-      .subscribe((data: any) => {
-        // this.data = data;
-        console.log(data);
-      });
-
-    // // listen to error
-    // this.socket.on('error', (data: any) => {
+    // this.socketIoService.onUnreadNotificationCount().subscribe((data) => {
     //   console.log(data);
     // });
+
+    this.unread();
+
+    this.socket.on('unread notification count', (data: any) => {
+      console.log(data);
+      this.count = data;
+    });
+  }
+
+  unread(){
+    this.socket
+      .fromEvent('unread notification count')
+      .pipe(map((data: any) => data.msg))
+      .subscribe((data) => {
+        console.log(data);
+        this.count = data;
+      });
   }
 
   getNotifications() {
     this.loading = true;
-    this.notificatonSub = this.notificationService.getNotifications().subscribe(
-      (notifications) => {
-        this.notifications = notifications.reverse();
-        console.log(notifications);
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-        this.errorMessage = 'Unable to get notifications';
-      }
-    );
+    this.notificationSub = this.notificationService
+      .getNotifications()
+      .subscribe(
+        (notifications) => {
+          this.notifications = notifications.reverse();
+          console.log(notifications);
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+          this.errorMessage = 'Unable to get notifications';
+        }
+      );
   }
 
-  deleteNotifcation(notification: Notification) {
+  deleteNotification(notification: Notification) {
     let index = this.notifications.indexOf(notification);
-    this.notificatonSub = this.notificationService
+    this.notificationSub = this.notificationService
       .deleteNotification(notification)
       .subscribe(
         () => {
@@ -109,13 +106,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   // marks a notification as read if not already read
-  markAsRead(notifiacation: Notification) {
-    !notifiacation.viewed?.includes(localStorage.getItem('userId')!)
-      ? (this.notificatonSub = this.notificationService
-          .readNotification(notifiacation)
+  markAsRead(notification: Notification) {
+    !notification.viewed?.includes(localStorage.getItem('userId')!)
+      ? (this.notificationSub = this.notificationService
+          .readNotification(notification)
           .subscribe(
             () => {
-              notifiacation.viewed?.push(this.userId);
+              notification.viewed?.push(this.userId);
               this.reset();
             },
             (error) => {
@@ -127,12 +124,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   // accept team membership invitation
-  acceptTeamInvitation(notifiacation: Notification) {
+  acceptTeamInvitation(notification: Notification) {
     this.teamSub = this.teamService
-      .acceptInvitation(notifiacation.target)
+      .acceptInvitation(notification.target)
       .subscribe(
         () => {
-          this.markAsRead(notifiacation);
+          this.markAsRead(notification);
           this.reset();
           this.snackBar.open(
             'Invitation accepted',
@@ -148,12 +145,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   // decline team membership invitation
-  declineTeamInvitation(notifiacation: Notification) {
+  declineTeamInvitation(notification: Notification) {
     this.teamSub = this.teamService
-      .declineInvitation(notifiacation.target)
+      .declineInvitation(notification.target)
       .subscribe(
         () => {
-          this.markAsRead(notifiacation);
+          this.markAsRead(notification);
           this.reset();
           this.snackBar.open(
             'Team invitation declined',
@@ -163,7 +160,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         },
         (error) => {
           console.log(error.error);
-          this.errorMessage = 'Unable to delcline, please try later';
+          this.errorMessage = 'Unable to decline, please try later';
         }
       );
   }
@@ -197,7 +194,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     return notification.notificationType === 'Team Member';
   }
 
-  //  checks if the notifiation is about beneficiary invitation
+  //  checks if the notification is about beneficiary invitation
   isBeneficiaryInvitation(notification: Notification) {
     return notification.title === 'Beneficiary invitation';
   }
@@ -208,7 +205,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.notificatonSub?.unsubscribe();
+    this.notificationSub?.unsubscribe();
     this.teamSub?.unsubscribe();
     this.fundraiserSub?.unsubscribe();
   }

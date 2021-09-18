@@ -20,7 +20,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-reported-fundraisers',
   templateUrl: './reported-fundraisers.component.html',
-  styleUrls: ['./reported-fundraisers.component.css'],
+  styleUrls: ['./reported-fundraisers.component.scss'],
 })
 export class ReportedFundraisersComponent implements OnInit, OnDestroy {
   loading = false;

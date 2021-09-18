@@ -1,10 +1,9 @@
-import {  HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
@@ -78,6 +77,15 @@ import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail
 import { DonationsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-content/donations-tab-content.component';
 import { AppRoutesModule } from './modules/routes.module';
 import { NotFoundModule } from './modules/not-found.module';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+
+const config: SocketIoConfig = {
+  url: environment.BASE_URL + '?token=' + localStorage.getItem('x-auth-token'), // socket server url;
+  options: {
+    transports: ['websocket'],
+  },
+};
 
 @NgModule({
   declarations: [
@@ -157,6 +165,7 @@ import { NotFoundModule } from './modules/not-found.module';
     SharedModule,
     AppRoutesModule,
     NotFoundModule,
+    SocketIoModule.forRoot(config),
   ],
 
   providers: [
