@@ -42,6 +42,7 @@ export class AdminHomeComponent implements OnInit ,OnDestroy{
 
   //search fundraisers of the current page
   searchFundraisers() {
+    this.searchedFundraisers=[];
     this.loading=true;
     let title = this.form.controls['title'].value;
     this.fundraiserSub = this.fundraiserService
@@ -82,6 +83,3 @@ export class AdminHomeComponent implements OnInit ,OnDestroy{
     if (this.fundraiserSub) this.fundraiserSub.unsubscribe();
   }
 }
-
-
-

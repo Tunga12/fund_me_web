@@ -5,14 +5,14 @@
       matInput
       formControlName="title"
       type="text"
-      required
       placeholder="search fundraisers"
     />
-    <span matPrefix>
+    <span matSuffix>
       <mat-icon class="mat-18">search</mat-icon>
     </span>
   </mat-form-field>
 </form>
+
 
 <div
   fxLayout="column"
@@ -30,10 +30,11 @@
     </mat-progress-spinner>
   </div>
 
-  <p class="text-error">{{ errorMessage }}</p>
+  <p class="text-error" fxLayoutAlign="center">{{ errorMessage }}</p>
 
   <!-- LIST OF FUNDRAISERS -->
   <h2 *ngIf="searchedFundraisers.length > 0">Search results</h2>
+  <h2 *ngIf="searchedFundraisers.length === 0 && fundraiserHome && !loading">No matches found.</h2>
   <app-public-fund-list
     [fundraisers]="searchedFundraisers"
     [hasNext]="hasNext()"
