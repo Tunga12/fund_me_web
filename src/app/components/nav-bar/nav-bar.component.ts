@@ -7,7 +7,6 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
 import { AuthService } from './../../services/auth/auth.service';
-import { CategoryService } from './../../services/category/category.service';
 
 @Component({
   selector: 'nav-bar',
@@ -28,7 +27,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
   currentUserSub?: Subscription;
 
   constructor(
-    private categoryService: CategoryService,
     private userService: UserService,
     private router: Router,
     public authService: AuthService,
@@ -39,8 +37,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.translate.use(localStorage.getItem('lang') || 'en');
   }
   ngOnInit(): void {
+    this.currentUser=JSON.parse(localStorage.getItem('user')||'{}');
+    console.log(this.currentUser);
+    
     // this.getCategories();
-    if (this.authService.isLoggedIn()) {
+    if (!this.currentUser) {
       this.getCurrentUser();
     }
 
@@ -53,20 +54,15 @@ export class NavBarComponent implements OnInit, OnDestroy {
   search(keyword: string) {
     this.router.navigate(['/s'], { queryParams: { q: keyword } });
   }
-  // get all categories from the service and assign to our list 'categories'
-  getCategories() {
-    this.categorySub = this.categoryService
-      .getCategories()
-      .subscribe((categoryList) => {
-        this.categories = categoryList;
-      });
-  }
+
 
   // get the currently logged in user
   getCurrentUser() {
     this.currentUserSub = this.userService
       .getCurrentUser()
       .subscribe((user) => {
+        let newUser:User={firstName:user.firstName,lastName:user.lastName,email:user.email}
+        localStorage.setItem('user',JSON.stringify(newUser))
         this.currentUser = user;
         localStorage.setItem('userId', this.currentUser?._id || '');
       });
