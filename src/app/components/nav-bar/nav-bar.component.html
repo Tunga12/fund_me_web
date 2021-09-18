@@ -1,5 +1,5 @@
 <mat-toolbar [classList]="'bg-white'">
-  <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-around center">
+  <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center" ngClass.gt-sm="lg">
     <!-- LOGO -->
     <img
       fxFlexOrder.lt-sm="0"
@@ -174,7 +174,6 @@
   </mat-toolbar-row>
 
   <mat-toolbar-row
-    *ngIf="!authService.isLoggedIn()"
     fxHide.gt-xs
     fxLayout="row"
     fxLayoutAlign="end center"

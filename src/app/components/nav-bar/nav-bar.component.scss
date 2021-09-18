@@ -11,9 +11,16 @@
   box-shadow: 0 1px 6px 0 rgb(32 33 36 / 12%);
   z-index: 2147483647 !important;
   padding-right: 50px;
+  align-self: center;
+  margin: 0px auto;
 }
 
 #search-icon {
   margin-left: -1rem;
   cursor: pointer;
+}
+
+mat-toolbar-row.mat-toolbar-row.lg {
+  padding-left: 100px;
+  padding-right: 100px;
 }
