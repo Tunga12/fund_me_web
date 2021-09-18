@@ -1,16 +1,17 @@
-<img
-  [src]="fundraiser.image"
-  onerror="this.src='./assets/images/placeholder.png'"
-  width="100%"
-  height="70%"
-/>
+
 <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
 <mat-progress-bar
   data-cy="loader"
   *ngIf="loading"
   mode="indeterminate"
 ></mat-progress-bar>
-<form [formGroup]="form" fxLayout="column" fxLayoutAlign="center stretch">
+<form [formGroup]="form" fxLayout="column" fxLayoutAlign="center center">
+  <img 
+  ngClass.sm="img-sm"
+  ngClass.lt-sm="img-xs"
+  [src]="fundraiser.image"
+  onerror="this.src='./assets/images/placeholder.png'"
+/>
   <button mat-raised-button color="primary">
     <label matLabel for="image">
       <input
@@ -19,7 +20,7 @@
         formControlName="image"
         type="file"
         accept="image/jpeg,image/png,image/gif, image/bmp"
-        (change)="onImageChoosen($event)"
+        (change)="onImageChosen($event)"
       />
       {{ "Change photo" | translate }}
     </label>

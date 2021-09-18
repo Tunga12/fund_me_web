@@ -77,7 +77,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
           this.form.patchValue(this.fundraiser);
           this.snackbar.open(
-            'Edit completed sccessfully',
+            'Edit completed successfully',
             'close',
             this.snackbarService.getConfig()
           );
@@ -116,14 +116,15 @@ export class OverviewComponent implements OnInit, OnDestroy {
       });
   }
 
-  // open delete connfirmation dialog
+  // open delete confirmation dialog
   openDeleteDialog() {
     this.dialog.open(DeleteDialogComponent, { data: this.fundraiser });
   }
 
   // compare two objects
   compareObjects(o1: any, o2: any): boolean {
-    return o1.name === o2.name || o1.id === o2.id;
+     if(o1&&o2){ return o1.name === o2.name || o1.id === o2.id;}
+     return false
   }
 
   ngOnDestroy(): void {

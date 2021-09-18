@@ -1,7 +1,9 @@
 
 .tab-content {
-  margin: 50px 100px;
+  margin: 50px auto;
+  max-width: 80%;
 }
+
 .tab-content.radio {
   display: flex;
   flex-direction: column;

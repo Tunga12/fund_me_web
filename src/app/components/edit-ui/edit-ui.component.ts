@@ -16,7 +16,8 @@ export class EditUiComponent implements OnInit, OnDestroy {
   loading = true;
   fundraiserId: string = '';
   fundraiser!: Fundraiser;
-  tabs = [1, 2, 3, 4];
+  tabs = ['Overview', 'Photo', 'Story', //'Notification'
+];
   fundraiserSub?: Subscription;
   errorMessage = '';
   constructor(
@@ -31,11 +32,11 @@ export class EditUiComponent implements OnInit, OnDestroy {
     this.docTitle.setTitle('Edit fundraiser');
     // get the id parameter from router
     this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
-    this.getFundriser();
+    this.getFundraiser();
   }
 
-  // get fundriser using id
-  getFundriser() {
+  // get fundraiser using id
+  getFundraiser() {
     this.fundraiserSub = this.fundraiserServ
       .getFundraiser(this.fundraiserId)
       .subscribe((fundraiser) => {
@@ -50,7 +51,7 @@ export class EditUiComponent implements OnInit, OnDestroy {
   }
 
 
-  openAddPhotoOrVedioDialog() {
+  openAddPhotoOrVideoDialog() {
     this.dialog
       .open(AddPhotoVideoDialogComponent, { data: { id: 1 } })
       .afterClosed()

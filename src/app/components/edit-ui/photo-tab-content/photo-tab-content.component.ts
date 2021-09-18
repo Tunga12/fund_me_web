@@ -56,7 +56,7 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
           this.fundraiser = response;
           console.log(response);
           this.snackbar.open(
-            'Photo changed sccessfully',
+            'Photo changed successfully',
             'close',
             this.snackbarService.getConfig()
           );
@@ -98,7 +98,7 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
     );
   }
 
-  onImageChoosen(event: any) {
+  onImageChosen(event: any) {
     this.errorMessage = '';
     this.original_image = event;
     

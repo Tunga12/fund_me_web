@@ -34,7 +34,7 @@
         {{"Fundraiser goal is required!"|translate}}
       </mat-error>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-        {{"The minimun allowed goal is"|translate :{min:goalAmount?.errors?.min.min | currency} }}
+        {{"The minimum allowed goal is"|translate :{min:goalAmount?.errors?.min.min | currency} }}
       </mat-error>
     </mat-form-field>
   </div>
@@ -44,7 +44,7 @@
     <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="fundraiser.category">
       <mat-option>{{"Choose category"|translate}}</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
-        category.name
+        category.name|translate
       }}</mat-option>
     </mat-select>
     <mat-error *ngIf="category?.touched && category?.errors?.required">
@@ -54,7 +54,7 @@
 
   <!-- <p class="bold">Campaign link</p>
 <mat-divider></mat-divider>
-<h3>gofundme.com/f/sbdsbd</h3>
+<h3>legas.com/f/sbdsbd</h3>
 <p>
 This link can only be changed once. Changing your link does not break your
 previous link
@@ -71,9 +71,9 @@ previous link
   type="text"
 />
 <mat-hint
-  ><h5 class="bold">preview: www.gofundme.com/{{ link.value }}</h5>
+  ><h5 class="bold">preview: www.legas.com/{{ link.value }}</h5>
 </mat-hint>
-<mat-sufix matSuffix> {{ 45 - link.value.length }} </mat-sufix>
+<mat-suffix matSuffix> {{ 45 - link.value.length }} </mat-suffix>
 </mat-form-field> -->
 
   <!-- TEAM SETTINGS -->
@@ -90,9 +90,9 @@ previous link
     value="hfdjfhd"
     type="text"
   />
-  <mat-sufix matSuffix>
+  <mat-suffix matSuffix>
     {{ 45 - teamName.value.length }}
-  </mat-sufix>
+  </mat-suffix>
 </mat-form-field>
 
 <label for="show-amount"
@@ -102,7 +102,7 @@ previous link
 <button class="delete-btn" mat-button>Delete Team</button>
 </div>
 -->
-  <!-- FUNDRISER SETTINGS -->
+  <!-- FUNDRAISER SETTINGS -->
   <!-- <div class="setting">
 <h2 class="bold">Fundraiser Settings</h2>
 
