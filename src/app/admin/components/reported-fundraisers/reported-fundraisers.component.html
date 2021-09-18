@@ -8,17 +8,17 @@
   </mat-progress-spinner>
 </div>
 
-<p class="text-error">{{ errorMessage }}</p>
+<!-- <p class="text-error">{{ errorMessage }}</p> -->
 
-<div *ngIf="!loading">
+<!-- <div *ngIf="!loading">
   <div
     class="no-data"
     *ngIf="dataSource.data.length === 0"
     style="margin: 30px"
   >
-    You have no reported fudraisers yet.
+    You have no reported fundraisers yet.
   </div>
-</div>
+</div> -->
 <div
   *ngIf="dataSource.data.length !== 0"
   class="table-container mat-elevation-z8"
