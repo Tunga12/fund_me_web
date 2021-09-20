@@ -109,7 +109,7 @@ const routes: Routes =
         HelpsComponent,
         ImportExcelComponent,
         UsersComponent,
-        ReportedFundraisersComponent        
+        ReportedFundraisersComponent,
     ],
 
     imports: [
