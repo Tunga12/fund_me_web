@@ -32,16 +32,16 @@
         {{ element.fundraiser.title | titlecase }}
       </mat-cell>
     </ng-container>
-
+<!-- 
     <ng-container matColumnDef="reason">
-      <mat-header-cell *matHeaderCellDef> Report reason</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Report reason</mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.report.reason | titlecase }}
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container matColumnDef="totalRaised">
-      <mat-header-cell *matHeaderCellDef> Total raised</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Total money raised</mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.fundraiser.totalRaised }}
       </mat-cell>
@@ -50,9 +50,18 @@
     <ng-container matColumnDef="view">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button mat-icon-button [routerLink]="['/fundraiser-detail', element.fundraiser._id]" color="primary" >
-                <mat-icon class="mat-18">visibility</mat-icon>
-            </button> View
+            <button mat-button [routerLink]="['/fundraiser-detail', element.fundraiser._id]" color="primary" >
+                <mat-icon class="mat-18">visibility</mat-icon>View
+            </button> 
+        </mat-cell>
+    </ng-container>
+   
+    <ng-container matColumnDef="block">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-button (click)="blockFundraiser(element.fundraiser)" color="warn" >
+                <mat-icon class="mat-18">block</mat-icon>Block
+            </button> 
         </mat-cell>
     </ng-container>
 

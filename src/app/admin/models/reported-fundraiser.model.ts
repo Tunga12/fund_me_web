@@ -3,5 +3,5 @@ import { Report } from "src/app/models/report.model";
 
 export interface ReportedFundraiser{
     fundraiser:Fundraiser;
-    report:Report;
+    reports:Report[];
 }

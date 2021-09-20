@@ -4,6 +4,7 @@ import {
   OnDestroy,
   ViewChild,
   ChangeDetectorRef,
+  AfterViewInit,
 } from '@angular/core';
 import { ReportedFundsService } from '../../services/reported-funds/reported';
 import { FundraiserService } from './../../../services/fundraiser/fundraiser.service';
@@ -14,22 +15,24 @@ import { ReportedFundraiser } from './../../models/reported-fundraiser.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Withdrawal } from 'src/app/models/withdrawal.model';
 import { Title } from '@angular/platform-browser';
+import { Fundraiser } from 'src/app/models/fundraiser.model';
+import { SnackbarService } from './../../../services/snackbar/snackbar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reported-fundraisers',
   templateUrl: './reported-fundraisers.component.html',
   styleUrls: ['./reported-fundraisers.component.scss'],
 })
-export class ReportedFundraisersComponent implements OnInit, OnDestroy {
+export class ReportedFundraisersComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   loading = false;
   errorMessage = '';
 
   // table data
-  displayedColumns = [
-    "title","reason","totalRaised",'view'
-  ];
+  displayedColumns = ['title',  'totalRaised', 'view', 'block'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
   //data source for the table
@@ -38,6 +41,8 @@ export class ReportedFundraisersComponent implements OnInit, OnDestroy {
   reports: Report[] = []; // reports
   reportedFundraisers: ReportedFundraiser[] = []; // reports with their fundraiser
 
+  fundraisers: Fundraiser[] = [];
+
   // subscriptions
   reportSub?: Subscription;
 
@@ -45,41 +50,42 @@ export class ReportedFundraisersComponent implements OnInit, OnDestroy {
     private reportServ: ReportedFundsService,
     private fundraiserServ: FundraiserService,
     private pageTitle: Title,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fundraiserService: FundraiserService,
+    private snackbarService: SnackbarService,
+    private snackBar: MatSnackBar
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    this.loading = true;
+   ngOnInit() {
     this.pageTitle.setTitle('Reported fundraisers');
-
-    await this.getReports();
+     this.getReports();
+     this.getFundraisers();
+     this.getReportedFundraisers();
   }
 
-  async getReports() {
-    this.reportSub = await this.reportServ.getReports().subscribe(
-      async (reports) => {
+   getReports() {
+    this.loading = true;
+    this.reportSub = this.reportServ.getReports().subscribe(
+       (reports) => {
         this.reports = reports;
-        await this.getReportedFundraisers(reports);
+        console.log(reports);
       },
       (error: HttpErrorResponse) => {
         console.log(error.error);
-        this.loading = false;
         this.errorMessage = error.error;
       }
     );
   }
 
-  // get fundraisers with their reports
-  async getReportedFundraisers(reports: Report[]) {
-    let reportedFund: ReportedFundraiser;
-    await reports.forEach(async (report) => {
-      await this.fundraiserServ.getFundraiserAsync(report.fundraiserId).then(
+  // get fundraisers if they are reported(if their id is in the list of reports)
+   getFundraisers() {
+     this.reports.forEach(async (report) => {
+      await this.fundraiserServ.getFundraiser(report.fundraiserId).subscribe(
         (fund) => {
-          reportedFund = { fundraiser: fund, report: report };
-          this.reportedFundraisers.push(reportedFund);
-          this.dataSource.data = this.reportedFundraisers;
-          this.cdr.detectChanges();
-          this.dataSource.paginator = this.paginator;
+          if (!this.fundraisers.includes(fund)) {
+            this.fundraisers.push(fund);
+            console.log(fund);
+          }
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);
@@ -87,7 +93,50 @@ export class ReportedFundraisersComponent implements OnInit, OnDestroy {
         }
       );
     });
+  }
+
+  // get fundraisers with their reports
+   getReportedFundraisers() {    
+    let reportedFund: ReportedFundraiser;
+     this.fundraisers.forEach( (fundraiser) => {
+      let reports = this.reports.filter(
+        (report) => report.fundraiserId === fundraiser._id
+      );
+      reportedFund = { fundraiser: fundraiser, reports: reports };
+      this.reportedFundraisers.push(reportedFund);
+      console.log(reportedFund);
+    });
     this.loading=false;
+  }
+
+  blockFundraiser(fundraiser: Fundraiser) {
+    this.fundraiserService
+      .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
+      .subscribe(
+        () => {
+          this.snackBar.open(
+            'Fundraiser blocked successfully',
+            'close',
+            this.snackbarService.getConfig()
+          );
+        },
+        (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Unable to block fundraiser',
+            'close',
+            this.snackbarService.getConfig()
+          );
+          this.errorMessage = error.error;
+          console.log(error.error);
+        }
+      );
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.data = this.reportedFundraisers;
+    this.cdr.detectChanges();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
