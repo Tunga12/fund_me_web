@@ -1,5 +1,5 @@
-<p *ngIf="categories.length === 0 && !loading">No categories</p>
-<p *ngIf="loading">Loading categories...</p>
+<p *ngIf="categories.length === 0 && !loading" [attr.align]="'center'">No categories</p>
+<p *ngIf="loading" [attr.align]="'center'">Loading categories...</p>
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
   <button
     mat-raised-button
