@@ -29,6 +29,7 @@
         type="text"
         placeholder="category name"
       />
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
       <mat-error
         data-cy="name-empty-error"
         *ngIf="name?.touched && name?.errors?.required"

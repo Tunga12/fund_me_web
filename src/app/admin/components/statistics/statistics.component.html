@@ -19,13 +19,13 @@
         <mat-icon class="mat-27">payment</mat-icon>
         <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
             <strong> {{getNumberOfFundraisersCreated()}} </strong>
-            <!-- <strong> CAMPIGNS </strong> -->
+            <!-- <strong> CAMPAIGNS </strong> -->
             <strong [ngPlural]="getNumberOfFundraisersCreated()">
                 <ng-template ngPluralCase="=1">
-                    CAMPIGN
+                    CAMPAIGN
                 </ng-template>
                 <ng-template ngPluralCase="other">
-                    CAMPIGNS
+                    CAMPAIGNS
                 </ng-template>
             </strong>
         </div>

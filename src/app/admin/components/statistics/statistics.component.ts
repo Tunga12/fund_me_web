@@ -40,7 +40,7 @@ export class StatisticsComponent implements OnInit {
   errorMessage: string = '';
   currentPage: number = 0;
 
-  dateChosen: Date = new Date('2021-07-29T13:10:10.626Z');
+  dateChosen: Date = new Date('0');
   endDate: Date = new Date();
   constructor(
     private fundraiserService: FundraiserService,
@@ -53,7 +53,7 @@ export class StatisticsComponent implements OnInit {
     this.title.setTitle('Admin | statistics');
     this.loading = true;
     await this.getAllFundraisers();
-    this.getFudraisersByDate(this.dateChosen, this.endDate);
+    this.getFundraisersByDate(this.dateChosen, this.endDate);
 
     // console.log(this.allFundraisers);
     
@@ -66,16 +66,16 @@ export class StatisticsComponent implements OnInit {
     this.loading = false;
   }
 
+  // when a user select a date range
   async dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     this.totalRaised = 0;
     this.totalTip=0;
     this.loading = true;
     let startDate = new Date(dateRangeStart.value)
     let endDate = new Date(dateRangeEnd.value)
-    await this.getFudraisersByDate(startDate, endDate);
+    await this.getFundraisersByDate(startDate, endDate);
     await this.getUsersByDate(startDate, endDate);
     await this.getFilteredDonationsByDate(startDate, endDate);
-    await this.getTotalRaised();
     this.loading = false;
   }
 
@@ -88,7 +88,7 @@ export class StatisticsComponent implements OnInit {
     
   }
 
-  //get fundrisers of a page
+  //get fundraisers of a page
   async getFundraisers() {
     this.loading = true;
     await this.fundraiserService
@@ -115,7 +115,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   // filter fundraisers by date
-  async getFudraisersByDate(startDate: Date, endDate: Date) {
+  async getFundraisersByDate(startDate: Date, endDate: Date) {
     this.filteredFundraisers = await this.allFundraisers.filter((fund: Fundraiser) => {
       let creationDate=  new Date(fund.dateCreated!);
       return startDate <= creationDate && creationDate <= endDate;
@@ -159,6 +159,7 @@ export class StatisticsComponent implements OnInit {
         let donationDate = new Date(donation.date!);
         return (startDate <= donationDate && donationDate <= endDate) 
       });
+      await this.getTotalRaised();
   }
 
   // get total raised
@@ -166,7 +167,10 @@ export class StatisticsComponent implements OnInit {
     await this.filteredDonations.forEach(
       (donation) => {
         this.totalRaised += donation.amount;
-        this.totalTip += donation.tip;
+        if (donation.tip) {
+          this.totalTip += donation.tip;
+        }
+        console.log(this.totalTip);
       }
     );
   }
