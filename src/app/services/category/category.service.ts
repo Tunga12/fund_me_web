@@ -10,6 +10,10 @@ import { environment } from 'src/environments/environment';
 export class CategoryService {
   constructor(private http: HttpClient) {}
 
+  // create a category
+  createCategory(category:Category): Observable<Category> {
+    return this.http.post<Category>(`${environment.BASE_URL}/api/categories`,category);
+  }
   // get all available categories
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${environment.BASE_URL}/api/categories`);
@@ -23,11 +27,12 @@ export class CategoryService {
   // get all available categories
   updateCategory(id:string, category:Category):Observable<Category> {
     delete category._id
+    delete category.__v
     return this.http.put<Category>(`${environment.BASE_URL}/api/categories/${id}`,category);
   }
 
   // get all available categories
   deleteCategory(id: string){
-    return this.http.delete(`${environment.BASE_URL}/api/categories/${id}`);
+    return this.http.delete(`${environment.BASE_URL}/api/categories/${id}`,{responseType:'text'});
   }
 }

@@ -28,6 +28,7 @@ import { AuthGuard } from '../services/route-guards/auth-guard/auth-guard.servic
 import { ImportExcelComponent } from './components/import-excel/import-excel.component';
 import { UsersComponent } from './components/users/users.component';
 import { ReportedFundraisersComponent } from './components/reported-fundraisers/reported-fundraisers.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 const routes: Routes =
     [
@@ -90,6 +91,11 @@ const routes: Routes =
                     path:'reports',
                     component:ReportedFundraisersComponent
                 }
+                ,
+                {
+                    path:'categories',
+                    component:CategoriesComponent
+                }
 
             ]
         }];
@@ -110,6 +116,7 @@ const routes: Routes =
         ImportExcelComponent,
         UsersComponent,
         ReportedFundraisersComponent,
+        CategoriesComponent
     ],
 
     imports: [

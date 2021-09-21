@@ -1,1 +1,73 @@
-<p>categories works!</p>
+<p *ngIf="categories.length === 0 && !loading">No categories</p>
+<p *ngIf="loading">Loading categories...</p>
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <button
+    mat-raised-button
+    [color]="isFormOpen ? 'warn' : 'primary'"
+    (click)="toggleForm()"
+  >
+    {{ isFormOpen ? "Cancel" : "Add new" }}
+  </button>
+  <form
+    *ngIf="isFormOpen"
+    [formGroup]="form"
+    (ngSubmit)="
+      isFormEditMode ? editCategory(categoryToBeEdited!) : createCategory();
+      $event.preventDefault()
+    "
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="0px"
+    class="form-container"
+  >
+    <h1>{{ isFormEditMode ? "Edit category" : "Add new category" }}</h1>
+    <mat-form-field floatPlaceholder="auto" appearance="outline">
+      <mat-label>Name of the category</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        type="text"
+        placeholder="category name"
+      />
+      <mat-error
+        data-cy="name-empty-error"
+        *ngIf="name?.touched && name?.errors?.required"
+        >{{ "Please enter category name" | translate }}
+      </mat-error>
+
+      <mat-error
+        data-cy="name-minlength-error"
+        *ngIf="name?.touched && name?.errors?.minlength"
+      >
+        Category name must be
+        {{ name?.errors?.minlength.requiredLength }}
+        letters minimum.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary">
+      {{ isFormEditMode ? "Save" : "Add" }}
+    </button>
+  </form>
+</div>
+<div
+  *ngIf="!loading"
+  fxLayout="row wrap"
+  fxLayoutAlign="start start"
+  fxLayoutGap="10px"
+>
+  <mat-card *ngFor="let category of categories">
+    <mat-card-header>
+      <mat-card-title
+        ><a>{{ category.name }}</a></mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-actions [attr.align]="'start'">
+      <button mat-button (click)="editMode(category)">
+        <mat-icon class="mat-18">edit</mat-icon>Edit
+      </button>
+      <button mat-button color="warn" (click)="deleteCategory(category)">
+        <mat-icon class="mat-18">delete</mat-icon>Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
