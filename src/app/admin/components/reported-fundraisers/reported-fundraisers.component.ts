@@ -32,7 +32,7 @@ export class ReportedFundraisersComponent
   errorMessage = '';
 
   // table data
-  displayedColumns = ['title',  'totalRaised', 'view', 'block'];
+  displayedColumns = ['title', 'totalRaised', 'view', 'block'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
   //data source for the table
@@ -56,49 +56,62 @@ export class ReportedFundraisersComponent
     private snackBar: MatSnackBar
   ) {}
 
-   ngOnInit() {
+ async ngOnInit() {
     this.pageTitle.setTitle('Reported fundraisers');
-     this.getReports();
-     this.getFundraisers();
-     this.getReportedFundraisers();
+    this.loading=true;
+    await this.getReports();    
+    await this.getFundraisers();
+    await this.getReportedFundraisers();
+    this.loading=false;
   }
 
-   getReports() {
-    this.loading = true;
-    this.reportSub = this.reportServ.getReports().subscribe(
-       (reports) => {
+  async getReports() {
+    return new Promise(resolve=>{ this.reportSub = this.reportServ.getReports().subscribe(
+      (reports) => {
         this.reports = reports;
         console.log(reports);
+        resolve(true)
+
       },
       (error: HttpErrorResponse) => {
         console.log(error.error);
         this.errorMessage = error.error;
+        resolve(true)
       }
-    );
+    );});
   }
 
   // get fundraisers if they are reported(if their id is in the list of reports)
-   getFundraisers() {
-     this.reports.forEach(async (report) => {
-      await this.fundraiserServ.getFundraiser(report.fundraiserId).subscribe(
-        (fund) => {
-          if (!this.fundraisers.includes(fund)) {
-            this.fundraisers.push(fund);
-            console.log(fund);
+  async getFundraisers() {
+    console.log('am here');
+    return new Promise(async (resolve) => {
+      if (this.reports.length===0) {          
+        resolve(true);
+      }
+      await this.reports.forEach(async (report,index) => {
+        await this.fundraiserServ.getFundraiser(report.fundraiserId).subscribe(
+          (fund) => {
+            if (!this.fundraisers.includes(fund)) {
+              this.fundraisers.push(fund);
+              console.log(fund);
+            }
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error.error);
+            this.errorMessage = error.error;
           }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-          this.errorMessage = error.error;
+        );
+        if (index===this.reports.length-1) {          
+          resolve(true);
         }
-      );
+      });
     });
   }
 
   // get fundraisers with their reports
-   getReportedFundraisers() {    
+  getReportedFundraisers() {
     let reportedFund: ReportedFundraiser;
-     this.fundraisers.forEach( (fundraiser) => {
+    this.fundraisers.forEach((fundraiser) => {
       let reports = this.reports.filter(
         (report) => report.fundraiserId === fundraiser._id
       );
@@ -106,7 +119,6 @@ export class ReportedFundraisersComponent
       this.reportedFundraisers.push(reportedFund);
       console.log(reportedFund);
     });
-    this.loading=false;
   }
 
   blockFundraiser(fundraiser: Fundraiser) {

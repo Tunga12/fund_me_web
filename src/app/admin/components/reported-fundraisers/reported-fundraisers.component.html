@@ -8,17 +8,17 @@
   </mat-progress-spinner>
 </div>
 
-<!-- <p class="text-error">{{ errorMessage }}</p> -->
-
-<!-- <div *ngIf="!loading">
+<div *ngIf="!loading">
+  <p [attr.align]="'center'" class="text-error">{{ errorMessage }}</p>
   <div
+    [attr.align]="'center'"
     class="no-data"
     *ngIf="dataSource.data.length === 0"
     style="margin: 30px"
   >
     You have no reported fundraisers yet.
   </div>
-</div> -->
+</div>
 <div
   *ngIf="dataSource.data.length !== 0"
   class="table-container mat-elevation-z8"
@@ -32,7 +32,7 @@
         {{ element.fundraiser.title | titlecase }}
       </mat-cell>
     </ng-container>
-<!-- 
+    <!-- 
     <ng-container matColumnDef="reason">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Report reason</mat-header-cell>
       <mat-cell *matCellDef="let element">
@@ -41,33 +41,42 @@
     </ng-container> -->
 
     <ng-container matColumnDef="totalRaised">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Total money raised</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Total money raised</mat-header-cell
+      >
       <mat-cell *matCellDef="let element">
         {{ element.fundraiser.totalRaised }}
       </mat-cell>
     </ng-container>
-   
+
     <ng-container matColumnDef="view">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <button mat-button [routerLink]="['/fundraiser-detail', element.fundraiser._id]" color="primary" >
-                <mat-icon class="mat-18">visibility</mat-icon>View
-            </button> 
-        </mat-cell>
-    </ng-container>
-   
-    <ng-container matColumnDef="block">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <button mat-button (click)="blockFundraiser(element.fundraiser)" color="warn" >
-                <mat-icon class="mat-18">block</mat-icon>Block
-            </button> 
-        </mat-cell>
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          [routerLink]="['/fundraiser-detail', element.fundraiser._id]"
+          color="primary"
+        >
+          <mat-icon class="mat-18">visibility</mat-icon>View
+        </button>
+      </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="block">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          (click)="blockFundraiser(element.fundraiser)"
+          color="warn"
+        >
+          <mat-icon class="mat-18">block</mat-icon>Block
+        </button>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row  *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     <mat-row *matNoDataRow>No reports yet.</mat-row>
   </mat-table>
   <mat-paginator
