@@ -15,7 +15,7 @@
       #key
       type="search"
       placeholder="Search users by email"
-      (keyup.enter)="search(key.value)"
+      (keyup)="search(key.value)"
     />
     <span id="search-icon" matSuffix>
       <mat-icon class="mat-18" (click)="search(key.value)"
@@ -35,7 +35,7 @@
   </div>
 
   <p>{{ errorMessage }}</p>  
-    <div *ngIf="!loading && users.length>0 && user===undefined" >
+    <div *ngIf="!loading && key.value && user===undefined" >
       A user with this email doesn't exist.
     </div>
 
