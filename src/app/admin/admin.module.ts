@@ -31,6 +31,7 @@ import { ReportedFundraisersComponent } from './components/reported-fundraisers/
 import { CategoriesComponent } from './components/categories/categories.component';
 import { UnsuccessfulPaymentsComponent } from './components/import-excel/unsuccessful-payments/unsuccessful-payments.component';
 import { SuccessfulPaymentsComponent } from './components/import-excel/successful-payments/successful-payments.component';
+import { ReportReasonsComponent } from './components/report-reasons/report-reasons.component';
 
 const routes: Routes =
     [
@@ -120,7 +121,8 @@ const routes: Routes =
         ReportedFundraisersComponent,
         CategoriesComponent,
         UnsuccessfulPaymentsComponent,
-        SuccessfulPaymentsComponent
+        SuccessfulPaymentsComponent,
+        ReportReasonsComponent
     ],
 
     imports: [
