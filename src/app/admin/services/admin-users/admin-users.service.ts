@@ -18,13 +18,13 @@ export class AdminUsersService {
   }
 
   // verify user
-  verifyUser(user: User): Observable<User> {
-    let id = user._id;
-    delete user._id;
-    delete user.__v;
-
-    let verifiedUser = { ...user, isVerified: true };
-    console.log(verifiedUser);
+  verifyUser(id:string,user: User): Observable<User> {
+    let verifiedUser:User = { 
+      isVerified: true,
+      firstName:user.firstName ,
+      lastName:user.lastName,
+      email:user.email,
+    };
 
     return this.http.put<User>(
       `${environment.BASE_URL}/api/users/${id}`,
@@ -32,6 +32,19 @@ export class AdminUsersService {
     );
   }
 
+  // un verify a user 
+  unVerifyUser(id:string,user: User): Observable<User> {
+    let notVerifiedUser:User = { 
+      isVerified: false,
+      firstName:user.firstName ,
+      lastName:user.lastName,
+      email:user.email,
+    };
+    return this.http.put<User>(
+      `${environment.BASE_URL}/api/users/${id}`,
+      notVerifiedUser
+    );
+  }
   // get currently logged in user
   async getCurrentUser() {
     return await this.http

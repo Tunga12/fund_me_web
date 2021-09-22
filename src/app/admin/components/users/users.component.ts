@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit {
 
   search(email:string){
     let user:User|undefined;
-        user=this.users.find(_user=>_user.email===email);
+        user=this.users.find(_user=>_user.email.toLowerCase()===email.toLowerCase());
         console.log(user);
      this.user=user;
   }
@@ -42,18 +42,31 @@ export class UsersComponent implements OnInit {
     
   }
 
-  verify(user:User){
-    console.log(user);
-    
-    this.useSrv.verifyUser(user)
+  verifyUser(userToVerify:User){
+    console.log(userToVerify);
+    this.useSrv.verifyUser(userToVerify._id!,userToVerify)
     .subscribe((user)=>{
       console.log(user);
-      
+      this.user=user;
     },
     (error:HttpErrorResponse)=>{
       console.log(error.error);
       this.errorMessage=error.error;
     });
   }
+  
+  unVerifyUser(userToVerify:User){
+    console.log(userToVerify);
+    this.useSrv.unVerifyUser(userToVerify._id!,userToVerify)
+    .subscribe((user)=>{
+      console.log(user);      
+      this.user=user;
+    },
+    (error:HttpErrorResponse)=>{
+      console.log(error.error);
+      this.errorMessage=error.error;
+    });
+  }
+
 
 }
