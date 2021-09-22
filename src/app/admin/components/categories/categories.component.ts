@@ -150,6 +150,7 @@ export class CategoriesComponent implements OnInit {
   // make form edit mode
   editMode(category: Category) {
     this.isFormEditMode = true;
+    this.isFormOpen = true;
     this.categoryToBeEdited = category;
     this.form.patchValue(category);
     console.log(this.categoryToBeEdited);
