@@ -99,6 +99,11 @@ const routes: Routes =
                     path:'categories',
                     component:CategoriesComponent
                 }
+                ,
+                {
+                    path:'report-reasons',
+                    component:ReportReasonsComponent
+                }
 
             ]
         }];

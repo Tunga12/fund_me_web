@@ -1,1 +1,74 @@
-<p>report-reasons works!</p>
+<p *ngIf="reasons.length === 0 && !loading" [attr.align]="'center'">No reasons</p>
+<p *ngIf="loading" [attr.align]="'center'">Loading reasons...</p>
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <button
+    mat-raised-button
+    [color]="isFormOpen ? 'warn' : 'primary'"
+    (click)="toggleForm()"
+  >
+    {{ isFormOpen ? "Cancel" : "Add new" }}
+  </button>
+  <form
+    *ngIf="isFormOpen"
+    [formGroup]="form"
+    (ngSubmit)="
+      isFormEditMode ? editReportReasonType(reportReasonTypeToBeEdited!) : createReportReasonType();
+      $event.preventDefault()
+    "
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="0px"
+    class="form-container"
+  >
+    <h1>{{ isFormEditMode ? "Edit reason type" : "Add new reason type" }}</h1>
+    <mat-form-field floatPlaceholder="auto" appearance="outline">
+      <mat-label>Name of the report reason type</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        type="text"
+        placeholder="reason type name"
+      />
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      <mat-error
+        data-cy="name-empty-error"
+        *ngIf="name?.touched && name?.errors?.required"
+        >{{ "Please enter reason type name" | translate }}
+      </mat-error>
+
+      <mat-error
+        data-cy="name-minlength-error"
+        *ngIf="name?.touched && name?.errors?.minlength"
+      >
+        Category name must be
+        {{ name?.errors?.minlength.requiredLength }}
+        letters minimum.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary">
+      {{ isFormEditMode ? "Save" : "Add" }}
+    </button>
+  </form>
+</div>
+<div
+  *ngIf="!loading"
+  fxLayout="row wrap"
+  fxLayoutAlign="start start"
+  fxLayoutGap="10px"
+>
+  <mat-card *ngFor="let reportReasonType of reasons">
+    <mat-card-header>
+      <mat-card-title
+        ><a>{{ reportReasonType.name }}</a></mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-actions [attr.align]="'start'">
+      <button mat-button (click)="editMode(reportReasonType)">
+        <mat-icon class="mat-18">edit</mat-icon>Edit
+      </button>
+      <button mat-button color="warn" (click)="deleteReportReasonType(reportReasonType)">
+        <mat-icon class="mat-18">delete</mat-icon>Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

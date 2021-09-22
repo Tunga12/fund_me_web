@@ -113,15 +113,21 @@
           <mat-icon mat-list-icon class="mat-18">people_outline</mat-icon
           ><span *ngIf="!icons_only"> Users</span></a>
 
+          <a mat-list-item routerLink="reports" routerLinkActive="active">
+            <mat-icon mat-list-icon class="mat-18">report_problem</mat-icon
+            ><span *ngIf="!icons_only"> Reports</span>
+          </a>
+
         <a mat-list-item routerLink="categories" routerLinkActive="active">
           <mat-icon mat-list-icon class="mat-18">card_travel</mat-icon
           ><span *ngIf="!icons_only"> Categories</span>
         </a>
 
-        <a mat-list-item routerLink="reports" routerLinkActive="active">
-          <mat-icon mat-list-icon class="mat-18">report_problem</mat-icon
-          ><span *ngIf="!icons_only"> Reports</span>
+        <a mat-list-item routerLink="report-reasons" routerLinkActive="active">
+          <mat-icon mat-list-icon class="mat-18">report</mat-icon
+          ><span *ngIf="!icons_only"> Report reason types </span>
         </a>
+
         
         <a mat-list-item routerLink="helps" routerLinkActive="active">
           <mat-icon mat-list-icon class="mat-18">help_outline</mat-icon
