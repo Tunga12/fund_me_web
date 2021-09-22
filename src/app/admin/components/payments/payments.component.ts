@@ -15,6 +15,7 @@ import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Payment } from '../../models/payment.model';
 import { User } from 'src/app/models/user.model';
+
 @Component({
   selector: 'admin-payments',
   templateUrl: './payments.component.html',
@@ -51,47 +52,86 @@ export class PaymentsComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private pageTitle: Title,
-    private fundraiserService: FundraiserService,
+    private fundraiserService: FundraiserService
   ) {}
 
   async ngOnInit() {
-    this.pageTitle.setTitle('Admin | payments');
+    this.pageTitle.setTitle('Admin | payments to be exported');
+    this.loading=true;
     await this.getAllFundraisers();
     console.log(this.allFundraisers);
-    this.getFilteredFundraiserDetail();
+    await this.getFilteredFundraiserDetail();
+    console.log(this.fundsWithFullData);
+    await this.activateTable();
+    this.loading=false;
   }
 
-  // listen to event date range change from the date range selector
-  async dateRangeChange(
-    dateRangeStart: HTMLInputElement,
-    dateRangeEnd: HTMLInputElement
-  ) {
-    this.payments=[];
-    this.loading = true;
-    this.date_chosen = true;
-    let startDate = new Date(dateRangeStart.value);
-    let endDate = new Date(dateRangeEnd.value);
+  // // listen to event date range change from the date range selector
+  // async dateRangeChange(
+  //   dateRangeStart: HTMLInputElement,
+  //   dateRangeEnd: HTMLInputElement
+  // ) {
+  //   this.payments=[];
+  //   this.loading = true;
+  //   this.date_chosen = true;
 
-    console.log(this.filterFundraisers(startDate, endDate));
+  // //   console.log(this.filterFundraisers(startDate, endDate));
 
-  // filter fundraisers that have accepted withdrawal status and donations in the given date range
-    this.filterFundraisers(startDate, endDate).forEach((fund) =>
-      this.addToPayments(fund, startDate, endDate)
-    );
-    
-    console.log(this.payments);
-    this.loading = false;
+  // // // filter fundraisers that have accepted withdrawal status and donations in the given date range
+  // //   this.filterFundraisers(startDate, endDate).forEach((fund) =>
+  // //     this.addToPayments(fund, startDate, endDate)
+  // //   );
 
-    // assign the payments array to our data source
-    this.dataSource.data = this.payments;
-    this.cdr.detectChanges();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    
-    console.log(this.dataSource.data);
-  }
+  //   console.log(this.payments);
+  //   this.loading = false;
+
+  //   // assign the payments array to our data source
+  //   this.dataSource.data = this.payments;
+  //   this.cdr.detectChanges();
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+
+  //   console.log(this.dataSource.data);
+  // }
 
   // get all available fundraisers
+ 
+
+  // // filter fundraisers that have accepted withdrawal status and donations in the given date range
+  // filterFundraisers(startDate: Date, endDate: Date) {
+  //   let filteredFunds = this.fundsWithFullData.filter((fund) => {
+  //     let donations = fund.donations?.filter((donation) => {
+  //       let donationDate = new Date(donation.date!);
+  //       return startDate <= donationDate && donationDate <= endDate;
+  //     });
+  //     return (
+  //       fund.withdraw &&
+  //       fund.withdraw.status?.toLocaleLowerCase() === 'accepted' &&
+  //       donations!.length > 0
+  //     );
+  //   });
+  //   return filteredFunds;
+  // }
+
+  // // get the total donation amount for each a fundraiser in the given date range
+  // getTotalDonationAmount(
+  //   fundraiser: Fundraiser,
+  //   startDate: Date,
+  //   endDate: Date
+  // ) {
+  //   let total = 0;
+  //   let donations = fundraiser.donations?.filter((donation) => {
+  //     let donationDate = new Date(donation.date!);
+  //     return startDate <= donationDate && donationDate <= endDate;
+  //   });
+
+  //   donations?.forEach((donation) => {
+  //     total += donation.amount;
+  //   });
+  //   return total;
+  // }
+
+
   async getAllFundraisers() {
     do {
       await this.getFundraisers();
@@ -100,7 +140,6 @@ export class PaymentsComponent implements OnInit {
 
   //get fundraisers of a single page
   async getFundraisers() {
-    this.loading = true;
     await this.fundraiserService.getFundraisersAsync(this.currentPage).then(
       (fundraiserPage: FundraiserPage) => {
         this.fundraiserPage = fundraiserPage;
@@ -110,37 +149,45 @@ export class PaymentsComponent implements OnInit {
         this.currentPage++;
       },
       (error: HttpErrorResponse) => {
-        this.loading = false;
         console.log(error.error);
         this.errorMessage = 'Unable to load fundraisers';
       }
     );
   }
 
-  // filter fundraisers that have accepted withdrawal status and donations in the given date range
-  filterFundraisers(startDate: Date, endDate: Date) {
-    let filteredFunds = this.fundsWithFullData.filter((fund) => {
-      let donations = fund.donations?.filter((donation) => {
-        let donationDate = new Date(donation.date!);
-        return startDate <= donationDate && donationDate <= endDate;
-      });
-      return (
-        fund.withdraw &&
-        fund.withdraw.status?.toLocaleLowerCase() === 'accepted' &&
-        donations!.length > 0
+  // get fundraiser details for those having donations and totalRaised-totalWithdrawn>0
+  async getFilteredFundraiserDetail() {
+    return new Promise(async resolve=>{
+      await this.allFundraisers.forEach(async (fund,index) => {
+      await this.fundraiserService.getFundraiserAsync(fund._id!).then(
+        (fundraiser) => {
+          if (
+            fundraiser.donations?.length! > 0 &&
+            (fundraiser.totalRaised!- this.getTotalWithdrawn(fundraiser) > 0)
+          ) {
+            this.fundsWithFullData.push(fundraiser);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
       );
+      if (index===this.allFundraisers.length-1) {
+        resolve(true);
+      }
     });
-    return filteredFunds;
-  }
+  });
+}
+
 
   // add fundraiser data to payments array
-  addToPayments(fundraiser: Fundraiser, startDate: Date, endDate: Date) {
+  addToPayments(fundraiser: Fundraiser) {
     let user: User = fundraiser.beneficiary
       ? fundraiser.beneficiary!
       : fundraiser.organizer!;
     let withdrawal = fundraiser.withdraw;
     let payment: Payment = {
-      amount: this.getTotalDonationAmount(fundraiser, startDate, endDate),
+      amount: fundraiser.totalRaised! - this.getTotalWithdrawn(fundraiser),
       firstName: user.firstName,
       lastName: user.lastName,
       fundraiserId: fundraiser._id!,
@@ -150,40 +197,29 @@ export class PaymentsComponent implements OnInit {
     this.payments.push(payment);
   }
 
-  // get the total donation amount for each a fundraiser in the given date range
-  getTotalDonationAmount(
-    fundraiser: Fundraiser,
-    startDate: Date,
-    endDate: Date
-  ) {
-    let total = 0;
-    let donations = fundraiser.donations?.filter((donation) => {
-      let donationDate = new Date(donation.date!);
-      return startDate <= donationDate && donationDate <= endDate;
+  // activate the data table
+  activateTable() {
+    this.fundsWithFullData.forEach((fund) => {
+      this.addToPayments(fund);
     });
+    console.log(this.payments);
+    
+    // assign the payments array to our data source
+    this.dataSource.data = this.payments;
+    this.cdr.detectChanges();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
-    donations?.forEach((donation) => {
-      total += donation.amount;
+  // returns the total withdrawn amount of a fundraiser
+  getTotalWithdrawn(fundraiser: Fundraiser) {
+    let total = 0;
+    fundraiser.totalWithdraw?.forEach((withdrawal) => {
+      if (withdrawal.amount) {
+        total += withdrawal.amount;
+      }
     });
+    console.log(total);
     return total;
   }
-
-  // get fundraiser details for those having donations
-  getFilteredFundraiserDetail() {
-    this.allFundraisers.forEach(async (fund) => {
-      await this.fundraiserService.getFundraiserAsync(fund._id!).then(
-        (fundraiser) => {
-          if (fundraiser.donations?.length! > 0) {
-            this.fundsWithFullData.push(fundraiser);
-          }
-        },
-        () => {}
-      );
-    });
-  }
-
-  // // export table by xlsx library
-  // exportTable(tableId: string) {
-  //   this.excelSrv.exportToFile("payments", tableId);
-  // }
 }

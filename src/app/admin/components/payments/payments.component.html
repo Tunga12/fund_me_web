@@ -1,19 +1,3 @@
-<div>
-  <mat-form-field appearance="fill" fxFlex="50" fxFlex.lt-md="90">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input #dateRangeStart matStartDate placeholder="Start date" />
-      <input
-        #dateRangeEnd
-        matEndDate
-        placeholder="End date"
-        (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
-      />
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
-</div>
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"
@@ -24,19 +8,10 @@
   </mat-progress-spinner>
 </div>
 
-  <p *ngIf="!loading" class="text-error" style="text-align: center;">
-    {{ errorMessage }}
-  </p>
+<p *ngIf="!loading" class="text-error" style="text-align: center">
+  {{ errorMessage }}
+</p>
 
-<div *ngIf="!loading" fxLayout="row" fxLayoutAlign="center start">
-  <div class="no-data" *ngIf="dataSource.data.length === 0">
-    {{
-      date_chosen
-        ? "You have no payments in this date range."
-        : "Please choose a date range."
-    }}
-  </div>
-</div>
 
 <div
   *ngIf="dataSource.data.length !== 0 && !loading"
@@ -111,10 +86,10 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    <mat-row *matNoDataRow>No approved withdrawal requests yet.</mat-row>
+    <mat-row *matNoDataRow>No payments to export for now.</mat-row>
   </mat-table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="[5, 10, 15,20,25,50,100]"
     showFirstLastButtons
     aria-label="Select page"
   >
