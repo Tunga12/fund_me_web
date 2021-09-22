@@ -39,7 +39,7 @@
 <p *ngIf="!loading" class="text-error" style="text-align: center">
   {{ errorMessage }}
 </p>
-<div
+<!-- <div
   *ngIf="result"
   fxLayout="column"
   fxLayoutAlign="start center"
@@ -56,92 +56,12 @@
     </h4>
     <h4 style="color: red">Failed: {{ failedPayments.length }}</h4>
   </div>
-</div>
-
-<div
-  *ngIf="dataSource.data.length > 0 && !loading"
-  class="table-container mat-elevation-z8"
->
-  <div
-    *ngIf="result"
-    fxLayout="row"
-    fxLayoutAlign="space-around start"
-    fxLayoutGap="22px"
-  >
-    <button
-      mat-raised-button
-      (click)="exporter.exportTable('xlsx')"
-      color="primary"
-    >
-      Export
-    </button>
-    <button mat-raised-button color="primary" (click)="uploadPayments()">
-      Retry
-    </button>
-  </div>
-  <mat-table
-    matSort
-    [dataSource]="dataSource"
-    matTableExporter
-    #exporter="matTableExporter"
-    matSort
-  >
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef> First name </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.firstName | titlecase }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef> Last name </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.lastName | titlecase }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="bankName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Bank name
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.bankName | titlecase }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="bankAccountNo">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Bank account no.</mat-header-cell
-      >
-      <mat-cell *matCellDef="let element">
-        {{ element.bankAccountNo }}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Amount</mat-header-cell
-      >
-      <mat-cell *matCellDef="let element">
-        {{ element.amount | number: ".2" }}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="fundraiserId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header
-        >Fundraiser ID</mat-header-cell
-      >
-      <mat-cell *matCellDef="let element">
-        {{ element.fundraiserId }}
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    <mat-row *matNoDataRow>No approved withdrawal requests yet.</mat-row>
-  </mat-table>
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page"
-  >
-  </mat-paginator>
-</div>
+</div> -->
+<mat-tab-group>
+  <mat-tab label="Successful">
+    <app-successful-payments [payments]="payments" ></app-successful-payments>
+  </mat-tab>
+  <mat-tab label="Unsuccessful"> 
+  <app-unsuccessful-payments [payments]="payments" ></app-unsuccessful-payments>  
+  </mat-tab>
+</mat-tab-group>

@@ -9,6 +9,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Payment } from '../../models/payment.model';
@@ -20,6 +21,7 @@ import { ExcelService } from '../../services/excel/excel.service';
   styleUrls: ['./import-excel.component.scss'],
 })
 export class ImportExcelComponent implements OnInit, OnDestroy {
+  payments: Payment[] = [];
   loading: boolean = false;
   result: boolean = false;
   fileChosen=false;
@@ -31,6 +33,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
     'bankAccountNo',
     'amount',
     'fundraiserId',
+    'status'
   ];
   importedPayments: Payment[] = [];
   fundraiserSub?: Subscription;
@@ -44,12 +47,15 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
   constructor(
     private cdr: ChangeDetectorRef,
     private excelSrv: ExcelService,
-    private fundraiserService: FundraiserService
+    private fundraiserService: FundraiserService,
+    private title:Title
   ) {}
   ngOnDestroy(): void {
     this.fundraiserSub?.unsubscribe();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title.setTitle('Legas|Admin upload payments')
+  }
 
   onFileChange(evt: any) {
     this.dataSource.data = [];
@@ -68,7 +74,6 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
       // remove the first row (the table header)
       const importedData = data.slice(1, data.length);
 
-      let payments: Payment[] = [];
       var result = {};
 
       // convert the data to a list of payment objects
@@ -77,10 +82,10 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
         this.displayedColumns.forEach((key, i) => {
           result = { ...result, [key]: data_item[i] };
         });
-        payments.push(result as Payment);
+        this.payments.push(result as Payment);
       });
 
-      this.dataSource.data = payments;
+      this.dataSource.data = this.payments;
       console.log(this.dataSource.data);
       this.cdr.detectChanges();
       this.dataSource.paginator = this.paginator;
@@ -113,21 +118,15 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
                 .editFundraiser(fundToBePaid._id!, fundToBePaid)
                 .subscribe(
                   (fundraiser) => {
-                    console.log(fundraiser);
+                    console.log('uploaded: ',fundraiser);
                   },
                   (error) => {
                     console.log(error);
-                    !this.failedPayments.includes(payment)
-                      ? this.failedPayments.push(payment)
-                      : '';
                   }
                 );
             },
             (error) => {
               console.log(error.error);
-              !this.failedPayments.includes(payment)
-                ? this.failedPayments.push(payment)
-                : '';
             }
           );
         if (index === this.dataSource.data.length - 1) {
@@ -136,6 +135,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
         }
       });
     });
+
     upload.then(() => {
       this.loading = false;
       this.result = true;

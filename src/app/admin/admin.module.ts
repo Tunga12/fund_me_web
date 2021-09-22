@@ -29,6 +29,8 @@ import { ImportExcelComponent } from './components/import-excel/import-excel.com
 import { UsersComponent } from './components/users/users.component';
 import { ReportedFundraisersComponent } from './components/reported-fundraisers/reported-fundraisers.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { UnsuccessfulPaymentsComponent } from './components/import-excel/unsuccessful-payments/unsuccessful-payments.component';
+import { SuccessfulPaymentsComponent } from './components/import-excel/successful-payments/successful-payments.component';
 
 const routes: Routes =
     [
@@ -116,7 +118,9 @@ const routes: Routes =
         ImportExcelComponent,
         UsersComponent,
         ReportedFundraisersComponent,
-        CategoriesComponent
+        CategoriesComponent,
+        UnsuccessfulPaymentsComponent,
+        SuccessfulPaymentsComponent
     ],
 
     imports: [
