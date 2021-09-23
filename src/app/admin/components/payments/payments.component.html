@@ -12,6 +12,9 @@
   {{ errorMessage }}
 </p>
 
+<h2 [attr.align]="'center'" *ngIf="dataSource.data.length === 0 && !loading">
+  There are no payments for now, please check later.
+</h2>
 
 <div
   *ngIf="dataSource.data.length !== 0 && !loading"
@@ -28,6 +31,7 @@
   >
     Export
   </button>
+
   <mat-table
     matSort
     [dataSource]="dataSource"
@@ -89,7 +93,7 @@
     <mat-row *matNoDataRow>No payments to export for now.</mat-row>
   </mat-table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 15,20,25,50,100]"
+    [pageSizeOptions]="[5, 10, 15, 20, 25, 50, 100]"
     showFirstLastButtons
     aria-label="Select page"
   >
