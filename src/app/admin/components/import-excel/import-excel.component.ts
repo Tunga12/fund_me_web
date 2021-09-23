@@ -1,16 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Payment } from '../../models/payment.model';
 import { ExcelService } from '../../services/excel/excel.service';
@@ -22,10 +13,14 @@ import { ExcelService } from '../../services/excel/excel.service';
 })
 export class ImportExcelComponent implements OnInit, OnDestroy {
   payments: Payment[] = [];
+
+  successfulPayments: Payment[] = []; //payments having status 1
+  unsuccessfulPayments: Payment[] = []; // payments having status 0
+
   loading: boolean = false;
   result: boolean = false;
-  fileChosen=false;
-  totalUploads = 0;
+
+  fileChosen = false;
   displayedColumns = [
     'firstName',
     'lastName',
@@ -33,33 +28,20 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
     'bankAccountNo',
     'amount',
     'fundraiserId',
-    'status'
+    'status',
   ];
   importedPayments: Payment[] = [];
   fundraiserSub?: Subscription;
   errorMessage: string = '';
-  failedPayments: Payment[] = [];
-
-  //data source for the table
-  dataSource = new MatTableDataSource<Payment>();
-  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
-  @ViewChild(MatPaginator) sort!: MatSort;
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private excelSrv: ExcelService,
-    private fundraiserService: FundraiserService,
-    private title:Title
-  ) {}
+  constructor(private excelSrv: ExcelService, private title: Title) {}
   ngOnDestroy(): void {
     this.fundraiserSub?.unsubscribe();
   }
   ngOnInit(): void {
-    this.title.setTitle('Legas|Admin upload payments')
+    this.title.setTitle('Legas | Admin upload payments');
   }
 
   onFileChange(evt: any) {
-    this.dataSource.data = [];
-    this.cdr.detectChanges();
     const target: DataTransfer = <DataTransfer>evt.target;
     if (target.files.length !== 1) {
       this.errorMessage = 'Cannot use multiple files';
@@ -82,67 +64,22 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
         this.displayedColumns.forEach((key, i) => {
           result = { ...result, [key]: data_item[i] };
         });
+
         this.payments.push(result as Payment);
       });
-
-      this.dataSource.data = this.payments;
-      console.log(this.dataSource.data);
-      this.cdr.detectChanges();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.classifyPayments();
     };
     reader.readAsBinaryString(target.files[0]);
-    this.fileChosen=true;
+    this.fileChosen = true;
   }
 
-  uploadPayments() {
-    this.totalUploads = this.dataSource.data.length;
-    this.loading = true;
-    var upload = new Promise((resolve) => {
-      this.dataSource.data.forEach((payment: Payment, index) => {
-        console.log(payment.fundraiserId);
-        this.fundraiserSub = this.fundraiserService
-          .getFundraiser(payment.fundraiserId)
-          .subscribe(
-            (fund) => {
-              let withdraws = fund.totalWithdraw;
-              withdraws?.push({
-                date: new Date(Date.now()),
-                amount: payment.amount,
-              });
-              let fundToBePaid = {
-                ...fund,
-                totalWithdraw: withdraws,
-              };
-              this.fundraiserSub = this.fundraiserService
-                .editFundraiser(fundToBePaid._id!, fundToBePaid)
-                .subscribe(
-                  (fundraiser) => {
-                    console.log('uploaded: ',fundraiser);
-                  },
-                  (error) => {
-                    console.log(error);
-                  }
-                );
-            },
-            (error) => {
-              console.log(error.error);
-            }
-          );
-        if (index === this.dataSource.data.length - 1) {
-          this.loading = false;
-          resolve(true);
-        }
-      });
-    });
-
-    upload.then(() => {
-      this.loading = false;
-      this.result = true;
-      this.dataSource.data = this.failedPayments;
-      this.cdr.detectChanges();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  classifyPayments() {
+    this.payments.forEach((payment) => {
+      if (payment.status === 1) {
+        this.successfulPayments.push(payment);
+      } else {
+        this.unsuccessfulPayments.push(payment);
+      }
     });
   }
 }

@@ -1,3 +1,17 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px" class="top">
+  <p>Dou you want to decline withdrawal requests for all payments?</p>
+  <button mat-raised-button 
+  color="warn" [attr.align]="'right'"
+  (click)="declineAll()"
+  >
+    Decline all
+  </button>
+</div>
+
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>>
+</div>
+
 <mat-table
   matSort
   [dataSource]="dataSource"
@@ -37,9 +51,7 @@
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>
-      Amount</mat-header-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Amount</mat-header-cell>
     <mat-cell *matCellDef="let element">
       {{ element.amount | number: ".2" }}
     </mat-cell>
@@ -54,11 +66,25 @@
   </ng-container>
 
   <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef mat-sort-header
-      >Status</mat-header-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
     <mat-cell *matCellDef="let element">
       {{ element.status }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="reason">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Reason</mat-header-cell>
+    <mat-cell *matCellDef="let element" [attr.backgroundColor]="(decliningStarted && !element.reason)? 'warn' :'' " >
+      <!-- <mat-label>Select reason</mat-label> -->
+      <mat-select [(value)]="element.reason" placeholder="Select reason">
+        <mat-option [value]=""></mat-option>
+        <mat-option [value]="'Account number doesn\'t exist'"
+          >Account number doesn't exist</mat-option
+        >
+        <mat-option [value]="'User name doesn\'t correspond to account number'"
+          >User name doesn't correspond to account number</mat-option
+        >
+      </mat-select>
     </mat-cell>
   </ng-container>
 

@@ -43,7 +43,7 @@ export class AdminWithdrawalsService {
   // accept a withdrawal request
   declineWithdrawalRequest(withdrawalId: string) {
     return this.http.put(`${environment.BASE_URL}/api/withdrawal/${withdrawalId}`, {
-      accpted: false
+      accepted: false
     },
       {
         responseType: 'text'

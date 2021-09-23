@@ -5,4 +5,6 @@ export interface Payment {
   bankAccountNo: string;
   fundraiserId:string;
   amount: number;
+  status?:number;
+  reason?:string;
 }
