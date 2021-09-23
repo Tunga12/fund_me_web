@@ -13,7 +13,7 @@
   <div
     [attr.align]="'center'"
     class="no-data"
-    *ngIf="dataSource.data.length === 0"
+    *ngIf="dataSource.data.length === 0 && !errorMessage"
     style="margin: 30px"
   >
     You have no reported fundraisers yet.
