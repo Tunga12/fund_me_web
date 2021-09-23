@@ -7,6 +7,7 @@ import { Report } from './../../../../models/report.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from './../../../../services/snackbar/snackbar.service';
+import { ReportReasonType } from 'src/app/admin/models/report-reason-type.model';
 
 @Component({
   selector: 'app-report-dialog',
@@ -16,13 +17,8 @@ import { SnackbarService } from './../../../../services/snackbar/snackbar.servic
 export class ReportDialogComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
-  choices = [
-    'child abuse',
-    'spam or misleading',
-    "doesn't represent myself",
-    'not a company person',
-    'infringes my rights',
-  ];
+  reasons:ReportReasonType[]=[];
+ 
   fundraiserId = '';
   form!: FormGroup;
   // subscriptions
@@ -30,7 +26,7 @@ export class ReportDialogComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private reportSrv: ReportService,
-    private dilogRef: MatDialogRef<ReportDialogComponent>,
+    private dialogRef: MatDialogRef<ReportDialogComponent>,
     private snackBar: MatSnackBar,
     private snackbarSrv: SnackbarService,
     @Inject(MAT_DIALOG_DATA) private data: any
@@ -39,6 +35,7 @@ export class ReportDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.formBuilder.group({ reason: '' });
     this.fundraiserId = this.data.fundraiserId;
+    this.reasons=this.data.reasons;
   }
 
   report() {
@@ -55,7 +52,7 @@ export class ReportDialogComponent implements OnInit, OnDestroy {
           'close',
           this.snackbarSrv.getConfig()
         );
-        this.dilogRef.close();
+        this.dialogRef.close();
       },
       (error: HttpErrorResponse) => {
         console.log(error.error);

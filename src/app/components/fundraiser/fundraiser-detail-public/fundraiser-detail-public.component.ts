@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
+import { ReportReasonTypesService } from 'src/app/services/report-reason-types/report-reason-types.service';
+import { ReportReasonType } from 'src/app/admin/models/report-reason-type.model';
 
 @Component({
   selector: 'app-fundraiser-detail-public',
@@ -24,6 +26,9 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId') || '';
+
+  reasonsList: ReportReasonType[] = [];
+
   user!: User;
   errorMessage = '';
   loading = true; // to show a loading spinner
@@ -34,10 +39,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   fundSub?: Subscription;
   userSub?: Subscription;
+  reasonSub?: Subscription;
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
+    private reasonsService: ReportReasonTypesService,
     private snackBar: MatSnackBar,
     private userService: UserService,
     private snackbarService: SnackbarService,
@@ -58,7 +65,10 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     this.getFundraiser(this.fundraiserId);
 
     // get current user
-    this.getUser()
+    this.getUser();
+
+    // get all reasons
+    this.getReportReasons();
   }
 
   // get current user to know admin or not
@@ -67,6 +77,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       this.user = user;
     });
   }
+
   increaseShareCount() {
     this.loading = true;
     this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
@@ -160,32 +171,18 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   // opens the report fundraiser dialog
   openReportDialog() {
     this.dialog.open(ReportDialogComponent, {
-      data: { fundraiserId: this.fundraiserId },
+      data: { fundraiserId: this.fundraiserId,reasons:this.reasonsList },
     });
   }
 
-  // blockFundraiser(fundraiser: Fundraiser) {
-  //   this.fundraiserService
-  //     .editFundraiser(fundraiser._id!, { ...fundraiser, isBlocked: true })
-  //     .subscribe(
-  //       () => {
-  //         this.snackBar.open(
-  //           'Fundraiser blocked successfully',
-  //           'close',
-  //           this.snackbarService.getConfig()
-  //         );
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //         this.snackBar.open(
-  //           'Unable to block fundraiser',
-  //           'close',
-  //           this.snackbarService.getConfig()
-  //         );
-  //         this.errorMessage = error.error;
-  //         console.log(error.error);
-  //       }
-  //     );
-  // }
+  // get all report reason types
+  getReportReasons() {
+    this.reasonSub = this.reasonsService
+      .getReportReasonTypes()
+      .subscribe((reasons) => {
+        this.reasonsList = reasons;
+      });
+  }
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();

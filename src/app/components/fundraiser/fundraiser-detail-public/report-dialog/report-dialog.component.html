@@ -16,11 +16,11 @@
     >
       <mat-radio-button
         data-cy="option"
-        *ngFor="let choice of choices"
+        *ngFor="let reason of reasons"
         name="reason"
-        [value]="choice"
+        [value]="reason._id"
       >
-        {{ choice|translate }}
+        {{ reason.name|translate }}
       </mat-radio-button>
     </mat-radio-group>
   </form>
