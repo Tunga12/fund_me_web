@@ -4,7 +4,7 @@ import { AddTeamMembersDialogComponent } from 'src/app/components/fundraiser/my-
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { TeamService } from './../../../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { TeamMember } from 'src/app/models/team-memeber.model';
+import { TeamMember } from 'src/app/models/team-member.model';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';

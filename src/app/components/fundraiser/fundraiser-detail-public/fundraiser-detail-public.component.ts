@@ -18,6 +18,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { ReportReasonTypesService } from 'src/app/services/report-reason-types/report-reason-types.service';
 import { ReportReasonType } from 'src/app/admin/models/report-reason-type.model';
+import { CurrencyConverterService } from './../../../services/currency-converter/currency-converter.service';
 
 @Component({
   selector: 'app-fundraiser-detail-public',
@@ -29,11 +30,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   reasonsList: ReportReasonType[] = [];
 
+
   user!: User;
   errorMessage = '';
   loading = true; // to show a loading spinner
-  percentage = 0;
-
+  // percentage = 0;
+  // totalRaised=0;
   fundraiserId: string = '';
   fundraiser?: Fundraiser;
 
@@ -112,11 +114,13 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
         this.fundraiser = fundraiser;
         this.loading = false;
 
-        this.percentage = this.fundraiserService.getPercentage(this.fundraiser);
+
         console.log(this.fundraiser);
         console.log(
           this.fundraiserService.hasAcceptedTeamMembers(this.fundraiser)
         );
+
+        console.log(fundraiser);
 
         // if there is a referer id increase share count
         this.activatedRoute.queryParams.subscribe((qParams) => {
@@ -171,7 +175,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   // opens the report fundraiser dialog
   openReportDialog() {
     this.dialog.open(ReportDialogComponent, {
-      data: { fundraiserId: this.fundraiserId,reasons:this.reasonsList },
+      data: { fundraiserId: this.fundraiserId, reasons: this.reasonsList },
     });
   }
 
@@ -183,6 +187,8 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
         this.reasonsList = reasons;
       });
   }
+
+ 
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();

@@ -15,6 +15,8 @@ import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Payment } from '../../models/payment.model';
 import { User } from 'src/app/models/user.model';
+import { CurrencyConverterService } from './../../../services/currency-converter/currency-converter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'admin-payments',
@@ -48,8 +50,12 @@ export class PaymentsComponent implements OnInit {
   fundraiserPage?: FundraiserPage;
   allFundraisers: Fundraiser[] = [];
   fundsWithFullData: Fundraiser[] = [];
-
+  exchangeRate: number=1;
+  
+  exchangeRateSubscription?: Subscription;
+  
   constructor(
+    private currencyConverterService: CurrencyConverterService,
     private cdr: ChangeDetectorRef,
     private pageTitle: Title,
     private fundraiserService: FundraiserService
@@ -163,7 +169,7 @@ export class PaymentsComponent implements OnInit {
         (fundraiser) => {
           if (
             fundraiser.donations?.length! > 0 &&
-            (fundraiser.totalRaised!- this.getTotalWithdrawn(fundraiser) > 0)
+            (this.getTotalRaised(fundraiser)- this.getTotalWithdrawn(fundraiser) > 0)
           ) {
             this.fundsWithFullData.push(fundraiser);
           }
@@ -187,7 +193,7 @@ export class PaymentsComponent implements OnInit {
       : fundraiser.organizer!;
     let withdrawal = fundraiser.withdraw;
     let payment: Payment = {
-      amount: fundraiser.totalRaised! - this.getTotalWithdrawn(fundraiser),
+      amount: this.getTotalRaised(fundraiser) - this.getTotalWithdrawn(fundraiser),
       firstName: user.firstName,
       lastName: user.lastName,
       fundraiserId: fundraiser._id!,
@@ -222,4 +228,41 @@ export class PaymentsComponent implements OnInit {
     console.log(total);
     return total;
   }
+
+   // returns the percentage of the total raised by this fundraiser to its goal
+   getPercentage(fund: Fundraiser): number {
+    return (
+      ((fund.totalRaised?.birr ??
+        0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)) /
+        fund.goalAmount!) *
+      100
+    );
+  }
+
+  // returns the total money raised by this fundraiser in birr
+  getTotalRaised(fund: Fundraiser): number {
+    return (
+      fund.totalRaised?.birr ??
+      0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)
+    );
+  }
+
+  getExchangeRate() {
+    this.exchangeRateSubscription = this.currencyConverterService
+      .getExchangeRate()
+      .subscribe(
+        (rate) => {
+          this.exchangeRate = rate;
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.exchangeRateSubscription?.unsubscribe();
+    
+  }
+
 }

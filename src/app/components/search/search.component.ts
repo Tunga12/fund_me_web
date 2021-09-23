@@ -6,6 +6,7 @@ import { Subscription, Subject } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { CurrencyConverterService } from 'src/app/services/currency-converter/currency-converter.service';
 
 @Component({
   selector: 'app-search',
@@ -17,17 +18,20 @@ export class SearchComponent implements OnInit , OnDestroy{
   loading = true; // to show loading spinner till the fundraisers are available
   errorMessage = '';
 
-  searchedFundarisers: Fundraiser[] = [];
+  searchedFundraisers: Fundraiser[] = [];
 
   fundraiserSub?: Subscription;
 
   fundraiserHome?: FundraiserPage;
   currentPage: number = 0;
+  exchangeRate: number=1;
+  exchangeRateSubscription: any;
 
   constructor(
     private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
-    private docTitle: Title
+    private docTitle: Title,
+    private currencyConverterService: CurrencyConverterService,
   ) { }
 
   ngOnInit(): void {
@@ -38,15 +42,15 @@ export class SearchComponent implements OnInit , OnDestroy{
     });
   }
 
-  //search fundrisers of the current page
+  //search fundraisers of the current page
   searchFundraisers() {
     this.fundraiserSub = this.fundraiserService
       .search(this.param, this.currentPage)
       .subscribe(
         (fundraiserHome: FundraiserPage) => {
           this.fundraiserHome = fundraiserHome;
-          this.searchedFundarisers = [
-            // ...this.searchedFundarisers,
+          this.searchedFundraisers = [
+            // ...this.searchedFundraisers,
             ...fundraiserHome.fundraisers,
           ];
           this.loading = false;
@@ -70,10 +74,9 @@ export class SearchComponent implements OnInit , OnDestroy{
     this.searchFundraisers();
   }
 
-  percentage(fund: Fundraiser): number {
-    return this.fundraiserService.getPercentage(fund);
-  }
+ 
 
+   
   // unsubscribe if from all subscriptions
   ngOnDestroy(): void {
     if (this.fundraiserSub) this.fundraiserSub.unsubscribe();

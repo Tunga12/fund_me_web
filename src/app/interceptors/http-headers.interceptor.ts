@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 export class HttpHeaderInterceptor implements HttpInterceptor {
@@ -14,7 +15,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let token = localStorage.getItem('x-auth-token');
-    if (token) {
+    if (token && req.url.startsWith(environment.BASE_URL)) {
       // console.log(token);
       req = req.clone({
         setHeaders: {

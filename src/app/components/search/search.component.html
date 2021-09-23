@@ -8,8 +8,8 @@
       </mat-progress-spinner>
     </div>
     <p class="text-error">{{ errorMessage }}</p>
-    <h2 *ngIf="searchedFundarisers.length === 0 && !loading">No matchs found</h2>
-    <app-public-fund-list [fundraisers]="searchedFundarisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
+    <h2 *ngIf="searchedFundraisers.length === 0 && !loading">No matches found</h2>
+    <app-public-fund-list [fundraisers]="searchedFundraisers" [hasNext]="hasNext()" (nextEvent)="nextPage()">
     </app-public-fund-list>
   </div>
 </main>

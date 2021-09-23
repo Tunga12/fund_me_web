@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
-import { TeamMember } from './../../../../../models/team-memeber.model';
+import { TeamMember } from '../../../../../models/team-member.model';
 
 @Component({
   selector: 'app-add-team-members-dialog',

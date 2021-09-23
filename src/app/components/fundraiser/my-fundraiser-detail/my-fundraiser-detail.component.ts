@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
@@ -10,6 +11,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 import { PostAnUpdateComponent } from '../../post-an-update/post-an-update.component';
 import { ShareDialogComponent } from '../../share-dialog/share-dialog.component';
 import { Update } from './../../../models/update.model';
+import { CurrencyConverterService } from './../../../services/currency-converter/currency-converter.service';
 
 @Component({
   selector: 'app-detail',
@@ -20,7 +22,6 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userId');
   tabs = [1, 2, 3];
   update!: Update;
-  percentage: number = 0;
 
   fundraiserId: string = '';
   fundraiser!: Fundraiser;
@@ -29,29 +30,33 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
 
   // subscriptions
   fundraiserSub?: Subscription;
+  exchangeRate: number = 1;
+  exchangeRateSubscription?: Subscription;
+
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private fundraiserServ: FundraiserService,
     private docTitle: Title,
-    private router: Router
+    private router: Router,
+    private currencyConverterService: CurrencyConverterService
   ) {}
 
   ngOnInit(): void {
     this.docTitle.setTitle('Manage fundraiser');
     // get the id parameter from router
     this.fundraiserId = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
-    this.getFundriser();
+    this.getFundraiser();
+    this.getExchangeRate();
   }
 
-  // get fundriser using id
-  getFundriser() {
+  // get fundraiser using id
+  getFundraiser() {
     this.loading = true;
     this.fundraiserServ.getFundraiser(this.fundraiserId).subscribe(
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
-        this.percentage = this.fundraiserServ.getPercentage(this.fundraiser);
         console.log(fundraiser);
       },
       (error) => {
@@ -76,7 +81,7 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
   withdrawal(id: string) {
     {
       this.fundraiser.withdraw
-        ? this.router.navigate(['/my-fundraiser/withdrawals/', id,'overview'])
+        ? this.router.navigate(['/my-fundraiser/withdrawals/', id, 'overview'])
         : this.router.navigate(['/withdrawal', id]);
     }
   }
@@ -104,7 +109,39 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  // returns the percentage of the total raised by this fundraiser to its goal
+  getPercentage(fund: Fundraiser): number {
+    return (
+      ((fund.totalRaised?.birr ??
+        0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)) /
+        fund.goalAmount!) *
+      100
+    );
+  }
+
+  // returns the total money raised by this fundraiser in birr
+  getTotalRaised(fund: Fundraiser): number {
+    return (
+      fund.totalRaised?.birr ??
+      0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)
+    );
+  }
+
+  getExchangeRate() {
+    this.exchangeRateSubscription = this.currencyConverterService
+      .getExchangeRate()
+      .subscribe(
+        (rate) => {
+          this.exchangeRate = rate;
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
+      );
+  }
+
   ngOnDestroy(): void {
     this.fundraiserSub?.unsubscribe();
+    this.exchangeRateSubscription?.unsubscribe();
   }
 }

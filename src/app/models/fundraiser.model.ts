@@ -1,10 +1,10 @@
 import { Donation } from './donation.model';
-import { TeamMember } from './team-memeber.model';
 import { Category } from './category.model';
 import { Location } from 'src/app/models/location.model';
 import { User } from './user.model';
 import { Update } from './update.model';
 import { Withdrawal } from './withdrawal.model';
+import { TeamMember } from './team-member.model';
 
 export interface Fundraiser {
   __v?: any;
@@ -21,16 +21,19 @@ export interface Fundraiser {
   dateCreated?: string;
   organizer?: User;
   beneficiary?: User;
-  totalRaised?: number;
+  totalRaised?: {
+    birr: number;
+    dollar: number;
+  };
   isPublished?: boolean;
   totalShareCount?: number;
   likeCount?: number;
-  withdraw?:Withdrawal,
-  totalWithdraw?: Withdraw[],
-  isBlocked?:boolean;
+  withdraw?: Withdrawal;
+  totalWithdraw?: Withdraw[];
+  isBlocked?: boolean;
 }
 
-interface Withdraw{
-  date:Date,
-  amount:number
+interface Withdraw {
+  date: Date;
+  amount: number;
 }

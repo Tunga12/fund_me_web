@@ -27,7 +27,7 @@ export class TeamMemberComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.docTitle.setTitle('My fundaisers| team');
+    this.docTitle.setTitle('My fundraisers| team');
     // then get fundraisers
     this.getMyFundraisers();
   }
@@ -35,7 +35,7 @@ export class TeamMemberComponent implements OnInit, OnDestroy {
 
   // get fundraisers of current user
   getMyFundraisers() {
-    this.fundraiserSUb = this.fundraiserServ.getMemeberFundraisers().subscribe(
+    this.fundraiserSUb = this.fundraiserServ.getMemberFundraisers().subscribe(
       (fundraisersPage:FundraiserPage) => {
         this.loading = false;
         this.myFundraisers = fundraisersPage.fundraisers;

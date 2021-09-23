@@ -75,10 +75,10 @@
           </div>
           <mat-progress-bar
             mode="determinate"
-            [value]="percentage"
+            [value]="getPercentage(fundraiser)"
             color="primary"
           ></mat-progress-bar>
-          <p>{{"Total raised:"| translate }} {{ fundraiser.totalRaised| currency }}</p>
+          <p>{{"Total raised:"| translate }} {{ getTotalRaised(fundraiser)| currency:"ETB" }}</p>
         </div>
       </div>
 

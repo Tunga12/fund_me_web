@@ -1,31 +1,51 @@
-<div fxLayout="row wrap" fxLayoutAlign="start
- start" fxLayoutGap="20px" 
- fxLayoutGap.xs="6px"
- fxLayoutGap.md="10px"
- >
-    <mat-card *ngFor="let fundraiser of fundraisers" [routerLink]="['/fundraiser-detail', fundraiser._id]"
-        fxFlex.lt-md="47" 
-        fxFlex.lt-sm="100" 
-        fxFlex.gt-sm="31"
-        >
-        <div class="mat-image-container">
-            <img [src]="fundraiser.image" onerror="this.src='./assets/images/placeholder.png'" />
-        </div>
-        <mat-card-content fxLayout="column" fxLayoutAlign="start start" [ngStyle.xs]="{ height: '130px' }">
-            <strong>{{ fundraiser.title }}</strong>
-            <span *ngIf="(fundraiser?.donations)!.length > 0" class="color-gray text-small">
-                Last donation {{ (fundraiser?.donations)![0].date | timeago }}
-            </span>
-            <mat-progress-bar mode="determinate" [value]="percentage(fundraiser)" color="primary">
-            </mat-progress-bar>
-            <p>
-                <strong>{{ fundraiser.totalRaised }}</strong> raised of
-                {{ fundraiser.goalAmount }}
-            </p>
-        </mat-card-content>
-    </mat-card>
-
-    <div fxFlexAlign="center" *ngIf="hasNext" (click)="nextPage()">
-        <a>See more</a>
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="start
+ start"
+  fxLayoutGap="20px"
+  fxLayoutGap.xs="6px"
+  fxLayoutGap.md="10px"
+>
+  <mat-card
+    *ngFor="let fundraiser of fundraisers"
+    [routerLink]="['/fundraiser-detail', fundraiser._id]"
+    fxFlex.lt-md="47"
+    fxFlex.lt-sm="100"
+    fxFlex.gt-sm="31"
+  >
+    <div class="mat-image-container">
+      <img
+        [src]="fundraiser.image"
+        onerror="this.src='./assets/images/placeholder.png'"
+      />
     </div>
+    <mat-card-content
+      fxLayout="column"
+      fxLayoutAlign="start start"
+      [ngStyle.xs]="{ height: '130px' }"
+    >
+      <strong>{{ fundraiser.title }}</strong>
+      <span
+        *ngIf="(fundraiser?.donations)!.length > 0"
+        class="color-gray text-small"
+      >
+        Last donation {{ (fundraiser?.donations)![0].date | timeago }}
+      </span>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="getPercentage(fundraiser)"
+        color="primary"
+      >
+      </mat-progress-bar>
+      <p>
+        <strong>{{ getTotalRaised(fundraiser) | currency: "ETB" }}</strong>
+        raised of
+        {{ fundraiser.goalAmount }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <div fxFlexAlign="center" *ngIf="hasNext" (click)="nextPage()">
+    <a>See more</a>
+  </div>
 </div>

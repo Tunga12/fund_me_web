@@ -5,12 +5,15 @@ import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { environment } from 'src/environments/environment';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { Donation } from 'src/app/models/donation.model';
-import { TeamMember } from './../../models/team-memeber.model';
+import { TeamMember } from 'src/app/models/team-member.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FundraiserService {
+  getPercentage(fundraiser: Fundraiser): number {
+    throw new Error('Method not implemented.');
+  }
   constructor(private http: HttpClient) {}
 
   // get fundraisers by page
@@ -37,14 +40,13 @@ export class FundraiserService {
       .toPromise();
   }
 
-  // create fundiser
+  // create fundraiser
   createFundraiser(fundraiser: Fundraiser): Observable<Fundraiser> {
     let customFundraiser = {
       ...fundraiser,
       isPublished: true,
       category: fundraiser.category?._id,
     };
-    // console.log('cusome', customFundraiser), console.log('orginal', fundraiser);
 
     return this.http.post<Fundraiser>(
       `${environment.BASE_URL}/api/fundraisers`,
@@ -53,15 +55,15 @@ export class FundraiserService {
   }
 
   //get a single fundraiser by id
-  getFundraiser(fudriserId: string): Observable<Fundraiser> {
+  getFundraiser(fundraiserId: string): Observable<Fundraiser> {
     return this.http.get<Fundraiser>(
-      `${environment.BASE_URL}/api/fundraisers/${fudriserId}`
+      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`
     );
   }
   //get a single fundraiser by id
-  getFundraiserAsync(fudriserId: string) {
+  getFundraiserAsync(fundraiserId: string) {
     return this.http
-      .get<Fundraiser>(`${environment.BASE_URL}/api/fundraisers/${fudriserId}`)
+      .get<Fundraiser>(`${environment.BASE_URL}/api/fundraisers/${fundraiserId}`)
       .toPromise();
   }
 
@@ -73,7 +75,7 @@ export class FundraiserService {
   }
 
   // get team fundraisers of current user
-  getMemeberFundraisers(): Observable<FundraiserPage> {
+  getMemberFundraisers(): Observable<FundraiserPage> {
     return this.http.get<FundraiserPage>(
       `${environment.BASE_URL}/api/fundraisers/member`
     );
@@ -108,7 +110,7 @@ export class FundraiserService {
     );
   }
 
-  // delete funraiser by id
+  // delete fundraiser by id
   deleteFundraiser(fundraiserId: string): Observable<string> {
     return this.http.delete<string>(
       `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`
@@ -122,7 +124,7 @@ export class FundraiserService {
     );
   }
 
-  // set beeficiary id for a fundraiser
+  // set beneficiary id for a fundraiser
   setBeneficiary(
     fundraiser: Fundraiser,
     beneficiaryId: string
@@ -146,7 +148,7 @@ export class FundraiserService {
     );
   }
 
-  /*non http sevices */
+  /*non http services */
   getNumberOfComments(fundraiser: Fundraiser): number {
     let comments = fundraiser.donations?.filter((donation) => {
       if (donation.comment?.trim()) {
@@ -158,7 +160,7 @@ export class FundraiserService {
     return comments?.length || 0;
   }
 
-  //to know if a fundraiser has a team (accepted mambers)
+  //to know if a fundraiser has a team (accepted members)
   hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {
     let team = fundraiser?.teams?.filter((member: TeamMember) => {
       if (member.status !== 'pending' &&  member.id.userId._id! !=fundraiser.organizer?._id!) return true;
@@ -194,19 +196,13 @@ export class FundraiserService {
     return team?.length!;
   }
 
-  //to know if a fundraiser has a team (accepted mambers)
+  //to know if a fundraiser has a team (accepted members)
   hasPendingTeamMembers(fundraiser: Fundraiser): boolean {
     let team = fundraiser.teams?.filter((member: TeamMember) => {
       if (member.status === 'pending') return true;
       return false;
     });
     return team?.length! > 0;
-  }
-  //  get percentage of total raised to goalAmount of this fundraiserr
-  getPercentage(fundraiser: Fundraiser): number {
-    if (fundraiser!.goalAmount! > 0)
-      return (fundraiser!.totalRaised! * 100) / fundraiser!.goalAmount!;
-    return 0;
   }
 
   // returns the most recent donation among the list of donations
