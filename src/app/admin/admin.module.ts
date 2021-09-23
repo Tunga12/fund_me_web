@@ -104,7 +104,6 @@ const routes: Routes =
                     path:'report-reasons',
                     component:ReportReasonsComponent
                 }
-
             ]
         }];
 
