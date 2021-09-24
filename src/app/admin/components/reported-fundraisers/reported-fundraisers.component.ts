@@ -66,7 +66,9 @@ export class ReportedFundraisersComponent
   }
 
   async getReports() {
-    return new Promise(resolve=>{ this.reportSub = this.reportServ.getReports().subscribe(
+    return new Promise(resolve=>
+    { this.reportSub = this.reportServ
+    .getReports().subscribe(
       (reports) => {
         this.reports = reports;
         console.log(reports);
@@ -89,7 +91,9 @@ export class ReportedFundraisersComponent
         resolve(true);
       }
       await this.reports.forEach(async (report,index) => {
-        await this.fundraiserServ.getFundraiser(report.fundraiserId).subscribe(
+        await this.fundraiserServ
+        .getFundraiser(report.fundraiserId)
+        .subscribe(
           (fund) => {
             if (!this.fundraisers.includes(fund)) {
               this.fundraisers.push(fund);
