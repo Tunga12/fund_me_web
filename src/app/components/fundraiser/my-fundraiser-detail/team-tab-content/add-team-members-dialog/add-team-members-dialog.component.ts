@@ -4,7 +4,6 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { ImportContactsDialogComponent } from '../../../../teams/import-contacts-dialog/import-contacts-dialog.component';
 import {
   FormGroup,
   FormControl,
@@ -107,13 +106,6 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   removeEmail(email: string) {
     // let index = this.emails.indexOf(email);
     // this.emails.splice(index, 1);
-  }
-
-  openImportContactsDialog() {
-    this.dialog
-      .open(ImportContactsDialogComponent, { data: { id: 1 } })
-      .afterClosed()
-      .subscribe((close_result) => console.log(close_result));
   }
 
   ngOnDestroy(): void {

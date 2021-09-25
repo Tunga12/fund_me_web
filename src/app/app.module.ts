@@ -47,7 +47,6 @@ import { AddPhotoVideoDialogComponent } from './components/post-an-update/add-ph
 import { AddYoutubeVideoDialogComponent } from './components/post-an-update/add-youtube-video-dialog/add-youtube-video-dialog.component';
 import { PostAnUpdateComponent } from './components/post-an-update/post-an-update.component';
 import { ShareDialogComponent } from './components/share-dialog/share-dialog.component';
-import { ImportContactsDialogComponent } from './components/teams/import-contacts-dialog/import-contacts-dialog.component';
 import { BeneficiaryFormComponent } from './components/withdrawal/beneficiary-form/beneficiary-form/beneficiary-form.component';
 import { ConfirmPageComponent } from './components/withdrawal/beneficiary-form/confirm-page/confirm-page.component';
 import { PersonalInfoSummaryComponent } from './components/withdrawal/personal-info-summary/personal-info-summary.component';
@@ -103,7 +102,6 @@ const config: SocketIoConfig = {
     AddPhotoVideoDialogComponent,
     AddYoutubeVideoDialogComponent,
     AddTeamMembersDialogComponent,
-    ImportContactsDialogComponent,
     EditUiComponent,
     YoutubeVideoPlayerComponent,
     WithdrawalComponent,

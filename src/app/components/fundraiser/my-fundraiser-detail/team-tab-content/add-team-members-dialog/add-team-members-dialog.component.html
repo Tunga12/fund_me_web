@@ -66,11 +66,9 @@
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list> -->
-    <p>
-      <a (click)="openImportContactsDialog()"> {{"Import your email contacts"| translate}}</a>
-    </p>
+ 
     <mat-progress-bar *ngIf="loading" mode="indeterminate" [value]="100" color="primary"></mat-progress-bar>
-    <mat-error *ngIf="errorMessage"> {{ errorMessage }} </mat-error>
+    <mat-error *ngIf="errorMessage"> {{ errorMessage|translate }} </mat-error>
     <p>
       <button
         [disabled]="form.invalid || loading"
