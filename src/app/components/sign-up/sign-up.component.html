@@ -57,13 +57,21 @@
           <mat-error
             data-cy="fname-minlength-error"
             *ngIf="firstName?.touched && firstName?.errors?.minlength"
-            >{{"First name must be letters minimum." | translate:{minlength:firstName?.errors?.minlength.requiredLength} }}
+            >{{
+              "First name must be letters minimum."
+                | translate
+                  : { minlength: firstName?.errors?.minlength.requiredLength }
+            }}
           </mat-error>
 
           <mat-error
             data-cy="fname-maxlength-error"
             *ngIf="firstName?.touched && firstName?.errors?.maxlength"
-            >{{"First name must be letters maximum."| translate:{maxlength:firstName?.errors?.maxlength.requiredLength} }}
+            >{{
+              "First name must be letters maximum."
+                | translate
+                  : { maxlength: firstName?.errors?.maxlength.requiredLength }
+            }}
           </mat-error>
 
           <mat-error
@@ -92,13 +100,21 @@
           <mat-error
             data-cy="lname-minlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.minlength"
-            >{{"Last name must be letters minimum."| translate:{ minlength:lastName?.errors?.minlength.requiredLength} }}
+            >{{
+              "Last name must be letters minimum."
+                | translate
+                  : { minlength: lastName?.errors?.minlength.requiredLength }
+            }}
           </mat-error>
 
           <mat-error
             data-cy="lname-maxlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.maxlength"
-            >{{"Last name must be letters maximum."| translate:{maxlength:lastName?.errors?.maxlength.requiredLength } }}
+            >{{
+              "Last name must be letters maximum."
+                | translate
+                  : { maxlength: lastName?.errors?.maxlength.requiredLength }
+            }}
           </mat-error>
 
           <mat-error
@@ -150,10 +166,17 @@
           <mat-icon matPrefix>phone</mat-icon>
           <mat-error
             data-cy="phone-length-error"
-            *ngIf="phone?.touched && (phone?.errors?.minlength ||  phone?.errors?.maxlength)"
-            >{{"Phone number must be digits." | translate: { length: phone?.errors?.minlength?.requiredLength} }}
+            *ngIf="
+              phone?.touched &&
+              (phone?.errors?.minlength || phone?.errors?.maxlength)
+            "
+            >{{
+              "Phone number must be digits."
+                | translate
+                  : { length: phone?.errors?.minlength?.requiredLength }
+            }}
           </mat-error>
-          
+
           <mat-error
             data-cy="phone-empty-error"
             *ngIf="phone?.touched && phone?.errors?.required"
@@ -183,8 +206,7 @@
             [type]="hidePassword ? 'password' : 'text'"
             (change)="onPasswordChange()"
             autocomplete="new-password"
-        [placeholder]="'Password' | translate"
-
+            [placeholder]="'Password' | translate"
           />
           <mat-icon
             matSuffix
@@ -196,20 +218,30 @@
           <mat-error
             data-cy="password-minlength-error"
             *ngIf="password?.touched && password?.errors?.minlength"
-            >{{"Password length must be minimum." | translate:{length:password?.errors?.minlength.requiredLength} }}
+            >{{
+              "Password length must be minimum."
+                | translate
+                  : { length: password?.errors?.minlength.requiredLength }
+            }}
           </mat-error>
 
           <mat-error
             data-cy="password-empty-error"
             *ngIf="password?.touched && password?.errors?.required"
-            >{{"Please enter your password"|translate}}
+            >{{ "Please enter your password" | translate }}
           </mat-error>
 
           <mat-error
             data-cy="password-weak-error"
-            *ngIf="password?.touched &&(password?.errors?.pattern || !password?.errors?.minlength)"
+            *ngIf="
+              password?.touched &&
+              (password?.errors?.pattern || !password?.errors?.minlength)
+            "
           >
-            {{"Password must contain at least 1 special character, 1 letter and 1 number."|translate}}
+            {{
+              "Password must contain at least 1 special character, 1 letter and 1 number."
+                | translate
+            }}
           </mat-error>
         </mat-form-field>
 
@@ -272,7 +304,8 @@
   </div>
   <mat-card-footer>
     Legas's fee is 10% from each donation you receive. The payment processor fee
-    is 1% + $0.30 per donation. By continuing, you agree to the Legas
+    is 1% for telebirr and 2.89% + 0.3 for paypal per donation. By continuing,
+    you agree to the Legas
     <a
       link
       routerLink="/terms"
