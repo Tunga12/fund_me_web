@@ -20,13 +20,12 @@ export class ReportReasonsComponent implements OnInit {
 
   reasons: ReportReasonType[] = [];
 
-  reportReasonTypeToBeEdited?: ReportReasonType;
+  reportReasonTypeToBeEdited?: ReportReasonType;//a  reason currently being edited
 
   reportReasonTypeSubscription?: Subscription;
 
   form!: FormGroup;
   isFormOpen: boolean=false;
-  reasonTypes: ReportReasonType[]=[];
 
   constructor(
     private reportReasonTypeService: ReportReasonTypeService,
@@ -47,7 +46,7 @@ export class ReportReasonsComponent implements OnInit {
     this.reportReasonTypeSubscription = this.reportReasonTypeService.getReportReasonTypes().subscribe(
       (reasons:ReportReasonType[]) => {
         this.loading = false;
-        this.reasonTypes = reasons;
+        this.reasons = reasons;
       },
       (error: HttpErrorResponse) => {
         this.loading = false;

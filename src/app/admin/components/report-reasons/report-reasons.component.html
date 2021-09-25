@@ -1,14 +1,14 @@
 <p *ngIf="reasons.length === 0 && !loading" [attr.align]="'center'">No reasons</p>
-<p *ngIf="loading" [attr.align]="'center'">Loading reasons...</p>
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
   <button
-    mat-raised-button
-    [color]="isFormOpen ? 'warn' : 'primary'"
-    (click)="toggleForm()"
+  mat-raised-button
+  [color]="isFormOpen ? 'warn' : 'primary'"
+  (click)="toggleForm()"
   >
-    {{ isFormOpen ? "Cancel" : "Add new" }}
-  </button>
-  <form
+  {{ isFormOpen ? "Cancel" : "Add new" }}
+</button>
+<p *ngIf="loading" [attr.align]="'center'">Loading reasons...</p>
+<form
     *ngIf="isFormOpen"
     [formGroup]="form"
     (ngSubmit)="
