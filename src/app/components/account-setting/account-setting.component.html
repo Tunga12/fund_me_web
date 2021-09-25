@@ -10,7 +10,7 @@
     [ngStyle.sm]="{ width: '60%' }"
     [ngStyle.lt-sm]="{ width: '90%' }"
   >
-    <h2 class="bold">{{"Acount settings"|translate}}</h2>
+    <h2 class="bold">{{"Account settings"|translate}}</h2>
     <mat-progress-spinner
       *ngIf="loading"
       fxFlexAlign="center center"
@@ -42,14 +42,14 @@
           </mat-error>
           <mat-error *ngIf="firstName?.touched && firstName?.errors?.minlength"
             >{{
-              "First name must be minimun."
+              "First name must be letters minimum."
                 | translate
                   : { minlength: firstName?.errors?.minlength.requiredLength }
             }}
           </mat-error>
 
           <mat-error *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
-            >{{ "First name cannot include whitespaces." | translate }}
+            >{{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field floatPlaceholder="auto" appearance="outline">
@@ -65,14 +65,14 @@
           </mat-error>
           <mat-error *ngIf="lastName?.touched && lastName?.errors?.minlength"
             >{{
-              "Last name must be minimum."
+              "Last name must be letters minimum."
                 | translate
                   : { minlength: lastName?.errors?.minlength.requiredLength }
             }}
           </mat-error>
 
           <mat-error *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
-            >{{ "Last name cannot include whitespaces." | translate }}
+            >{{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -132,7 +132,7 @@
             data-cy="fname-whitespace-error"
             *ngIf="phone?.touched && phone?.errors?.whiteSpace"
             >{{ "Phone number" | translate }}
-            {{ "cannot include whitespaces." | translate }}
+            {{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>

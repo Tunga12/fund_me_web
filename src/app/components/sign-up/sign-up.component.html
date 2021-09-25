@@ -63,14 +63,14 @@
           <mat-error
             data-cy="fname-maxlength-error"
             *ngIf="firstName?.touched && firstName?.errors?.maxlength"
-            >{{"First name must be maximun."| translate:{maxlength:firstName?.errors?.maxlength.requiredLength} }}
+            >{{"First name must be letters maximum."| translate:{maxlength:firstName?.errors?.maxlength.requiredLength} }}
           </mat-error>
 
           <mat-error
             data-cy="fname-whitespace-error"
             *ngIf="firstName?.touched && firstName?.errors?.whiteSpace"
             >{{ "First name" | translate }}
-            {{ "cannot include whitespaces." | translate }}
+            {{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
 
@@ -92,20 +92,20 @@
           <mat-error
             data-cy="lname-minlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.minlength"
-            >{{"Last name must be minimun."| translate:{ minlength:lastName?.errors?.minlength.requiredLength} }}
+            >{{"Last name must be letters minimum."| translate:{ minlength:lastName?.errors?.minlength.requiredLength} }}
           </mat-error>
 
           <mat-error
             data-cy="lname-maxlength-error"
             *ngIf="lastName?.touched && lastName?.errors?.maxlength"
-            >{{"Last name must be maximun."| translate:{maxlength:lastName?.errors?.maxlength.requiredLength } }}
+            >{{"Last name must be letters maximum."| translate:{maxlength:lastName?.errors?.maxlength.requiredLength } }}
           </mat-error>
 
           <mat-error
             data-cy="lname-whitespace-error"
             *ngIf="lastName?.touched && lastName?.errors?.whiteSpace"
             >{{ "Last name" | translate }}
-            {{ "cannot include whitespaces." | translate }}
+            {{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -134,7 +134,7 @@
           <mat-error
             data-cy="email-empty-error"
             *ngIf="email?.touched && email?.errors?.required"
-            >{{ "Please enter your email" | translate }}
+            >{{ "Please enter your email." | translate }}
           </mat-error>
         </mat-form-field>
 
@@ -164,7 +164,7 @@
             data-cy="fname-whitespace-error"
             *ngIf="phone?.touched && phone?.errors?.whiteSpace"
             >{{ "Phone number" | translate }}
-            {{ "cannot include whitespaces." | translate }}
+            {{ "cannot include white spaces." | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -209,7 +209,7 @@
             data-cy="password-weak-error"
             *ngIf="password?.touched &&(password?.errors?.pattern || !password?.errors?.minlength)"
           >
-            {{"Password must contain atleast 1 special character, 1 letter and 1 number."|translate}}
+            {{"Password must contain at least 1 special character, 1 letter and 1 number."|translate}}
           </mat-error>
         </mat-form-field>
 

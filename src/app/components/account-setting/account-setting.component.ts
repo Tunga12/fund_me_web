@@ -30,7 +30,7 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
   user!: User;
   userSub?: Subscription;
 
-  // validate the existance of whitesaces in our input
+  // validate the existence of white spaces in our input
   whiteSpaceValidator = new WhiteSpaceValidatorDirective();
 
   constructor(
@@ -101,7 +101,7 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
         this.form.patchValue(this.user);
         this.loading = false;
         this.snackBar.open(
-          'Update saved seccuessfully',
+          'Change saved successfully',
           'close',
           this.snackbarService.getConfig()
         );
@@ -119,7 +119,7 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
     );
   }
 
-  // opens the chane password dialog
+  // opens the change password dialog
   openChangePasswordDialog() {
     this.dialog.open(PasswordResetComponent);
   }
