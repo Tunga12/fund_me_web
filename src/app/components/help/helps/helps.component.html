@@ -7,7 +7,18 @@
   fxLayoutGap="10px"
   class="helps"
 >
-  <div *ngIf="helps.length === 0">
+<div *ngIf="loading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="80"
+    color="primary"
+    class="loading-spinner"
+  >
+  </mat-progress-spinner>
+</div>
+<mat-error class="bold" *ngIf="!loading && errorMessage">{{ errorMessage }}</mat-error>
+
+  <div *ngIf="helps.length === 0 && !loading">
     <h3>No helps in this category, please check later.</h3>
   </div>
   <mat-expansion-panel

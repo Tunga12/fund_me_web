@@ -7,24 +7,37 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-helps',
   templateUrl: './helps.component.html',
-  styleUrls: ['./helps.component.scss']
+  styleUrls: ['./helps.component.scss'],
 })
 export class HelpsComponent implements OnInit {
-  helps:Help[]=[];
- helpSub?:Subscription;
- private _category='';
-  constructor(private helpService: HelpService,private route: ActivatedRoute) {}
+  loading = false;
+  errorMessage = '';
+  helps: Help[] = [];
+  helpSub?: Subscription;
+  private _category = '';
+  constructor(
+    private helpService: HelpService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      (params)=>{
-        this._category=params.get('category')||'';
-        this.helpSub=this.helpService.getHelpsByCategory(this._category!).subscribe((helps) => {
-          this.helps = helps;
-          console.log(helps);
-        });
-      }
-    );
+    this.loading = true;
+    this.route.paramMap.subscribe((params) => {
+      this._category = params.get('category') || '';
+      this.helpSub = this.helpService
+        .getHelpsByCategory(this._category!)
+        .subscribe(
+          (helps) => {
+            this.helps = helps;
+            console.log(helps);
+            this.loading = false;
+          },
+          (error) => {
+            console.log(error.error);
+            this.errorMessage=error.error;
+          }
+        );
+    });
   }
 
   ngOnDestroy(): void {
