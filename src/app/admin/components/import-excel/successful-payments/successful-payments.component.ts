@@ -1,10 +1,16 @@
-import { Component, Input, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Payment } from 'src/app/admin/models/payment.model';
 import { Subscription } from 'rxjs';
-import { Title } from '@angular/platform-browser';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 
 @Component({
@@ -14,6 +20,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 })
 export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
   @Input() payments: Payment[] = [];
+  errorMessage = '';
   displayedColumns = [
     'firstName',
     'lastName',
@@ -34,15 +41,14 @@ export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
 
   constructor(
     private fundraiserService: FundraiserService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    
     this.dataSource.data = this.payments;
     this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 
   uploadPayments() {
@@ -71,11 +77,13 @@ export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
                   },
                   (error) => {
                     console.log(error);
+                    this.errorMessage = error.error;
                   }
                 );
             },
             (error) => {
               console.log(error.error);
+              this.errorMessage = error.error;
             }
           );
         if (index === this.payments.length - 1) {

@@ -24,6 +24,8 @@ import { AdminWithdrawalsService } from 'src/app/admin/services/admin-withdrawal
 export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
   @Input() payments: Payment[] = [];
   loading = false;
+  haveNoReasons: string[] = [];
+  errorMessage = '';
 
   displayedColumns = [
     'firstName',
@@ -57,8 +59,7 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
     this.dataSource.data = this.payments;
     this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  
+    // this.dataSource.sort = this.sort;
   }
 
   // get a fundraiser by its id, then decline its withdrawal request
@@ -69,6 +70,7 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
         this.performDeclineWithdrawalRequest(fundraiser.withdraw?._id!);
       },
       (error: HttpErrorResponse) => {
+        this.errorMessage = error.error;
         console.log(error.error);
       }
     );
@@ -83,6 +85,7 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
           console.log(result);
         },
         (error: HttpErrorResponse) => {
+          this.errorMessage = error.error;
           console.log(error.error);
         }
       );
@@ -93,11 +96,27 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
     this.payments.forEach((payment) => {
       if (!payment.reason) {
         console.log('please add reasons for all');
+        this.errorMessage = 'please add reasons for all';
+        this.haveNoReasons.push(payment.fundraiserId);
         return;
       }
-      this.declineWithdrawalRequest(payment.fundraiserId)
+      this.declineWithdrawalRequest(payment.fundraiserId);
       console.log('upload successful');
     });
+  }
+
+  reasonChanged(payment: Payment) {
+    if (payment.reason) {
+      if (this.haveNoReasons.includes(payment.fundraiserId)) {
+        let index = this.haveNoReasons.indexOf(payment.fundraiserId);
+        console.log(index);
+        this.haveNoReasons.splice(index , 1);
+        this.haveNoReasons.length===0?this.errorMessage = '':'';
+      }
+    } else {
+      this.haveNoReasons.push(payment.fundraiserId);
+      this.errorMessage = 'please add reasons for all';
+    }
   }
 
   ngOnDestroy() {
