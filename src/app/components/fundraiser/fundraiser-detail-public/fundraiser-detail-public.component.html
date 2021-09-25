@@ -11,6 +11,7 @@
     [classList]="'bg-white'"
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    ngClass.gt-xs="large-tool-bar"
   >
     <img
       data-cy="logo"
@@ -24,20 +25,21 @@
       fxLayoutAlign="end center"
       fxLayoutGap="5px"
     >
-      <a
+      <button
         data-cy="start-a-campaign-btn"
-        mat-button
+        mat-stroked-button
         [routerLink]="['/create']"
         class="nav-link"
+        color="primary"
       >
         {{ "Start a Campaign" | translate }}
-      </a>
+      </button>
       <mat-divider fxShow.gt-xs vertical style="height: 30px"></mat-divider>
       <a
         data-cy="login-btn"
         mat-button
+        color="primary"
         [routerLink]="['/sign-in']"
-        class="nav-link"
       >
         {{ "Log in" | translate }}
       </a>
