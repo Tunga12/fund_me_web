@@ -1,8 +1,15 @@
-
 <nav class="mat-elevation-z1">
-    <nav-bar></nav-bar>
-  </nav>
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px" class="helps">
+  <nav-bar></nav-bar>
+</nav>
+<div
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  fxLayoutGap="10px"
+  class="helps"
+>
+  <div *ngIf="helps.length === 0">
+    <h3>No helps in this category, please check later.</h3>
+  </div>
   <mat-expansion-panel
     [hideToggle]="false"
     *ngFor="let help of helps"
