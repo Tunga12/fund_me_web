@@ -41,7 +41,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     console.log(this.currentUser);
     
     // this.getCategories();
-    if (!this.currentUser) {
+    if (!this.currentUser?.firstName || !this.currentUser?.lastName) {
       this.getCurrentUser();
     }
 
