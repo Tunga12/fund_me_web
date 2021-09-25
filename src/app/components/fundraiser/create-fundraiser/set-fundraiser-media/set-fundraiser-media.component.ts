@@ -3,11 +3,7 @@ import { Router } from '@angular/router';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageService } from './../../../../services/image/image.service';
-import {
-  base64ToFile,
-  ImageCroppedEvent,
-  LoadedImage,
-} from 'ngx-image-cropper';
+import { base64ToFile } from 'ngx-image-cropper';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCropperComponent } from './../../../image-cropper/image-cropper.component';
 
@@ -43,11 +39,18 @@ export class SetFundraiserMediaComponent implements OnInit {
   nextStep() {
     this.loading = true;
     if (this.croppedImage) {
-      let file = base64ToFile(this.croppedImage);
+      let blob = base64ToFile(this.croppedImage);
+      var file = new File([blob], 'image.png', {
+        type: 'image/png',
+        lastModified: new Date().getTime(),
+      });
+
+      console.log(file.size);
       const formData: FormData = new FormData();
       formData.append('image', file);
       this.imageService.upload(formData).subscribe(
-        () => {
+        (response) => {
+          this.fundraiser.image = response;
           this.loading = false;
           this.next.emit(this.fundraiser);
         },
@@ -69,36 +72,41 @@ export class SetFundraiserMediaComponent implements OnInit {
 
   editImage() {
     let blob = base64ToFile(this.croppedImage);
-    var file = new File([blob], 'my_image.png', {
+    var file = new File([blob], 'image.png', {
       type: 'image/png',
       lastModified: new Date().getTime(),
     });
     this.form.get('image')?.setValue(file);
-    // let fl=new DataTransfer();
-    // fl.items.add(file);
-    // console.log(fl);
-    // this.original_image.target.files=fl
     console.log(this.original_image.srcElement.files);
     this.onImageChosen(this.original_image);
   }
 
   onImageChosen(event: any) {
+    console.log(event.target.files[0].size);
+    this.errorMessage = '';
     // open the cropper only if image is chosen
-    this.original_image = event;
     if (event.target.value) {
-      this.imageCropperDialog
-        .open(ImageCropperComponent, { data: { image: event } })
-        .afterClosed()
-        .subscribe((croppedImage) => {
-          console.log(croppedImage);
-          if (croppedImage) {
-            this.imageSrc = croppedImage;
-            this.fundraiser.image = croppedImage;
-            this.croppedImage = croppedImage;
-          }
-        });
-    }else{
-      this.errorMessage="No image chosen."
+      let size_in_mb = event.target.files[0].size / 1048576;
+
+      if (size_in_mb > 0.05) {
+        this.errorMessage =
+          'your image size is more than maximum, please choose an image with a lower size.';
+      } else {
+        this.original_image = event;
+        this.imageCropperDialog
+          .open(ImageCropperComponent, { data: { image: event } })
+          .afterClosed()
+          .subscribe((croppedImage) => {
+            console.log(croppedImage);
+            if (croppedImage) {
+              this.imageSrc = croppedImage;
+              this.fundraiser.image = croppedImage;
+              this.croppedImage = croppedImage;
+            }
+          });
+      }
+    } else {
+      this.errorMessage = 'No image chosen.';
     }
   }
 }

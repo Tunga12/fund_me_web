@@ -7,6 +7,7 @@
     }}
   </p>
 
+  <p [attr.align]="'center'" class="text-error" *ngIf="errorMessage">{{errorMessage}} </p>
   <ng-container *ngIf="imageSrc === '' && !loading; else elseTemplate">
     <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
     <button id="image-chooser">
