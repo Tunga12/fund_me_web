@@ -33,7 +33,7 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
   loading = false;
   constructor(
     private dialog: MatDialog,
-    private teamSevice: TeamService,
+    private teamService: TeamService,
     // private fundraiserServ: FundraiserService,
     private snackbarService: SnackbarService,
     private snackBar: MatSnackBar,
@@ -63,13 +63,13 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
     this.loading = true;
     let email = this.form.value['email'];
     console.log(email);
-    this.teamSub = this.teamSevice
+    this.teamSub = this.teamService
       .addMember({ email: email }, this.fundraiser._id!)
       .subscribe(
-         () => {
+        () => {
           this.loading = false;
           this.snackBar.open(
-            'Invaitation successful',
+            'Invitation successful',
             'close',
             this.snackbarService.getConfig()
           );
@@ -83,26 +83,6 @@ export class AddTeamMembersDialogComponent implements OnInit, OnDestroy {
         }
       );
   }
-
-  // // get fundriser using id
-  // async getFundriser() {
-  //   this.loading = true;
-  //   await this.fundraiserServ.getFundraiserAsync(this.fundraiser?._id!).then(
-  //     (fundraiser) => {
-  //       this.fundraiser = fundraiser;
-  //       this.loading = false;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       console.log(error.status);
-  //       this.loading = false;
-  //       this.errorMessage = navigator.onLine
-  //         ? error.error
-  //         : 'You are offline, please check your internet connection!';
-  //     }
-  //   );
-  // }
-
   removeEmail(email: string) {
     // let index = this.emails.indexOf(email);
     // this.emails.splice(index, 1);
