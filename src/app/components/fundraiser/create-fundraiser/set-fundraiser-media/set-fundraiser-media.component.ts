@@ -88,7 +88,7 @@ export class SetFundraiserMediaComponent implements OnInit {
     if (event.target.value) {
       let size_in_mb = event.target.files[0].size / 1048576;
 
-      if (size_in_mb > 0.05) {
+      if (size_in_mb > 1) {
         this.errorMessage =
           'your image size is more than maximum, please choose an image with a lower size.';
       } else {
