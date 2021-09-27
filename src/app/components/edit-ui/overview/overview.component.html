@@ -29,13 +29,15 @@
         placeholder="goal"
         type="number"
       />
-      <mat-icon matPrefix>monetization_on</mat-icon>
+      <!-- <mat-icon matPrefix>monetization_on</mat-icon> -->
+      <span matSuffix>ETB</span>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
         {{"Fundraiser goal is required!"|translate}}
       </mat-error>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
         {{"The minimum allowed goal is"|translate :{min:goalAmount?.errors?.min.min | currency} }}
       </mat-error>
+      
     </mat-form-field>
   </div>
 

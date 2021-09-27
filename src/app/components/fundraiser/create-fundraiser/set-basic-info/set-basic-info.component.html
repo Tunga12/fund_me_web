@@ -23,8 +23,8 @@
       type="number"
       min="1"
     />
-    <mat-icon matPrefix>monetization_on</mat-icon>
-    <span matSuffix>.00 ETB</span>
+    <!-- <mat-icon matPrefix>monetization_on</mat-icon> -->
+    <span matSuffix>ETB</span>
     <mat-error data-cy="goal-required-error" *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
       {{"Fundraiser goal is required!"|translate}}
     </mat-error>
