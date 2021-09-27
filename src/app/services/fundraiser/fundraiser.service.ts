@@ -97,9 +97,9 @@ export class FundraiserService {
     delete fundraiser._id;
     delete fundraiser.__v;
     delete fundraiser.beneficiary;
-    if (!fundraiser.category) {
-      delete fundraiser.category
-    }
+    // if (!fundraiser.category) {
+    //   delete fundraiser.category
+    // }
     let customFundraiser = {
       ...fundraiser,
       category: fundraiser.category?._id,

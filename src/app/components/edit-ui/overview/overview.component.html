@@ -6,23 +6,24 @@
     fxLayoutGap="10px"
   >
     <mat-form-field appearance="outline">
-      <mat-label>{{"Title"|translate}}</mat-label>
+      <mat-label>{{ "Title" | translate }}</mat-label>
       <input
         matInput
         formControlName="title"
         placeholder="Title of your campaign"
         type="text"
       />
-      <mat-error *ngIf="title?.touched && title?.errors?.required"
-        >{{"Title is required!"|translate}}</mat-error
-      >
-      <mat-error *ngIf="title?.touched && title?.errors?.max"
-        >{{"Title must be maximum letters."| translate:{length:title?.errors?.max.max} }}</mat-error
-      >
+      <mat-error *ngIf="title?.touched && title?.errors?.required">{{
+        "Title is required!" | translate
+      }}</mat-error>
+      <mat-error *ngIf="title?.touched && title?.errors?.max">{{
+        "Title must be maximum letters."
+          | translate: { length: title?.errors?.max.max }
+      }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label> {{"Goal"|translate}} </mat-label>
+      <mat-label> {{ "Goal" | translate }} </mat-label>
       <input
         matInput
         formControlName="goalAmount"
@@ -32,115 +33,33 @@
       <!-- <mat-icon matPrefix>monetization_on</mat-icon> -->
       <span matSuffix>ETB</span>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.required">
-        {{"Fundraiser goal is required!"|translate}}
+        {{ "Fundraiser goal is required!" | translate }}
       </mat-error>
       <mat-error *ngIf="goalAmount?.touched && goalAmount?.errors?.min">
-        {{"The minimum allowed goal is"|translate :{min:goalAmount?.errors?.min.min | currency} }}
+        {{
+          "The minimum allowed goal is"
+            | translate: { min: goalAmount?.errors?.min.min | currency }
+        }}
       </mat-error>
-      
     </mat-form-field>
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>{{"Category of your fundraiser"|translate}}</mat-label>
-    <mat-select formControlName="category" [compareWith]="compareObjects" [(value)]="fundraiser.category">
-      <mat-option>{{"Choose category"|translate}}</mat-option>
+    <mat-label>{{ "Category of your fundraiser" | translate }}</mat-label>
+    <mat-select
+      formControlName="category"
+      [compareWith]="compareObjects"
+      [(value)]="fundraiser.category"
+    >
+      <mat-option>{{ "Choose category" | translate }}</mat-option>
       <mat-option *ngFor="let category of categories" [value]="category">{{
-        category.name|translate
+        category.name | translate
       }}</mat-option>
     </mat-select>
     <mat-error *ngIf="category?.touched && category?.errors?.required">
-      {{"Category is required!"|translate}}
+      {{ "Category is required!" | translate }}
     </mat-error>
   </mat-form-field>
-
-  <!-- <p class="bold">Campaign link</p>
-<mat-divider></mat-divider>
-<h3>legas.com/f/sbdsbd</h3>
-<p>
-This link can only be changed once. Changing your link does not break your
-previous link
-</p>
-
-<mat-form-field appearance="outline">
-<mat-label> Campaign link </mat-label>
-<input
-  matInput
-  class="matInput"
-  #link
-  placeholder="goal"
-  value="hfdjfhd"
-  type="text"
-/>
-<mat-hint
-  ><h5 class="bold">preview: www.legas.com/{{ link.value }}</h5>
-</mat-hint>
-<mat-suffix matSuffix> {{ 45 - link.value.length }} </mat-suffix>
-</mat-form-field> -->
-
-  <!-- TEAM SETTINGS -->
-  <!-- <div class="setting">
-<h2 class="bold">Team Settings</h2>
-<p></p>
-<mat-form-field appearance="outline">
-  <mat-label> Team Name </mat-label>
-  <input
-    matInput
-    class="matInput"
-    #teamName
-    placeholder="goal"
-    value="hfdjfhd"
-    type="text"
-  />
-  <mat-suffix matSuffix>
-    {{ 45 - teamName.value.length }}
-  </mat-suffix>
-</mat-form-field>
-
-<label for="show-amount"
-  >Show the amount each team member has raised publicly
-</label>
-<mat-checkbox id="show-amount" value="" color="primary"></mat-checkbox>
-<button class="delete-btn" mat-button>Delete Team</button>
-</div>
--->
-  <!-- FUNDRAISER SETTINGS -->
-  <!-- <div class="setting">
-<h2 class="bold">Fundraiser Settings</h2>
-
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
-  <div style="width: 100%">
-    <label for="allow-comment">
-      Allow donors to leave comments on my fundraiser
-    </label>
-    <mat-checkbox id="allow-comment" value="" color="primary"></mat-checkbox>
-    <mat-divider></mat-divider>
-  </div>
-
-  <div style="width: 100%">
-    <label for="allow-donations"> Allow donations to my fundraiser </label>
-    <mat-checkbox
-      id="allow-donations"
-      value=""
-      color="primary"
-    ></mat-checkbox>
-    <mat-divider></mat-divider>
-  </div>
-  <div>
-    <label for="allow-search">
-      Allow my fundraiser to appear in search results
-    </label>
-    <mat-checkbox id="allow-search" value="" color="primary"></mat-checkbox>
-    <div class="info-text">
-      <span
-        >Your fundraiser will appear in Legas search results and other
-        online search engines. (If this is turned off, people will still be
-        able to view your fundraiser if they have the link)</span
-      >
-    </div>
-  </div>
-</div> -->
-
   <div class="save">
     <button
       [disabled]="form.invalid || !form.touched || loading"
@@ -149,23 +68,48 @@ previous link
       class="btn-large"
       style="width: 50% !important"
     >
-      {{"Save"|translate}}
+      {{ "Save" | translate }}
     </button>
     <!-- </div> -->
   </div>
 </form>
+<!-- TEAM SETTINGS -->
+<div class="setting">
+  <h2 class="bold">Team Settings</h2>
+  <button class="delete-btn" mat-button (click)="deleteTeamMembers()">
+    Delete Team
+  </button>
+</div>
+
+<!-- FUNDRAISER SETTINGS -->
+<div class="setting">
+  <h2 class="bold">Fundraiser Settings</h2>
+  <div style="width: 100%">
+    <mat-slide-toggle
+      (change)="onAllowDonationsChange($event)"
+      color="primary"
+      checked="fundraiser.isPublished"
+    >
+      Allow donations to my fundraiser
+    </mat-slide-toggle>
+    <!-- <mat-divider></mat-divider> -->
+  </div>
+</div>
 
 <div class="setting">
   <div>
-    <h2 class="bold">{{"Delete my fundraiser"|translate}}</h2>
+    <h2 class="bold">{{ "Delete my fundraiser" | translate }}</h2>
     <div class="info-text">
       <span>
-        {{"You will no longer have access to this fundraiser after deleting. If you
-        received donations, your donors will still be able to view a summary."|translate}}
+        {{
+          "You will no longer have access to this fundraiser after deleting. If you
+        received donations, your donors will still be able to view a summary."
+            | translate
+        }}
       </span>
     </div>
   </div>
   <button class="delete-btn bold" (click)="openDeleteDialog()" mat-button>
-    {{"Delete Fundraiser"|translate}}
+    {{ "Delete Fundraiser" | translate }}
   </button>
 </div>

@@ -49,14 +49,8 @@ export class StoryComponent implements OnInit, OnDestroy {
     let fundraiser = {
       ...this.fundraiser,
       ...this.form.value,
-      category: this.fundraiser.category?._id,
-      organizer: this.fundraiser.organizer?._id,
     };
     let fundraiserId = this.fundraiser._id!;
-    // remove the unnecessary elements: not needed for update
-    delete fundraiser._id;
-    delete fundraiser.__v;
-    delete fundraiser.beneficiary;
 
     this.fundraiserSub = this.fundraiserService
       .editFundraiser(fundraiserId, fundraiser)
@@ -64,7 +58,7 @@ export class StoryComponent implements OnInit, OnDestroy {
         (fundraiser) => {
           this.fundraiser = fundraiser;
           this.snackbar.open(
-            'Edit completed sccessfly',
+            'Edit completed successfully',
             'close',
             this.snackbarService.getConfig()
           );
@@ -80,6 +74,7 @@ export class StoryComponent implements OnInit, OnDestroy {
         }
       );
   }
+
   ngOnDestroy() {
     this.fundraiserSub?.unsubscribe();
   }

@@ -57,24 +57,15 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // post edit
   editFundraiser() {
     this.loading = true;
-    
-    let fundraiser={...this.fundraiser,...this.form.value,
-      category: this.fundraiser.category?._id,
-      organizer: this.fundraiser.organizer?._id,}
+    this.fundraiser={...this.fundraiser,...this.form.value}
     let fundraiserId = this.fundraiser._id!;
-    // remove the unnecessary elements: not needed for update
-    delete fundraiser._id;
-    delete fundraiser.__v;
-    delete fundraiser.beneficiary;
-    
+
     this.fundraiserSub = this.fundraiserService
-      .editFundraiser(fundraiserId, fundraiser)
+      .editFundraiser(fundraiserId, this.fundraiser)
       .subscribe(
         (fundraiser) => {
           this.loading = false;
           this.fundraiser = fundraiser;
-          console.log(this.fundraiser);
-
           this.form.patchValue(this.fundraiser);
           this.snackbar.open(
             'Edit completed successfully',
@@ -95,16 +86,17 @@ export class OverviewComponent implements OnInit, OnDestroy {
       );
   }
 
-  get goalAmount(): AbstractControl | null {
-    return this.form.get('goalAmount');
+  // allow of stop donations to this fundraiser
+  onAllowDonationsChange(event: any) {
+    console.log(event.checked);
+    this.fundraiser.isPublished = event.checked;
+    this.editFundraiser();
   }
 
-  get category(): AbstractControl | null {
-    return this.form.get('category');
-  }
-
-  public get title(): AbstractControl | null {
-    return this.form.get('title');
+  // delete team members of this fundraiser
+  deleteTeamMembers() {
+    this.fundraiser.teams = [];
+    this.editFundraiser();
   }
 
   // get categories
@@ -123,8 +115,23 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   // compare two objects
   compareObjects(o1: any, o2: any): boolean {
-     if(o1&&o2){ return o1.name === o2.name || o1.id === o2.id;}
-     return false
+    if (o1 && o2) {
+      return o1.name === o2.name || o1.id === o2.id;
+    }
+    return false;
+  }
+
+  // getters and setters for form controls
+  get goalAmount(): AbstractControl | null {
+    return this.form.get('goalAmount');
+  }
+
+  get category(): AbstractControl | null {
+    return this.form.get('category');
+  }
+
+  public get title(): AbstractControl | null {
+    return this.form.get('title');
   }
 
   ngOnDestroy(): void {

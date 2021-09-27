@@ -25,6 +25,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const imports = [
   MatBadgeModule,
@@ -58,6 +59,7 @@ const imports = [
   MatDialogModule,
   MatCheckboxModule,
   MatSidenavModule,
+  MatSlideToggleModule,
 ];
 const exports = imports;
 @NgModule({
