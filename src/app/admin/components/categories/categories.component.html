@@ -1,13 +1,13 @@
 <p *ngIf="categories.length === 0 && !loading" [attr.align]="'center'">No categories</p>
-<p *ngIf="loading" [attr.align]="'center'">Loading categories...</p>
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
   <button
-    mat-raised-button
-    [color]="isFormOpen ? 'warn' : 'primary'"
-    (click)="toggleForm()"
+  mat-raised-button
+  [color]="isFormOpen ? 'warn' : 'primary'"
+  (click)="toggleForm()"
   >
-    {{ isFormOpen ? "Cancel" : "Add new" }}
-  </button>
+  {{ isFormOpen ? "Cancel" : "Add new" }}
+</button>
+<p *ngIf="loading" [attr.align]="'center'">Loading categories...</p>
   <form
     *ngIf="isFormOpen"
     [formGroup]="form"
