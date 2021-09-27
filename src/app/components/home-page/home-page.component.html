@@ -70,13 +70,14 @@
       </h1>
     </div>
     <h1 class="color-gray mat-h1" data-cy="get-started-mobile">
-      {{ "Get Started Today" | translate }}.
+      {{ "Get Started Today." | translate }}
     </h1>
     <a
       routerLink="/create"
       mat-raised-button
       color="primary"
       class="btn-large"
+      [ngStyle.sm]="{ 'max-width': '40%' }"
       [ngStyle.lt-sm]="{ 'max-width': '60%' }"
       data-cy="start-btn-mobile"
     >

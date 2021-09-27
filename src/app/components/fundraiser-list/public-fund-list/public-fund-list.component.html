@@ -1,16 +1,16 @@
 <div
   fxLayout="row wrap"
-  fxLayoutAlign="start
- start"
+  fxLayout.lt-sm="column"
+  fxLayoutAlign.lt-sm="start center"
   fxLayoutGap="20px"
-  fxLayoutGap.xs="6px"
+  fxLayoutGap.lt-md="11px"
   fxLayoutGap.md="10px"
 >
   <mat-card
     *ngFor="let fundraiser of fundraisers"
     [routerLink]="['/fundraiser-detail', fundraiser._id]"
     fxFlex.lt-md="47"
-    fxFlex.lt-sm="100"
+    fxFlex.lt-sm="90"
     fxFlex.gt-sm="31"
   >
     <div class="mat-image-container">
@@ -40,7 +40,7 @@
       <p>
         <strong>{{ getTotalRaised(fundraiser) | currency: "ETB" }}</strong>
         raised of
-        {{ fundraiser.goalAmount }}
+        {{ fundraiser.goalAmount | currency: "ETB" }}
       </p>
     </mat-card-content>
   </mat-card>
