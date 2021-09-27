@@ -52,6 +52,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   search(keyword: string) {
+    if(keyword)
     this.router.navigate(['/s'], { queryParams: { q: keyword } });
   }
 
