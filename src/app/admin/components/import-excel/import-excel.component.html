@@ -6,7 +6,7 @@
 >
   <button mat-raised-button color="primary">
     <label>
-      Import successful payments
+      Import payments excel
       <input
         hidden
         type="file"
@@ -37,10 +37,10 @@
   </div>
 </div> -->
 <mat-tab-group *ngIf="payments.length>0" >
-  <mat-tab label="Successful">
+  <mat-tab label="Successful payments">
     <app-successful-payments [payments]="successfulPayments" ></app-successful-payments>
   </mat-tab>
-  <mat-tab label="Unsuccessful"> 
+  <mat-tab label="Unsuccessful payments"> 
   <app-unsuccessful-payments [payments]="unsuccessfulPayments" ></app-unsuccessful-payments>  
   </mat-tab>
 </mat-tab-group>

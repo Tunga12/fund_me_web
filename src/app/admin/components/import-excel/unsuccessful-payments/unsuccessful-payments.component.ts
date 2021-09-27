@@ -63,11 +63,11 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
   }
 
   // get a fundraiser by its id, then decline its withdrawal request
-  declineWithdrawalRequest(id: string) {
-    this.fundraiserSub = this.fundraiserService.getFundraiser(id).subscribe(
+  declineWithdrawalRequest(fundraiserId: string,reason:string) {
+    this.fundraiserSub = this.fundraiserService.getFundraiser(fundraiserId).subscribe(
       (fundraiser) => {
         console.log(fundraiser);
-        this.performDeclineWithdrawalRequest(fundraiser.withdraw?._id!);
+        this.performDeclineWithdrawalRequest(fundraiser.withdraw?._id!,reason);
       },
       (error: HttpErrorResponse) => {
         this.errorMessage = error.error;
@@ -77,9 +77,10 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
   }
 
   // decline a withdrawal request
-  performDeclineWithdrawalRequest(id: string) {
+  performDeclineWithdrawalRequest(withdrawalId: string, reason:string) {
+    this.errorMessage='';
     this.withdrawalSub = this.withdrawalService
-      .declineWithdrawalRequest(id)
+      .declineWithdrawalRequest(withdrawalId,reason)
       .subscribe(
         (result) => {
           console.log(result);
@@ -93,14 +94,16 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
 
   declineAll() {
     this.decliningStarted = true;
-    this.payments.forEach((payment) => {
+    this.payments.forEach((payment, index) => {
       if (!payment.reason) {
         console.log('please add reasons for all');
         this.errorMessage = 'please add reasons for all';
         this.haveNoReasons.push(payment.fundraiserId);
         return;
       }
-      this.declineWithdrawalRequest(payment.fundraiserId);
+      this.payments.splice(index,1);
+      this.dataSource.data=this.payments;
+      this.declineWithdrawalRequest(payment.fundraiserId,payment.reason);
       console.log('upload successful');
     });
   }

@@ -39,6 +39,10 @@
             <mat-header-cell *matHeaderCellDef> Bank account no.</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.bankAccountNo | titlecase}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="reason">
+            <mat-header-cell *matHeaderCellDef> Reason</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.reason | titlecase}} </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>

@@ -109,7 +109,7 @@ rejectWithdrawalRequest(withdrawal: Withdrawal) {
   let index=this.pendingWithdrawals.indexOf(withdrawal);
     this.pendingWithdrawals.splice(index,1);
 
-  this.withdrawalSub = this.withdrawalService.declineWithdrawalRequest(withdrawal._id!).subscribe(
+  this.withdrawalSub = this.withdrawalService.declineWithdrawalRequest(withdrawal._id!,'Your fundraiser is not relevant.').subscribe(
     () => {      
         this.snackBar.open('Request declined successfully!', 'Close', this.snackbarService.getConfig());
     }

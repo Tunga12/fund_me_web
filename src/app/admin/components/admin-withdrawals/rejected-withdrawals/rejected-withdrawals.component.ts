@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
 export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
   displayedColumns = [
     // 'firstName', 'lastName', 'email',
-     'bankName', 'bankAccountNo', 'date']
+     'bankName', 'bankAccountNo','reason', 'date']
 
   rejectedWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;
@@ -37,11 +37,12 @@ export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
   withdrawalSub?: Subscription;
   constructor(
     private withdrawalService: AdminWithdrawalsService,
-    private pageTitle: Title
+    private pageTitle: Title,
+    private cdr:ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
-    this.pageTitle.setTitle('withdrawals| pending');
+    this.pageTitle.setTitle('withdrawals| Rejected');
     // then get withdrawals
     this.getRejectedWithdrawals();
   }
@@ -53,8 +54,10 @@ export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
       (withdrawalsPage: WithdrawalsPage) => {
         this.loading = false;
         this.rejectedWithdrawals = withdrawalsPage.withdrawals;
-        this.dataSource = new MatTableDataSource<Withdrawal>(this.rejectedWithdrawals);
-
+        console.log(this.rejectedWithdrawals);
+        
+        this.dataSource.data = this.rejectedWithdrawals;
+        this.cdr.detectChanges();
         this.dataSource.paginator = this.paginator;
       },
       (error: HttpErrorResponse) => {
