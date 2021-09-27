@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -38,7 +38,8 @@ export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
 
   constructor(
     private withdrawalService: AdminWithdrawalsService,
-    private pageTitle: Title
+    private pageTitle: Title,
+    private cdr:ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +58,9 @@ export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
         this.approvedWithdrawals = withdrawalsPage.withdrawals;
         console.log('approved', this.approvedWithdrawals);
         
-        this.dataSource = new MatTableDataSource<Withdrawal>(this.approvedWithdrawals);
+        this.dataSource.data = this.approvedWithdrawals;
+        this.cdr.detectChanges();
+        this.dataSource.paginator=this.paginator;
       
       },
       (error: HttpErrorResponse) => {
