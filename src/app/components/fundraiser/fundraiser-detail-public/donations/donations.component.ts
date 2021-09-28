@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Donation } from 'src/app/models/donation.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
@@ -10,7 +14,7 @@ interface InputDatFormat {
   fundraiser: Fundraiser;
 }
 @Component({
-  selector: 'app-doantions',
+  selector: 'app-donations',
   templateUrl: './donations.component.html',
   styleUrls: ['./donations.component.scss'],
 })
@@ -20,7 +24,8 @@ export class DonationsComponent implements OnInit {
   topButtonLabel = '';
   constructor(
     private router: Router,
-    private fundariserService: FundraiserService,
+    private fundraiserService: FundraiserService,
+    private dialogRef: MatDialogRef<DonationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: InputDatFormat
   ) {}
 
@@ -40,13 +45,14 @@ export class DonationsComponent implements OnInit {
     this.toggleLabels();
     this.donations =
       this.type === 'Top'
-        ? this.fundariserService
+        ? this.fundraiserService
             .sortDonationsByAmountDSC(this.data.fundraiser.donations!)
             .slice(0, 5)
         : this.data.fundraiser.donations!;
   }
 
   gotoDonatePage() {
+    this.dialogRef.close();
     this.router.navigate(['/donate', this.data.fundraiser._id]);
   }
 }
