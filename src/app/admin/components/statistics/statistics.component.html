@@ -1,81 +1,110 @@
 <div>
-    <mat-form-field appearance="fill" fxFlex="50" fxFlex.lt-md="90">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-            <input #dateRangeStart matStartDate placeholder="Start date">
-            <input #dateRangeEnd matEndDate placeholder="End date"
-                (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
+  <mat-form-field appearance="fill" fxFlex="50" fxFlex.lt-md="90">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input #dateRangeStart matStartDate placeholder="Start date" />
+      <input
+        #dateRangeEnd
+        matEndDate
+        placeholder="End date"
+        (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
 </div>
 <div *ngIf="loading">
-    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
-    </mat-progress-spinner>
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  >
+  </mat-progress-spinner>
 </div>
-<div *ngIf="!loading" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-        <mat-icon class="mat-27">payment</mat-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-            <strong> {{getNumberOfFundraisersCreated()}} </strong>
-            <!-- <strong> CAMPAIGNS </strong> -->
-            <strong [ngPlural]="getNumberOfFundraisersCreated()">
-                <ng-template ngPluralCase="=1">
-                    CAMPAIGN
-                </ng-template>
-                <ng-template ngPluralCase="other">
-                    CAMPAIGNS
-                </ng-template>
-            </strong>
-        </div>
+<div
+  *ngIf="!loading"
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-around center"
+  fxLayoutGap="20px"
+>
+  <div
+    fxLayout="row"
+    class="container"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+  >
+    <mat-icon class="mat-27">payment</mat-icon>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <strong> {{ getNumberOfFundraisersCreated() }} </strong>
+      <!-- <strong> CAMPAIGNS </strong> -->
+      <strong [ngPlural]="getNumberOfFundraisersCreated()">
+        <ng-template ngPluralCase="=1"> CAMPAIGN </ng-template>
+        <ng-template ngPluralCase="other"> CAMPAIGNS </ng-template>
+      </strong>
     </div>
+  </div>
 
-    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-        <fa-icon [icon]="donateIcon" [size]="'3x'"></fa-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-            <strong> {{ filteredDonations.length }} </strong>
-            <strong [ngPlural]="filteredDonations.length">
-                <ng-template ngPluralCase="=1">
-                    Donation
-                </ng-template>
-                <ng-template ngPluralCase="other">
-                    Donations
-                </ng-template>
-            </strong>
-        </div>
+  <div
+    fxLayout="row"
+    class="container"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+  >
+    <fa-icon [icon]="donateIcon" [size]="'3x'"></fa-icon>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <strong> {{ filteredDonations.length }} </strong>
+      <strong [ngPlural]="filteredDonations.length">
+        <ng-template ngPluralCase="=1"> Donation </ng-template>
+        <ng-template ngPluralCase="other"> Donations </ng-template>
+      </strong>
     </div>
+  </div>
 
-    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-        <!-- <mat-icon class="mat-18">people</mat-icon> -->
-        <mat-icon class="mat-18">trending_up</mat-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-            <strong> {{ totalRaised|currency }} </strong>
-            <strong> RAISED </strong>
-        </div>
+  <div
+    fxLayout="row"
+    class="container"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+  >
+    <!-- <mat-icon class="mat-18">people</mat-icon> -->
+    <mat-icon class="mat-18">trending_up</mat-icon>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <strong> {{ totalRaised | currency: "ETB" }} </strong>
+      <strong> RAISED </strong>
     </div>
-    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-        <!-- <mat-icon class="mat-18"></mat-icon> -->
-        <fa-icon [icon]="coinIcon" [size]="'3x'"></fa-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-            <strong> {{ totalTip|currency }} </strong>
-            <strong> TIP </strong>
-        </div>
+  </div>
+  
+  <div
+    fxLayout="row"
+    class="container"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+  >
+    <!-- <mat-icon class="mat-18"></mat-icon> -->
+    <fa-icon [icon]="coinIcon" [size]="'3x'"></fa-icon>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <strong> {{ totalTip | currency: "ETB" }} </strong>
+      <strong> TIP </strong>
     </div>
+  </div>
 
-    <div fxLayout="row" class="container" fxLayoutAlign="space-between start" fxLayoutGap="30px">
-        <mat-icon class="mat-18">people</mat-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-            <strong> {{ filteredUsers.length }} </strong>
-            <!-- <strong> NEW USERS </strong> -->
-            <strong [ngPlural]="filteredUsers.length">
-                <ng-template ngPluralCase="=1">
-                    NEW USER
-                </ng-template>
-                <ng-template ngPluralCase="other">
-                    NEW USERS
-                </ng-template>
-            </strong>
-        </div>
+  <div
+    fxLayout="row"
+    class="container"
+    fxLayoutAlign="space-between start"
+    fxLayoutGap="30px"
+  >
+    <mat-icon class="mat-18">people</mat-icon>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
+      <strong> {{ filteredUsers.length }} </strong>
+      <!-- <strong> NEW USERS </strong> -->
+      <strong [ngPlural]="filteredUsers.length">
+        <ng-template ngPluralCase="=1"> NEW USER </ng-template>
+        <ng-template ngPluralCase="other"> NEW USERS </ng-template>
+      </strong>
     </div>
+  </div>
 </div>
