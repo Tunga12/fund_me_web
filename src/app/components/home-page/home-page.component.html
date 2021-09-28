@@ -1,4 +1,3 @@
-
 <nav class="mat-elevation-z1 sticky-top-0">
   <nav-bar></nav-bar>
 </nav>
@@ -272,10 +271,15 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="ready-to-start-fundraising">
+  <h3>Ready to start fundraising?</h3>
   <a routerLink="/create" mat-raised-button color="primary"
     >{{ "Start a Campaign" | translate }}
   </a>
 </div>
+
 <div class="bg-gray">
   <div
     fxLayout="row"
@@ -287,17 +291,20 @@
     ngStyle.gt-sm="margin: 20px auto; width: 80%"
   >
     <img
-      src="assets/images/mobile-app-users.jpg"
+      src="assets/images/mobile-app-users.png"
       alt=""
       fxFlex="58"
       fxFlex.sm="50"
       [ngStyle.xs]="{ width: '100%' }"
     />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
-      <span class="bold">{{"Available now"|translate}}</span>
-      <h1 class="bold">{{"The Legas app"|translate}}</h1>
+      <span class="bold">{{ "Available now" | translate }}</span>
+      <h1 class="bold">{{ "The Legas app" | translate }}</h1>
       <p class="color-gray">
-        {{"Start and manage fundraisers, engage with supporters, and discover important causes — all on the go"|translate}}
+        {{
+          "Start and manage fundraisers, engage with supporters, and discover important causes — all on the go"
+            | translate
+        }}
       </p>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
         <!-- <a target="_" href="https://apps.apple.com/app/apple-store/id734130700"><img src="/assets/images/img-app-store.png" alt=""></a> -->
