@@ -2,13 +2,11 @@
   <h2 data-cy="comment-header" class="bold">
     {{ "Comments" | translate }}({{ getNumberOfComments() }})
   </h2>
-  <div>
-    <mat-divider></mat-divider>
-  </div>
+  <mat-divider></mat-divider>
   <h3 data-cy="no-comments" *ngIf="getNumberOfComments() === 0">
     {{ "No comments to show" | translate }}
   </h3>
-  <div data-cy="comments" *ngFor="let donation of fundraiser?.donations; let last = last">
+  <ng-container data-cy="comments" *ngFor="let donation of fundraiser?.donations; let last = last">
     <div
       *ngIf="donation?.comment"
       fxLayout="row"
@@ -42,9 +40,8 @@
         </p>
       </div>
     </div>
-
-    <div *ngIf="!last">
+    <div *ngIf="!last && donation?.comment">
       <mat-divider></mat-divider>
     </div>
-  </div>
+  </ng-container>
 </div>
