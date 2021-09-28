@@ -71,57 +71,6 @@
         <overview [fundraiser]="fundraiser"></overview>
       </div>
       </span>
-
-      <!-- <div
-        *ngIf="index === 0"
-        class="tab-content"
-      >
-        <overview [fundraiser]="fundraiser"></overview>
-      </div>
-      <div
-        *ngIf="index === 1"
-        class="tab-content"
-        fxLayout="column"
-        fxLayoutAlign="center center"
-      >
-       <app-photo-tab-content [fundraiser]="fundraiser!"></app-photo-tab-content> 
-      </div>
-
-      <div *ngIf="index === 2" class="tab-content">
-        <story fxFlex="100" [fundraiser]="fundraiser"></story>
-      </div> -->
-
-      <!-- <div
-        *ngIf="index === 3"
-        [ngStyle.xs]="{ width: '100%', margin: '30px auto' }"
-        class="tab-content radio"
-      >
-        <p
-          style="width: 50%; text-align: justify"
-          [ngStyle.lt-md]="{ width: '100%' }"
-        >
-          Choose how you would like to receive emails when others donate or
-          comment on your fundraiser.
-        </p>
-        <mat-radio-group>
-          <mat-radio-button color="primary" value="yes" style="display: block">
-            Send me an email for every donation or comment
-          </mat-radio-button>
-          <mat-radio-button color="primary" value="no" style="display: block">
-            Send me a daily highlight of donations and
-            comments</mat-radio-button
-          >
-        </mat-radio-group>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="openAddPhotoOrVideoDialog()"
-          class="btn-large"
-          style="width: 30% !important"
-        >
-          {{ "Save changes" | translate }}
-        </button>
-      </div>-->
     </mat-tab>
   </mat-tab-group>
 </div>
