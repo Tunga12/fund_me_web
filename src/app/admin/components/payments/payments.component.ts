@@ -157,9 +157,9 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  // get fundraiser details 
-  // for those having donations 
-  // and totalRaised-totalWithdrawn>0, 
+  // get fundraiser details
+  // for those having donations
+  // and totalRaised-totalWithdrawn>0,
   // and its withdrawal request is accepted
   async getFilteredFundraiserDetail() {
     return new Promise(async (resolve) => {
@@ -255,7 +255,9 @@ export class PaymentsComponent implements OnInit {
       .getExchangeRate()
       .subscribe(
         (rate) => {
-          this.exchangeRate = rate;
+          if (rate) {
+            this.exchangeRate = rate.USD_ETB;
+          }
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);

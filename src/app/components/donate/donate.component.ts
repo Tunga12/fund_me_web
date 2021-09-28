@@ -202,9 +202,8 @@ export class DonateComponent implements OnInit, OnDestroy {
   donate() {
     this.loading = true;
     this.donation = { ...this.donation, ...this.form.value };
-    // remove the memberId field if its value is empty
+    // assign the memberId field to the organizers memberId if its value is empty
     if (!this.memberId || !this.memberId!.value) {
-      // delete this.donation['memberId'];
       this.donation.memberId = this.fundraiser?.teams![0].id._id;
     }
 

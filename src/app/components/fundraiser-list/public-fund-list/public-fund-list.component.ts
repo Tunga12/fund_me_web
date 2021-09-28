@@ -41,8 +41,7 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   // returns the percentage of the total raised by this fundraiser to its goal
   getPercentage(fund: Fundraiser): number {
     return (
-      ((fund.totalRaised?.birr ??
-        0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)) /
+      ((fund.totalRaised?.birr!+ (fund.totalRaised?.dollar! * this.exchangeRate)) /
         fund.goalAmount!) *
       100
     );
@@ -51,8 +50,7 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   // returns the total money raised by this fundraiser in birr
   getTotalRaised(fund: Fundraiser): number {
     return (
-      fund.totalRaised?.birr ??
-      0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)
+      fund.totalRaised?.birr!+ (fund.totalRaised?.dollar! * this.exchangeRate)
     );
   }
 
@@ -60,12 +58,15 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
     this.nextEvent.emit();
   }
 
+  // get the current exchange rate(USD->ETB)
   getExchangeRate() {
     this.exchangeRateSubscription = this.currencyConverterService
       .getExchangeRate()
       .subscribe(
         (rate) => {
-          this.exchangeRate = rate;
+          if (rate) {
+            this.exchangeRate = rate.USD_ETB;
+          }
         },
         (error: HttpErrorResponse) => {
           console.log(error.error);

@@ -38,13 +38,13 @@ export class WithdrawalsComponent implements OnInit, OnDestroy {
         // console.log(param);
         this.fundraiserId = param.get('id') || '';
         this.tab = param.get('tab') || '';
-        this.getFundriser();
+        this.getFundraiser();
       }
     );
   }
 
-  // get fundriser using id
-  getFundriser() {
+  // get fundraiser using id
+  getFundraiser() {
     this.loading = true;
     this.fundraiserServ.getFundraiser(this.fundraiserId).subscribe(
       (fundraiser) => {

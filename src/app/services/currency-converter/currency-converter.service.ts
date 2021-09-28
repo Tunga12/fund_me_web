@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class CurrencyConverterService {
   constructor(private http: HttpClient) {}
 
-  getExchangeRate(): Observable<number> {
-    return this.http.get<number>(
+  getExchangeRate(): Observable<{USD_ETB:number}> {
+    return this.http.get<{USD_ETB:number}>(
       'https://free.currconv.com/api/v7/convert?q=USD_ETB&compact=ultra&apiKey=320b48a5bd4a198cd402',{
         headers:{}
       }

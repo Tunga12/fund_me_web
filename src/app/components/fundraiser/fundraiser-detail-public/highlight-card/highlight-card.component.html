@@ -37,7 +37,7 @@ padding: 0px;"
 
     <!-- Show this div if donations have made to this fundraiser -->
     <div
-    class="full-width"
+      class="full-width"
       *ngIf="fundraiser?.donations?.length !== 0"
       fxLayout="column"
       fxLayoutGap="20px"
@@ -54,18 +54,18 @@ padding: 0px;"
         <div>
           <mat-divider> </mat-divider>
         </div>
-        <div *ngIf="hasDonated()">
+        <!-- <div *ngIf="hasDonated()">
           <h3 data-cy="you-have-donated" class="bold">
             {{
               "You've donated"
-                | translate: { amount: getMyDonationAmount() | currency }
+                | translate: { amount: getMyDonationAmount() | currency:"ETB"}
             }}
           </h3>
 
           <div>
             <mat-divider> </mat-divider>
           </div>
-        </div>
+        </div> -->
       </div>
       <div fxLayout="column" fxLayoutGap="10px">
         <div fxLayout="row" fxLayoutGap="20px">
@@ -98,7 +98,9 @@ padding: 0px;"
               </span>
             </div>
             <div fxLayout="row wrap" fxLayoutGap="20px">
-              <strong>{{ recentDonation?.amount | currency }}</strong>
+              <strong>{{
+                getAmountInBirr(recentDonation!) | currency: "ETB"
+              }}</strong>
               <a>{{ "Recent donation" | translate }} </a>
             </div>
           </div>
@@ -135,7 +137,9 @@ padding: 0px;"
               </span>
             </div>
             <div fxLayout="row wrap" fxLayoutGap="20px">
-              <strong>{{ topDonation?.amount | currency }}</strong>
+              <strong>{{
+                getAmountInBirr(topDonation!) | currency: "ETB"
+              }}</strong>
               <a href="">{{ "Top donation" | translate }} </a>
             </div>
           </div>
@@ -174,7 +178,9 @@ padding: 0px;"
             </span>
           </div>
           <div fxLayout="row wrap" fxLayoutGap="20px">
-            <strong>{{ firstDonation?.amount | currency }}</strong>
+            <strong>{{
+              getAmountInBirr(firstDonation!) | currency: "ETB"
+            }}</strong>
             <a href="">{{ "First donation" | translate }} </a>
           </div>
         </div>

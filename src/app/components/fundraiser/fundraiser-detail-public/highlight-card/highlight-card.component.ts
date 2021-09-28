@@ -1,9 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ShareDialogComponent } from 'src/app/components/share-dialog/share-dialog.component';
 import { Donation } from 'src/app/models/donation.model';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { ShareArgs } from 'src/app/models/share-buttons-args';
+import { CurrencyConverterService } from 'src/app/services/currency-converter/currency-converter.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { DonationsComponent } from '../donations/donations.component';
 
@@ -18,7 +21,13 @@ export class HighlightCardComponent implements OnInit {
   topDonation?: Donation;
   recentDonation?: Donation;
   firstDonation?: Donation;
+
+  currencyConversionRate: number = 1;
+
+  // subscriptions
+  currencySub?: Subscription;
   constructor(
+    private currencyConvServ: CurrencyConverterService,
     private fundraiserServ: FundraiserService,
     private dialog: MatDialog
   ) {}
@@ -27,17 +36,39 @@ export class HighlightCardComponent implements OnInit {
     this.getFirstDonation();
     this.getTopDonation();
     this.getRecentDonation();
+    this.getConversionRate();
   }
 
-  // check if the current user has donated to this fundraiser
-  hasDonated(): boolean {
-    return this.fundraiserServ.hasDonated(this.fundraiser!, this.userId);
+  // get currency conversion rate
+  getConversionRate() {
+    this.currencySub = this.currencyConvServ.getExchangeRate().subscribe(
+      (rate) => {
+        if (rate) {
+          this.currencyConversionRate = rate.USD_ETB;
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error);
+      }
+    );
   }
 
-  // get the donation amount I made to a fundraiser
-  getMyDonationAmount(): number {
-    return this.fundraiserServ.myDonation(this.fundraiser!, this.userId);
+  // returns donation amount in birr
+  getAmountInBirr(donation: Donation) {
+        return donation.paymentMethod.toLowerCase() === 'paypal'
+      ? donation.amount * this.currencyConversionRate
+      : donation.amount;
   }
+
+  // // check if the current user has donated to this fundraiser
+  // hasDonated(): boolean {
+  //   return this.fundraiserServ.hasDonated(this.fundraiser!, this.userId);
+  // }
+
+  // // get the donation amount I made to a fundraiser
+  // getMyDonationAmount(): number {
+  //   return this.fundraiserServ.myDonation(this.fundraiser!, this.userId);
+  // }
 
   // get the first donation of this fundraiser
   getFirstDonation() {
@@ -52,7 +83,7 @@ export class HighlightCardComponent implements OnInit {
       this.fundraiser?.donations!
     );
   }
-  // get recent donation of this fudraiser
+  // get recent donation of this fundraiser
   getRecentDonation() {
     this.recentDonation = this.fundraiserServ.getRecentDonation(
       this.fundraiser?.donations!
