@@ -138,21 +138,29 @@ export class PostAnUpdateComponent implements OnInit, OnDestroy {
 
   onImageChosen(event: any) {
     this.errorMessage = '';
+
     // open the dialog only if image is chosen
     if (event.target.value) {
-      this.imageCropperDialog
-        .open(UpdateImageCropperComponent, {
-          data: { image: event, mode: this.mode },
-        })
-        .afterClosed()
-        .subscribe((croppedImage: any) => {
-          console.log(croppedImage);
+      let size_in_mb = event.target.files[0].size / 1048576;
 
-          if (croppedImage) {
-            this.update.image = croppedImage;
+      if (size_in_mb > 1) {
+        this.errorMessage =
+          'your image size is more than maximum, please choose an image with a lower size.';
+      } else {
+        this.imageCropperDialog
+          .open(UpdateImageCropperComponent, {
+            data: { image: event, mode: this.mode },
+          })
+          .afterClosed()
+          .subscribe((croppedImage: any) => {
             console.log(croppedImage);
-          }
-        });
+
+            if (croppedImage) {
+              this.update.image = croppedImage;
+              console.log(croppedImage);
+            }
+          });
+      }
     } else {
       this.errorMessage = 'No image chosen.';
     }

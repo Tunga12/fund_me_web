@@ -6,6 +6,10 @@
   <mat-divider></mat-divider>
 </div>
 <mat-dialog-content>
+  <mat-error *ngIf="errorMessage">
+    {{ errorMessage }}
+  </mat-error>
+
   <form
     [formGroup]="form"
     (ngSubmit)="mode === 'Edit' ? editUpdate(update) : postUpdate()"
@@ -39,7 +43,7 @@
         accept="image/jpeg,image/png,image/gif, image/bmp"
         (change)="onImageChosen($event)"
       />
-      {{ "Add photo" | translate }}
+      {{mode === 'Edit' ?"Change photo": "Add photo" | translate }}
     </label>
 
     <img
@@ -55,10 +59,7 @@
       fxFlexAlign="center"
     ></mat-progress-bar>
 
-    <mat-error *ngIf="errorMessage">
-      {{ errorMessage }}
-    </mat-error>
-
+    
     <button
       [disabled]="form.invalid || loading"
       mat-raised-button
