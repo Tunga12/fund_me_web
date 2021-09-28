@@ -179,10 +179,12 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   // go to paypal page
   goToPayPal() {
-    // remove the memberId field if its value is empty
+    // // remove the memberId field if its value is empty
     if (!this.memberId || !this.memberId!.value) {
-      delete this.donation['memberId'];
+      // delete this.donation['memberId'];
+      this.donation.memberId = this.fundraiser?.teams![0].id._id;
     }
+
     if (!this.donation.comment) {
       delete this.donation['comment'];
     }
@@ -202,20 +204,25 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.donation = { ...this.donation, ...this.form.value };
     // remove the memberId field if its value is empty
     if (!this.memberId || !this.memberId!.value) {
-      delete this.donation['memberId'];
+      // delete this.donation['memberId'];
+      this.donation.memberId = this.fundraiser?.teams![0].id._id;
     }
 
     this.donationSub = this.donationService
       .createDonation(this.fundraiserId, this.donation)
       .subscribe(
         (response: HttpResponse<any>) => {
+          console.log(response);
+
           this.snackBar.open(
             'Donation successfully completed',
             'close',
             this.snackbarService.getConfig()
           );
-          this.loading = false;
-          this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
+          setTimeout(() => {
+            this.loading = false;
+            this.router.navigate(['/fundraiser-detail', this.fundraiserId]);
+          }, 2000);
         },
         (error: HttpErrorResponse) => {
           this.errorMessage = error.error;
