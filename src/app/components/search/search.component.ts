@@ -15,7 +15,7 @@ import { CurrencyConverterService } from 'src/app/services/currency-converter/cu
 })
 export class SearchComponent implements OnInit , OnDestroy{
   param = '';
-  loading = true; // to show loading spinner till the fundraisers are available
+  loading = false; // to show loading spinner till the fundraisers are available
   errorMessage = '';
 
   searchedFundraisers: Fundraiser[] = [];
@@ -31,7 +31,6 @@ export class SearchComponent implements OnInit , OnDestroy{
     private fundraiserService: FundraiserService,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
-    private currencyConverterService: CurrencyConverterService,
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +43,7 @@ export class SearchComponent implements OnInit , OnDestroy{
 
   //search fundraisers of the current page
   searchFundraisers() {
+    this.loading=true;
     this.fundraiserSub = this.fundraiserService
       .search(this.param, this.currentPage)
       .subscribe(
@@ -73,9 +73,6 @@ export class SearchComponent implements OnInit , OnDestroy{
     this.currentPage += 1;
     this.searchFundraisers();
   }
-
- 
-
    
   // unsubscribe if from all subscriptions
   ngOnDestroy(): void {
