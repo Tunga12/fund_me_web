@@ -114,9 +114,10 @@ export class FundraiserService {
   }
 
   // delete fundraiser by id
-  deleteFundraiser(fundraiserId: string): Observable<string> {
-    return this.http.delete<string>(
-      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`
+  deleteFundraiser(fundraiserId: string){
+    return this.http.delete(
+      `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
+      {responseType:'text'}
     );
   }
 

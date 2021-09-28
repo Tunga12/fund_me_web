@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./delete-dialog.component.scss'],
 })
 export class DeleteDialogComponent implements OnInit, OnDestroy {
-  loading = false; //to show a loading indiacater
+  loading = false;
   errorMessage = '';
   fundraiserSub?: Subscription;
   fundraiser!: Fundraiser;
@@ -22,8 +22,7 @@ export class DeleteDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Fundraiser
-  ) {  }
-
+  ) {}
 
   ngOnInit(): void {
     this.fundraiser = this.data;
@@ -32,16 +31,13 @@ export class DeleteDialogComponent implements OnInit, OnDestroy {
   deleteFundraiser() {
     this.errorMessage = '';
     this.loading = true;
-    let fundId = this.activatedRoute.snapshot.paramMap.get('id');
     this.fundraiserSub = this.fundraiserService
-      .deleteFundraiser(this.fundraiser._id ?? fundId ?? '')
+      .deleteFundraiser(this.fundraiser._id!)
       .subscribe(
         () => {
           this.loading = false;
           this.dialogRef.close();
-          this.router.navigateByUrl(
-            `/my-fundraisers/${this.fundraiser.organizer?._id}`
-          );
+          this.router.navigate([`/my-fundraisers`, 'organizer']);
         },
         (error: HttpErrorResponse) => {
           this.loading = false;

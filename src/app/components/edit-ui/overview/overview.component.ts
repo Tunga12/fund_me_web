@@ -32,6 +32,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   fundraiserSub?: Subscription;
   loading = false;
   errorMessage = '';
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,15 +58,17 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // post edit
   editFundraiser() {
     this.loading = true;
-    this.fundraiser={...this.fundraiser,...this.form.value}
+    let newFundraiser=JSON.parse(JSON.stringify({...this.fundraiser,...this.form.value}))
     let fundraiserId = this.fundraiser._id!;
 
     this.fundraiserSub = this.fundraiserService
-      .editFundraiser(fundraiserId, this.fundraiser)
+      .editFundraiser(fundraiserId, newFundraiser)
       .subscribe(
         (fundraiser) => {
           this.loading = false;
-          this.fundraiser = fundraiser;
+          delete fundraiser.category;
+          delete fundraiser.organizer;
+          this.fundraiser = {...this.fundraiser,...fundraiser};
           this.form.patchValue(this.fundraiser);
           this.snackbar.open(
             'Edit completed successfully',
