@@ -7,13 +7,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { FundraiserPage } from 'src/app/models/fundraiser-page.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { CurrencyConverterService } from 'src/app/services/currency-converter/currency-converter.service';
 
 @Component({
@@ -23,9 +19,10 @@ import { CurrencyConverterService } from 'src/app/services/currency-converter/cu
 })
 export class PublicFundListComponent implements OnInit, OnDestroy {
   @Input() fundraisers!: Fundraiser[];
+  @Input() loading!: boolean;
   @Input() hasNext!: boolean;
   @Output() nextEvent = new EventEmitter();
-
+  
   exchangeRate: number = 1;
 
   exchangeRateSubscription?: Subscription;

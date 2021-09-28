@@ -9,6 +9,7 @@ import { Fundraiser } from 'src/app/models/fundraiser.model';
 export class MyFundListComponent{
   @Input() fundraisers!: Fundraiser[];
   @Input() hasNext!: boolean;
+  @Input() loading!: boolean;
   @Output() nextEvent=new EventEmitter();
   constructor() {}
 

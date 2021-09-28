@@ -46,6 +46,15 @@
   </mat-card>
 
   <div fxFlexAlign="center" *ngIf="hasNext" (click)="nextPage()">
+    <div *ngIf="loading">
+      <mat-progress-spinner
+        mode="indeterminate"
+        [value]="80"
+        color="primary"
+        class="loading-spinner"
+      >
+      </mat-progress-spinner>
+    </div>
     <a>See more</a>
   </div>
 </div>

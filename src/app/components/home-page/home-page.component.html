@@ -119,6 +119,7 @@
   <app-public-fund-list
     data-cy="fundraisers-list"
     [fundraisers]="fundraisers"
+    [loading]="loading" 
     [hasNext]="hasNext()"
     (nextEvent)="nextPage()"
   >
