@@ -1,28 +1,20 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
   <!-- search field -->
-  <div
-    class="search-container"
-    fxFlex.gt-xs="50"
-    fxFlex.lt-sm="80"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="0px"
-  >
-    <input
-      data-cy="search-field"
-      id="search-field"
-      matInput
-      #key
-      type="search"
-      placeholder="Search users by email"
-      (keyup)="search(key.value)"
-    />
-    <span id="search-icon" matSuffix>
-      <mat-icon class="mat-18" (click)="search(key.value)"
-        >search</mat-icon
-      ></span
-    >
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>User email address </mat-label>
+      <input
+        data-cy="search-field"
+        id="search-field"
+        matInput
+        #key
+        placeholder="Search users by email"
+        (keyup)="search(key.value)"
+        email
+      />
+      <span matSuffix>
+        <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon>
+      </span>
+    </mat-form-field>
 
   <div *ngIf="loading">
     <mat-progress-spinner
@@ -34,18 +26,43 @@
     </mat-progress-spinner>
   </div>
 
-  <p>{{ errorMessage }}</p>  
-    <div *ngIf="!loading && key.value && user===undefined" >
-      A user with this email doesn't exist.
-    </div>
+  <p>{{ errorMessage }}</p>
+  <div *ngIf="!loading && key.value && user === undefined">
+    A user with this email doesn't exist.
+  </div>
 
-  <div *ngIf="!loading && user" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5px" fxFlex.gt-xs="60" fxFlex.lt-sm="90" class="mat-elevation-z10 user-info">
-    
-    <div fxFlexAlign="end" *ngIf="user" fxLayout="row" fxLayoutGap="20px"> 
-        <a *ngIf="!user?.isVerified" (click)="verifyUser(user!)" mat-raised-button color="primary" >Verify</a>
-        <a *ngIf="user?.isVerified" mat-raised-button color="primary" class="verified"><mat-icon class="mat-18">check</mat-icon> Verified</a>
-        <a *ngIf="user?.isVerified" mat-raised-button color="warn" (click)="unVerifyUser(user)"><mat-icon class="mat-18">cancel</mat-icon> Refute</a>
-      </div>
+  <div
+    *ngIf="!loading && user"
+    fxLayout="column"
+    fxLayoutAlign="start start"
+    fxLayoutGap="5px"
+    fxFlex.gt-xs="60"
+    fxFlex.lt-sm="90"
+    class="mat-elevation-z10 user-info"
+  >
+    <div fxFlexAlign="end" *ngIf="user" fxLayout="row" fxLayoutGap="20px">
+      <a
+        *ngIf="!user?.isVerified"
+        (click)="verifyUser(user!)"
+        mat-raised-button
+        color="primary"
+        >Verify</a
+      >
+      <a
+        *ngIf="user?.isVerified"
+        mat-raised-button
+        color="primary"
+        class="verified"
+        ><mat-icon class="mat-18">check</mat-icon> Verified</a
+      >
+      <a
+        *ngIf="user?.isVerified"
+        mat-raised-button
+        color="warn"
+        (click)="unVerifyUser(user)"
+        ><mat-icon class="mat-18">cancel</mat-icon> Refute</a
+      >
+    </div>
     <p><strong>First name:</strong> {{ user?.firstName | titlecase }}</p>
     <p><strong>Last name:</strong> {{ user?.lastName | titlecase }}</p>
     <p><strong>Email:</strong> {{ user?.email | titlecase }}</p>
