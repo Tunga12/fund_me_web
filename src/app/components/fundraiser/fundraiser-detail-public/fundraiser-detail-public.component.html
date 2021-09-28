@@ -153,6 +153,7 @@
           data-cy="data-mobile"
           fxHide.gt-xs
           [fundraiser]="fundraiser!"
+          [exchangeRate]="exchangeRate"
           [ngStyle]="{ width: '100%' }"
         ></app-stat>
       </div>
@@ -268,7 +269,9 @@
           data-cy="card-mobile"
           fxHide.gt-xs
           [fundraiser]="fundraiser!"
+          [exchangeRate]="exchangeRate"
           fxFlex="100"
+
         ></app-highlight-card>
 
         <!-- Updates section -->
@@ -287,7 +290,9 @@
         <!-- end of organizer and beneficiary -->
 
         <!-- Comment section -->
-        <app-comment-section [fundraiser]="fundraiser!"></app-comment-section>
+        <app-comment-section 
+        [exchangeRate]="exchangeRate"
+        [fundraiser]="fundraiser!"></app-comment-section>
         <!--End of Comment section -->
       </div>
     </div>
@@ -297,6 +302,7 @@
       data-cy="card-desktop"
       fxHide.lt-sm
       [fundraiser]="fundraiser!"
+      [exchangeRate]="exchangeRate"
       id="right-side-card"
       fxFlex.sm="40"
       fxFlex.gt-sm="30"

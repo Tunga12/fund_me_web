@@ -6,6 +6,7 @@ padding: 0px;"
     <app-stat
       data-cy="data"
       [fundraiser]="fundraiser!"
+      [exchangeRate]="exchangeRate"
       [ngStyle]="{ width: '100%' }"
       fxHide.lt-sm
     ></app-stat>
@@ -99,7 +100,7 @@ padding: 0px;"
             </div>
             <div fxLayout="row wrap" fxLayoutGap="20px">
               <strong>{{
-                getAmountInBirr(recentDonation!) | currency: "ETB"
+                getDonationAmountInBirr(recentDonation!) | currency: "ETB"
               }}</strong>
               <a>{{ "Recent donation" | translate }} </a>
             </div>
@@ -138,7 +139,7 @@ padding: 0px;"
             </div>
             <div fxLayout="row wrap" fxLayoutGap="20px">
               <strong>{{
-                getAmountInBirr(topDonation!) | currency: "ETB"
+                getDonationAmountInBirr(topDonation!) | currency: "ETB"
               }}</strong>
               <a href="">{{ "Top donation" | translate }} </a>
             </div>
@@ -179,7 +180,7 @@ padding: 0px;"
           </div>
           <div fxLayout="row wrap" fxLayoutGap="20px">
             <strong>{{
-              getAmountInBirr(firstDonation!) | currency: "ETB"
+              getDonationAmountInBirr(firstDonation!) | currency: "ETB"
             }}</strong>
             <a href="">{{ "First donation" | translate }} </a>
           </div>

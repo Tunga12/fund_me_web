@@ -30,6 +30,8 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   reasonsList: ReportReasonType[] = [];
 
+  // currency exchange rate USD->ETB
+  exchangeRate = 1;
 
   user!: User;
   errorMessage = '';
@@ -39,17 +41,18 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   fundraiserId: string = '';
   fundraiser?: Fundraiser;
 
+  // subscriptions
   fundSub?: Subscription;
   userSub?: Subscription;
   reasonSub?: Subscription;
+  currencySub?: Subscription;
   constructor(
+    private currencyConvServ: CurrencyConverterService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     private reasonsService: ReportReasonTypesService,
-    private snackBar: MatSnackBar,
     private userService: UserService,
-    private snackbarService: SnackbarService,
     public fundraiserService: FundraiserService,
     public authService: AuthService
   ) {}
@@ -59,7 +62,6 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     // get the id parameter from router
     this.activatedRoute.paramMap.subscribe((params) => {
       this.fundraiserId = params.get('id') ?? '';
-
       // console.log(this.fundraiserId)
     });
 
@@ -71,8 +73,24 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
     // get all reasons
     this.getReportReasons();
+    this.getConversionRate();
   }
 
+  // get currency conversion rate
+  getConversionRate() {
+    this.currencySub = this.currencyConvServ.getExchangeRate().subscribe(
+      (rate) => {
+        if (rate) {
+          this.exchangeRate = rate.USD_ETB;
+          console.log(rate);
+          
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error);
+      }
+    );
+  }
   // get current user to know admin or not
   getUser() {
     this.userSub = this.userService.getCurrentUser().subscribe((user) => {
@@ -113,7 +131,6 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       (fundraiser) => {
         this.fundraiser = fundraiser;
         this.loading = false;
-
 
         console.log(this.fundraiser);
         console.log(
@@ -187,8 +204,6 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
         this.reasonsList = reasons;
       });
   }
-
- 
 
   ngOnDestroy(): void {
     this.fundSub?.unsubscribe();

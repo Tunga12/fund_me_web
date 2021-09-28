@@ -19,7 +19,7 @@
       />
       <div fxLayout="column">
         <span data-cy="comment-info" class="bold">
-          <strong #value hidden>{{ donation.amount | currency }}</strong>
+          <strong #value hidden>{{ getDonationAmount(donation) | currency:"ETB" }}</strong>
           <span *ngIf="donation.isAnonymous">{{
             "Anonymous" | translate
           }}</span>
@@ -40,8 +40,8 @@
         </p>
       </div>
     </div>
-    <div *ngIf="!last && donation?.comment">
+    <div *ngIf="!last && donation?.comment && getNumberOfComments()>1">
       <mat-divider></mat-divider>
     </div>
-  </ng-container>
+  </ng-container> 
 </div>

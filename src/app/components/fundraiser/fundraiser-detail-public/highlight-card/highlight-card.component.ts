@@ -18,16 +18,14 @@ import { DonationsComponent } from '../donations/donations.component';
 export class HighlightCardComponent implements OnInit {
   userId = localStorage.getItem('userId') || '';
   @Input() fundraiser!: Fundraiser;
+  @Input() exchangeRate!:number;
+
   topDonation?: Donation;
   recentDonation?: Donation;
   firstDonation?: Donation;
 
-  currencyConversionRate: number = 1;
 
-  // subscriptions
-  currencySub?: Subscription;
   constructor(
-    private currencyConvServ: CurrencyConverterService,
     private fundraiserServ: FundraiserService,
     private dialog: MatDialog
   ) {}
@@ -36,27 +34,12 @@ export class HighlightCardComponent implements OnInit {
     this.getFirstDonation();
     this.getTopDonation();
     this.getRecentDonation();
-    this.getConversionRate();
-  }
-
-  // get currency conversion rate
-  getConversionRate() {
-    this.currencySub = this.currencyConvServ.getExchangeRate().subscribe(
-      (rate) => {
-        if (rate) {
-          this.currencyConversionRate = rate.USD_ETB;
-        }
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.error);
-      }
-    );
-  }
+     }
 
   // returns donation amount in birr
-  getAmountInBirr(donation: Donation) {
+  getDonationAmountInBirr(donation: Donation) {
         return donation.paymentMethod.toLowerCase() === 'paypal'
-      ? donation.amount * this.currencyConversionRate
+      ? donation.amount * this.exchangeRate
       : donation.amount;
   }
 
@@ -94,7 +77,7 @@ export class HighlightCardComponent implements OnInit {
   donations(type: string) {
     this.dialog
       .open(DonationsComponent, {
-        data: { type: type, fundraiser: this.fundraiser },
+        data: { type: type, fundraiser: this.fundraiser,exchangeRate:this.exchangeRate },
       })
       .afterClosed()
       .subscribe((close_result) => console.log(close_result));

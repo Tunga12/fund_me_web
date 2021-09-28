@@ -6,16 +6,20 @@
       fxLayoutAlign="space-between start"
       fxLayoutGap="30px"
     >
-      <h2 data-cy="donations-title" class="bold" matDialogTitle>{{ type| translate }}<span fxHide.lt-md>{{"donations"| translate}}</span></h2>
+      <h2 data-cy="donations-title" class="bold" matDialogTitle>
+        {{ type | translate
+        }}<span fxHide.lt-md>{{ "donations" | translate }}</span>
+      </h2>
       <div fxLayout="row" fxLayoutGap="20px">
         <button
-        data-cy="toggle-btn"
+          data-cy="toggle-btn"
           mat-stroked-button
           (click)="getDonations()"
           style="border-radius: 20px"
         >
           <mat-icon *ngIf="type === 'All'" class="mat-18">sort</mat-icon>
-          {{ topButtonLabel|translate }} <span fxHide.lt-md>{{"donations"|translate}}</span>
+          {{ topButtonLabel | translate }}
+          <span fxHide.lt-md>{{ "donations" | translate }}</span>
         </button>
         <span data-cy="close-btn" mat-dialog-close class="close-dialog">
           <mat-icon class="mat-18">close</mat-icon>
@@ -23,12 +27,12 @@
       </div>
     </div>
     <button
-    data-cy="donate-btn"
+      data-cy="donate-btn"
       mat-raised-button
       (click)="gotoDonatePage()"
       class="styled-button donate btn-large"
     >
-      <mat-icon>attach_money</mat-icon> {{"Donate now"| translate}}
+      <mat-icon>attach_money</mat-icon> {{ "Donate now" | translate }}
     </button>
   </div>
   <mat-divider></mat-divider>
@@ -44,16 +48,19 @@
             fxLayoutAlign="start start"
             fxLayoutGap="10px"
           >
-            <span data-cy="donor-name" *ngIf="donation?.isAnonymous">{{"Anonymous"|translate}}</span>
+            <span data-cy="donor-name" *ngIf="donation?.isAnonymous">{{
+              "Anonymous" | translate
+            }}</span>
             <span data-cy="donor-name" *ngIf="!donation?.isAnonymous">{{
               donation?.userId?.firstName! + " " + donation?.userId?.lastName
                 | titlecase
             }}</span>
           </div>
           <span data-cy="donation-time">
-            <strong>{{ donation.amount }} </strong> •{{
-              donation.date | timeago
-            }}
+            <strong
+              >{{ getDonationAmount(donation) | currency: "ETB" }}
+            </strong>
+            •{{ donation.date | timeago }}
           </span>
         </div>
       </div>

@@ -12,6 +12,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 interface InputDatFormat {
   type: string;
   fundraiser: Fundraiser;
+  exchangeRate:number;
 }
 @Component({
   selector: 'app-donations',
@@ -22,6 +23,7 @@ export class DonationsComponent implements OnInit {
   donations!: Donation[];
   type = ''; //to know top donations or all donations
   topButtonLabel = '';
+  exchangeRate: number=1;
   constructor(
     private router: Router,
     private fundraiserService: FundraiserService,
@@ -33,6 +35,7 @@ export class DonationsComponent implements OnInit {
     this.type = this.data.type;
     this.donations = this.data.fundraiser.donations!;
     this.topButtonLabel = this.type === 'Top' ? 'All' : 'Top';
+    this.exchangeRate=this.data.exchangeRate;
   }
   // open the donation form
 
@@ -41,6 +44,7 @@ export class DonationsComponent implements OnInit {
     this.topButtonLabel = this.type === 'Top' ? 'All' : 'Top';
   }
 
+  // get donations based on label
   getDonations() {
     this.toggleLabels();
     this.donations =
@@ -51,6 +55,12 @@ export class DonationsComponent implements OnInit {
         : this.data.fundraiser.donations!;
   }
 
+    // returns donation amount for a donation in ETB
+    getDonationAmount(donation: Donation): number {
+      return donation.paymentMethod?.toLowerCase() === 'paypal'
+        ? donation.amount * this.exchangeRate
+        : donation.amount;
+    }
   gotoDonatePage() {
     this.dialogRef.close();
     this.router.navigate(['/donate', this.data.fundraiser._id]);
