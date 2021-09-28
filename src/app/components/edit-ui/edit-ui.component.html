@@ -16,16 +16,15 @@
       <div class="back-btn">
         <button
           (click)="backToDetailPage()"
-          mat-raised-button
           class="bold"
+          mat-button
           style="margin: 20px 0px"
         >
           <mat-icon class="mat-18">arrow_back_ios</mat-icon>
-          {{ "Back" | translate }}
+          <span fxHide.xs>{{ "Back" | translate }}</span>
         </button>
       </div>
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-        <!-- TODO -->
         <img
           class="title"
           [ngStyle.xs]="{ width: '100%', height: '200px' }"
