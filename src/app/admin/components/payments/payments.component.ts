@@ -62,7 +62,7 @@ export class PaymentsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.pageTitle.setTitle('Admin | payments to be exported');
+    this.pageTitle.setTitle('Admin | Export payments');
     this.loading = true;
     await this.getAllFundraisers();
     console.log(this.allFundraisers);

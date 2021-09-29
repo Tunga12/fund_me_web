@@ -11,6 +11,7 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-categories',
@@ -35,10 +36,12 @@ export class CategoriesComponent implements OnInit {
     private categoryService: CategoryService,
     private snackBar: MatSnackBar,
     private snackBarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private title:Title
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle("Admin| Categories");
     this.getCategories();
     this.form = this.formBuilder.group({
       name: ['', [Validators.minLength(3), Validators.required]],

@@ -42,7 +42,7 @@ export class RejectedWithdrawalsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.pageTitle.setTitle('withdrawals| Rejected');
+    this.pageTitle.setTitle('Admin| withdrawals declined');
     // then get withdrawals
     this.getRejectedWithdrawals();
   }

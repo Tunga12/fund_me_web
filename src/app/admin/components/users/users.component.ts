@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { AdminUsersService } from '../../services/admin-users/admin-users.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users',
@@ -14,10 +15,12 @@ export class UsersComponent implements OnInit {
   users:User[]=[];
   user?:User;
   constructor(
-    private useSrv:AdminUsersService
+    private useSrv:AdminUsersService,
+    private title:Title
   ) { }
 
   async ngOnInit(): Promise<void> {
+    this.title.setTitle('Admin| Users')
     await this.getAllUsers();
   }
 

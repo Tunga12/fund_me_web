@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
@@ -31,10 +32,12 @@ export class ReportReasonsComponent implements OnInit {
     private reportReasonTypeService: ReportReasonTypeService,
     private snackBar: MatSnackBar,
     private snackBarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private title:Title
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle("Admin| Report reason types");
     this.getReportReasonTypes();
     this.form = this.formBuilder.group({
       name: ['', [Validators.minLength(3), Validators.required]],

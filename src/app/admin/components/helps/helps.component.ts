@@ -5,6 +5,7 @@ import { AdminHelpService } from '../../services/admin-help/admin-help.service';
 import { Help } from '../../../models/help.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'admin-helps',
@@ -21,10 +22,12 @@ export class HelpsComponent implements OnInit, OnDestroy {
   constructor(
     private helpService: AdminHelpService,
     private snackBar: MatSnackBar,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private title:Title
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle("Admin| Helps");
     this.getAllHelps();
   }
 

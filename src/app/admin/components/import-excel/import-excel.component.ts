@@ -38,7 +38,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
     this.fundraiserSub?.unsubscribe();
   }
   ngOnInit(): void {
-    this.title.setTitle('Legas | Admin upload payments');
+    this.title.setTitle('Admin| Import payments');
   }
 
   onFileChange(evt: any) {

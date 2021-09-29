@@ -43,7 +43,7 @@ export class ApprovedWithdrawalsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.pageTitle.setTitle('withdrawals| pending');
+    this.pageTitle.setTitle('Admin| withdrawals pending');
     // then get withdrawals
     this.getApprovedWithdrawals();
   }

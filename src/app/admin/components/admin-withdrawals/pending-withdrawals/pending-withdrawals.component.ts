@@ -55,7 +55,7 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.pageTitle.setTitle('withdrawals| pending');
+    this.pageTitle.setTitle('Admin| withdrawals pending');
     // then get withdrawals
     this.getPendingWithdrawals();
   }
