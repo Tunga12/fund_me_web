@@ -41,25 +41,38 @@
         {{ element.fundraiser.totalRaised }}
       </mat-cell>
     </ng-container>
-    
+
     <ng-container matColumnDef="reasons">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Reasons</mat-header-cell
       >
-      <mat-cell *matCellDef="let element" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5px">
-        <p *ngFor="let report of element.reports">
-          {{ report.report.reason.name}}
-          <mat-hint>{{ report.occurrence+' times'}}</mat-hint>
-        </p>
+      <mat-cell
+        *matCellDef="let element"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayoutGap="5px"
+      >
+        <div *ngFor="let report of element.reports">
+          <p
+            matBadge="{{ report.occurrence }}"
+            matBadgeDescription="How many times this report type is made to this Fundraiser."
+            matBadgeColor="warn"
+            matBadgeOverlap="false"
+            matBadgePosition="after"
+            matBadgeSize="small"
+          >
+            {{ report.report.reason.name }}
+          </p>
+        </div>
       </mat-cell>
     </ng-container>
-    
+
     <ng-container matColumnDef="totalReports">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Total reports</mat-header-cell
       >
       <mat-cell *matCellDef="let element">
-        {{ countReports(element)}}
+        <h2 class="bold">{{ countReports(element) }}</h2>
       </mat-cell>
     </ng-container>
 
@@ -80,7 +93,7 @@
     <ng-container matColumnDef="block">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button 
+        <button
           mat-button
           (click)="blockFundraiser(element.fundraiser)"
           color="warn"
@@ -91,7 +104,9 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     <mat-row *matNoDataRow>No reports yet.</mat-row>
   </mat-table>

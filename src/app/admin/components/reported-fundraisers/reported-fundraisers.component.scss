@@ -1,4 +1,12 @@
-mat-cell.mat-cell{
+mat-cell.mat-cell {
+  padding: 3px;
+  display: block;
+  p {
+    margin: 0.5rem auto;
+  }
+
+  h2 {
     text-align: center;
-    padding: 3px;
+    color: green;
+  }
 }
