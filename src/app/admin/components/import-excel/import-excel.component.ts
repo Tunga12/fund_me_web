@@ -73,6 +73,7 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
     this.fileChosen = true;
   }
 
+  // classify the payments in to successful and unsuccessful based on status
   classifyPayments() {
     this.payments.forEach((payment) => {
       if (payment.status === 1) {

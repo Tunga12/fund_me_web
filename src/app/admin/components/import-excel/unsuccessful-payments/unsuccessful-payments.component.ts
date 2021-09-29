@@ -36,6 +36,7 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
     'fundraiserId',
     'status',
     'reason',
+    'decline',
   ];
 
   // subscriptions

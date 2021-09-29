@@ -1,8 +1,15 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px" class="top">
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="center center"
+  fxLayoutGap="20px"
+  class="top"
+>
   <p>Dou you want to decline withdrawal requests for all payments?</p>
-  <button mat-raised-button 
-  color="warn" [attr.align]="'right'"
-  (click)="declineAll()"
+  <button
+    mat-raised-button
+    color="warn"
+    [attr.align]="'right'"
+    (click)="declineAll()"
   >
     Decline all
   </button>
@@ -12,94 +19,132 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>>
 </div>
 
-<p *ngIf="!loading && errorMessage" [attr.align]="'center'" class="text-error" >{{ errorMessage}}</p>
-<div
-class="mat-elevation-z1"
->
-<mat-table
-  matSort
-  [dataSource]="dataSource"
-  matTableExporter
-  #exporter="matTableExporter"
-  matSort
->
-  <ng-container matColumnDef="firstName">
-    <mat-header-cell *matHeaderCellDef> First name </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.firstName | titlecase }}
-    </mat-cell>
-  </ng-container>
+<p *ngIf="!loading && errorMessage" [attr.align]="'center'" class="text-error">
+  {{ errorMessage }}
+</p>
+<div class="mat-elevation-z1">
+  <mat-table
+    matSort
+    [dataSource]="dataSource"
+    matTableExporter
+    #exporter="matTableExporter"
+    matSort
+  >
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef> First name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.firstName | titlecase }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="lastName">
-    <mat-header-cell *matHeaderCellDef> Last name </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.lastName | titlecase }}
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef> Last name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.lastName | titlecase }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="bankName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>
-      Bank name
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.bankName | titlecase }}
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="bankName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Bank name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.bankName | titlecase }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="bankAccountNo">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>
-      Bank account no.</mat-header-cell
-    >
-    <mat-cell *matCellDef="let element">
-      {{ element.bankAccountNo }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Amount</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.amount | number: ".2" }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="fundraiserId">
-    <mat-header-cell *matHeaderCellDef mat-sort-header
-      >Fundraiser ID</mat-header-cell
-    >
-    <mat-cell *matCellDef="let element">
-      {{ element.fundraiserId }}
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="bankAccountNo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Bank account no.</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        {{ element.bankAccountNo }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Amount</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        {{ element.amount | number: ".2" }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fundraiserId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Fundraiser ID</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        {{ element.fundraiserId }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.status }}
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Status</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        {{ element.status }}
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="reason">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Reason</mat-header-cell>
-    <mat-cell *matCellDef="let element" [attr.backgroundColor]="(decliningStarted && !element.reason)? 'warn' :'' " >
-      <!-- <mat-label>Select reason</mat-label> -->
-      <mat-select [(value)]="element.reason" (valueChange)="reasonChanged(element)" placeholder="Select reason">
-        <mat-option [value]=""></mat-option>
-        <mat-option [value]="'Account number doesn\'t exist'"
-          >Account number doesn't exist</mat-option
+    <ng-container matColumnDef="reason">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Reason</mat-header-cell
+      >
+      <mat-cell
+        *matCellDef="let element"
+        [attr.backgroundColor]="
+          decliningStarted && !element.reason ? 'warn' : ''
+        "
+      >
+        <!-- <mat-label>Select reason</mat-label> -->
+        <mat-select
+          [(value)]="element.reason"
+          (valueChange)="reasonChanged(element)"
+          placeholder="Select reason"
         >
-        <mat-option [value]="'User name doesn\'t correspond to account number'"
-          >User name doesn't correspond to account number</mat-option
-        >
-      </mat-select>
-    </mat-cell>
-  </ng-container>
+          <mat-option [value]=""></mat-option>
+          <mat-option [value]="'Account number doesn\'t exist'"
+            >Account number doesn't exist</mat-option
+          >
+          <mat-option
+            [value]="'User name doesn\'t correspond to account number'"
+            >User name doesn't correspond to account number</mat-option
+          >
+        </mat-select>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row [class]="haveNoReasons.includes(row.fundraiserId)?'reason-required':''" *matRowDef="let row; columns: displayedColumns"></mat-row>
-  <mat-row *matNoDataRow>No approved withdrawal requests yet.</mat-row>
-</mat-table>
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons
-  aria-label="Select page"
->
-</mat-paginator>
+    <ng-container matColumnDef="decline">
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          [disabled]="!element.reason"
+          mat-raised-button
+          color="warn"
+          [attr.align]="'right'"
+          (click)="
+            declineWithdrawalRequest(element.fundraiserId, element.reason)
+          "
+          title="decline withdrawal request for this payment"
+        >
+          Decline
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      [class]="
+        haveNoReasons.includes(row.fundraiserId) ? 'reason-required' : ''
+      "
+      *matRowDef="let row; columns: displayedColumns"
+    ></mat-row>
+    <mat-row *matNoDataRow>No approved withdrawal requests yet.</mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>
