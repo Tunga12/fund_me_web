@@ -100,11 +100,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
           localStorage.setItem('userId', (result.body as User)._id ?? '');
         }
 
-        let redirec_url = localStorage.getItem('redirect-url');
+        let redirect_url = localStorage.getItem('redirect-url');
         localStorage.removeItem('redirect-url');
         this.loading = false;
-        redirec_url
-          ? this.router.navigateByUrl(redirec_url)
+        redirect_url
+          ? this.router.navigateByUrl(redirect_url)
           : this.router.navigateByUrl('/home-page');
       },
       (error: HttpErrorResponse) => {
