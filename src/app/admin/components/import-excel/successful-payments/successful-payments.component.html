@@ -1,16 +1,29 @@
-<button
-mat-raised-button
-color="primary"
-(click)="uploadPayments()"
-[attr.align]="'right'"
->
-Upload all
-</button>
-<div *ngIf="loading">
- <mat-progress-bar mode="indeterminate"></mat-progress-bar>>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="uploadPayments()">
+    {{!uploadComplete?'Upload all':'Retry'}}
+  </button>
+
+  <div
+    *ngIf="!loading && uploadComplete"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-around center"
+  >
+    <h3>Total: {{ payments.length }}</h3>
+    <h3 class="successful">Successful: {{ successfullyPaidFundraisers.length }}</h3>
+    <h3 class="already-paid">Already paid: {{ alreadyPaidFundraisers.length }}</h3>
+    <h3 class="failed">Failed: {{ paymentFailedFundraisers.length }}</h3>
+  </div>
 </div>
 
-<p *ngIf="!loading" class="text-error" style="text-align: center">
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>>
+</div>
+
+<p
+  *ngIf="!loading && errorMessage"
+  class="text-error"
+  style="text-align: center"
+>
   {{ errorMessage }}
 </p>
 <mat-table
@@ -52,9 +65,7 @@ Upload all
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>
-      Amount</mat-header-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Amount</mat-header-cell>
     <mat-cell *matCellDef="let element">
       {{ element.amount | number: ".2" }}
     </mat-cell>
@@ -69,16 +80,18 @@ Upload all
   </ng-container>
 
   <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef mat-sort-header
-      >Status</mat-header-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
     <mat-cell *matCellDef="let element">
       {{ element.status }}
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <mat-row [class]="
+  alreadyPaidFundraisers.includes(row.fundraiserId)?'already-paid'
+  : successfullyPaidFundraisers.includes(row.fundraiserId)?'successful'
+  : paymentFailedFundraisers.includes(row.fundraiserId)?'failed'
+  :''" *matRowDef="let row; columns: displayedColumns"></mat-row>
   <mat-row *matNoDataRow>No approved withdrawal requests yet.</mat-row>
 </mat-table>
 <mat-paginator

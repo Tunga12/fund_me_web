@@ -39,6 +39,11 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
     'decline',
   ];
 
+  // fundraiser ids to display statistics
+  successful: string[] = [];
+  failed: string[] = [];
+  alreadyDeclined: string[] = [];
+
   // subscriptions
   fundraiserSub?: Subscription;
   withdrawalSub?: Subscription;
@@ -48,7 +53,7 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatPaginator) sort!: MatSort;
 
-  decliningStarted: boolean = false;
+  decliningComplete: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -64,37 +69,55 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
   }
 
   // get a fundraiser by its id, then decline its withdrawal request
-  declineWithdrawalRequest(fundraiserId: string,reason:string) {
-    this.fundraiserSub = this.fundraiserService.getFundraiser(fundraiserId).subscribe(
-      (fundraiser) => {
-        console.log(fundraiser);
-        this.performDeclineWithdrawalRequest(fundraiser.withdraw?._id!,reason);
-      },
-      (error: HttpErrorResponse) => {
-        this.errorMessage = error.error;
-        console.log(error.error);
-      }
-    );
+  declineWithdrawalRequest(fundraiserId: string, reason: string) {
+    this.fundraiserSub = this.fundraiserService
+      .getFundraiser(fundraiserId)
+      .subscribe(
+        (fundraiser) => {
+          console.log(fundraiser);
+          this.performDeclineWithdrawalRequest(
+            fundraiser.withdraw?._id!,
+            reason,
+            fundraiserId
+          );
+        },
+        (error: HttpErrorResponse) => {
+          this.errorMessage = error.error;
+          console.log(error.error);
+          this.failed.push(fundraiserId);
+        }
+      );
   }
 
   // decline a withdrawal request
-  performDeclineWithdrawalRequest(withdrawalId: string, reason:string) {
-    this.errorMessage='';
+  performDeclineWithdrawalRequest(
+    withdrawalId: string,
+    reason: string,
+    fundId: string
+  ) {
+    this.errorMessage = '';
     this.withdrawalSub = this.withdrawalService
-      .declineWithdrawalRequest(withdrawalId,reason)
+      .declineWithdrawalRequest(withdrawalId, reason)
       .subscribe(
         (result) => {
+          this.successful.push(fundId);
           console.log(result);
         },
         (error: HttpErrorResponse) => {
           this.errorMessage = error.error;
+          error.status === 400 &&
+          error.error
+            .toLowerCase()
+            .startsWith('this withdrawal request has already been declined.')
+            ? this.alreadyDeclined.push(fundId)
+            : this.failed.push(fundId);
           console.log(error.error);
         }
       );
   }
 
   declineAll() {
-    this.decliningStarted = true;
+    this.reset();
     this.payments.forEach((payment, index) => {
       if (!payment.reason) {
         console.log('please add reasons for all');
@@ -102,9 +125,10 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
         this.haveNoReasons.push(payment.fundraiserId);
         return;
       }
-      this.payments.splice(index,1);
-      this.dataSource.data=this.payments;
-      this.declineWithdrawalRequest(payment.fundraiserId,payment.reason);
+      this.declineWithdrawalRequest(payment.fundraiserId, payment.reason);
+      if (index === this.payments.length-1) {
+        this.decliningComplete = true;
+      }
       console.log('upload successful');
     });
   }
@@ -114,13 +138,20 @@ export class UnsuccessfulPaymentsComponent implements OnInit, OnDestroy {
       if (this.haveNoReasons.includes(payment.fundraiserId)) {
         let index = this.haveNoReasons.indexOf(payment.fundraiserId);
         console.log(index);
-        this.haveNoReasons.splice(index , 1);
-        this.haveNoReasons.length===0?this.errorMessage = '':'';
+        this.haveNoReasons.splice(index, 1);
+        this.haveNoReasons.length === 0 ? (this.errorMessage = '') : '';
       }
     } else {
       this.haveNoReasons.push(payment.fundraiserId);
       this.errorMessage = 'please add reasons for all';
     }
+  }
+
+  reset() {
+    this.successful = [];
+    this.failed = [];
+    this.alreadyDeclined = [];
+    this.decliningComplete = false;
   }
 
   ngOnDestroy() {

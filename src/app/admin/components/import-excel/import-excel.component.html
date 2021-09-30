@@ -1,7 +1,7 @@
 <div
   *ngIf="!result"
   fxLayout="row"
-  fxLayoutAlign="space-around end"
+  fxLayoutAlign="center center"
   fxLayoutGap="22px"
 >
   <button mat-raised-button color="primary">
@@ -16,31 +16,24 @@
       />
     </label>
   </button>
+<p *ngIf="filename">{{filename}}</p>
 </div>
 
-<!-- <div
-  *ngIf="result"
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  fxLayoutGap="0px"
-  class="mat-typography"
->
-  <h1>
-    <mat-icon color="primary" class="bold">check</mat-icon>Upload completed
-  </h1>
-  <div fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px">
-    <h4>Total: {{ totalUploads }}</h4>
-    <h4 style="color: green">
-      Successful: {{ totalUploads - failedPayments.length }}
-    </h4>
-    <h4 style="color: red">Failed: {{ failedPayments.length }}</h4>
-  </div>
-</div> -->
-<mat-tab-group *ngIf="payments.length>0" >
-  <mat-tab label="Successful payments">
-    <app-successful-payments [payments]="successfulPayments" ></app-successful-payments>
+
+<p class="text-error" *ngIf="errorMessage">{{errorMessage}}</p>
+
+<mat-tab-group *ngIf="payments.length > 0">
+  <mat-tab *ngIf="successfulPayments.length > 0" label="Successful payments">
+    <app-successful-payments
+      [payments]="successfulPayments"
+    ></app-successful-payments>
   </mat-tab>
-  <mat-tab label="Unsuccessful payments"> 
-  <app-unsuccessful-payments [payments]="unsuccessfulPayments" ></app-unsuccessful-payments>  
+  <mat-tab
+    *ngIf="unsuccessfulPayments.length > 0"
+    label="Unsuccessful payments"
+  >
+    <app-unsuccessful-payments
+      [payments]="unsuccessfulPayments"
+    ></app-unsuccessful-payments>
   </mat-tab>
 </mat-tab-group>

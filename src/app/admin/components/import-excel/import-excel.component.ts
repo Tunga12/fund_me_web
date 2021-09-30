@@ -14,6 +14,8 @@ import { ExcelService } from '../../services/excel/excel.service';
 export class ImportExcelComponent implements OnInit, OnDestroy {
   payments: Payment[] = [];
 
+  filename = '';
+
   successfulPayments: Payment[] = []; //payments having status 1
   unsuccessfulPayments: Payment[] = []; // payments having status 0
 
@@ -42,11 +44,17 @@ export class ImportExcelComponent implements OnInit, OnDestroy {
   }
 
   onFileChange(evt: any) {
+    this.successfulPayments = [];
+    this.unsuccessfulPayments = [];
+    this.payments = [];
     const target: DataTransfer = <DataTransfer>evt.target;
     if (target.files.length !== 1) {
       this.errorMessage = 'Cannot use multiple files';
       throw new Error('Cannot use multiple files');
     }
+
+    this.filename = target.files[0].name;
+
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;

@@ -1,36 +1,53 @@
-.table-container{
-    margin-top: 0px;
+.table-container {
+  margin-top: 0px;
 }
 
-.mat-primary.mat-raised-button{
-    margin: 0px;
+.mat-primary.mat-raised-button {
+  margin: 0px;
 }
 
-mat-cell.mat-cell{
-    text-align: center;
-    overflow: initial;
-    padding: 1px;
-    display: block;
+mat-cell.mat-cell {
+  text-align: center;
+  overflow: initial;
+  padding: 1px;
+  display: block;
 }
 
-.table-container{
-    margin-top: 0px;
+.table-container {
+  margin-top: 0px;
 }
 
-.mat-primary.mat-raised-button{
-    margin: 0px;
+.mat-primary.mat-raised-button {
+  margin: 0px;
 }
 
-mat-cell.mat-cell{
-    text-align: center;
-    overflow: initial;
-    padding: 1px;
+mat-cell.mat-cell {
+  text-align: center;
+  overflow: initial;
+  padding: 1px;
 }
 
-.top{
-    margin:1rem;
+.top {
+  margin: 1rem;
 }
 
-.reason-required{
-    background-color: red;
+.reason-required {
+  mat-cell {
+    color: red !important;
+  }
+}
+
+.failed,
+.failed > mat-cell {
+  color: red;
+}
+
+.successful,
+.successful > mat-cell {
+  color: rgb(11, 179, 11);
+}
+
+.already-paid,
+.already-paid > mat-cell {
+  color: rgb(255, 196, 1);
 }

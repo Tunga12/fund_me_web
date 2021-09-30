@@ -12,7 +12,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Payment } from 'src/app/admin/models/payment.model';
 import { Subscription } from 'rxjs';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
+import { Fundraiser } from './../../../../models/fundraiser.model';
 
+interface Withdraw {
+  date: Date;
+  amount: number;
+}
 @Component({
   selector: 'app-successful-payments',
   templateUrl: './successful-payments.component.html',
@@ -21,6 +26,8 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
   @Input() payments: Payment[] = [];
   errorMessage = '';
+
+  uploadComplete=false;
   displayedColumns = [
     'firstName',
     'lastName',
@@ -30,6 +37,11 @@ export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
     'fundraiserId',
     'status',
   ];
+
+  // ids of fundraisers
+  alreadyPaidFundraisers: string[] = []; //ids of fundraisers
+  successfullyPaidFundraisers: string[] = [];
+  paymentFailedFundraisers: string[] = [];
 
   //data source for the table
   dataSource = new MatTableDataSource<Payment>();
@@ -53,41 +65,35 @@ export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
 
   uploadPayments() {
     this.loading = true;
-    var upload = new Promise((resolve) => {
+    this.reset();
+    let upload = new Promise((resolve) => {
       this.payments.forEach((payment: Payment, index) => {
-        console.log(payment.fundraiserId);
         this.fundraiserSub = this.fundraiserService
           .getFundraiser(payment.fundraiserId)
           .subscribe(
-            (fund) => {
-              let withdraws = fund.totalWithdraw;
-              withdraws?.push({
-                date: new Date(Date.now()),
+            (fundraiser) => {
+              let newWithdraw = {
+                date: new Date(),
                 amount: payment.amount,
-              });
-              let fundToBePaid = {
-                ...fund,
-                totalWithdraw: withdraws,
               };
-              this.fundraiserSub = this.fundraiserService
-                .editFundraiser(fundToBePaid._id!, fundToBePaid)
-                .subscribe(
-                  (fundraiser) => {
-                    console.log('uploaded: ', fundraiser);
-                  },
-                  (error) => {
-                    console.log(error);
-                    this.errorMessage = error.error;
-                  }
-                );
+
+              if (this.isValidPayment(newWithdraw, fundraiser.totalWithdraw!)) {
+                fundraiser.totalWithdraw?.push(newWithdraw);
+                this.editFundraiser(fundraiser._id!, fundraiser);
+              } else {
+                console.log('already paid');
+                this.alreadyPaidFundraisers.push(payment.fundraiserId);
+              }
             },
             (error) => {
               console.log(error.error);
               this.errorMessage = error.error;
+              this.paymentFailedFundraisers.push(payment.fundraiserId);
             }
           );
         if (index === this.payments.length - 1) {
           this.loading = false;
+          this.uploadComplete=true;
           resolve(true);
         }
       });
@@ -97,6 +103,52 @@ export class SuccessfulPaymentsComponent implements OnInit, OnDestroy {
       this.loading = false;
     });
   }
+
+  // edit fundraiser
+  editFundraiser(id: string, fundraiser: Fundraiser) {
+    this.fundraiserSub = this.fundraiserService
+      .editFundraiser(id, fundraiser)
+      .subscribe(
+        (fundraiser) => {
+          console.log('uploaded: ', fundraiser);
+          this.successfullyPaidFundraisers.push(id);
+        },
+        (error) => {
+          console.log(error);
+          this.errorMessage = error.error;
+          this.paymentFailedFundraisers.push(id);
+        }
+      );
+  }
+
+  // if the given withdrawals list contains the given newWithdraw(payment amount
+  // and the todays date) return false else true
+  isValidPayment(newWithdraw: Withdraw, withdraws: Withdraw[]) {
+    let existing = withdraws.filter(
+      (withdraw) =>
+        withdraw.amount === newWithdraw.amount &&
+        this.isDatesEqual(withdraw.date, newWithdraw.date)
+    );
+    return existing ? false : true;
+  }
+
+  // compare equality of two dates
+  isDatesEqual(date1: Date, date2: Date) {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  // reset data
+  reset(){
+    this.successfullyPaidFundraisers=[];
+    this.paymentFailedFundraisers=[];
+    this.alreadyPaidFundraisers=[];
+    this.uploadComplete=false;
+  }
+
 
   ngOnDestroy() {
     this.fundraiserSub?.unsubscribe();

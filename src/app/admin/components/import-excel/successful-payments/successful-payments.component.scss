@@ -1,13 +1,34 @@
-.table-container{
-    margin-top: 0px;
+.table-container {
+  margin-top: 0px;
 }
 
-.mat-primary.mat-raised-button{
-    margin: 0px;
+mat-cell.mat-cell {
+  text-align: center;
+  overflow: initial;
+  padding: 1px;
+  display: block;
 }
 
-mat-cell.mat-cell{
-    text-align: center;
-    overflow: initial;
-    padding: 1px;
+.button-container {
+  margin: 20px auto;
+  width: 80%;
+
+  button {
+    margin-left: auto;
+  }
+}
+
+.failed,
+.failed > mat-cell {
+  color: red;
+}
+
+.successful,
+.successful > mat-cell {
+  color: rgb(11, 179, 11);
+}
+
+.already-paid,
+.already-paid > mat-cell {
+  color: rgb(255, 196, 1);
 }
