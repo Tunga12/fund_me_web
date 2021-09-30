@@ -97,10 +97,14 @@
 <div
   fxLayout="column"
   fxLayoutGap="20px"
-  style="width: 80%; margin: 50px auto"
-  [ngStyle.lt-md]="{ width: '96%', margin: '0px auto' }"
+  class="fundraisers-list-section"
+  ngClass.lt-md="width-lt-md"
+  ngClass.gt-sm="width-large"
+  
 >
-  <h2 class="bold mat-h2" data-cy="top-fundraisers-header">
+  <h2 class="bold" data-cy="top-fundraisers-header"
+  
+  >
     {{ "Top fundraisers" | translate }}
   </h2>
   <div *ngIf="loading">

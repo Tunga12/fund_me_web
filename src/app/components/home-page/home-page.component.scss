@@ -58,7 +58,19 @@ nav {
   }
 }
 
-app-public-fund-list{
-  margin: 0px auto;
-  padding: unset;
+.fundraisers-list-section {
+  h2{
+    padding-left: 10px;
+  }
+
+  margin: 50px auto;
+
+}
+
+.width-large {
+  max-width: 80% !important;
+}
+
+.width-lt-md {
+  max-width: 90% !important;
 }
