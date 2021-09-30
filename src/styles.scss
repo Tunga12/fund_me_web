@@ -19,13 +19,10 @@ body {
 }
 
 /* FOR DEBUGGING : PURPOSE ONLY */
-/* * {
-  border: solid 1px red;
-} */
+//  * {
+//   border: solid 1px red;
+// }
 
-/* .mat-toolbar-row, .mat-toolbar-single-row {
-   height: 50px; 
-} */
 
 .header {
   background: #fff;
@@ -217,11 +214,6 @@ div.avatar-contain {
   height: 70px;
 }
 
-.sticky-top-0 {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
 
 .table-container {
   margin: 30px 20px;

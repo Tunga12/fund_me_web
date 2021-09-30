@@ -59,7 +59,7 @@
     <div class="full-width" data-cy="mobile-image">
       <img
         class="img-mobile"
-        src="/assets/images/gofundme-homepage-illustration-1920w.png"
+        src="/assets/images/homepage-illustration-1920w.png"
       />
     </div>
 
@@ -113,13 +113,13 @@
     </mat-progress-spinner>
   </div>
 
-  <p class="text-error">{{ errorMessage }}</p>
+  <p *ngIf="errorMessage" class="text-error">{{ errorMessage }}</p>
 
   <!-- LIST OF FUNDRAISERS -->
   <app-public-fund-list
     data-cy="fundraisers-list"
     [fundraisers]="fundraisers"
-    [loading]="loading" 
+    [loading]="loading"
     [hasNext]="hasNext()"
     (nextEvent)="nextPage()"
   >

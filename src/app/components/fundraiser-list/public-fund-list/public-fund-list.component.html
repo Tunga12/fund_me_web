@@ -1,17 +1,10 @@
-<div
-  fxLayout="row wrap"
-  fxLayout.lt-sm="column"
-  fxLayoutAlign.lt-sm="start center"
-  fxLayoutGap="20px"
-  fxLayoutGap.lt-md="11px"
-  fxLayoutGap.md="10px"
->
+<div fxLayout="row wrap" fxLayoutAlign="space-around center">
   <mat-card
     *ngFor="let fundraiser of fundraisers"
     [routerLink]="['/fundraiser-detail', fundraiser._id]"
-    fxFlex.lt-md="47"
+    fxFlex.lt-md="48"
     fxFlex.lt-sm="90"
-    fxFlex.gt-sm="31"
+    fxFlex.gt-sm="32"
   >
     <div class="mat-image-container">
       <img
@@ -45,13 +38,12 @@
     </mat-card-content>
   </mat-card>
 
-  <div fxFlexAlign="center" *ngIf="hasNext" (click)="nextPage()">
+  <div fxFlex.gt-sm="64" *ngIf="hasNext" (click)="nextPage()">
     <div *ngIf="loading">
       <mat-progress-spinner
         mode="indeterminate"
         [value]="80"
         color="primary"
-        class="loading-spinner"
       >
       </mat-progress-spinner>
     </div>
