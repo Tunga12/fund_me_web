@@ -71,70 +71,6 @@ export class PaymentsComponent implements OnInit {
     await this.activateTable();
   }
 
-  // // listen to event date range change from the date range selector
-  // async dateRangeChange(
-  //   dateRangeStart: HTMLInputElement,
-  //   dateRangeEnd: HTMLInputElement
-  // ) {
-  //   this.payments=[];
-  //   this.loading = true;
-  //   this.date_chosen = true;
-
-  // //   console.log(this.filterFundraisers(startDate, endDate));
-
-  // // // filter fundraisers that have accepted withdrawal status and donations in the given date range
-  // //   this.filterFundraisers(startDate, endDate).forEach((fund) =>
-  // //     this.addToPayments(fund, startDate, endDate)
-  // //   );
-
-  //   console.log(this.payments);
-  //   this.loading = false;
-
-  //   // assign the payments array to our data source
-  //   this.dataSource.data = this.payments;
-  //   this.cdr.detectChanges();
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-
-  //   console.log(this.dataSource.data);
-  // }
-
-  // get all available fundraisers
-
-  // // filter fundraisers that have accepted withdrawal status and donations in the given date range
-  // filterFundraisers(startDate: Date, endDate: Date) {
-  //   let filteredFunds = this.fundsWithFullData.filter((fund) => {
-  //     let donations = fund.donations?.filter((donation) => {
-  //       let donationDate = new Date(donation.date!);
-  //       return startDate <= donationDate && donationDate <= endDate;
-  //     });
-  //     return (
-  //       fund.withdraw &&
-  //       fund.withdraw.status?.toLocaleLowerCase() === 'accepted' &&
-  //       donations!.length > 0
-  //     );
-  //   });
-  //   return filteredFunds;
-  // }
-
-  // // get the total donation amount for each a fundraiser in the given date range
-  // getTotalDonationAmount(
-  //   fundraiser: Fundraiser,
-  //   startDate: Date,
-  //   endDate: Date
-  // ) {
-  //   let total = 0;
-  //   let donations = fundraiser.donations?.filter((donation) => {
-  //     let donationDate = new Date(donation.date!);
-  //     return startDate <= donationDate && donationDate <= endDate;
-  //   });
-
-  //   donations?.forEach((donation) => {
-  //     total += donation.amount;
-  //   });
-  //   return total;
-  // }
-
   async getAllFundraisers() {
     do {
       await this.getFundraisers();
@@ -245,8 +181,8 @@ export class PaymentsComponent implements OnInit {
   // returns the total money raised by this fundraiser in birr
   getTotalRaised(fund: Fundraiser): number {
     return (
-      fund.totalRaised?.birr ??
-      0 + (fund.totalRaised?.dollar ?? 0 * this.exchangeRate)
+      (fund.totalRaised?.birr ?? 0) +
+      (fund.totalRaised?.dollar ?? 0) * this.exchangeRate
     );
   }
 

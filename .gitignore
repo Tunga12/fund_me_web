@@ -48,3 +48,7 @@ Thumbs.db
 /cypress/screenshots/*
 /cypress/videos/*
 /cypress/downloads/*
+
+# excel files
+*.csv
+*.xlsx
