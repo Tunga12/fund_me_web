@@ -6,6 +6,8 @@
 
 .verified {
   cursor: default;
+  color: rgb(10, 168, 10);
+  font-weight: bold;
 }
 
 #search-icon {
@@ -19,4 +21,8 @@
 
 mat-form-field.mat-form-field {
   max-width: 60%;
+}
+
+.buttons-container{
+  width: 100%;
 }

@@ -1,20 +1,20 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
   <!-- search field -->
-    <mat-form-field appearance="outline">
-      <mat-label>User email address </mat-label>
-      <input
-        data-cy="search-field"
-        id="search-field"
-        matInput
-        #key
-        placeholder="Search users by email"
-        (keyup)="search(key.value)"
-        email
-      />
-      <span matSuffix>
-        <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon>
-      </span>
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>User email address </mat-label>
+    <input
+      data-cy="search-field"
+      id="search-field"
+      matInput
+      #key
+      placeholder="Search users by email"
+      (keyup)="search(key.value)"
+      email
+    />
+    <span matSuffix>
+      <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon>
+    </span>
+  </mat-form-field>
 
   <div *ngIf="loading">
     <mat-progress-spinner
@@ -40,7 +40,8 @@
     fxFlex.lt-sm="90"
     class="mat-elevation-z10 user-info"
   >
-    <div fxFlexAlign="end" *ngIf="user" fxLayout="row" fxLayoutGap="20px">
+    <div *ngIf="user" fxLayout="row" fxLayoutAlign="space-between center"
+     fxLayoutGap="20px" class="buttons-container">
       <a
         *ngIf="!user?.isVerified"
         (click)="verifyUser(user!)"
@@ -48,13 +49,9 @@
         color="primary"
         >Verify</a
       >
-      <a
-        *ngIf="user?.isVerified"
-        mat-raised-button
-        color="primary"
-        class="verified"
-        ><mat-icon class="mat-18">check</mat-icon> Verified</a
-      >
+      <div *ngIf="user?.isVerified" class="verified" fxLayout="row">
+        <mat-icon class="mat-18">check_circle</mat-icon> <h3>Verified</h3>
+      </div>
       <a
         *ngIf="user?.isVerified"
         mat-raised-button

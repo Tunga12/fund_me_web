@@ -7,69 +7,66 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  loading:boolean=false;
-  errorMessage:string='';
-  users:User[]=[];
-  user?:User;
-  constructor(
-    private useSrv:AdminUsersService,
-    private title:Title
-  ) { }
+  loading: boolean = false;
+  errorMessage: string = '';
+  users: User[] = [];
+  user?: User;
+  constructor(private useSrv: AdminUsersService, private title: Title) {}
 
   async ngOnInit(): Promise<void> {
-    this.title.setTitle('Admin| Users')
+    this.title.setTitle('Admin| Users');
     await this.getAllUsers();
   }
 
-  search(email:string){
-    let user:User|undefined;
-        user=this.users.find(_user=>_user.email.toLowerCase()===email.toLowerCase());
-        console.log(user);
-     this.user=user;
+  search(email: string) {
+    let user: User | undefined;
+    user = this.users.find(
+      (_user) => _user.email.toLowerCase() === email.toLowerCase()
+    );
+    this.user = user;
   }
 
   //get all users
-  async getAllUsers(){
+  async getAllUsers() {
     await this.useSrv.getAllUsers().then(
-      (users)=>{
-        this.users=users;
+      (users) => {
+        this.users = users;
       },
-      (error:HttpErrorResponse)=>{
-        this.errorMessage=error.error;
+      (error: HttpErrorResponse) => {
+        this.errorMessage = error.error;
         console.log(error.error);
       }
     );
-    
   }
 
-  verifyUser(userToVerify:User){
+  verifyUser(userToVerify: User) {
     console.log(userToVerify);
-    this.useSrv.verifyUser(userToVerify._id!,userToVerify)
-    .subscribe((user)=>{
-      console.log(user);
-      this.user=user;
-    },
-    (error:HttpErrorResponse)=>{
-      console.log(error.error);
-      this.errorMessage=error.error;
-    });
+    this.useSrv.verifyUser(userToVerify._id!, userToVerify).subscribe(
+      (user) => {
+        console.log(user);
+        this.user = user;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error);
+        this.errorMessage = error.error;
+      }
+    );
   }
-  
-  unVerifyUser(userToVerify:User){
+
+  unVerifyUser(userToVerify: User) {
     console.log(userToVerify);
-    this.useSrv.unVerifyUser(userToVerify._id!,userToVerify)
-    .subscribe((user)=>{
-      console.log(user);      
-      this.user=user;
-    },
-    (error:HttpErrorResponse)=>{
-      console.log(error.error);
-      this.errorMessage=error.error;
-    });
+    this.useSrv.unVerifyUser(userToVerify._id!, userToVerify).subscribe(
+      (user) => {
+        console.log(user);
+        this.user = user;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error);
+        this.errorMessage = error.error;
+      }
+    );
   }
-
-
 }
