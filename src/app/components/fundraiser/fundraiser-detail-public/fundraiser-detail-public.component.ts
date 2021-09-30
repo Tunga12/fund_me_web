@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
 import { ShareArgs } from 'src/app/models/share-buttons-args';
@@ -52,6 +52,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     private reasonsService: ReportReasonTypesService,
+    private router:Router,
     private userService: UserService,
     public fundraiserService: FundraiserService,
     public authService: AuthService
@@ -189,6 +190,10 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       .subscribe((close_result) => console.log(close_result));
   }
 
+  // listen for click on report button
+  reportBtnClick(){
+    this.authService.isLoggedIn()?this.openReportDialog():this.router.navigateByUrl('sign-in');
+  }
   // opens the report fundraiser dialog
   openReportDialog() {
     this.dialog.open(ReportDialogComponent, {
