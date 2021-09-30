@@ -7,12 +7,8 @@ import { SnackbarService } from './../../services/snackbar/snackbar.service';
 import { TeamService } from './../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { environment } from 'src/environments/environment';
-import { SocketIoConfig } from 'ngx-socket-io';
+import { io } from 'socket.io-client';
 import { SocketIoService } from './../../services/socket.io/socket.io.service';
-import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
-
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -37,34 +33,30 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private teamService: TeamService,
     private fundraiserService: FundraiserService,
-    private socket: Socket,
-    // private socketIoService: SocketIoService,
-    public notificationService: NotificationService // private socketService: SocketIoService
+    private socketIoService: SocketIoService,
+    public notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.getNotifications();
-
-    // this.socketIoService.onUnreadNotificationCount().subscribe((data) => {
-    //   console.log(data);
-    // });
-
-    this.unread();
-
-    this.socket.on('unread notification count', (data: any) => {
-      console.log(data);
-      this.count = data;
-    });
-  }
-
-  unread(){
-    this.socket
-      .fromEvent('unread notification count')
-      .pipe(map((data: any) => data.msg))
-      .subscribe((data) => {
+    this.socketIoService.onAllNotifications().subscribe(
+      (data) => {
         console.log(data);
-        this.count = data;
-      });
+        // this.notifications=data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+    this.socketIoService.onUnreadNotificationCount().subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    // this.getNotifications();
   }
 
   getNotifications() {

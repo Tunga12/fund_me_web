@@ -76,15 +76,8 @@ import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail
 import { DonationsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-content/donations-tab-content.component';
 import { AppRoutesModule } from './modules/routes.module';
 import { NotFoundModule } from './modules/not-found.module';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
 
-const config: SocketIoConfig = {
-  url: environment.BASE_URL + '?token=' + localStorage.getItem('x-auth-token'), // socket server url;
-  options: {
-    transports: ['websocket'],
-  },
-};
+
 
 @NgModule({
   declarations: [
@@ -163,7 +156,6 @@ const config: SocketIoConfig = {
     SharedModule,
     AppRoutesModule,
     NotFoundModule,
-    SocketIoModule.forRoot(config),
   ],
 
   providers: [
