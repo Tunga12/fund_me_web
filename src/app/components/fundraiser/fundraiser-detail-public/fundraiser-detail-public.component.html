@@ -93,220 +93,225 @@
 </nav>
 
 <div class="container">
-<main
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  fxFlex.lt-md="94"
-  fxFlex="80"
-  class="center"
->
-  <div *ngIf="loading">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="80"
-      color="primary"
-      class="loading-spinner"
-    >
-    </mat-progress-spinner>
-  </div>
-  <mat-error class="bold" *ngIf="!loading && errorMessage">{{ errorMessage }}</mat-error>
-
-  <div
-    *ngIf="!loading && !errorMessage"
-    fxLayout="row"
-    fxFlex.sm="100"
-    fxFlex="86"
-    [ngStyle]="{ margin: '20px auto' }"
-    fxLayoutAlign="space-around start"
+  <main
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    fxFlex.lt-md="94"
+    fxFlex="80"
+    class="center"
   >
-    <div
-      fxLayout="column"
-      fxLayoutGap="2px"
-      fxLayoutAlign="start start"
-      fxFlex.sm="56"
-      fxFlex.gt-sm="60"
-      fxFlex.xs="98"
-      [ngStyle.gt-sm]="{ 'padding-right': '20px' }"
-    >
-      <div
-        fxLayout="row wrap"
-        fxLayoutAlign="space-between center"
-        fxLayoutGap="10px"
+    <div *ngIf="loading">
+      <mat-progress-spinner
+        mode="indeterminate"
+        [value]="80"
+        color="primary"
+        class="loading-spinner"
       >
-        <h1 data-cy="title-desktop" fxHide.lt-sm class="bold">
-          {{ fundraiser?.title }}
-        </h1>
-      </div>
-      <div>
-        <img
-          data-cy="fundraiser-image"
-          class="fundraiser-img"
-          [src]="fundraiser?.image"
-          alt="fundraiser image"
-          onerror="this.src='/assets/images/placeholder.png'"
-        />
-      </div>
+      </mat-progress-spinner>
+    </div>
+    <mat-error class="bold" *ngIf="!loading && errorMessage">{{
+      errorMessage
+    }}</mat-error>
 
-      <div data-cy="mobile-stat" fxHide.gt-xs fxLayout.xs="column">
-        <h1 data-cy="title-mobile" class="bold">{{ fundraiser?.title }}</h1>
-        <app-stat
-          data-cy="data-mobile"
-          fxHide.gt-xs
-          [fundraiser]="fundraiser!"
-          [exchangeRate]="exchangeRate"
-          [ngStyle]="{ width: '100%' }"
-        ></app-stat>
-      </div>
-      <!-- Fundraiser info -->
+    <div
+      *ngIf="!loading && !errorMessage"
+      fxLayout="row"
+      fxFlex.sm="100"
+      fxFlex="86"
+      [ngStyle]="{ margin: '20px auto' }"
+      fxLayoutAlign="space-around start"
+    >
       <div
         fxLayout="column"
-        fxLayoutAlign="space-around start"
-        fxLayoutGap="20px"
-        fxFlex="90"
-        fxFlex.lt-md="98"
+        fxLayoutGap="2px"
+        fxLayoutAlign="start start"
+        fxFlex.sm="56"
+        fxFlex.gt-sm="60"
+        fxFlex.xs="98"
+        [ngStyle.gt-sm]="{ 'padding-right': '20px' }"
       >
+        <div
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="10px"
+        >
+          <h1 data-cy="title-desktop" fxHide.lt-sm class="bold">
+            {{ fundraiser?.title }}
+          </h1>
+        </div>
         <div>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="space-between center"
-            fxLayoutGap="20px"
-          >
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <img
+            data-cy="fundraiser-image"
+            class="fundraiser-img"
+            [src]="fundraiser?.image"
+            alt="fundraiser image"
+            onerror="this.src='/assets/images/placeholder.png'"
+          />
+        </div>
+
+        <div data-cy="mobile-stat" fxHide.gt-xs fxLayout.xs="column">
+          <h1 data-cy="title-mobile" class="bold">{{ fundraiser?.title }}</h1>
+          <app-stat
+            data-cy="data-mobile"
+            fxHide.gt-xs
+            [fundraiser]="fundraiser!"
+            [ngStyle]="{ width: '100%' }"
+          ></app-stat>
+        </div>
+        <!-- Fundraiser info -->
+        <div
+          fxLayout="column"
+          fxLayoutAlign="space-around start"
+          fxLayoutGap="20px"
+          fxFlex="90"
+          fxFlex.lt-md="98"
+        >
+          <div>
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              fxLayoutGap="20px"
+            >
               <div
-                fxLayout="column"
-                fxLayoutAlign="center start"
-                fxLayoutGap="0px"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="20px"
               >
                 <div
-                  *ngIf="hasAcceptedTeamMembers()"
-                  fxLayout="row"
-                  fxLayoutAlign="start start"
+                  fxLayout="column"
+                  fxLayoutAlign="center start"
+                  fxLayoutGap="0px"
                 >
-                  <strong class="team-fund-label">
-                    <mat-icon>people</mat-icon>
-                    <span>{{ "Team fundraiser" | translate }}</span>
-                  </strong>
-                </div>
-                <div
-                  fxLayout="row"
-                  fxLayoutAlign="start center"
-                  fxLayoutGap="2px"
-                >
-                  <mat-icon
-                    *ngIf="fundraiser?.organizer?.isVerified"
-                    color="primary"
-                    class="verified-icon"
-                    >check_circle</mat-icon
-                  > 
-                  <span data-cy="organizer-data">
-                    &nbsp;
-                    {{
-                      fundraiser?.organizer?.firstName +
-                        " " +
-                        fundraiser?.organizer?.lastName | titlecase
-                    }}
-                    <span *ngIf="hasAcceptedTeamMembers()">
-                      {{ "and" | translate }}
+                  <div
+                    *ngIf="hasAcceptedTeamMembers()"
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                  >
+                    <strong class="team-fund-label">
+                      <mat-icon>people</mat-icon>
+                      <span>{{ "Team fundraiser" | translate }}</span>
+                    </strong>
+                  </div>
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="2px"
+                  >
+                    <mat-icon
+                      *ngIf="fundraiser?.organizer?.isVerified"
+                      color="primary"
+                      class="verified-icon"
+                      >check_circle</mat-icon
+                    >
+                    <span data-cy="organizer-data">
+                      &nbsp;
                       {{
-                        fundraiserService.getNumberOfAcceptedTeamMembers(
-                          fundraiser!
-                        )
+                        fundraiser?.organizer?.firstName +
+                          " " +
+                          fundraiser?.organizer?.lastName | titlecase
                       }}
-                      <span
-                        *ngIf="
+                      <span *ngIf="hasAcceptedTeamMembers()">
+                        {{ "and" | translate }}
+                        {{
                           fundraiserService.getNumberOfAcceptedTeamMembers(
                             fundraiser!
-                          ) === 1
-                        "
-                        >{{ "other" | translate }}</span
-                      >
-                      <span
-                        *ngIf="
-                          fundraiserService.getNumberOfAcceptedTeamMembers(
-                            fundraiser!
-                          ) > 1
-                        "
-                        >{{ "others" | translate }}</span
-                      >
-                      {{ "are" | translate }}
+                          )
+                        }}
+                        <span
+                          *ngIf="
+                            fundraiserService.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) === 1
+                          "
+                          >{{ "other" | translate }}</span
+                        >
+                        <span
+                          *ngIf="
+                            fundraiserService.getNumberOfAcceptedTeamMembers(
+                              fundraiser!
+                            ) > 1
+                          "
+                          >{{ "others" | translate }}</span
+                        >
+                        {{ "are" | translate }}
+                      </span>
+                      <span *ngIf="!hasAcceptedTeamMembers()">
+                        {{ "is" | translate }}
+                      </span>
+                      {{ "organizing this fundraiser" | translate }}
                     </span>
-                    <span *ngIf="!hasAcceptedTeamMembers()">
-                      {{ "is" | translate }}
-                    </span>
-                    {{ "organizing this fundraiser" | translate }}
-                  </span>
+                  </div>
                 </div>
               </div>
+              <button
+                data-cy="report-btn"
+                mat-button
+                (click)="reportBtnClick()"
+              >
+                <mat-icon class="mat-18">flag</mat-icon>
+                {{ "report" | titlecase | translate }}
+              </button>
             </div>
-            <button
-              data-cy="report-btn"
-              mat-button
-              (click)="reportBtnClick()"
-            >
-              <mat-icon class="mat-18">flag</mat-icon>
-              {{ "report" | titlecase | translate }}
-            </button>
+            <div>
+              <mat-divider></mat-divider>
+            </div>
           </div>
+
           <div>
+            <p data-cy="date-and-category">
+              {{ fundraiser?.dateCreated | timeago }} |
+              <a href="">{{ fundraiser?.category?.name! | translate }}</a>
+            </p>
             <mat-divider></mat-divider>
           </div>
+
+          <!-- story section -->
+          <section>
+            <div data-cy="story" [innerHTML]="fundraiser?.story"></div>
+          </section>
+
+          <app-highlight-card
+            data-cy="card-mobile"
+            fxHide.gt-xs
+            [fundraiser]="fundraiser!"
+            [exchangeRate]="exchangeRate"
+            fxFlex="100"
+          ></app-highlight-card>
+
+          <!-- Updates section -->
+          <app-updates-section [fundraiser]="fundraiser!"></app-updates-section>
+
+          <!-- Fundraising team section -->
+          <app-team-and-organizer-section
+            [fundraiser]="fundraiser!"
+          ></app-team-and-organizer-section>
+          <!-- end of fundraising team section -->
+
+          <!-- Organizer and beneficiary section -->
+          <app-organizer-and-beneficiary-section
+            [fundraiser]="fundraiser!"
+          ></app-organizer-and-beneficiary-section>
+          <!-- end of organizer and beneficiary -->
+
+          <!-- Comment section -->
+          <app-comment-section
+            [exchangeRate]="exchangeRate"
+            [fundraiser]="fundraiser!"
+          ></app-comment-section>
+          <!--End of Comment section -->
         </div>
-
-        <div>
-          <p data-cy="date-and-category">
-            {{ fundraiser?.dateCreated | timeago }} |
-            <a href="">{{ fundraiser?.category?.name! | translate }}</a>
-          </p>
-          <mat-divider></mat-divider>
-        </div>
-
-        <!-- story section -->
-        <section>
-          <div data-cy="story" [innerHTML]="fundraiser?.story"></div>
-        </section>
-
-        <app-highlight-card
-          data-cy="card-mobile"
-          fxHide.gt-xs
-          [fundraiser]="fundraiser!"
-          [exchangeRate]="exchangeRate"
-          fxFlex="100"
-
-        ></app-highlight-card>
-
-        <!-- Updates section -->
-        <app-updates-section [fundraiser]="fundraiser!"></app-updates-section>
-
-        <!-- Fundraising team section -->
-        <app-team-and-organizer-section
-          [fundraiser]="fundraiser!"
-        ></app-team-and-organizer-section>
-        <!-- end of fundraising team section -->
-
-        <!-- Organizer and beneficiary section -->
-        <app-organizer-and-beneficiary-section
-          [fundraiser]="fundraiser!"
-        ></app-organizer-and-beneficiary-section>
-        <!-- end of organizer and beneficiary -->
-
-        <!-- Comment section -->
-        <app-comment-section 
-        [exchangeRate]="exchangeRate"
-        [fundraiser]="fundraiser!"></app-comment-section>
-        <!--End of Comment section -->
       </div>
-    </div>
 
-    <!-- Card on the right side -->
-    <app-highlight-card
-      data-cy="card-desktop"
-      fxHide.lt-sm
-      [fundraiser]="fundraiser!"
-      [exchangeRate]="exchangeRate"
-      id="right-side-card"
-      fxFlex.sm="40"
-      fxFlex.gt-sm="30"
-    ></app-highlight-card>
-  </div>
-</main>
+      <!-- Card on the right side -->
+      <app-highlight-card
+        data-cy="card-desktop"
+        fxHide.lt-sm
+        [fundraiser]="fundraiser!"
+        [exchangeRate]="exchangeRate"
+        id="right-side-card"
+        fxFlex.sm="40"
+        fxFlex.gt-sm="30"
+      ></app-highlight-card>
+    </div>
+  </main>
 </div>
