@@ -76,9 +76,18 @@ import { ReportDialogComponent } from './components/fundraiser/fundraiser-detail
 import { DonationsTabContentComponent } from './components/fundraiser/my-fundraiser-detail/donors-tab-conntent/donations-tab-content/donations-tab-content.component';
 import { AppRoutesModule } from './modules/routes.module';
 import { NotFoundModule } from './modules/not-found.module';
+import { SocketIoService } from './services/socket.io/socket.io.service';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
-
-
+const config: SocketIoConfig = {
+  url: 'http://178.62.55.81:5000/',
+  options: {
+    transports: ['websocket','polling'],
+    query: {
+      token: localStorage.getItem('x-auth-token') || '',
+    },
+  },
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,6 +158,7 @@ import { NotFoundModule } from './modules/not-found.module';
     ShareButtonsModule.withConfig({
       debug: true,
     }),
+    SocketIoModule.forRoot(config),
     ShareIconsModule,
     NgxPayPalModule,
     ImageCropperModule,
@@ -173,6 +183,7 @@ import { NotFoundModule } from './modules/not-found.module';
       useClass: HttpHeaderInterceptor,
       multi: true,
     },
+    SocketIoService,
   ],
   bootstrap: [AppComponent],
 })

@@ -7,7 +7,6 @@ import { SnackbarService } from './../../services/snackbar/snackbar.service';
 import { TeamService } from './../../services/team/team.service';
 import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.service';
 import { Fundraiser } from 'src/app/models/fundraiser.model';
-import { io } from 'socket.io-client';
 import { SocketIoService } from './../../services/socket.io/socket.io.service';
 @Component({
   selector: 'app-notification',
@@ -28,6 +27,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   fundraiserSub?: Subscription;
   userId = localStorage.getItem('userId')!;
 
+  // subscriptions
+  subs: Subscription[] = [];
   constructor(
     private snackBar: MatSnackBar,
     private snackbarService: SnackbarService,
@@ -38,25 +39,27 @@ export class NotificationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.socketIoService.onAllNotifications().subscribe(
-      (data) => {
-        console.log(data);
-        // this.notifications=data;
-      },
-      (err) => {
-        console.log(err);
-      }
+    this.subs.push(
+      this.socketIoService
+        .getMessage('unread notification count')
+        .subscribe((data) => {
+          console.log(data);
+        })
     );
 
-    this.socketIoService.onUnreadNotificationCount().subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (err) => {
-        console.log(err);
-      }
+    this.subs.push(
+      this.socketIoService
+        .getMessage('all notification')
+        .subscribe((data) => console.log(data))
     );
-    // this.getNotifications();
+
+    this.subs.push(
+      this.socketIoService
+        .getMessage('error')
+        .subscribe((data) => console.log(data))
+    );
+
+    this.getNotifications();
   }
 
   getNotifications() {
@@ -200,5 +203,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.notificationSub?.unsubscribe();
     this.teamSub?.unsubscribe();
     this.fundraiserSub?.unsubscribe();
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }
