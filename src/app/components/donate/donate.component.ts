@@ -16,7 +16,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
-import { Donation } from 'src/app/models/donation.model';
+import { Donation, PendingDonation } from 'src/app/models/donation.model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
@@ -56,7 +56,7 @@ export class DonateComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private snackbarService: SnackbarService,
     public fundraiserService: FundraiserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.setTitle('Donate');
@@ -85,17 +85,17 @@ export class DonateComponent implements OnInit, OnDestroy {
       clientId:
         'Aatbc1PvvGMzDDJXG_gpBOl3FKna4TAmIgtuyufjBGtsX514ZS2vLHNs-xRidfrSzxsQ9hbLawfGxlAu',
       createOrderOnClient: (data: any) => <ICreateOrderRequest>(<unknown>{
-          intent: 'CAPTURE',
-          purchase_units: [
-            {
-              amount: {
-                value:
-                  this.donation.amount +
-                  (this.donation.amount * this.donation.tip) / 100,
-              },
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            amount: {
+              value:
+                this.donation.amount +
+                (this.donation.amount * this.donation.tip) / 100,
             },
-          ],
-        }),
+          },
+        ],
+      }),
       advanced: {
         extraQueryParams: [{ name: 'disable-funding', value: 'credit,card' }],
       },
@@ -191,6 +191,40 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.donationService.goToPayPal(this.fundraiserId, this.donation).subscribe(
       (result) => {
         console.log(result);
+      },
+      (error) => {
+        console.log(error.error);
+      }
+    );
+  }
+
+  goToTelebirr() {
+    let pendingDonation: PendingDonation = {
+      fundId: this.fundraiserId,
+      comment: this.comment?.value,
+      amount: this.amount?.value,
+      tip: this.tip?.value,
+      isAnonymous: this.form.value['isAnonymous'],
+      memberId: this.memberId?.value,
+      paymentMethod: 'telebirr',
+    }
+    // if memberId is empty add the user's id
+    if (!this.memberId || !this.memberId!.value) {
+      pendingDonation.memberId = this.fundraiser?.teams![0].id._id;
+    }
+
+    let json = {
+      returnUrl: `http://localhost:4200${this.router.url.replace('donate', 'fundraiser-detail')}`,
+      subject: `Donating for ${this.fundraiser?.title}`,
+      donation: pendingDonation
+    }
+    console.log(`json: ${JSON.stringify(json)}`)
+    console.log(`json: ${JSON.stringify(this.donation)}`)
+
+    this.donationService.goToTelebirr(json).subscribe(
+      (result: any) => {
+        console.log(result);
+        window.open(result.data.toPayUrl, "_blank");
       },
       (error) => {
         console.log(error.error);

@@ -32,4 +32,11 @@ export class DonationService {
       donation
     );
   }
+
+  goToTelebirr(json: { returnUrl: string, subject: string, donation: Donation}) {    
+    return this.httpClient.post(
+      `${environment.BASE_URL}/api/telebirr/pay`,
+      json
+    );
+  }
 }

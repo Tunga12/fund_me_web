@@ -11,3 +11,19 @@ export interface Donation
   memberId?:string;
   paymentMethod:string;
 }
+
+
+
+export interface PendingDonation
+{
+  id?: string;
+  userId?: User;
+  fundId: string;
+  date?: string;
+  comment?: string;
+  amount: number;
+  tip: number;
+  isAnonymous?: boolean;
+  memberId?:string;
+  paymentMethod:string;
+}
