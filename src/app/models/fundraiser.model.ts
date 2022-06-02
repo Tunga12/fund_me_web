@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { Update } from './update.model';
 import { Withdrawal } from './withdrawal.model';
 import { TeamMember } from './team-member.model';
+import { PaymentInfo } from './paymentInfo.model';
 
 export interface Fundraiser {
   __v?: any;
@@ -31,9 +32,17 @@ export interface Fundraiser {
   withdraw?: Withdrawal;
   totalWithdraw?: Withdraw[];
   isBlocked?: boolean;
+
+  totalPayed?: {
+    birr: number;
+    dollar: number;
+  };
+
+  paymentInfo?: PaymentInfo;
 }
 
 interface Withdraw {
   date: Date;
   amount: number;
 }
+

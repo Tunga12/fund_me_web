@@ -1,8 +1,8 @@
 .fundraiser-img {
-  width: 100% !important;
-  max-height: 300px;
+  width            : 100% !important;
+  max-height       : 300px;
   background-repeat: no-repeat;
-  position: static;
+  position         : static;
 }
 
 div {
@@ -12,9 +12,10 @@ div {
 .color-purple {
   color: #6e3291 !important;
 }
+
 .bg-purple-avatar {
-  border-radius: 50%;
-  padding: 10px;
+  border-radius   : 50%;
+  padding         : 10px;
   background-color: #f0eaf4;
 }
 
@@ -23,12 +24,12 @@ p {
 }
 
 .team-fund-label {
-  color: #c5912c;
+  color      : #c5912c;
   font-weight: 900;
 }
 
 mat-icon {
-  cursor: pointer;
+  cursor   : pointer;
   font-size: 18px;
 }
 
@@ -45,8 +46,8 @@ app-updates-section {
 }
 
 .verified-icon {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size    : 1.8rem;
+  font-weight  : bold;
   margin-bottom: 10px;
 }
 
@@ -54,13 +55,14 @@ main {
   margin: 20px auto;
   height: 100%;
 }
+
 .center {
   margin: 0px auto;
 }
 
 app-highlight-card#right-side-card {
   position: sticky;
-  top: 0;
+  top     : 0;
 }
 
 mat-error.mat-error {
@@ -68,29 +70,48 @@ mat-error.mat-error {
 }
 
 .container {
-  min-height: 50%;
+  min-height   : 50%;
   margin-bottom: 40px !important;
 }
 
 .styled-button {
-  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
-  font-weight: 900;
-  border: 1px solid transparent;
-  padding: 1rem !important;
-  font-size: 16px;
-  line-height: 1.5px;
+  box-shadow    : 0 2px 6px rgb(0 0 0 / 10%);
+  font-weight   : 900;
+  // border     : 1px solid transparent;
+  padding       : 1rem !important;
+  font-size     : 16px;
+  line-height   : 1.5px;
 }
+
 .donate {
-  background: linear-gradient(180deg, #fdb933 35.42%, #f58131 139.58%);
-  border-color: #c06828;
+  background     : linear-gradient(180deg, #fdb933 35.42%, #f58131 139.58%);
+  // border-color: #c06828;
+  font-weight    : 900;
 }
 
 .share {
-  background: linear-gradient(180deg, #ffde9e 50%, #fcb957);
-  border-color: B#c5912c;
+  background     : linear-gradient(180deg, #ffde9e 50%, #fcb957);
+  // border-color: B#c5912c;
+  font-weight    : 900;
+
 }
 
-.large-tool-bar{
-  padding-left: 10%;
+.large-tool-bar {
+  padding-left : 10%;
   padding-right: 10%;
+}
+
+b {
+  font-weight: 500;
+}
+
+.reportLine {
+  display        : flex;
+  flex-direction : row;
+  justify-content: right;
+}
+
+.reportBtn {
+  float: right;
+  color: #c4c4c4;
 }

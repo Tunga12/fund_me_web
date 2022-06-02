@@ -12,8 +12,8 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
   templateUrl: './my-fundraisers.component.html',
   styleUrls: ['./my-fundraisers.component.scss']
 })
-export class MyFundraisersComponent implements OnInit,OnDestroy {
-  tabLinks=['organizer', 'team-member','beneficiary'];
+export class MyFundraisersComponent implements OnInit, OnDestroy {
+  tabLinks = ['organizer', 'team-member'];
   loading = true;
   myFundraisers: Fundraiser[] = [];
 
@@ -24,7 +24,7 @@ export class MyFundraisersComponent implements OnInit,OnDestroy {
     private router: Router,
     private fundraiserService: FundraiserService,
     private docTitle: Title
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('My fundraisers');
@@ -39,7 +39,7 @@ export class MyFundraisersComponent implements OnInit,OnDestroy {
   // get fundraisers of current user
   getMyFundraisers() {
     this.fundraiserSUb = this.fundraiserService.getMyFundraisers().subscribe(
-      (fundraisersPage:FundraiserPage) => {
+      (fundraisersPage: FundraiserPage) => {
         this.loading = false;
         this.myFundraisers = fundraisersPage.fundraisers;
       },
@@ -56,11 +56,11 @@ export class MyFundraisersComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.fundraiserSUb?.unsubscribe();
   }
-  
 
 
-    createFundraiser() {
-      this.router.navigateByUrl('/create');
-    }
+
+  createFundraiser() {
+    this.router.navigateByUrl('/create');
+  }
 }
 

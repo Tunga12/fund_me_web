@@ -35,10 +35,10 @@ export class SignInComponent implements OnInit, OnDestroy {
     private docTitle: Title,
     private userService: UserService,
     private translate: TranslateService,
-    ) {
-      this.translate.setDefaultLang('en');
-      this.translate.use(localStorage.getItem('lang') || 'en');
-    }
+  ) {
+    this.translate.setDefaultLang('en');
+    this.translate.use(localStorage.getItem('lang') || 'en');
+  }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Legas | Log in');
@@ -53,7 +53,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   signIn() {
     this.loading = true;
     this.logInSub = this.authServ.signIn(this.form.value).subscribe(
-      (result: HttpResponse<any>) => {
+      async (result: HttpResponse<any>) => {
         let token = result.headers.get('x-auth-token');
         if (token) {
           localStorage.setItem('x-auth-token', token);
@@ -61,19 +61,24 @@ export class SignInComponent implements OnInit, OnDestroy {
         let redirec_url = localStorage.getItem('redirect-url');
         localStorage.removeItem('redirect-url');
         this.loading = false;
-        let user: User;
-        this.userSub = this.userService.getCurrentUser().subscribe((user) => {
-          user = user;
-          if (user.isAdmin) {
-            redirec_url
-              ? this.router.navigateByUrl(redirec_url)
-              : this.router.navigateByUrl('/admin');
-          } else {
-            redirec_url
-              ? this.router.navigateByUrl(redirec_url)
-              : this.router.navigateByUrl('/home-page');
-          }
-        });
+
+        let user = await this.userService.getCurrentUser().toPromise();
+        let newUser: User = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          // email: user.email,
+        };
+        localStorage.setItem('user', JSON.stringify(newUser));
+        localStorage.setItem('userId', JSON.stringify(user._id));
+        if (user.isAdmin) {
+          redirec_url
+            ? this.router.navigateByUrl(redirec_url)
+            : this.router.navigateByUrl('/admin');
+        } else {
+          redirec_url
+            ? this.router.navigateByUrl(redirec_url)
+            : this.router.navigateByUrl('/home-page');
+        }
       },
       (error: HttpErrorResponse) => {
         this.loading = false;

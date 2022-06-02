@@ -19,6 +19,13 @@ export class UserService {
     return this.http.put<User>(`${environment.BASE_URL}/api/users/me`, user);
   }
 
+  changePassword(passwords: { oldPassword: string; newPassword: string }) {
+    return this.http.put<User>(
+      `${environment.BASE_URL}/api/users/changePassword`,
+      passwords
+    );
+  }
+
   // delete currently logged in user
   deleteCurrentUser() {
     return this.http.delete(`${environment.BASE_URL}/api/users/me`, {

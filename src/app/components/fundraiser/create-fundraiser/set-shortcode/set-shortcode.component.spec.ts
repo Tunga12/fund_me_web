@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DonateComponent } from './donate.component';
+import { SetShortcodeComponent } from './set-shortcode.component';
 
-describe('DonateComponent', () => {
-  let component: DonateComponent;
-  let fixture: ComponentFixture<DonateComponent>;
+describe('SetShortcodeComponent', () => {
+  let component: SetShortcodeComponent;
+  let fixture: ComponentFixture<SetShortcodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DonateComponent ]
+      declarations: [ SetShortcodeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DonateComponent);
+    fixture = TestBed.createComponent(SetShortcodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

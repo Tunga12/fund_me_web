@@ -22,7 +22,7 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   @Input() loading!: boolean;
   @Input() hasNext!: boolean;
   @Output() nextEvent = new EventEmitter();
-  
+
   exchangeRate: number = 1;
 
   exchangeRateSubscription?: Subscription;
@@ -38,7 +38,8 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   // returns the percentage of the total raised by this fundraiser to its goal
   getPercentage(fund: Fundraiser): number {
     return (
-      ((fund.totalRaised?.birr!+ (fund.totalRaised?.dollar! * this.exchangeRate)) /
+      ((fund.totalRaised?.birr! +
+        fund.totalRaised?.dollar! * this.exchangeRate) /
         fund.goalAmount!) *
       100
     );
@@ -47,7 +48,7 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   // returns the total money raised by this fundraiser in birr
   getTotalRaised(fund: Fundraiser): number {
     return (
-      fund.totalRaised?.birr!+ (fund.totalRaised?.dollar! * this.exchangeRate)
+      fund.totalRaised?.birr! + fund.totalRaised?.dollar! * this.exchangeRate
     );
   }
 
@@ -56,19 +57,8 @@ export class PublicFundListComponent implements OnInit, OnDestroy {
   }
 
   // get the current exchange rate(USD->ETB)
-  getExchangeRate() {
-    this.exchangeRateSubscription = this.currencyConverterService
-      .getExchangeRate()
-      .subscribe(
-        (rate) => {
-          if (rate) {
-            this.exchangeRate = rate.USD_ETB;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-        }
-      );
+  async getExchangeRate() {
+    this.exchangeRate = await this.currencyConverterService.getExchangeRate();
   }
 
   ngOnDestroy() {

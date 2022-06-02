@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,7 +19,7 @@ import { WhiteSpaceValidatorDirective } from 'src/app/validators/white-space.val
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss'],
 })
-export class PersonalInfoComponent implements OnInit,OnDestroy {
+export class PersonalInfoComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   // validate the existence of white spaces in our input
   whiteSpaceValidator = new WhiteSpaceValidatorDirective();
@@ -22,9 +27,9 @@ export class PersonalInfoComponent implements OnInit,OnDestroy {
   fundraiser!: Fundraiser;
 
   // loading and error message
-  loading=false;
-  errorMessage='';
-  
+  loading = false;
+  errorMessage = '';
+
   // subscriptions
   activatedRouteSub?: Subscription;
   withdrawalSub?: Subscription;
@@ -32,70 +37,81 @@ export class PersonalInfoComponent implements OnInit,OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private pageTitle: Title,
-    private router: Router, private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private withdrawalService: UserWithdrawalService,
-    private fundraiserService: FundraiserService,
-  ) { }
+    private fundraiserService: FundraiserService
+  ) {}
 
   ngOnInit(): void {
     this.pageTitle.setTitle('Legas | Add Beneficiary');
     // get the id of the fundraiser
-    this.activatedRouteSub = this.activatedRoute.paramMap.subscribe((params) => {
-      this.fundId = params.get('id') || '';
-      console.log(this.fundId);
-    });
+    this.activatedRouteSub = this.activatedRoute.paramMap.subscribe(
+      (params) => {
+        this.fundId = params.get('id') || '';
+        console.log(this.fundId);
+      }
+    );
 
     // create the form
     this.form = this.formBuilder.group({
       bankName: ['', [Validators.required, Validators.minLength(3)]],
-      bankAccountNo: ['', [Validators.required, Validators.minLength(3), this.whiteSpaceValidator,]],
+      bankAccountNo: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          this.whiteSpaceValidator,
+        ],
+      ],
     });
     this.getFundraiser();
   }
 
-
   // create withdrawal
   createWithdrawal() {
-    this.loading=true;
-    this.withdrawalSub = this.withdrawalService.createWithdrawal(
-      this.fundId, { ...this.form.value, isOrganizer: true }
-    ).subscribe(
-      () => {
-        console.log("withdrawal created");
-        this.goToPersonalInfoSummary();
-        this.loading=false;
-      }
-      , (error: HttpErrorResponse) => {
-        this.loading=false;
-        this.errorMessage="Unable to create withdrawal"
-        console.log('error:',error.error);
-
-      }
-    );
+    this.loading = true;
+    this.withdrawalSub = this.withdrawalService
+      .createWithdrawal({
+        ...this.form.value,
+        isOrganizer: true,
+        fundraiser: this.fundId,
+      })
+      .subscribe(
+        () => {
+          console.log('withdrawal created');
+          this.goToPersonalInfoSummary();
+          this.loading = false;
+        },
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+          this.errorMessage = 'Unable to create withdrawal';
+          console.log('error:', error.error);
+        }
+      );
   }
 
   // get the current fundraiser
   getFundraiser() {
-    this.loading=true;
+    this.loading = true;
     this.fundraiserSub = this.fundraiserService
       .getFundraiser(this.fundId)
       .subscribe(
         (fund: Fundraiser) => {
           this.fundraiser = fund;
-        this.loading=false;
-        // if this fundraiser has a withdrawal info linked, show it
+          this.loading = false;
+          // if this fundraiser has a withdrawal info linked, show it
           if (this.fundraiser.withdraw) {
             this.form.patchValue(this.fundraiser.withdraw);
           }
         },
         (error: HttpErrorResponse) => {
           this.errorMessage = error.error;
-        this.loading=false;
-        console.log('Error while getting fundraiser:', error.error);
+          this.loading = false;
+          console.log('Error while getting fundraiser:', error.error);
         }
       );
   }
-
 
   // getters for controls
   public get bankName(): AbstractControl {
@@ -106,16 +122,15 @@ export class PersonalInfoComponent implements OnInit,OnDestroy {
     return this.form.get('bankAccountNo')!;
   }
 
-
-
   goBack() {
-    this.activatedRoute.params.subscribe((param) => { console.log(param) }
-    );
+    this.activatedRoute.params.subscribe((param) => {
+      console.log(param);
+    });
     this.router.navigate(['/withdrawal', this.fundId]);
   }
 
   goToPersonalInfoSummary() {
-    this.router.navigate(['/withdrawal/personal-info-summary',this.fundId]);
+    this.router.navigate(['/withdrawal/personal-info-summary', this.fundId]);
   }
 
   ngOnDestroy(): void {

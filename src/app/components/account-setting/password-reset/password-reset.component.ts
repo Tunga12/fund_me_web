@@ -54,34 +54,42 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   // change password
   changePassword() {
     this.loading = true;
-    let currentUser: User;
-    this.userSub = this.userService.getCurrentUser().subscribe(
-      (user) => {
-        currentUser = user;
+    // let currentUser: User;
+    this.updateUser();
 
-        if (user.password === this.password.value) {
-          this.updateUser(user);
-        } else {
-          this.loading = false;
-          this.errorMessage = 'Incorrect password';
-        }
-      },
+    // this.userSub = this.userService.getCurrentUser().subscribe(
+    //   (user) => {
+    //     currentUser = user;
 
-      (error) => {
-        this.loading = false;
-        this.errorMessage = error.error;
-      }
-    );
+    //     console.log(`user's password is: ${user.password}`);
+
+    //     if (user.password == this.password.value) {
+    //       this.updateUser(user);
+    //     } else {
+    //       this.loading = false;
+    //       this.errorMessage = 'Incorrect password';
+    //     }
+    //   },
+
+    //   (error) => {
+    //     this.loading = false;
+    //     this.errorMessage = error.error;
+    //   }
+    // );
   }
 
   // update user to change password
-  updateUser(user: User) {
-    delete user._id;
-    delete user.__v;
+  updateUser() {
+    // delete user._id;
+    // delete user.__v;
     this.userService
-      .updateCurrentUser({
-        ...user,
-        password: this.newPassword.value,
+      // .updateCurrentUser({
+      //   ...user,
+      //   password: this.newPassword.value,
+      // })
+      .changePassword({
+        oldPassword: this.password.value,
+        newPassword: this.newPassword.value,
       })
       .subscribe(
         () => {

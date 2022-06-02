@@ -1,47 +1,41 @@
 <div>
   <h2 data-cy="comment-header" class="bold">
-    {{ "Comments" | translate }}({{ getNumberOfComments() }})
+    {{ "Comments" | translate }}({{ donationInfo.totalComments }})
   </h2>
   <mat-divider></mat-divider>
   <h3 data-cy="no-comments" *ngIf="getNumberOfComments() === 0">
     {{ "No comments to show" | translate }}
   </h3>
-  <ng-container data-cy="comments" *ngFor="let donation of fundraiser?.donations; let last = last">
-    <div
-      *ngIf="donation?.comment"
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="20px"
-      style="margin: 20px 0px"
-    >
-      <img
-        src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-      />
+  <ng-container data-cy="comments" *ngFor="let donation of donations; let last = last">
+    <div *ngIf="donation?.comment" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px"
+      style="margin: 20px 0px">
+      <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
       <div fxLayout="column">
         <span data-cy="comment-info" class="bold">
           <strong #value hidden>{{ getDonationAmount(donation) | currency:"ETB" }}</strong>
           <span *ngIf="donation.isAnonymous">{{
             "Anonymous" | translate
           }}</span>
-          <span *ngIf="!donation.isAnonymous">{{
-            donation.userId?.firstName + " " + donation.userId?.lastName
+          <span data-cy="donor-name" *ngIf="!donation?.isAnonymous">{{
+            donation?.name! 
               | titlecase
           }}</span>
           {{ "donated" | translate: { value: value.innerHTML } }}
         </span>
         <p data-cy="comment-content" #comment>
           {{ donation.comment?.slice(0, 20) }}
-          <a
-            #more
-            *ngIf="comment?.textContent?.length! > 20"
-            (click)="comment.textContent = donation?.comment!"
-            >...{{ "more" | translate }}</a
-          >
+          <a #more *ngIf="comment?.textContent?.length! > 20"
+            (click)="comment.textContent = donation?.comment!">...{{ "more" | translate }}</a>
         </p>
       </div>
     </div>
     <div *ngIf="!last && donation?.comment && getNumberOfComments()>1">
       <mat-divider></mat-divider>
     </div>
-  </ng-container> 
+  </ng-container>
+
+  <button *ngIf="hasMoreComments" data-cy="top-donations-btn" (click)="getMoreComments()" mat-stroked-button
+    color="primary">
+    {{ "See more" | translate }}
+  </button>
 </div>

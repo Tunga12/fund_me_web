@@ -1,7 +1,7 @@
-<nav class="mat-elevation-z2">
+<!-- <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav>
-<mat-card fxLayout="column" [ngStyle.xs]="{ width: '94%' }" [ngStyle.sm]="{ width: '60%' }" fxLayoutGap="10px">
+</nav> -->
+<!-- <mat-card fxLayout="column" [ngStyle.xs]="{ width: '94%' }" [ngStyle.sm]="{ width: '60%' }" fxLayoutGap="10px">
   <mat-card-header fxFlexAlign="center">
     <mat-card-title>Select withdrawal type </mat-card-title>
   </mat-card-header>
@@ -60,9 +60,9 @@
        </p>
       </mat-hint>
       <div class="read-more-link">
-        <!-- <a readMore [readMore-length]="200" [readMore-element]="textContent"> 
+        <a readMore [readMore-length]="200" [readMore-element]="textContent"> 
           <span class="less">less</span><span class="more">more</span>
-        </a> -->
+        </a>
       </div>
       <button mat-raised-button [disabled]="!form.touched && form.invalid" [fxFlexAlign]="'center'" class="btn-large" color="primary"
         (click)="openNextForm()">
@@ -71,4 +71,21 @@
       <button mat-button [fxFlexAlign]="'center'" [routerLink]="['/my-fundraiser-detail',fundId]">Back</button>
     </form>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
+<div class="withdraw_page">
+  <mat-card>
+    <mat-card-title>Withdrawal</mat-card-title>
+    <mat-card-content>
+      <p> Take a minute to review these important details:</p>
+      <ul>
+        <li>
+          <p>All donations are already transferred to your <b>telebirr account</b></p>
+        </li>
+        <li>
+          <p>You can login into the portal you have received from telebirr and transfer the money to your bank account
+          </p>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

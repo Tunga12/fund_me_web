@@ -32,7 +32,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
   fundraiserSub?: Subscription;
   loading = false;
   errorMessage = '';
-  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,7 +41,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private snackbar: MatSnackBar,
     private docTitle: Title
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Edit overview');
@@ -58,7 +57,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
   // post edit
   editFundraiser() {
     this.loading = true;
-    let newFundraiser=JSON.parse(JSON.stringify({...this.fundraiser,...this.form.value}))
+    let newFundraiser = JSON.parse(
+      JSON.stringify({ ...this.fundraiser, ...this.form.value })
+    );
     let fundraiserId = this.fundraiser._id!;
 
     this.fundraiserSub = this.fundraiserService
@@ -68,7 +69,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
           this.loading = false;
           delete fundraiser.category;
           delete fundraiser.organizer;
-          this.fundraiser = {...this.fundraiser,...fundraiser};
+          this.fundraiser = { ...this.fundraiser, ...fundraiser };
           this.form.patchValue(this.fundraiser);
           this.snackbar.open(
             'Edit completed successfully',
@@ -79,12 +80,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
         (error) => {
           this.loading = false;
           this.snackbar.open(
-            error.error,
+            "Failed to edit fundraiser",
             'close',
             this.snackbarService.getConfig()
           );
           console.log(error.error);
-          this.errorMessage = error.error;
+          this.errorMessage = "Failed to edit fundraiser";
         }
       );
   }
@@ -98,7 +99,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   // delete team members of this fundraiser
   deleteTeamMembers() {
-    this.fundraiser.teams = [];
+    this.fundraiser.teams = [this.fundraiser.teams![0]];
     this.editFundraiser();
   }
 

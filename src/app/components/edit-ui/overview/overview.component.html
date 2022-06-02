@@ -88,7 +88,7 @@
     <mat-slide-toggle
       (change)="onAllowDonationsChange($event)"
       color="primary"
-      checked="fundraiser.isPublished"
+      [checked]="fundraiser.isPublished"
     >
       Allow donations to my fundraiser
     </mat-slide-toggle>

@@ -5,15 +5,15 @@ import { Withdrawal } from 'src/app/models/withdrawal.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserWithdrawalService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient
-  ) { }
-
-  createWithdrawal(fundraiserId: string, withdrawal: Withdrawal): Observable<Withdrawal> {
-    return this.http.post<Withdrawal>(`${environment.BASE_URL}/api/withdrawal/${fundraiserId}`, withdrawal);
+  createWithdrawal(withdrawal: Withdrawal): Observable<Withdrawal> {
+    return this.http.post<Withdrawal>(
+      `${environment.BASE_URL}/api/withdrawal`,
+      withdrawal
+    );
   }
 }

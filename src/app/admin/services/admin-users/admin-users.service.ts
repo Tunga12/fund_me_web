@@ -18,12 +18,12 @@ export class AdminUsersService {
   }
 
   // verify user
-  verifyUser(id:string,user: User): Observable<User> {
-    let verifiedUser:User = { 
+  verifyUser(id: string, user: User): Observable<User> {
+    let verifiedUser: User = {
       isVerified: true,
-      firstName:user.firstName ,
-      lastName:user.lastName,
-      email:user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
     };
 
     return this.http.put<User>(
@@ -32,13 +32,13 @@ export class AdminUsersService {
     );
   }
 
-  // un verify a user 
-  unVerifyUser(id:string,user: User): Observable<User> {
-    let notVerifiedUser:User = { 
+  // un verify a user
+  unVerifyUser(id: string, user: User): Observable<User> {
+    let notVerifiedUser: User = {
       isVerified: false,
-      firstName:user.firstName ,
-      lastName:user.lastName,
-      email:user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
     };
     return this.http.put<User>(
       `${environment.BASE_URL}/api/users/${id}`,
@@ -52,4 +52,14 @@ export class AdminUsersService {
       .toPromise();
   }
 
+  async getUsersCount(startDate: Date, endDate: Date): Promise<number> {
+    let count = await this.http
+      .post<{ count: number }>(`${environment.BASE_URL}/api/users/count`, {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      })
+      .toPromise();
+
+    return count.count;
+  }
 }

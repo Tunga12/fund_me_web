@@ -1,3 +1,5 @@
+import { Fundraiser } from './fundraiser.model';
+
 export interface Withdrawal {
   status?: string;
   isDeleted?: boolean;
@@ -6,4 +8,6 @@ export interface Withdrawal {
   bankAccountNo: string;
   isOrganizer?: boolean;
   date?: string;
+  reason: string;
+  fundraiser: Fundraiser;
 }

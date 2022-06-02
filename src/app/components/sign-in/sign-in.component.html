@@ -1,10 +1,10 @@
-<nav class="mat-elevation-z2 sticky-top-0">
+<!-- <nav class="mat-elevation-z2 sticky-top-0">
   <mat-toolbar
     [classList]="'bg-white'"
     fxLayout="row wrap"
     fxLayoutAlign="space-around center"
   >
-    <!-- LOGO -->
+     LOGO 
     <img [routerLink]="['/']" class="logo" src="/assets/images/logo.svg" />
     <div fxFLexFill></div>
     <div data-cy="sign-up">
@@ -14,13 +14,9 @@
       </a>
     </div>
   </mat-toolbar>
-</nav>
-<mat-card
-  fxLayout="column"
-  [ngStyle.gt-sm]="{ width: '30%', margin: '30px auto' }"
-  [ngStyle.sm]="{ width: '40%', margin: '30px auto' }"
-  fxLayoutGap="10px"
->
+</nav> -->
+<mat-card fxLayout="column" [ngStyle.gt-sm]="{ width: '30%', margin: '30px auto' }"
+  [ngStyle.sm]="{ width: '40%', margin: '30px auto' }" fxLayoutGap="10px">
   <mat-card-title>
     <h1 class="bold" data-cy="sign-in-header">{{ "Log in" | translate }}</h1>
   </mat-card-title>
@@ -41,61 +37,32 @@
 
       <mat-form-field appearance="outline">
         <mat-label> {{ "Email Address" | translate }} </mat-label>
-        <input
-          matInput
-          formControlName="email"
-          class="matInput"
-          [placeholder]="'Email Address' | translate"
-          type="email"
-          autocomplete="email"
-        />
+        <input matInput formControlName="email" class="matInput" [placeholder]="'Email Address' | translate"
+          type="email" autocomplete="email" />
         <mat-icon matPrefix>email</mat-icon>
-        <mat-error
-          data-cy="invalid-email-error"
-          *ngIf="email?.touched && email?.errors?.email"
-          >{{ "Please enter a valid email." | translate }}
+        <mat-error data-cy="invalid-email-error" *ngIf="email?.touched && email?.errors?.email">
+          {{ "Please enter a valid email." | translate }}
         </mat-error>
-        <mat-error
-          data-cy="empty-email-error"
-          *ngIf="email?.touched && email?.errors?.required"
-          >{{ "Please enter your email" | translate }}
+        <mat-error data-cy="empty-email-error" *ngIf="email?.touched && email?.errors?.required">
+          {{ "Please enter your email" | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>{{ "Enter your password" | translate }}</mat-label>
-        <input
-          matInput
-          formControlName="password"
-          [type]="hidePassword ? 'password' : 'text'"
-          (change)="change()"
-          [placeholder]="'password' | translate"
-          autocomplete="current-password"
-        />
-        <mat-icon
-          matSuffix
-          (click)="hidePassword = !hidePassword"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hidePassword"
-          >{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon
-        >
-        <mat-error
-          data-cy="empty-password-error"
-          *ngIf="password?.touched && password?.errors?.required"
-          >{{ "Please enter your password" | translate }}
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" (change)="change()"
+          [placeholder]="'password' | translate" autocomplete="current-password" />
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword">{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+        <mat-error data-cy="empty-password-error" *ngIf="password?.touched && password?.errors?.required">
+          {{ "Please enter your password" | translate }}
         </mat-error>
       </mat-form-field>
       <p *ngIf="logInMessage" class="error-message">{{ logInMessage }}</p>
       <!-- <mat-error *ngIf="form.touched && form.invalid"> Please enter your email and password </mat-error> -->
       <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-      <button
-        mat-raised-button
-        [disabled]="(form.invalid && form.touched) || loading"
-        color="primary"
-        class="btn-large"
-        type="submit"
-        data-cy="sign-in-btn"
-      >
+      <button mat-raised-button [disabled]="(form.invalid && form.touched) || loading" color="primary" class="btn-large"
+        type="submit" data-cy="sign-in-btn">
         {{ "Log in to Legas" | translate }}
       </button>
     </form>
@@ -104,7 +71,6 @@
     <mat-divider mat-inset></mat-divider>
   </div>
   <a link routerLinkActive="router-link-active" color="accent">
-    {{ "Forgot password?" | translate }}</a
-  >
+    {{ "Forgot password?" | translate }}</a>
 </mat-card>
 <p class="footer-logo"></p>

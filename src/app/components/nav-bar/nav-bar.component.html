@@ -1,84 +1,42 @@
-<mat-toolbar [classList]="'bg-white'">
+<mat-toolbar *ngIf="!routeContains('sign')" [classList]="'bg-white'">
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center" ngClass.gt-sm="lg">
     <!-- LOGO -->
-    <img
-      fxFlexOrder.lt-sm="0"
-      routerLink="/"
-      src="/assets/images/logo.svg"
-      class="logo"
-    />
+    <img fxFlexOrder.lt-sm="0" routerLink="/" src="/assets/images/logo.svg" class="logo" />
     <!-- search field -->
-    <div 
-    fxHide.lt-sm
-    fxFlexOrder.lt-sm="1" class="search-container">
-      <input
-        data-cy="search-field"
-        id="search-field"
-        matInput
-        #key
-        type="search"
-        [placeholder]="'Search fundraisers' | translate"
-        (keyup.enter)="search(key.value)"
-        [value]="searchWord ?? ''"
-      />
+    <div fxHide.lt-sm fxFlexOrder.lt-sm="1" class="search-container">
+      <input data-cy="search-field" id="search-field" matInput #key type="search"
+        [placeholder]="'Search fundraisers' | translate" (keyup.enter)="search(key.value)" [value]="searchWord ?? ''" />
       <span id="search-icon" matSuffix>
-        <mat-icon class="mat-18" (click)="search(key.value)"
-          >search</mat-icon
-        ></span
-      >
+        <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon>
+      </span>
     </div>
 
     <div fxFlexOrder.lt-sm="2">
-      <a
-        fxHide.lt-sm
-        mat-button
-        *ngIf="!authService.isLoggedIn()"
-        [routerLink]="['/sign-in']"
-        data-cy="sign-in-btn"
-      >
+      <a fxHide.lt-sm mat-button *ngIf="!authService.isLoggedIn() " [routerLink]="['/sign-in']" data-cy="sign-in-btn">
         {{ " Log in" | translate }}
       </a>
-      <a
-        fxHide.lt-sm
-        *ngIf="!authService.isLoggedIn()"
-        mat-stroked-button
-        color="primary"
-        [routerLink]="['/create']"
-        data-cy="start-a-campaign-btn"
-      >
+      <a fxHide.lt-sm *ngIf="!authService.isLoggedIn() " mat-stroked-button color="primary" [routerLink]="['/create']"
+        data-cy="start-a-campaign-btn">
         {{ "Start a Campaign" | translate }}
       </a>
 
-      <a
-        fxHide.lt-md
-        *ngIf="authService.isLoggedIn()"
-        mat-button
-        [routerLink]="['/my-fundraisers/organizer']"
-        class="nav-link mat-button"
-        data-cy="your-fundraisers-btn"
-      >
+      <a fxHide.lt-md *ngIf="authService.isLoggedIn()" mat-button [routerLink]="['/my-fundraisers/organizer']"
+        class="nav-link mat-button" data-cy="your-fundraisers-btn">
         {{ "Your fundraisers" | translate }}
       </a>
 
       <!-- USER account MENU -->
-      <a
-        *ngIf="authService.isLoggedIn() && currentUser"
-        fxHide.lt-md
-        mat-button
-        [matMenuTriggerFor]="account"
-        (onMenuClose)="accountCaret = !accountCaret"
-        (onMenuOpen)="accountCaret = !accountCaret"
-        class="nav-link mat-button"
-        data-cy="account-btn"
-      >
-        <div
-          fxLayout="row"
-          fxLayoutAlign="space-between center"
-          fxLayoutGap="3px"
-        >
+      <a *ngIf="authService.isLoggedIn() && currentUser" fxHide.lt-md mat-button [matMenuTriggerFor]="account"
+        (onMenuClose)="accountCaret = !accountCaret" (onMenuOpen)="accountCaret = !accountCaret"
+        class="nav-link mat-button" data-cy="account-btn">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
           <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="3px">
             <div class="avatar-contain">
-              {{ (currentUser?.firstName?.charAt(0) +" "+currentUser?.lastName?.charAt(0)) | titlecase }}
+              {{
+                currentUser?.firstName?.charAt(0) +
+                  " " +
+                  currentUser?.lastName?.charAt(0) | titlecase
+              }}
             </div>
             <span>
               {{ currentUser?.firstName }}
@@ -89,130 +47,89 @@
           }}</mat-icon>
         </div>
       </a>
-      <button
-        *ngIf="authService.isLoggedIn()"
-        fxHide.lt-md
-        mat-icon-button
-        routerLink="/notification"
-      >
-        <mat-icon matBadge="5">notifications</mat-icon>
+      <button *ngIf="authService.isLoggedIn()" fxHide.lt-md mat-icon-button routerLink="/notification">
+        <mat-icon [matBadge]="unreadCount > 0 ? unreadCount : null">notifications</mat-icon>
       </button>
 
       <mat-menu #account="matMenu">
-        <a
-          fxHide.gt-sm
-          mat-menu-item
-          routerLink="/notification"
-          class="mat-menu-item"
-          data-cy="notifications-link"
-        >
-          <mat-icon matBadge="5">notifications</mat-icon>
+        <a fxHide.gt-sm mat-menu-item routerLink="/notification" class="mat-menu-item" data-cy="notifications-link">
+          <mat-icon [matBadge]="unreadCount > 0 ? unreadCount : null">notifications</mat-icon>
           {{ "Notifications" | translate }}
         </a>
-        <a
-          fxHide.gt-sm
-          *ngIf="authService.isLoggedIn()"
-          mat-button
-          [routerLink]="['/my-fundraisers/organizer']"
-          class="mat-menu-item"
-          data-cy="your-fundraisers-link"
-        >
+        <a fxHide.gt-sm *ngIf="authService.isLoggedIn()" mat-button [routerLink]="['/my-fundraisers/organizer']"
+          class="mat-menu-item" data-cy="your-fundraisers-link">
           {{ "Your fundraisers" | translate }}
         </a>
-        <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
+        <!-- <a mat-menu-item routerLink="/my-donations" class="mat-menu-item">
           {{ "Donations you've made" | translate }}
-        </a>
-        <a
-          data-cy="account-settings-link"
-          mat-menu-item
-          routerLink="/account-setting"
-          class="mat-menu-item"
-        >
-          {{ "Account settings" | translate }}
-        </a>
-        <a
-          data-cy="helps-link"
-          mat-menu-item
-          routerLink="/help"
-          class="mat-menu-item"
-        >
-          {{ "Helps" | translate }}
-        </a>
-        <a
-          data-cy="create-lnk"
-          mat-menu-item
-          routerLink="/create"
-          class="mat-menu-item"
-        >
+        </a> -->
+        <a data-cy="create-lnk" mat-menu-item routerLink="/create" class="mat-menu-item">
           {{ "Start a new fundraiser" | translate }}
         </a>
+        <a data-cy="account-settings-link" mat-menu-item routerLink="/account-setting" class="mat-menu-item">
+          {{ "Account settings" | translate }}
+        </a>
+        <a data-cy="helps-link" mat-menu-item routerLink="/help" class="mat-menu-item">
+          {{ "Help" | translate }}
+        </a>
+
 
         <mat-divider></mat-divider>
-        <a
-          data-cy="sign-out-link"
-          mat-menu-item
-          fxLayoutAlign="center"
-          routerLink="/sign-in"
-          (click)="authService.logOut()"
-          >{{ "Sign out" | translate }}</a
-        >
+        <a data-cy="sign-out-link" mat-menu-item fxLayoutAlign="center" routerLink="/sign-in"
+          (click)="authService.logOut()">{{ "Sign out" | translate }}</a>
       </mat-menu>
 
-      <button
-        *ngIf="authService.isLoggedIn()"
-        [matMenuTriggerFor]="account"
-        mat-icon-button
-        fxShow="true"
-        fxHide.gt-sm
-        fxFlexOrder.lt-sm="2"
-        data-cy="menu-btn"
-      >
+      <button *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="account" mat-icon-button fxShow="true" fxHide.gt-sm
+        fxFlexOrder.lt-sm="2" data-cy="menu-btn">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
   </mat-toolbar-row>
 
-  <mat-toolbar-row
-    fxHide.gt-xs
-    fxLayout="row"
-    fxLayoutAlign="end center"
-    fxLayoutGap="20px"
-  >
+  <mat-toolbar-row fxHide.gt-xs fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
     <div fxFlexOrder.lt-sm="1" class="search-container">
-      <input
-        data-cy="search-field"
-        id="search-field"
-        matInput
-        #key
-        type="search"
-        [placeholder]="'Search fundraisers' | translate"
-        (keyup.enter)="search(key.value)"
-        [value]="searchWord ?? ''"
-      />
+      <input data-cy="search-field" id="search-field" matInput #key type="search"
+        [placeholder]="'Search fundraisers' | translate" (keyup.enter)="search(key.value)" [value]="searchWord ?? ''" />
       <span id="search-icon" matSuffix>
-        <mat-icon class="mat-18" (click)="search(key.value)"
-          >search</mat-icon
-        ></span
-      >
+        <mat-icon class="mat-18" (click)="search(key.value)">search</mat-icon>
+      </span>
     </div>
   </mat-toolbar-row>
-  <mat-toolbar-row
-    *ngIf="!authService.isLoggedIn()"
-    fxHide.gt-xs
-    fxLayout="row"
-    fxLayoutAlign="end center"
-    fxLayoutGap="20px"
-  >
-    <a
-      mat-raised-button
-      data-cy="start-a-campaign-btn-lt-sm"
-      color="primary"
-      [routerLink]="['/create']"
-    >
+  <mat-toolbar-row *ngIf="!authService.isLoggedIn()" fxHide.gt-xs fxLayout="row" fxLayoutAlign="end center"
+    fxLayoutGap="20px">
+    <a mat-raised-button data-cy="start-a-campaign-btn-lt-sm" color="primary" [routerLink]="['/create']">
       {{ "Start a Fundraiser" | translate }}
     </a>
     <a data-cy="sign-in-btn-lt-sm" mat-button [routerLink]="['/sign-in']">
       {{ "Log in" | translate }}
     </a>
   </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-toolbar *ngIf="routeContains('sign-in')" [classList]="'bg-white'" fxLayout="row wrap"
+  fxLayoutAlign="space-around center">
+  <!-- LOGO -->
+  <img [routerLink]="['/']" class="logo" src="/assets/images/logo.svg" />
+  <div fxFLexFill></div>
+  <div data-cy="sign-up">
+    {{ "Don't you have an account?" | translate
+  }}<a color="primary" [routerLink]="['/sign-up']">
+      {{ "Register" | translate }}
+    </a>
+  </div>
+</mat-toolbar>
+
+
+<mat-toolbar *ngIf='routeContains("sign-up")' [classList]="'bg-white'" fxLayout="row wrap"
+  fxLayoutAlign="space-around center">
+  <!-- LOGO -->
+  <img [routerLink]="['/']" class="logo" src="/assets/images/logo.svg" />
+  <div fxFLexFill></div>
+  <div data-cy="log-in-option">
+    {{ "Already have an account?" | translate
+      }}<a color="primary" [routerLink]="['/sign-in']">
+      {{ "Log in" | translate }}
+    </a>
+  </div>
 </mat-toolbar>

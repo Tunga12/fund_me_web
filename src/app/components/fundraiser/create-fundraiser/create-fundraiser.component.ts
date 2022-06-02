@@ -25,7 +25,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
     private fundraiserService: FundraiserService,
     private router: Router,
     private docTitle: Title
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Create campaign');
@@ -40,6 +40,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
         latitude: 0,
         longitude: 0,
       },
+      paymentInfo: undefined,
     };
     this.getCurrentLocation();
   }
@@ -81,7 +82,7 @@ export class CreateFundraiserComponent implements OnInit, OnDestroy {
 
   // navigate to next step 'photo'
   next(fundraiser: Fundraiser) {
-    if (this.currentStep < 3) {
+    if (this.currentStep < 4) {
       this.currentStep += 1;
     }
     this.fundraiser = fundraiser;

@@ -10,6 +10,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 import { ImageService } from 'src/app/services/image/image.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-photo-tab-content',
@@ -26,6 +27,8 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
   croppedImage: any;
   original_image: any;
 
+  oldPath: string = '';
+
   @Input() fundraiser!: Fundraiser;
   form!: FormGroup;
   constructor(
@@ -35,14 +38,16 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
     private snackbar: MatSnackBar,
     private docTitle: Title,
     private imageCropperDialog: MatDialog,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private imageCompress: NgxImageCompressService
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Change photo');
     this.form = this.formBuilder.group({
       image: '',
     });
+    this.oldPath = this.fundraiser.image!;
   }
 
   // fundraiser edit
@@ -64,9 +69,9 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
         (error) => {
           this.loading = false;
           console.log(error.error);
-          this.errorMessage = error.error;
+          this.errorMessage = "Failed to edit fundraiser";
           this.snackbar.open(
-            error.error,
+            "Failed to edit fundraiser",
             'close',
             this.snackbarService.getConfig()
           );
@@ -76,10 +81,13 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
 
   // upload the image chosen by the user
   uploadImage() {
+    console.log('im in save changes');
     let file = base64ToFile(this.croppedImage);
     const formData: FormData = new FormData();
     formData.append('image', file, 'img.png');
-    this.imageSub = this.imageService.upload(formData).subscribe(
+    formData.append('oldPath', this.oldPath);
+    console.log(this.oldPath)
+    this.imageSub = this.imageService.changePhoto(formData).subscribe(
       (response: string) => {
         this.fundraiser.image = response;
         this.loading = false;
@@ -101,16 +109,48 @@ export class PhotoTabContentComponent implements OnInit, OnDestroy {
   onImageChosen(event: any) {
     this.errorMessage = '';
     this.original_image = event;
-    
+
     this.imageCropperDialog
-    .open(ImageCropperComponent, { data: { image: event } })
-    .afterClosed()
-    .subscribe((croppedImage: any) => {
+      .open(ImageCropperComponent, { data: { image: event } })
+      .afterClosed()
+      .subscribe((croppedImage: any) => {
         if (croppedImage) {
           this.fundraiser.image = croppedImage;
           this.croppedImage = croppedImage;
         }
       });
+  }
+
+  compressFile() {
+    console.log("in compressFile");
+    this.imageCompress.uploadFile().then(
+      ({ image, orientation }) => {
+
+        // this.imgResultBeforeCompression = image;
+        console.log("Size in bytes of the uploaded image was:", this.imageCompress.byteCount(image));
+
+        this.imageCompress
+          .compressFile(image, orientation, 50, 50) // 50% ratio, 50% quality
+          .then(
+            (compressedImage) => {
+              // this.imgResultAfterCompression = compressedImage;
+              console.log("Size in bytes after compression is now:", this.imageCompress.byteCount(compressedImage));
+              this.original_image = compressedImage;
+              this.imageCropperDialog
+                .open(ImageCropperComponent, { data: { image: compressedImage } })
+                .afterClosed()
+                .subscribe((croppedImage) => {
+                  console.log(croppedImage);
+                  if (croppedImage) {
+                    // this.imageSrc = croppedImage;
+                    this.fundraiser.image = croppedImage;
+                    this.croppedImage = croppedImage;
+                  }
+                });
+            }
+          );
+      }
+    );
   }
 
   ngOnDestroy(): void {

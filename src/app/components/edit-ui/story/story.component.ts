@@ -30,7 +30,7 @@ export class StoryComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private snackbar: MatSnackBar,
     private docTitle: Title
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Edit story');
@@ -65,12 +65,12 @@ export class StoryComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.snackbar.open(
-            error.error,
+            "Failed to edit fundraiser",
             'close',
             this.snackbarService.getConfig()
           );
           console.log(error.error);
-          this.errorMessage = error.error;
+          this.errorMessage = "Failed to edit fundraiser";
         }
       );
   }

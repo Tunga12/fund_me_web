@@ -1,27 +1,12 @@
 <footer class="bg-gray">
-  <div
-    fxLayout="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="space-around start"
-    fxLayoutAlign.lt-md="center center"
-    fxLayoutGap="10px"
-    class="content"
-  >
-    <div
-      fxLayout="column"
-      fxLayoutAlign="center start"
-      fxFlex="20"
-      fxLayoutGap="10px"
-    >
+  <!-- <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" fxLayoutAlign.lt-md="center center"
+    fxLayoutGap="10px" class="content">
+    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="20" fxLayoutGap="10px">
       <img src="/assets/images/logo.svg" alt="" width="100" height="50" />
       <mat-form-field appearance="outline">
         <mat-label>{{ "Language" | translate }}</mat-label>
-        <mat-select
-          placeholder="Language"
-          (selectionChange)="changeLang($event)"
-          name="language"
-          [(value)]="selectedLanguage"
-        >
+        <mat-select placeholder="Language" (selectionChange)="changeLang($event)" name="language"
+          [(value)]="selectedLanguage">
           <mat-option [value]="'en'">English </mat-option>
           <mat-option [value]="'am'"> አማርኛ </mat-option>
           <mat-option [value]="'or'"> Oromiffa </mat-option>
@@ -43,67 +28,48 @@
         "Help center" | translate
       }}</a>
     </div>
-  </div>
+  </div> -->
 
-  <div><mat-divider> </mat-divider></div>
+  <!-- <div>
+    <mat-divider> </mat-divider>
+  </div> -->
 
-  <div
-    class="content color-gray"
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="space-around center"
-    fxLayoutGap="30px"
-  >
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="start center"
-      fxLayoutGap="20px"
-      fxFlexOrder.xs="1"
-    >
-      <p>&copy; 2020-2021 {{"Legas"|translate}}</p>
-      <div
-        fxLayout="row"
-        fxLayout.xs="column"
-        fxLayoutAlign="space-around start"
-        fxLayoutGap="10px"
-      >
-        <p>{{"Terms"|translate}}</p>
-        <p>{{"Privacy"|translate}}</p>
-        <p>{{"Legal"|translate}}</p>
+  <div class="content color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center"
+    fxLayoutGap="30px">
+    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="20" fxLayoutGap="10px">
+      <img src="/assets/images/logo.svg" alt="" width="100" height="50" />
+      <mat-form-field appearance="outline">
+        <mat-label>{{ "Language" | translate }}</mat-label>
+        <mat-select placeholder="Language" (selectionChange)="changeLang($event)" name="language"
+          [(value)]="selectedLanguage">
+          <mat-option [value]="'en'">English </mat-option>
+          <mat-option [value]="'am'"> አማርኛ </mat-option>
+          <mat-option [value]="'or'"> Oromiffa </mat-option>
+          <mat-option [value]="'tr'"> Tigrigna </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexOrder.xs="1">
+      <p>&copy; {{ year }} {{"Legas"|translate}}</p>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around start" fxLayoutGap="10px">
+        <p><a color="primary" [routerLink]="['/terms']">{{"Terms"|translate}}</a></p>
+        <p><a color="primary" [routerLink]="['/privacy']">{{"Privacy"|translate}}</a>
+
       </div>
     </div>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="5px"
-      fxFlexOrder.xs="0"
-    >
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px" fxFlexOrder.xs="0">
       <mat-icon id="fb-icon" color="'0000ff'">facebook</mat-icon>
       <mat-icon>
-        <svg
-          fill="#1d9bf0"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
+        <svg fill="#1d9bf0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          aria-hidden="true" focusable="false">
           <path opacity="0" d="M0 0h24v24H0z"></path>
           <path
-            d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"
-          ></path>
+            d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z">
+          </path>
         </svg>
       </mat-icon>
       <mat-icon>
-        <img
-          src="/assets/images/Instagram_AppIcon.png"
-          alt=""
-          srcset=""
-          width="19"
-          height="19"
-        />
+        <img src="/assets/images/Instagram_AppIcon.png" alt="" srcset="" width="19" height="19" />
       </mat-icon>
       <mat-icon id="tg-icon"> telegram </mat-icon>
     </div>

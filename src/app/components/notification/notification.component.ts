@@ -14,7 +14,7 @@ import { SocketIoService } from './../../services/socket.io/socket.io.service';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  count: any = 0;
+  // count: any = 0;
   loading = false;
   notifications: Notification[] = [];
   acceptedTeamInvitations: Notification[] = [];
@@ -39,25 +39,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subs.push(
-      this.socketIoService
-        .getMessage('unread notification count')
-        .subscribe((data) => {
-          console.log(data);
-        })
-    );
+    // this.subs.push(
+    //   this.socketIoService
+    //     .listen('unread notification count')
+    //     .subscribe((data: any) => {
+    //       console.log(`unread count: ${data}`);
+    //     })
+    // );
 
-    this.subs.push(
-      this.socketIoService
-        .getMessage('all notification')
-        .subscribe((data) => console.log(data))
-    );
+    // this.subs.push(
+    //   this.socketIoService
+    //     .listen('all notification')
+    //     .subscribe((data: any) => console.log(data))
+    // );
 
-    this.subs.push(
-      this.socketIoService
-        .getMessage('error')
-        .subscribe((data) => console.log(data))
-    );
+    // this.subs.push(
+    //   this.socketIoService
+    //     .listen('error')
+    //     .subscribe((data: any) => console.log(data))
+    // );
 
     this.getNotifications();
   }

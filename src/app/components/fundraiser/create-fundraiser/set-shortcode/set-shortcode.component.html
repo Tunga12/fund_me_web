@@ -1,0 +1,58 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label data-cy="shortcode-label">{{
+      "Enter the shortcode you have received from telebirr" | translate
+    }}</mat-label>
+    <input data-cy="shortcode" matInput formControlName="shortcode" class="matInput"
+      [placeholder]="'Enter shortcode' | translate" type="number" min="1" />
+    <mat-error data-cy="shortcode-required-error" *ngIf="shortcode?.touched && shortcode?.errors?.required">
+      {{ "Fundraiser shortcode is required!" | translate }}
+    </mat-error>
+    <mat-error data-cy="shortcode-invalid-error" *ngIf="shortcode?.touched && shortcode?.errors?.shortcodeInvalid">
+      {{ "Invalid Shortcode" | translate }}
+    </mat-error>
+  </mat-form-field>
+  <p data-cy="info">
+    {{
+      "This is needed for donations to go directly into your telebirr account"
+        | translate
+    }}
+  </p>
+  <div id="note">
+    <p>
+      {{
+        "If you don't have a shortcode yet, Email us the following documents at" | translate }}
+      <b>legasfund@gmail.com</b> {{ "and we will send you the shortcode from telebirr within a maximum of 5 working days"
+          | translate
+      }}:
+    </p>
+    <ul>
+      <li> If you are a Business, charity or religious organization
+        <ul>
+          <li>{{ "Business License" | translate }}</li>
+          <li>{{ "Business Registration" | translate }}</li>
+          <li>{{ "Business TIN" | translate }}</li>
+          <li>
+            {{ "A letter specifying the reason for fundraising with the company stamp" | translate }}
+          </li>
+        </ul>
+      </li>
+
+      <li>If you are an individual
+        <ul>
+          <li>{{ "Renewed ID or passport" | translate }}</li>
+          <li>{{ "A legal document stating your condition: for example medical record from a hospital" | translate }}
+          </li>
+          <li>
+            {{ "A letter specifying the reason for fundraising with your signature" | translate }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <button data-cy="next-btn" type="button" [disabled]="!form.valid" mat-raised-button color="primary" class="btn-large"
+    (click)="nextStep()">
+    {{ "Next" | translate }}
+  </button>
+</form>

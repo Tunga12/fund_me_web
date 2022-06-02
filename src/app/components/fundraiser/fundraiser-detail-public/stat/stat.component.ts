@@ -16,7 +16,9 @@ export class StatComponent implements OnInit {
   totalRaised: number = 0;
   currencySub?: Subscription;
 
-  constructor(private currencyConvServ: CurrencyConverterService) {}
+  @Input() totalDonations?: number;
+
+  constructor(private currencyConvServ: CurrencyConverterService) { }
 
   ngOnInit(): void {
     this.getConversionRate();
@@ -29,20 +31,10 @@ export class StatComponent implements OnInit {
   }
 
   // get currency conversion rate
-  getConversionRate() {
-    this.currencySub = this.currencyConvServ.getExchangeRate().subscribe(
-      (rate) => {
-        if (rate) {
-          this.exchangeRate = rate.USD_ETB;
-          console.log(rate);
-        }
-        this.getTotalRaisedInBirr();
-        this.getPercentage();
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.error);
-      }
-    );
+  async getConversionRate() {
+    this.exchangeRate = await this.currencyConvServ.getExchangeRate();
+    this.getTotalRaisedInBirr();
+    this.getPercentage();
   }
 
   // percentage of money raised to fundraiser goal amount

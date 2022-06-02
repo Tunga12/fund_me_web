@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <p data-cy="intro-message">
     {{
-      "A high-quality photo or video will help tell your story and build trust with
+      "A high-quality photo will help tell your story and build trust with
     donors."
         | translate
     }}
@@ -10,26 +10,19 @@
   <p [attr.align]="'center'" class="text-error" *ngIf="errorMessage">{{errorMessage}} </p>
   <ng-container *ngIf="imageSrc === '' && !loading; else elseTemplate">
     <!-- Drag and drop or upload a photo that best represents your fundraiser. -->
-    <button id="image-chooser">
-      <label data-cy="image-label" for="image" id="image-label">
-        <input
-          id="image"
-          data-cy="image"
-          hidden
-          type="file"
-          accept="image/jpeg,image/png,image/gif, image/bmp"
-          formControlName="image"
-          (change)="onImageChosen($event)"
-        />
-        <div data-cy="label-text" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
-          <mat-icon>add</mat-icon>
-          <p>
-            {{
+    <button id="image-chooser" (click)="compressFile()">
+      <!-- <label data-cy="image-label" for="image" id="image-label"> -->
+      <!-- <input id="image" data-cy="image" hidden type="file" accept="image/jpeg,image/png,image/gif, image/bmp"
+          formControlName="image" (change)="compressFile()" /> -->
+      <div data-cy="label-text" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
+        <mat-icon>add</mat-icon>
+        <p>
+          {{
               "upload a photo that best represents your fundraiser" | translate
             }}
-          </p>
-        </div>
-      </label>
+        </p>
+      </div>
+      <!-- </label> -->
     </button>
     <!-- <div class="or-divider">
     <p class="bar"></p>
@@ -46,49 +39,20 @@
   </ng-container>
 
   <ng-template #elseTemplate>
-    <div
-      fxLayout="column"
-      fxLayoutAlign="start start"
-      fxLayoutGap="0px"
-      [ngStyle]="{ width: '96%' }"
-    >
-      <img
-        [src]="imageSrc"
-        *ngIf="imageSrc"
-        style="height: 300px; width: 100%"
-      />
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between start"
-        fxLayoutGap="20px"
-        [ngStyle]="{ width: '94%' }"
-      >
-        <button
-          [disabled]="!form.valid || loading"
-          (click)="editImage()"
-          mat-icon-button
-        >
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px" [ngStyle]="{ width: '96%' }">
+      <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; width: 100%" />
+      <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="20px" [ngStyle]="{ width: '94%' }">
+        <button [disabled]="imageSrc == ''" (click)="editImage()" mat-icon-button>
           <mat-icon>edit</mat-icon>{{ "Edit" | translate }}
         </button>
-        <button
-          [disabled]="!form.valid || loading"
-          mat-icon-button
-          color="warn"
-          (click)="removeImage()"
-        >
+        <button [disabled]="imageSrc == ''" mat-icon-button color="warn" (click)="removeImage()">
           <mat-icon>delete</mat-icon>{{ "Delete" | translate }}
         </button>
       </div>
     </div>
 
-    <button
-    data-cy="next-btn"
-      mat-raised-button
-      [disabled]="(form.touched && !form.valid)|| loading"
-      color="primary"
-      (click)="nextStep()"
-      class="btn-large"
-    >
+    <button data-cy="next-btn" mat-raised-button [disabled]="(form.touched && !form.valid)|| loading" color="primary"
+      (click)="nextStep()" class="btn-large">
       Next
     </button>
   </ng-template>

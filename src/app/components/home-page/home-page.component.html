@@ -1,13 +1,9 @@
-<nav class="mat-elevation-z1 sticky-top-0">
+<!-- <nav class="mat-elevation-z1 sticky-top-0">
   <nav-bar></nav-bar>
-</nav>
+</nav> -->
 <div>
   <div fxHide.lt-md class="illustration">
-    <div
-      fxLayout="column"
-      fxLayoutAlign="start start"
-      data-cy="non-mobile-header"
-    >
+    <div fxLayout="column" fxLayoutAlign="start start" data-cy="non-mobile-header">
       <h1 class="bold mat-h1">
         {{ "Fundraising for the people and" | translate }}
       </h1>
@@ -17,50 +13,25 @@
       </h1>
     </div>
 
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign.xs="center center"
-      fxLayoutAlign="start center"
-      fxLayoutGap="20px"
-    >
-      <a
-        class="btn-large"
-        routerLink="/create"
-        mat-raised-button
-        color="primary"
-        [ngStyle]="{ 'max-width': '30%' }"
-        data-cy="start-btn"
-      >
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign="start center"
+      fxLayoutGap="20px">
+      <a class="btn-large" routerLink="/create" mat-raised-button color="primary" [ngStyle]="{ 'max-width': '30%' }"
+        data-cy="start-btn">
         {{ "Start a Fundraiser" | translate }}
       </a>
       <div fxHide.lt-md>
         <mat-divider [vertical]="true" style="height: 30px"></mat-divider>
       </div>
-      <button
-        data-cy="how-it-works-btn"
-        fxFlex.lt-sm="60"
-        mat-button
-        class="btn-large color-gray"
-      >
+      <button data-cy="how-it-works-btn" fxFlex.lt-sm="60" mat-button class="btn-large color-gray">
         <mat-icon class="mat-18">play_circle_outline</mat-icon>
         {{ "See how Legas works" | translate }}
       </button>
     </div>
   </div>
 
-  <div
-    fxHide.gt-sm
-    fxLayout="column"
-    fxLayoutAlign="start center"
-    fxLayoutGap="20px"
-    data-cy="mobile"
-  >
+  <div fxHide.gt-sm fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px" data-cy="mobile">
     <div class="full-width" data-cy="mobile-image">
-      <img
-        class="img-mobile"
-        src="/assets/images/homepage-illustration-1920w.png"
-      />
+      <img class="img-mobile" src="/assets/images/homepage-illustration-1920w.png" />
     </div>
 
     <div class="mobile-header" data-cy="mobile-header">
@@ -71,66 +42,36 @@
     <h1 class="color-gray mat-h1" data-cy="get-started-mobile">
       {{ "Get Started Today." | translate }}
     </h1>
-    <a
-      routerLink="/create"
-      mat-raised-button
-      color="primary"
-      class="btn-large"
-      [ngStyle.sm]="{ 'max-width': '40%' }"
-      [ngStyle.lt-sm]="{ 'max-width': '60%' }"
-      data-cy="start-btn-mobile"
-    >
+    <a routerLink="/create" mat-raised-button color="primary" class="btn-large" [ngStyle.sm]="{ 'max-width': '40%' }"
+      [ngStyle.lt-sm]="{ 'max-width': '60%' }" data-cy="start-btn-mobile">
       {{ "Start a Campaign" | translate }}
     </a>
-    <button
-      fxFlex.lt-sm="60"
-      mat-button
-      class="btn-large color-gray"
-      data-cy="how-it-works-btn-mobile"
-    >
+    <button fxFlex.lt-sm="60" mat-button class="btn-large color-gray" data-cy="how-it-works-btn-mobile">
       <mat-icon class="mat-18">play_circle_outline</mat-icon>
       {{ "See how Legas works" | translate }}
     </button>
   </div>
 </div>
 <!-- fundraisers list  -->
-<div
-  fxLayout="column"
-  fxLayoutGap="20px"
-  class="fundraisers-list-section"
-  ngClass.lt-md="width-lt-md"
-  ngClass.gt-sm="width-large"
-  
->
-  <h2 class="bold" data-cy="top-fundraisers-header"
-  
-  >
+<div fxLayout="column" fxLayoutGap="20px" class="fundraisers-list-section" ngClass.lt-md="width-lt-md"
+  ngClass.gt-sm="width-large">
+  <h2 class="bold" data-cy="top-fundraisers-header">
     {{ "Top fundraisers" | translate }}
   </h2>
   <div *ngIf="loading">
-    <mat-progress-spinner
-      mode="indeterminate"
-      [value]="100"
-      color="primary"
-      class="loading-spinner"
-    >
+    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
     </mat-progress-spinner>
   </div>
 
   <p *ngIf="errorMessage" class="text-error">{{ errorMessage }}</p>
 
   <!-- LIST OF FUNDRAISERS -->
-  <app-public-fund-list
-    data-cy="fundraisers-list"
-    [fundraisers]="fundraisers"
-    [loading]="loading"
-    [hasNext]="hasNext()"
-    (nextEvent)="nextPage()"
-  >
+  <app-public-fund-list data-cy="fundraisers-list" [fundraisers]="fundraisers" [loading]="loading" [hasNext]="hasNext()"
+    (nextEvent)="nextPage()">
   </app-public-fund-list>
 </div>
 
-<div class="bg-gray" data-cy="trending-topic">
+<!-- <div class="bg-gray" data-cy="trending-topic">
   <div
     fxLayout="column"
     style="width: 80%; margin: 30px auto"
@@ -181,37 +122,22 @@
       <img fxHide.lt-md src="/assets/images/covid-19.jpg" />
     </div>
   </div>
-</div>
+</div> -->
 
-<div
-  fxLayout="column"
-  fxLayoutAlign="center center"
-  fxLayoutGap="30px"
-  ngStyle.xs="margin: 100px auto; width: 94%"
-  ngStyle.gt-sm="margin: 100px auto; width: 80%"
->
+<mat-divider></mat-divider>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px" ngStyle.xs="margin: 100px auto; width: 94%"
+  ngStyle.gt-sm="margin: 100px auto; width: 80%">
   <h2 class="bold mat-h2">
     {{ "The leader in online fundraising" | translate }}
   </h2>
-  <div
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="space-around center"
-    fxLayoutGap="30px"
-    style="min-width: 100%"
-  >
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="20px"
-      fxFlex="30"
-    >
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="30px"
+    style="min-width: 100%">
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" fxFlex="30">
       <svg viewBox="0 0 19 19" class="norma-icon--large">
         <g stroke="none" fill="green">
           <path
             d="M5.25 13.75h8.5v-8.5h-8.5zm8.5 1h-8.5v1.533c0 .258.206.467.45.467h7.6c.244 0 .45-.21.45-.467zm-8.5-10.5h8.5v-.533a.461.461 0 0 0-.45-.467H5.7c-.244 0-.45.21-.45.467zm8.05 13.5H5.7c-.8 0-1.45-.66-1.45-1.467V3.717c0-.806.65-1.467 1.45-1.467h7.6c.8 0 1.45.66 1.45 1.467v12.566c0 .806-.65 1.467-1.45 1.467zM9.5 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM10 11H9a1.5 1.5 0 0 0-1.415 1h3.83A1.5 1.5 0 0 0 10 11zm-3.5 2v-.5A2.5 2.5 0 0 1 9 10h1a2.5 2.5 0 0 1 2.5 2.5v.5z"
-            fill-rule="evenodd"
-          ></path>
+            fill-rule="evenodd"></path>
         </g>
       </svg>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
@@ -226,18 +152,12 @@
       </div>
     </div>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="20px"
-      fxFlex="30"
-    >
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" fxFlex="30">
       <svg viewBox="0 0 19 19" class="norma-icon--large">
         <g stroke="none" fill="green">
           <path
             d="M2.824 11h5.992L5.834 6.527l.832-.554L10.018 11h6.158a6.75 6.75 0 1 0-13.353 0zm.227 1a6.753 6.753 0 0 0 12.898 0zM9.5 17.75a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5z"
-            fill-rule="evenodd"
-          ></path>
+            fill-rule="evenodd"></path>
         </g>
       </svg>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
@@ -251,18 +171,12 @@
       </div>
     </div>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start start"
-      fxLayoutGap="20px"
-      fxFlex="30"
-    >
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" fxFlex="30">
       <svg viewBox="0 0 19 19" class="norma-icon--large">
         <g stroke="none" fill="green">
           <path
             d="M12.998 3.25H11v-1h4v4h-1V3.677L9.241 8.198 6.77 5.726 4.872 7.834l-.744-.668 2.603-2.892 2.528 2.528zM8.5 11.5v5.25h2V11.5zm3-1v7.25h-4V10.5zm-8.25 3.75v2.5h2v-2.5zm3-1v4.5h-4v-4.5zm7.5-4.75v8.25h2V8.5zm3-1v10.25h-4V7.5z"
-            fill-rule="evenodd"
-          ></path>
+            fill-rule="evenodd"></path>
         </g>
       </svg>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
@@ -280,28 +194,14 @@
 
 <div class="ready-to-start-fundraising">
   <h3>Ready to start fundraising?</h3>
-  <a routerLink="/create" mat-raised-button color="primary"
-    >{{ "Start a Campaign" | translate }}
+  <a routerLink="/create" mat-raised-button color="primary">{{ "Start a Campaign" | translate }}
   </a>
 </div>
 
 <div class="bg-gray">
-  <div
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="center start"
-    fxLayoutGap.gt-sm="30px"
-    fxLayoutGap.sm="20px"
-    ngStyle.xs="margin: 20px auto; width: 94%"
-    ngStyle.gt-sm="margin: 20px auto; width: 80%"
-  >
-    <img
-      src="assets/images/mobile-app-users.png"
-      alt=""
-      fxFlex="58"
-      fxFlex.sm="50"
-      [ngStyle.xs]="{ width: '100%' }"
-    />
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start" fxLayoutGap.gt-sm="30px" fxLayoutGap.sm="20px"
+    ngStyle.xs="margin: 20px auto; width: 94%" ngStyle.gt-sm="margin: 20px auto; width: 80%">
+    <img src="assets/images/mobile-app-users.png" alt="" fxFlex="58" fxFlex.sm="50" [ngStyle.xs]="{ width: '100%' }" />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
       <span class="bold">{{ "Available now" | translate }}</span>
       <h1 class="bold">{{ "The Legas app" | translate }}</h1>
@@ -313,11 +213,8 @@
       </p>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
         <!-- <a target="_" href="https://apps.apple.com/app/apple-store/id734130700"><img src="/assets/images/img-app-store.png" alt=""></a> -->
-        <a
-          href="https://play.google.com/store/apps/details?id=com.Legas.Legas"
-          target="_"
-          ><img src="/assets/images/img-play-store.png" alt=""
-        /></a>
+        <a href="https://play.google.com/store/apps/details?id=com.Legas.Legas" target="_"><img
+            src="/assets/images/img-play-store.png" alt="" /></a>
       </div>
     </div>
   </div>

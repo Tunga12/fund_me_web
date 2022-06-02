@@ -77,17 +77,13 @@ import { DonationsTabContentComponent } from './components/fundraiser/my-fundrai
 import { AppRoutesModule } from './modules/routes.module';
 import { NotFoundModule } from './modules/not-found.module';
 import { SocketIoService } from './services/socket.io/socket.io.service';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { SetShortcodeComponent } from './components/fundraiser/create-fundraiser/set-shortcode/set-shortcode.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxImageCompressService } from "ngx-image-compress";
+import { ReportComponent } from './components/fundraiser/fundraiser-detail-public/report/report.component';
 
-const config: SocketIoConfig = {
-  url: 'http://178.62.55.81:5000/',
-  options: {
-    transports: ['websocket','polling'],
-    query: {
-      token: localStorage.getItem('x-auth-token') || '',
-    },
-  },
-};
 @NgModule({
   declarations: [
     AppComponent,
@@ -147,6 +143,11 @@ const config: SocketIoConfig = {
     PhotoTabContentComponent,
     UpdateImageCropperComponent,
     ReportDialogComponent,
+    SetShortcodeComponent,
+    TermsComponent,
+    PrivacyComponent,
+    ReportComponent,
+
   ],
   entryComponents: [],
   imports: [
@@ -158,7 +159,6 @@ const config: SocketIoConfig = {
     ShareButtonsModule.withConfig({
       debug: true,
     }),
-    SocketIoModule.forRoot(config),
     ShareIconsModule,
     NgxPayPalModule,
     ImageCropperModule,
@@ -166,6 +166,7 @@ const config: SocketIoConfig = {
     SharedModule,
     AppRoutesModule,
     NotFoundModule,
+    ScrollingModule
   ],
 
   providers: [
@@ -184,7 +185,8 @@ const config: SocketIoConfig = {
       multi: true,
     },
     SocketIoService,
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

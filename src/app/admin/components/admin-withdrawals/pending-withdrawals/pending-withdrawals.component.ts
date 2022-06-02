@@ -16,21 +16,43 @@ import { WithdrawalsPage } from 'src/app/admin/models/withdrawals-page.model';
 import { AdminWithdrawalsService } from 'src/app/admin/services/admin-withdrawals/admin-withdrawals.service';
 import { Withdrawal } from 'src/app/models/withdrawal.model';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'admin-pending-withdrawals',
   templateUrl: './pending-withdrawals.component.html',
   styleUrls: ['./pending-withdrawals.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
   displayedColumns = [
     //'firstName', 'lastName', 'email',
+    // 'username',
     'bankName',
     'bankAccountNo',
     'date',
+    // 'link to fundraiser',
+    // 'reports',
     'accept',
     'decline',
   ];
+
+  expandedElement: any | null;
 
   pendingWithdrawals!: Withdrawal[];
   withdrawalPage!: WithdrawalsPage;
@@ -82,7 +104,7 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
       );
   }
 
-// update the table to the current data
+  // update the table to the current data
   updateTable() {
     this.dataSource.data = this.pendingWithdrawals;
     this.cdr.detectChanges();
@@ -105,7 +127,7 @@ export class PendingWithdrawalsComponent implements OnInit, OnDestroy {
   acceptWithdrawalRequest(withdrawal: Withdrawal) {
     let index = this.pendingWithdrawals.indexOf(withdrawal);
     this.pendingWithdrawals.splice(index, 1);
-this.updateTable();
+    this.updateTable();
     this.withdrawalSub = this.withdrawalService
       .acceptWithdrawalRequest(withdrawal._id!)
       .subscribe(

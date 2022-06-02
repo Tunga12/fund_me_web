@@ -19,6 +19,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import { ReportReasonTypesService } from 'src/app/services/report-reason-types/report-reason-types.service';
 import { ReportReasonType } from 'src/app/admin/models/report-reason-type.model';
 import { CurrencyConverterService } from './../../../services/currency-converter/currency-converter.service';
+import { DonationService } from 'src/app/services/donation/donation.service';
+import { DonationInfo } from 'src/app/models/donation.model';
 
 @Component({
   selector: 'app-fundraiser-detail-public',
@@ -40,6 +42,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   // totalRaised=0;
   fundraiserId: string = '';
   fundraiser?: Fundraiser;
+  donationInfo?: DonationInfo;
 
   // subscriptions
   fundSub?: Subscription;
@@ -52,13 +55,14 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private docTitle: Title,
     private reasonsService: ReportReasonTypesService,
-    private router:Router,
+    private router: Router,
     private userService: UserService,
+    private donationService: DonationService,
     public fundraiserService: FundraiserService,
-    public authService: AuthService
-  ) {}
+    public authService: AuthService,
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.docTitle.setTitle('fundraiser detail');
     // get the id parameter from router
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -67,10 +71,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
     });
 
     // get the fundraiser with this id
+    await this.getDonationsInfo(this.fundraiserId);
+
     this.getFundraiser(this.fundraiserId);
 
     // get current user
-    this.getUser();
+    // this.getUser();
 
     // get all reasons
     this.getReportReasons();
@@ -78,19 +84,8 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   }
 
   // get currency conversion rate
-  getConversionRate() {
-    this.currencySub = this.currencyConvServ.getExchangeRate().subscribe(
-      (rate) => {
-        if (rate) {
-          this.exchangeRate = rate.USD_ETB;
-          console.log(rate);
-          
-        }
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.error);
-      }
-    );
+  async getConversionRate() {
+    this.exchangeRate = await this.currencyConvServ.getExchangeRate();
   }
   // get current user to know admin or not
   getUser() {
@@ -102,7 +97,7 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   increaseShareCount() {
     this.loading = true;
     this.fundraiser!.totalShareCount = this.fundraiser?.totalShareCount! + 1;
-    let fundraiser = {
+    let fundraiser: any = {
       ...this.fundraiser,
       category: this.fundraiser?.category?._id,
       organizer: this.fundraiser?.organizer?._id,
@@ -141,12 +136,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
         console.log(fundraiser);
 
         // if there is a referer id increase share count
-        this.activatedRoute.queryParams.subscribe((qParams) => {
-          ref = qParams['ref'] || '';
-          if (ref && ref !== this.userId) {
-            this.increaseShareCount();
-          }
-        });
+        // this.activatedRoute.queryParams.subscribe((qParams) => {
+        //   ref = qParams['ref'] || '';
+        //   if (ref && ref !== this.userId) {
+        //     this.increaseShareCount();
+        //   }
+        // });
       },
       (error) => {
         this.loading = false;
@@ -158,14 +153,14 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
 
   share() {
     let data: ShareArgs = {
-      url: `https://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `http://legasfund.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I have created a fundraiser on legas ${
         this.fundraiser?.beneficiary
           ? 'to help' + this.fundraiser.beneficiary.firstName
           : ''
-      } please signup and help me by donating and sharing it to your friends. thanks!`,
+        } please signup and help me by donating and sharing it to your friends. thanks!`,
     };
     this.dialog
       .open(ShareDialogComponent, {
@@ -191,8 +186,11 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
   }
 
   // listen for click on report button
-  reportBtnClick(){
-    this.authService.isLoggedIn()?this.openReportDialog():this.router.navigateByUrl('sign-in');
+  reportBtnClick() {
+    this.authService.isLoggedIn()
+      // ? this.openReportDialog()
+      ? this.router.navigateByUrl('report')
+      : this.router.navigateByUrl('sign-in');
   }
   // opens the report fundraiser dialog
   openReportDialog() {
@@ -208,6 +206,12 @@ export class FundraiserDetailPublicComponent implements OnInit, OnDestroy {
       .subscribe((reasons) => {
         this.reasonsList = reasons;
       });
+  }
+
+  // donation details
+  async getDonationsInfo(fundraiserId: string) {
+    this.donationInfo = await this.donationService.getDonationInfo(fundraiserId).toPromise();
+    console.log(`in getDonationsInfo method: ${this.donationInfo}`);
   }
 
   ngOnDestroy(): void {

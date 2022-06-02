@@ -1,3 +1,6 @@
 <!-- <nav><nav-bar></nav-bar></nav> -->
+<nav *ngIf="!hide_navbar" class="mat-elevation-z2">
+  <nav-bar></nav-bar>
+</nav>
 <router-outlet></router-outlet>
 <app-footer *ngIf="!hide_footer"></app-footer>

@@ -1,52 +1,132 @@
 <div *ngIf="loading">
-    <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
-    </mat-progress-spinner>
+  <mat-progress-spinner
+    mode="indeterminate"
+    [value]="100"
+    color="primary"
+    class="loading-spinner"
+  >
+  </mat-progress-spinner>
 </div>
 
 <p class="text-error">{{ errorMessage }}</p>
 
 <div *ngIf="!loading">
-    <div class="no-data" *ngIf="dataSource.data.length===0" style="margin: 30px">
-        You have no pending withdrawal requests yet.</div>
+  <div
+    class="no-data"
+    *ngIf="dataSource.data.length === 0"
+    style="margin: 30px"
+  >
+    You have no pending withdrawal requests yet.
+  </div>
 </div>
-<div *ngIf="dataSource.data.length!==0" class="table-container mat-elevation-z8">
-    <mat-table matSort [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="bankName">
-            <mat-header-cell *matHeaderCellDef  mat-sort-header> Bank name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.bankName |titlecase}} </mat-cell>
-        </ng-container>
+<div
+  *ngIf="dataSource.data.length !== 0"
+  class="table-container mat-elevation-z8"
+>
+  <mat-table matSort [dataSource]="dataSource" matSort multiTemplateDataRows>
+    <!-- <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        User name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> Username </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="bankName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Bank name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.bankName | titlecase }}
+      </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="bankAccountNo">
-            <mat-header-cell *matHeaderCellDef> Bank account no.</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.bankAccountNo | titlecase}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="bankAccountNo">
+      <mat-header-cell *matHeaderCellDef> Bank account no.</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.bankAccountNo | titlecase }}
+      </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.date | date }} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="accept">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="acceptWithdrawalRequest(element)">
-                    <mat-icon class="mat-18">check </mat-icon>Accept
-                </button> 
-            </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.date | date }} </mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="link to fundraiser">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Link to fundraiser
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> Link to fundraiser </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="reports">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Reports
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> reports </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="accept">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="acceptWithdrawalRequest(element)"
+        >
+          <mat-icon class="mat-18">check </mat-icon>Accept
+        </button>
+      </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="decline">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="warn" (click)="rejectWithdrawalRequest(element)">
-                    <mat-icon class="mat-18">close</mat-icon>Decline
-                </button> 
-            </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        <mat-row *matNoDataRow>No pending withdrawal requests yet.</mat-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page">
-    </mat-paginator>
+    <ng-container matColumnDef="decline">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="rejectWithdrawalRequest(element)"
+        >
+          <mat-icon class="mat-18">close</mat-icon>Decline
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div
+          class="example-element-detail"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <!-- <div>
+            {{ element.fundraiser.organiser.firstName  element.fundraiser.organiser.lastName  element.fundraiser._id}}
+          </div> -->
+          <div>This is the detail!</div>
+          <div>This is the detail!</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let element; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    >
+    </mat-row>
+    <mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="example-detail-row"
+    ></mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>

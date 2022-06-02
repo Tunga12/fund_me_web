@@ -10,10 +10,10 @@ import { Subscription } from 'rxjs';
 })
 export class WithdrawalComponent implements OnInit, OnDestroy {
 
-  moreData=false;
+  moreData = false;
 
-  saving_type='';
-  withdrawer='';
+  saving_type = '';
+  withdrawer = '';
   fundId = '';//id of the fundraiser
   // subscriptions
   activatedRouteSub?: Subscription;
@@ -32,7 +32,7 @@ export class WithdrawalComponent implements OnInit, OnDestroy {
 
   openNextForm() {
     if (this.withdrawer === 'me') {
-      this.router.navigate(['/withdrawal/personal-info',this.fundId]);
+      this.router.navigate(['/withdrawal/personal-info', this.fundId]);
     }
     else {
       this.router.navigate(['/withdrawal/beneficiary-form', this.fundId])

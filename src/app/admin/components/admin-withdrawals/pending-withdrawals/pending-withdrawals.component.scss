@@ -1,2 +1,24 @@
+table {
+    width: 100%;
+}
 
-  
+mat-row.example-detail-row {
+    min-height: 0;
+}
+
+mat-row.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+mat-row.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display : flex;
+}

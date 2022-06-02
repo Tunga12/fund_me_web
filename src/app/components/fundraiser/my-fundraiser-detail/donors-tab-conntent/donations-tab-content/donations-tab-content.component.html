@@ -32,7 +32,7 @@
             <span>
               <!--<span *ngIf="donation?.isAnonymous">{{"Anonymous"| translate}}</span> -->
               <span *ngIf="donation">{{
-                donation?.userId?.firstName! + " " + donation?.userId?.lastName
+                donation?.name! 
                 | titlecase
                 }}</span>
               <strong>{{ donation.amount | currency }}</strong></span>

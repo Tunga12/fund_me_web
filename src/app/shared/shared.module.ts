@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {     ChangeDetectionStrategy 
+import {
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,8 @@ import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { StoryTextAreaComponent } from '../components/story-text-area/story-text-area.component';
 import { MyMaterialModule } from '../modules/material.module';
+import { TermsComponent } from '../components/terms/terms.component';
+import { PrivacyComponent } from '../components/privacy/privacy.component';
 
 
 const ROUTES: Routes = [
@@ -37,6 +40,14 @@ const ROUTES: Routes = [
     path: 's',
     component: SearchComponent,
   },
+  {
+    path: 'terms',
+    component: TermsComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
+  }
 ]
 
 @NgModule({
@@ -64,11 +75,11 @@ const ROUTES: Routes = [
     MatExpansionModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
-  })
+    })
   ],
   exports: [
     MatExpansionModule,

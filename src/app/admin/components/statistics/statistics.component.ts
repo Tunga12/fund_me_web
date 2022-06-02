@@ -35,14 +35,26 @@ export class StatisticsComponent implements OnInit {
   // users
   filteredUsers: User[] = [];
   allUsers: User[] = [];
-  totalRaised = 0;
-  totalTip = 0;
+  // totalRaised = 0;
+  // totalTip = 0;
   loading: boolean = false;
   errorMessage: string = '';
   currentPage: number = 0;
 
   dateChosen: Date = new Date('0');
   endDate: Date = new Date();
+
+  totalCampaign = 0;
+  totalDonation = 0;
+  totalUser = 0;
+  totalRaised: { countBirr: number; countDollar: number } = {
+    countBirr: 0,
+    countDollar: 0,
+  };
+  totalTip: { countBirr: number; countDollar: number } = {
+    countBirr: 0,
+    countDollar: 0,
+  };
 
   // currency
   exchangeRateSubscription?: Subscription;
@@ -60,34 +72,34 @@ export class StatisticsComponent implements OnInit {
     this.loading = true;
     this.getExchangeRate();
 
-    await this.getAllFundraisers();
-    this.getFundraisersByDate(this.dateChosen, this.endDate);
+    // await this.getAllFundraisers();
+    // this.getFundraisersByDate(this.dateChosen, this.endDate);
+    this.totalCampaign = await this.getFundraisersCount(
+      this.dateChosen,
+      this.endDate
+    );
+
+    this.totalDonation = await this.getDonationsCount(
+      this.dateChosen,
+      this.endDate
+    );
 
     // console.log(this.allFundraisers);
 
-    await this.getUsers();
-    this.getUsersByDate(this.dateChosen, this.endDate);
+    // await this.getUsers();
+    // this.getUsersByDate(this.dateChosen, this.endDate);
+    this.totalUser = await this.getUsersCount(this.dateChosen, this.endDate);
 
-    await this.getAllDonations();
-    this.getFilteredDonationsByDate(this.dateChosen, this.endDate);
-    this.getTotalRaised();
+    // await this.getAllDonations();
+    // this.getFilteredDonationsByDate(this.dateChosen, this.endDate);
+    this.totalRaised = await this.getTotalRaised(this.dateChosen, this.endDate);
+    this.totalTip = await this.getTotalTip(this.dateChosen, this.endDate);
     this.loading = false;
   }
 
   // get the current currency exchange rate
-  getExchangeRate() {
-    this.exchangeRateSubscription = this.currencyService
-      .getExchangeRate()
-      .subscribe(
-        (rate) => {
-          if (rate) {
-            this.exchangeRate = rate.USD_ETB;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-        }
-      );
+  async getExchangeRate() {
+    this.exchangeRate = await this.currencyService.getExchangeRate();
   }
 
   // when a user select a date range
@@ -95,120 +107,43 @@ export class StatisticsComponent implements OnInit {
     dateRangeStart: HTMLInputElement,
     dateRangeEnd: HTMLInputElement
   ) {
-    this.totalRaised = 0;
-    this.totalTip = 0;
+    // this.totalRaised = 0;
+    // this.totalTip = 0;
     this.loading = true;
     let startDate = new Date(dateRangeStart.value);
     let endDate = new Date(dateRangeEnd.value);
-    await this.getFundraisersByDate(startDate, endDate);
-    await this.getUsersByDate(startDate, endDate);
-    await this.getFilteredDonationsByDate(startDate, endDate);
+    this.totalCampaign = await this.getFundraisersCount(startDate, endDate);
+
+    this.totalUser = await this.getUsersCount(startDate, endDate);
+
+    this.totalDonation = await this.getDonationsCount(startDate, endDate);
+
+    this.totalRaised = await this.getTotalRaised(startDate, endDate);
+
+    this.totalTip = await this.getTotalTip(startDate, endDate);
     this.loading = false;
   }
 
-  //get all fundraisers
-  async getAllFundraisers() {
-    do {
-      await this.getFundraisers();
-    } while (this.currentPage < this.fundraiserPage?.totalPages!);
-    // console.log(this.allFundraisers);
+  async getFundraisersCount(startDate: Date, endDate: Date) {
+    return await this.fundraiserService.getFundraisersCount(startDate, endDate);
   }
 
-  //get fundraisers of a page
-  async getFundraisers() {
-    this.loading = true;
-    await this.fundraiserService.getAdminFundraisers(this.currentPage).then(
-      (fundraiserPage: FundraiserPage) => {
-        this.fundraiserPage = fundraiserPage;
-        console.log(fundraiserPage.fundraisers);
-
-        this.allFundraisers = [
-          ...this.allFundraisers,
-          ...fundraiserPage.fundraisers,
-        ];
-        this.loading = false;
-        this.currentPage++;
-      },
-
-      (error: HttpErrorResponse) => {
-        this.loading = false;
-        console.log(error.error);
-        this.errorMessage = 'Unable to load fundraisers';
-      }
+  async getDonationsCount(startDate: Date, endDate: Date) {
+    return await this.adminDonationService.getDonationsCount(
+      startDate,
+      endDate
     );
   }
 
-  // filter fundraisers by date
-  async getFundraisersByDate(startDate: Date, endDate: Date) {
-    this.filteredFundraisers = await this.allFundraisers.filter(
-      (fund: Fundraiser) => {
-        let creationDate = new Date(fund.dateCreated!);
-        return startDate <= creationDate && creationDate <= endDate;
-      }
-    );
+  async getUsersCount(startDate: Date, endDate: Date) {
+    return await this.usersService.getUsersCount(startDate, endDate);
   }
 
-  // get #fundraisers
-  getNumberOfFundraisersCreated(): number {
-    return this.filteredFundraisers.length;
+  async getTotalRaised(startDate: Date, endDate: Date) {
+    return await this.adminDonationService.getTotalRaised(startDate, endDate);
   }
 
-  // get all users
-  async getUsers() {
-    await this.usersService.getAllUsers().then(
-      (users: User[]) => (this.allUsers = users),
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
-  }
-
-  // get users by date
-  async getUsersByDate(startDate: Date, endDate: Date) {
-    this.filteredUsers = await this.allUsers.filter((user) => {
-      let signupDate = new Date(user.date!);
-      return startDate <= signupDate && signupDate <= endDate;
-    });
-  }
-
-  //get all donations
-  async getAllDonations() {
-    await this.adminDonationService
-      .getAllDonations()
-      .then((donations) => (this.allDonations = donations));
-  }
-
-  //get filtered donations by date
-  async getFilteredDonationsByDate(startDate: Date, endDate: Date) {
-    this.filteredDonations = await this.allDonations.filter((donation) => {
-      let donationDate = new Date(donation.date!);
-      return startDate <= donationDate && donationDate <= endDate;
-    });
-    await this.getTotalRaised();
-    await this.getTotalTip();
-  }
-
-  // get total raised
-  async getTotalRaised() {
-    await this.filteredDonations.forEach((donation) => {
-      this.totalRaised +=
-        donation.paymentMethod?.toLowerCase() === 'paypal'
-          ? donation.amount * this.exchangeRate
-          : donation.amount;
-    });
-  }
-
-  // get total tip
-  async getTotalTip() {
-    await this.filteredDonations.forEach((donation) => {
-      if (donation.tip) {
-        this.totalTip +=
-          donation.paymentMethod?.toLowerCase() === 'paypal'
-            ? donation.tip * this.exchangeRate
-            : donation.tip;
-      }
-    });
-    console.log(this.totalTip);
-    
+  async getTotalTip(startDate: Date, endDate: Date) {
+    return await this.adminDonationService.getTotalTip(startDate, endDate);
   }
 }

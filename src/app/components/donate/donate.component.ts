@@ -20,6 +20,7 @@ import { Donation, PendingDonation } from 'src/app/models/donation.model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-donate',
@@ -30,10 +31,12 @@ export class DonateComponent implements OnInit, OnDestroy {
   // donation object
   donation: Donation = {
     amount: 0,
-    tip: 10,
+    tip: 0,
     memberId: '',
-    paymentMethod: 'PayPal',
+    paymentMethod: 'paypal',
   };
+
+  tipPercentage = 7.5
 
   fundraiserId = '';
   loading = true; // to show/hide loading spinner
@@ -47,6 +50,9 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   public payPalConfig?: IPayPalConfig;
 
+  // for telebirr button
+  loadingBtn = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -59,10 +65,20 @@ export class DonateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(JSON.stringify(currentUser));
+
+    let firstName = currentUser?.firstName ? currentUser?.firstName : '';
+    let lastName = currentUser?.lastName ? currentUser?.lastName : '';
+
+
     this.title.setTitle('Donate');
     this.form = this.formBuilder.group({
+      firstName: [firstName, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      lastName: [lastName, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       amount: [10, [Validators.required, Validators.min(5)]],
-      tip: [10, [Validators.required, Validators.min(10)]],
+      // tip: [7.5, [Validators.required, Validators.min(10)]],
       // anonymous: [],
       comment: [
         '', //[Validators.required, Validators.minLength(5)]
@@ -148,13 +164,22 @@ export class DonateComponent implements OnInit, OnDestroy {
   }
 
   /* getters for form controls*/
+
+  public get firstName(): AbstractControl | null {
+    return this.form.get('firstName');
+  }
+
+  public get lastName(): AbstractControl | null {
+    return this.form.get('lastName');
+  }
+
   public get amount(): AbstractControl | null {
     return this.form.get('amount');
   }
 
-  public get tip(): AbstractControl | null {
-    return this.form.get('tip');
-  }
+  // public get tip(): AbstractControl | null {
+  //   return this.form.get('tip');
+  // }
 
   public get comment(): AbstractControl | null {
     return this.form.get('comment');
@@ -165,13 +190,13 @@ export class DonateComponent implements OnInit, OnDestroy {
   }
 
   // set  tip
-  set tip(amount) {
-    this.form.patchValue({ tip: amount });
-  }
+  // public set tip(amount) {
+  //   this.form.patchValue({ tip: amount });
+  // }
 
-  get tip_percentage(): number {
-    return (this.amount?.value * this.tip?.value) / 100;
-  }
+  // get tip_percentage(): number {
+  //   return (this.amount?.value * this.tip?.value) / 100;
+  // }
 
   percentSymbol() {
     return (number: number) => number + '%';
@@ -188,6 +213,10 @@ export class DonateComponent implements OnInit, OnDestroy {
     if (!this.donation.comment) {
       delete this.donation['comment'];
     }
+
+    // because tip(percentage) has to be changed to actual money
+    this.donation.tip = (this.donation.amount * this.donation.tip) / 100;
+
     this.donationService.goToPayPal(this.fundraiserId, this.donation).subscribe(
       (result) => {
         console.log(result);
@@ -199,32 +228,44 @@ export class DonateComponent implements OnInit, OnDestroy {
   }
 
   goToTelebirr() {
+    this.loadingBtn = true;
+
+    let tip: number = (this.amount?.value * this.tipPercentage) / 100;
     let pendingDonation: PendingDonation = {
+      name: this.form.value['isAnonymous'] ? 'Anonymous' : this.firstName?.value + " " + this.lastName?.value,
       fundId: this.fundraiserId,
       comment: this.comment?.value,
-      amount: this.amount?.value,
-      tip: this.tip?.value,
+      amount: this.amount?.value.toFixed(2),
+      // because tip(percentage) has to be changed to actual money
+      // round to 2 decimals
+      tip: Number.parseFloat(this.with2decimals(tip)),
       isAnonymous: this.form.value['isAnonymous'],
       memberId: this.memberId?.value,
       paymentMethod: 'telebirr',
-    }
+      userId: localStorage.getItem('userId')
+    };
     // if memberId is empty add the user's id
     if (!this.memberId || !this.memberId!.value) {
       pendingDonation.memberId = this.fundraiser?.teams![0].id._id;
     }
 
     let json = {
-      returnUrl: `http://localhost:4200${this.router.url.replace('donate', 'fundraiser-detail')}`,
+      returnUrl: `${environment.BASE_URL}${this.router.url.replace(
+        'donate',
+        'fundraiser-detail'
+      )}`,
       subject: `Donating for ${this.fundraiser?.title}`,
-      donation: pendingDonation
-    }
-    console.log(`json: ${JSON.stringify(json)}`)
-    console.log(`json: ${JSON.stringify(this.donation)}`)
+      donation: pendingDonation,
+      paymentInfo: this.fundraiser?.paymentInfo?._id
+    };
+    console.log(`json: ${JSON.stringify(json)}`);
+    console.log(`json: ${JSON.stringify(this.donation)}`);
 
     this.donationService.goToTelebirr(json).subscribe(
       (result: any) => {
         console.log(result);
-        window.open(result.data.toPayUrl, "_blank");
+        window.open(result.data.toPayUrl, '_self');
+        this.loadingBtn = false;
       },
       (error) => {
         console.log(error.error);
@@ -240,6 +281,9 @@ export class DonateComponent implements OnInit, OnDestroy {
     if (!this.memberId || !this.memberId!.value) {
       this.donation.memberId = this.fundraiser?.teams![0].id._id;
     }
+
+    // because tip(percentage) has to be changed to actual money
+    this.donation.tip = (this.donation.amount * this.donation.tip) / 100;
 
     this.donationSub = this.donationService
       .createDonation(this.fundraiserId, this.donation)
@@ -286,15 +330,20 @@ export class DonateComponent implements OnInit, OnDestroy {
       );
   }
 
-  // assign slider value or custom tip to tip amount
-  sliderChange(event: any) {
-    if (event.value < 10) {
-      setTimeout(() => {
-        event.source.value = 10;
-        this.tip = event.value > 10 ? event.value : 10;
-      });
-    }
-  }
+  // // assign slider value or custom tip to tip amount
+  // sliderChange(event: any) {
+  //   if (event.value < 10) {
+  //     setTimeout(() => {
+  //       event.source.value = 10;
+  //       this.tip = event.value > 10 ? event.value : 10;
+  //     });
+  //   }
+  // }
+
+  with2decimals(num: number) {
+    return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)![0];
+  };
+
 
   ngOnDestroy(): void {
     this.fundraiserSub?.unsubscribe();

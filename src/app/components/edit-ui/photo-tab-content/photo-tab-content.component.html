@@ -1,36 +1,16 @@
-
 <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-<mat-progress-bar
-  data-cy="loader"
-  *ngIf="loading"
-  mode="indeterminate"
-></mat-progress-bar>
+<mat-progress-bar data-cy="loader" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 <form [formGroup]="form" fxLayout="column" fxLayoutAlign="center center">
-  <img 
-  ngClass.sm="img-sm"
-  ngClass.lt-sm="img-xs"
-  [src]="fundraiser.image"
-  onerror="this.src='./assets/images/placeholder.png'"
-/>
-  <button mat-raised-button color="primary">
-    <label matLabel for="image">
-      <input
-        id="image"
-        hidden
-        formControlName="image"
-        type="file"
-        accept="image/jpeg,image/png,image/gif, image/bmp"
-        (change)="onImageChosen($event)"
-      />
-      {{ "Change photo" | translate }}
-    </label>
+  <img ngClass.sm="img-sm" ngClass.lt-sm="img-xs" [src]="fundraiser.image"
+    onerror="this.src='./assets/images/placeholder.png'" />
+  <button mat-raised-button color="primary" (click)="compressFile()">
+    <!-- <label matLabel for="image">
+      <input id="image" hidden formControlName="image" type="file" accept="image/jpeg,image/png,image/gif, image/bmp"
+        (click)="compressFile()" /> -->
+    {{ "Change photo" | translate }}
+    <!-- </label> -->
   </button>
-  <button
-    type="submit"
-    mat-raised-button
-    color="primary"
-    (click)="uploadImage()"
-  >
+  <button type="submit" mat-raised-button color="primary" (click)="uploadImage()">
     {{ "Save changes" | translate }}
   </button>
 </form>

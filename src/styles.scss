@@ -3,15 +3,19 @@
 
 @import '~ngx-sharebuttons/themes/material/material-dark-theme';
 @import '~ngx-sharebuttons/themes/modern/modern-light-theme';
+
 html,
 body {
   height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #fff;
+  margin             : 0;
+  // font-family     : Roboto, "Helvetica Neue", sans-serif;
+  font-family        : "CircularXXWeb", Trebuchet, Helvetica, Arial, sans-serif;
+  font-size          : 1rem;
+  line-height        : 1.5;
+  background-color   : #fff;
 }
 
 .bg-white {
@@ -27,8 +31,8 @@ body {
 .header {
   background: #fff;
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
-  padding: 0.5rem 8rem;
-  position: relative;
+  padding   : 0.5rem 8rem;
+  position  : relative;
 }
 
 .nav-link {
@@ -37,12 +41,12 @@ body {
 }
 
 .btn-link {
-  color: #00b086;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 400;
+  color               : #00b086;
+  cursor              : pointer;
+  font-size           : 0.875rem;
+  font-weight         : 400;
   text-decoration-line: underline;
-  margin: 0;
+  margin              : 0;
 }
 
 .btn-link:hover {
@@ -50,13 +54,13 @@ body {
 }
 
 a {
-  color: #00b086;
+  color          : #00b086;
   text-decoration: none;
-  cursor: pointer;
+  cursor         : pointer;
 }
 
 .bold {
-  font-weight: 900;
+  font-weight: 800;
 }
 
 img {
@@ -66,12 +70,12 @@ img {
 mat-form-field {
   margin-left: 8px;
   caret-color: #1d1d1b;
-  width: 100%;
-  margin: 0 auto;
+  width      : 100%;
+  margin     : 0 auto;
 }
 
 .mat-primary.mat-raised-button {
-  color: #fff;
+  color : #fff;
   margin: 10px 0px;
 }
 
@@ -80,10 +84,10 @@ mat-form-field {
 }
 
 .btn-large {
-  width: 100%;
-  padding: 8px !important;
-  font-size: 1.125rem;
-  font-weight: 600;
+  width      : 100%;
+  padding    : 8px !important;
+  font-size  : 1.125rem;
+  font-weight: 500;
 }
 
 .btn-md {
@@ -91,40 +95,40 @@ mat-form-field {
 }
 
 .facebook-btn {
-  font-size: 18;
+  font-size       : 18;
   background-color: rgb(59, 87, 157);
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  padding: 0.3rem 1rem;
-  margin-top: 20px;
-  width: 100%;
+  border-radius   : 4px;
+  color           : #fff;
+  font-weight     : 600;
+  padding         : 0.3rem 1rem;
+  margin-top      : 20px;
+  width           : 100%;
 }
 
 p.footer-logo {
-  width: 100%;
+  width : 100%;
   height: 40px;
 }
 
 mat-card.fundraiser-form {
   background-color: transparent !important;
-  box-shadow: none !important;
-  width: 40%;
-  margin: 40px auto;
+  box-shadow      : none !important;
+  width           : 40%;
+  margin          : 40px auto;
 }
 
 .or-divider {
-  display: flex;
+  display        : flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-  width: 98%;
-  align-items: baseline;
+  margin-bottom  : 1rem;
+  margin-top     : 1rem;
+  width          : 98%;
+  align-items    : baseline;
 }
 
 .bar {
-  height: 1px;
-  width: 40%;
+  height          : 1px;
+  width           : 40%;
   background-color: #c8c8dd;
 }
 
@@ -134,39 +138,41 @@ mat-card.fundraiser-form {
 
 .progress-bar-sections-section {
   height: 0.3125rem;
-  width: 94%;
+  width : 94%;
 }
+
 .progress-bar-sections-section--remaining {
   background-color: #c8c8c8;
 }
+
 .progress-bar-sections-wrap {
-  display: grid;
-  grid-column-gap: 0.5rem;
+  display              : grid;
+  grid-column-gap      : 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  grid-template-rows: auto;
+  grid-template-rows   : auto;
 }
 
 .progress-bar-sections-title {
   margin-bottom: 0.5rem !important;
-  text-align: left;
-  color: #767676;
+  text-align   : left;
+  color        : #767676;
 }
 
 /*post update */
 mat-dialog-content.mat-dialog-content {
-  width: 400px;
+  width : 400px;
   margin: 30px 0px;
 }
 
 .close-dialog {
-  float: right;
-  cursor: pointer;
+  float     : right;
+  cursor    : pointer;
   margin-top: -10px;
 }
 
 textarea {
   min-height: 7rem;
-  resize: none;
+  resize    : none;
 }
 
 .media {
@@ -174,9 +180,9 @@ textarea {
 }
 
 .dialog-go-back-btn {
-  margin: 20px !important;
-  text-align: center;
-  cursor: pointer;
+  margin         : 20px !important;
+  text-align     : center;
+  cursor         : pointer;
   text-decoration: underline;
 }
 
@@ -194,14 +200,14 @@ textarea {
 
 /* to contain name shortcuts */
 div.avatar-contain {
-  width: 2rem !important;
-  height: 2rem !important;
-  line-height: 2rem;
-  color: #ddd;
-  font-size: 0.875rem;
+  width        : 2rem !important;
+  height       : 2rem !important;
+  line-height  : 2rem;
+  color        : #ddd;
+  font-size    : 0.875rem;
   border-radius: 50%;
-  border: 0.0625rem solid #ddd;
-  text-align: center;
+  border       : 0.0625rem solid #ddd;
+  text-align   : center;
 }
 
 .loading-spinner {
@@ -210,21 +216,21 @@ div.avatar-contain {
 
 .logo {
   cursor: pointer;
-  width: 100px;
+  width : 100px;
   height: 70px;
 }
 
 
 .table-container {
   margin: 30px 20px;
-  width: 90%;
+  width : 90%;
 }
 
 .bg-gray {
   background-color: #fbf8f6;
-  padding: 20px;
+  padding         : 20px;
 }
 
-main{
+main {
   height: 100%;
 }

@@ -1,3 +1,21 @@
+<button
+  mat-raised-button
+  (click)="paymentInBirr()"
+  fxFlexAlign="center"
+  color="secondary"
+>
+  Payment in birr
+</button>
+
+<button
+  mat-raised-button
+  (click)="paymentInDollar()"
+  fxFlexAlign="right"
+  color="secondary"
+>
+  Payment in dollar
+</button>
+
 <div *ngIf="loading">
   <mat-progress-spinner
     mode="indeterminate"

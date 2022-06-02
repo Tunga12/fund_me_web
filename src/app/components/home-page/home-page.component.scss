@@ -5,19 +5,19 @@ button {
 h1.bold,
 h2.bold {
   font-weight: 900;
-  font-size: x-large;
+  font-size  : x-large;
 }
 
 .mobile-header {
-  width: 94%;
+  width : 94%;
   margin: 0px auto;
 }
 
 .illustration {
-  background-image: url(../../../assets/images/homepage-illustration-1920w.png);
+  background-image   : url(../../../assets/images/homepage-illustration-1920w.png);
   background-position: 50% center;
-  padding: 100px 100px 200px 100px;
-  height: 90% !important;
+  padding            : 100px 100px 200px 100px;
+  height             : 90% !important;
 }
 
 .full-width {
@@ -43,24 +43,26 @@ mat-icon.mat-icon {
 nav {
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
-  z-index: 2;
+  top     : 0;
+  z-index : 2;
 }
 
 .ready-to-start-fundraising {
-  margin: 4rem auto;
-  max-width: 70%;
+  margin    : 4rem auto;
+  max-width : 70%;
   text-align: center;
+
   a,
   h3 {
     font-size: large;
-    padding: 0.5rem 0.4rem;
+    padding  : 0.5rem 0.4rem;
   }
 }
 
 .fundraisers-list-section {
   margin: 50px auto;
-  h2{
+
+  h2 {
     padding-left: 10px;
   }
 }
@@ -71,4 +73,8 @@ nav {
 
 .width-lt-md {
   max-width: 96% !important;
+}
+
+hr {
+  border-color: rgba(247, 247, 247, 0.5);
 }

@@ -17,7 +17,7 @@ export class EditUiComponent implements OnInit, OnDestroy {
   fundraiserId: string = '';
   fundraiser!: Fundraiser;
   tabs = ['Overview', 'Photo', 'Story', //'Notification'
-];
+  ];
   fundraiserSub?: Subscription;
   errorMessage = '';
   constructor(
@@ -26,7 +26,7 @@ export class EditUiComponent implements OnInit, OnDestroy {
     private fundraiserServ: FundraiserService,
     private router: Router,
     private docTitle: Title,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Edit fundraiser');
@@ -44,10 +44,10 @@ export class EditUiComponent implements OnInit, OnDestroy {
         this.loading = false;
         console.log(this.fundraiser);
       },
-      (error)=>{
-        this.errorMessage=error.error;
-        console.log(error.error);
-      });
+        (error) => {
+          this.errorMessage = "Failed to fetch fundraiser";
+          console.log(error.error);
+        });
   }
 
 

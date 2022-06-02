@@ -1,5 +1,10 @@
 <div>
-  <mat-form-field appearance="fill" fxFlex="50" fxFlex.lt-md="90" appearance="outline">
+  <mat-form-field
+    appearance="fill"
+    fxFlex="50"
+    fxFlex.lt-md="90"
+    appearance="outline"
+  >
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
       <input #dateRangeStart matStartDate placeholder="Start date" />
@@ -38,9 +43,9 @@
   >
     <mat-icon class="mat-27">payment</mat-icon>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <strong> {{ getNumberOfFundraisersCreated() }} </strong>
+      <strong> {{ totalCampaign }} </strong>
       <!-- <strong> CAMPAIGNS </strong> -->
-      <strong [ngPlural]="getNumberOfFundraisersCreated()">
+      <strong [ngPlural]="totalCampaign">
         <ng-template ngPluralCase="=1"> CAMPAIGN </ng-template>
         <ng-template ngPluralCase="other"> CAMPAIGNS </ng-template>
       </strong>
@@ -55,8 +60,8 @@
   >
     <fa-icon [icon]="donateIcon" [size]="'3x'"></fa-icon>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <strong> {{ filteredDonations.length }} </strong>
-      <strong [ngPlural]="filteredDonations.length">
+      <strong> {{ totalDonation }} </strong>
+      <strong [ngPlural]="totalDonation">
         <ng-template ngPluralCase="=1"> Donation </ng-template>
         <ng-template ngPluralCase="other"> Donations </ng-template>
       </strong>
@@ -72,11 +77,12 @@
     <!-- <mat-icon class="mat-18">people</mat-icon> -->
     <mat-icon class="mat-18">trending_up</mat-icon>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <strong> {{ totalRaised | currency: "ETB" }} </strong>
+      <strong> {{ totalRaised.countBirr | currency: "ETB" }} </strong>
+      <strong> {{ totalRaised.countDollar | currency: "USD" }} </strong>
       <strong> RAISED </strong>
     </div>
   </div>
-  
+
   <div
     fxLayout="row"
     class="container"
@@ -86,7 +92,8 @@
     <!-- <mat-icon class="mat-18"></mat-icon> -->
     <fa-icon [icon]="coinIcon" [size]="'3x'"></fa-icon>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <strong> {{ totalTip | currency: "ETB" }} </strong>
+      <strong> {{ totalTip.countBirr | currency: "ETB" }} </strong>
+      <strong> {{ totalTip.countDollar | currency: "USD" }} </strong>
       <strong> TIP </strong>
     </div>
   </div>
@@ -99,9 +106,9 @@
   >
     <mat-icon class="mat-18">people</mat-icon>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0px">
-      <strong> {{ filteredUsers.length }} </strong>
+      <strong> {{ totalUser }} </strong>
       <!-- <strong> NEW USERS </strong> -->
-      <strong [ngPlural]="filteredUsers.length">
+      <strong [ngPlural]="totalUser">
         <ng-template ngPluralCase="=1"> NEW USER </ng-template>
         <ng-template ngPluralCase="other"> NEW USERS </ng-template>
       </strong>

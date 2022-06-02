@@ -14,7 +14,7 @@ export class FundraiserService {
   getPercentage(fundraiser: Fundraiser): number {
     throw new Error('Method not implemented.');
   }
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // get fundraisers by page
   getFundraisers(page: number): Observable<FundraiserPage> {
@@ -46,6 +46,7 @@ export class FundraiserService {
       ...fundraiser,
       isPublished: true,
       category: fundraiser.category?._id,
+      paymentInfo: fundraiser.paymentInfo?._id,
     };
 
     return this.http.post<Fundraiser>(
@@ -63,7 +64,9 @@ export class FundraiserService {
   //get a single fundraiser by id
   getFundraiserAsync(fundraiserId: string) {
     return this.http
-      .get<Fundraiser>(`${environment.BASE_URL}/api/fundraisers/${fundraiserId}`)
+      .get<Fundraiser>(
+        `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`
+      )
       .toPromise();
   }
 
@@ -103,9 +106,12 @@ export class FundraiserService {
     let customFundraiser = {
       ...fundraiser,
       category: fundraiser.category?._id,
-      organizer:fundraiser.organizer?._id,
-      withdraw: fundraiser.withdraw?._id
+      organizer: fundraiser.organizer?._id,
+      withdraw: fundraiser.withdraw?._id,
+      paymentInfo: fundraiser.paymentInfo?._id
     };
+
+    console.log(customFundraiser);
 
     return this.http.put<Fundraiser>(
       `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
@@ -114,10 +120,10 @@ export class FundraiserService {
   }
 
   // delete fundraiser by id
-  deleteFundraiser(fundraiserId: string){
+  deleteFundraiser(fundraiserId: string) {
     return this.http.delete(
       `${environment.BASE_URL}/api/fundraisers/${fundraiserId}`,
-      {responseType:'text'}
+      { responseType: 'text' }
     );
   }
 
@@ -167,7 +173,11 @@ export class FundraiserService {
   //to know if a fundraiser has a team (accepted members)
   hasAcceptedTeamMembers(fundraiser: Fundraiser): boolean {
     let team = fundraiser?.teams?.filter((member: TeamMember) => {
-      if (member.status !== 'pending' &&  member.id.userId._id! !=fundraiser.organizer?._id!) return true;
+      if (
+        member.status !== 'pending' &&
+        member.id.userId._id! != fundraiser.organizer?._id!
+      )
+        return true;
       return false;
     });
     return team?.length! > 0;
@@ -176,7 +186,7 @@ export class FundraiserService {
   //to know if a user has a has donated to a fundraiser
   hasDonated(fundraiser: Fundraiser, userId: string): boolean {
     let donation = fundraiser.donations?.find((donation: Donation) => {
-      if (donation.userId?._id === userId) return true;
+      if (donation.userId === userId) return true;
       return false;
     });
     return donation ? true : false;
@@ -185,7 +195,7 @@ export class FundraiserService {
   // get the donation amount of a user to a fundraiser
   myDonation(fundraiser: Fundraiser, userId: string): number {
     let donation = fundraiser.donations?.find((donation: Donation) => {
-      if (donation.userId?._id === userId) return true;
+      if (donation.userId === userId) return true;
       return false;
     });
     return donation ? donation.amount : 0;
@@ -245,5 +255,34 @@ export class FundraiserService {
         Date.parse(d2.date?.toString() ?? '') -
         Date.parse(d1.date?.toString() ?? '')
     );
+  }
+
+  async getFundraisersCount(startDate: Date, endDate: Date): Promise<number> {
+    let count = await this.http
+      .post<{ count: number }>(
+        `${environment.BASE_URL}/api/fundraisers/count`,
+        {
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        }
+      )
+      .toPromise();
+
+    return count.count;
+  }
+
+  async getPaymentBirr() {
+    let payments = await this.http
+      .get<Fundraiser[]>(`${environment.BASE_URL}/api/fundraisers/payBirr`)
+      .toPromise();
+
+    return payments;
+  }
+  async getPaymentDollar() {
+    let payments = await this.http
+      .get<Fundraiser[]>(`${environment.BASE_URL}/api/fundraisers/payDollar`)
+      .toPromise();
+
+    return payments;
   }
 }

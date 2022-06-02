@@ -7,10 +7,16 @@
     [ngStyle.gt-xs]="{ 'max-width': '50%' }"
   >
     <p>Total raised from this fundraiser(after fees)</p>
-    <h2 class="bold">{{ getTotalRaised(fundraiser) | currency: "ETB"}}</h2>
-    <div class="alert" *ngIf="fundraiser?.withdraw?.status === 'pending'">
+    <h2 class="bold">{{ getTotalRaised(fundraiser) | currency: "ETB" }}</h2>
+    <div class="warning" *ngIf="fundraiser?.withdraw?.status === 'pending'">
       <strong>Campaign Alert!</strong> Your campaign is currently under review
       and all withdrawals are on hold.
+    </div>
+    <div class="alert" *ngIf="fundraiser?.withdraw?.status === 'declined'">
+      <strong>Campaign Alert!</strong> Your campaign is currently DECLINED and
+      all withdrawals are on hold. Here is the reason
+      {{ fundraiser?.withdraw?.reason }}
+      Click here to refill your information
     </div>
     <p>Last withdrawal: N/A</p>
     <strong>{{ 0 | currency }}</strong>

@@ -12,16 +12,18 @@ export class ImageCropperComponent implements OnInit {
   errorMessage: any;
 
   canvasRotation = 0;
-  scale: number=1;
+  scale: number = 1;
   transform: ImageTransform = {};
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
+  imageBase64: any = '';
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<ImageCropperComponent>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -32,10 +34,13 @@ export class ImageCropperComponent implements OnInit {
     this.dialogRef.close(this.croppedImage);
   }
 
-  fileChangeEvent(event: any): void {
+  fileChangeEvent(image: any): void {
     this.loading = true;
-    this.imageChangedEvent = event;
-    console.log(this.imageChangedEvent);
+    // this.imageChangedEvent = event;
+    // console.log(this.imageChangedEvent);
+    this.imageBase64 = image;
+    console.log(this.imageBase64);
+
   }
 
   imageCropped(event: ImageCroppedEvent) {

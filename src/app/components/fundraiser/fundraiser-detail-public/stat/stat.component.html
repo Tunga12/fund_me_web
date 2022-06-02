@@ -1,12 +1,6 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  fxLayoutGap="2px"
-  style="margin-bottom: -15px"
->
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2px" style="margin-bottom: -15px">
   <h2>
-    <span data-cy="goal" class="bold"
-      >{{ totalRaised | currency: "ETB" }}
+    <span data-cy="goal" class="bold">{{ totalRaised | currency: "ETB" }}
     </span>
     <sub data-cy="total-raised" class="text-small color-gray">{{
       "raised of goal"
@@ -17,17 +11,17 @@
 <mat-progress-bar data-cy="progress" color="primary" [value]="percentage">
 </mat-progress-bar>
 <div fxLayout="row" fxLayoutGap="30px" style="margin: 10px 0px">
-  <a data-cy="donors" fxLayout="column" href="">
-    <span class="bold">{{ fundraiser?.donations?.length }}</span>
-    <mat-hint>{{ "donors" | translate }}</mat-hint>
-  </a>
+  <div data-cy="donors" fxLayout="row" href="" *ngIf="totalDonations">
+    <span class="donations">{{ totalDonations }} {{ "donations" | translate }}</span>
+    <!-- <mat-hint>{{ "donors" | translate }}</mat-hint> -->
+  </div>
 
-  <div data-cy="shares" fxLayout="column">
+  <!-- <div data-cy="shares" fxLayout="column">
     <span class="bold">{{ fundraiser?.totalShareCount }}</span>
     <mat-hint>{{ "shares" | translate }}</mat-hint>
   </div>
   <div data-cy="followers" fxLayout="column">
     <span class="bold">{{ fundraiser?.likeCount }}</span>
     <mat-hint>{{ "followers" | translate }}</mat-hint>
-  </div>
+  </div> -->
 </div>

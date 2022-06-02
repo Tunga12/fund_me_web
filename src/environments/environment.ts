@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'http://178.62.55.81',
+  // BASE_URL: 'http://178.62.55.81',
+  BASE_URL: 'http://legasfund.com',
 };
 
 /*

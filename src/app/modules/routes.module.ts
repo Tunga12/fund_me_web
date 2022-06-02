@@ -29,6 +29,7 @@ import { WithdrawGuard } from '../services/route-guards/withdraw-guard/withdraw-
 import { NotFoundModule } from './not-found.module';
 import { AdminModule } from '../admin/admin.module';
 import { SharedModule } from '../shared/shared.module';
+import { ReportComponent } from '../components/fundraiser/fundraiser-detail-public/report/report.component';
 
 const routes: Routes = [
   {
@@ -107,7 +108,7 @@ const routes: Routes = [
   {
     path: 'donate/:id',
     component: DonateComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'notification',
@@ -151,8 +152,14 @@ const routes: Routes = [
     component: AccountSettingComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'report',
+    component: ReportComponent,
+    canActivate: [AuthGuard],
+  },
 
   { path: '', redirectTo: '/home-page', pathMatch: 'full' }, // redirect to `home page`
+
 ];
 
 @NgModule({
@@ -164,4 +171,4 @@ const routes: Routes = [
 
   exports: [RouterModule],
 })
-export class AppRoutesModule {}
+export class AppRoutesModule { }

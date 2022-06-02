@@ -1,28 +1,14 @@
-<nav class="mat-elevation-z1" style="width: 100%">
+<!-- <nav class="mat-elevation-z1" style="width: 100%">
   <nav-bar></nav-bar>
-</nav>
+</nav> -->
 <div *ngIf="loading">
-  <mat-progress-spinner
-    mode="indeterminate"
-    [value]="100"
-    color="primary"
-    class="loading-spinner"
-  >
+  <mat-progress-spinner mode="indeterminate" [value]="100" color="primary" class="loading-spinner">
   </mat-progress-spinner>
 </div>
-<div
-  *ngIf="!loading"
-  fxLayout="column"
-  fxLayoutAlign="start start"
-  fxLayoutGap="20px"
-  [ngStyle]="{ width: '80%', margin: '30px auto' }"
-  [ngStyle.xs]="{ width: '98%', margin: '30px auto' }"
->
+<div *ngIf="!loading" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px"
+  [ngStyle]="{ width: '80%', margin: '30px auto' }" [ngStyle.xs]="{ width: '98%', margin: '30px auto' }">
   <div>
-    <button
-      mat-button
-      [routerLink]="['/fundraiser-detail', fundraiser?._id]"
-    >
+    <button mat-button [routerLink]="['/fundraiser-detail', fundraiser?._id]">
       <mat-icon class="mat-18">arrow_back_ios</mat-icon>
       {{ "Back" | translate }}
       <span fxHide.xs> {{ "to fundraiser" | translate }}</span>
@@ -33,64 +19,91 @@
     <mat-divider></mat-divider>
   </div>
 
-  <div
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="start center"
-    fxLayoutGap="15px"
-  >
-    <img
-      class="fundraiser-img"
-      [src]="fundraiser?.image"
-      [ngStyle.xs]="{ width: '100%', 'max-height': '150px' }"
-      onerror="this.src='/assets/images/placeholder.png'"
-    />
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <img class="fundraiser-img" [src]="fundraiser?.image" [ngStyle.xs]="{ width: '100%', 'max-height': '150px' }"
+      onerror="this.src='/assets/images/placeholder.png'" />
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0px">
       <p>
         {{ "You're supporting፡" | translate }}
         <strong>{{ fundraiser?.title }}</strong>
       </p>
-      <span class="color-gray text-small" *ngIf="fundraiser?.beneficiary">
+      <span class="color-gray text-small" *ngIf="fundraiser?.paymentInfo">
         {{ "Your donation will benefit" | translate }}
         <strong>
-          {{ fundraiser?.beneficiary?.firstName | titlecase }}
-          {{ fundraiser?.beneficiary?.lastName | titlecase }}
+          {{ fundraiser?.paymentInfo?.name | titlecase }}
         </strong>
       </span>
     </div>
   </div>
 
-  <div
-    fxLayout="row"
-    fxLayout.xs="column-reverse"
-    fxLayoutAlign="space-between start"
-  >
-    <form
-      [formGroup]="form"
-      style="width: 60%"
-      [ngStyle.xs]="{ width: '98%' }"
-      (change)="formChange()"
-    >
+  <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutAlign="space-between start">
+    <form [formGroup]="form" style="width: 60%" [ngStyle.xs]="{ width: '98%' }" (change)="formChange()">
       <h2 class="bold">{{ "Enter your donation" | translate }}</h2>
       <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ "First name" | translate }} * </mat-label>
+            <input matInput formControlName="firstName" [placeholder]="'First name' | translate" type="text"
+              autocomplete="given-name" />
+            <mat-error data-cy="fname-empty-error" *ngIf="firstName?.touched && firstName?.errors?.required">
+              {{ "Please enter your first name" | translate }}
+            </mat-error>
+
+            <mat-error data-cy="fname-minlength-error" *ngIf="firstName?.touched && firstName?.errors?.minlength">{{
+                "First name must be letters minimum."
+                  | translate
+                    : { minlength: firstName?.errors?.minlength.requiredLength }
+              }}
+            </mat-error>
+
+            <mat-error data-cy="fname-maxlength-error" *ngIf="firstName?.touched && firstName?.errors?.maxlength">{{
+                "First name must be letters maximum."
+                  | translate
+                    : { maxlength: firstName?.errors?.maxlength.requiredLength }
+              }}
+            </mat-error>
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label> {{ "Last name" | translate }} *</mat-label>
+            <input matInput formControlName="lastName" [placeholder]="'Last name' | translate" type="text"
+              autocomplete="family-name" />
+            <mat-error data-cy="lname-empty-error" *ngIf="lastName?.touched && lastName?.errors?.required">
+              {{ "Please enter your last name" | translate }}
+            </mat-error>
+
+            <mat-error data-cy="lname-minlength-error" *ngIf="lastName?.touched && lastName?.errors?.minlength">{{
+                "Last name must be letters minimum."
+                  | translate
+                    : { minlength: lastName?.errors?.minlength.requiredLength }
+              }}
+            </mat-error>
+
+            <mat-error data-cy="lname-maxlength-error" *ngIf="lastName?.touched && lastName?.errors?.maxlength">{{
+                "Last name must be letters maximum."
+                  | translate
+                    : { maxlength: lastName?.errors?.maxlength.requiredLength }
+              }}
+            </mat-error>
+
+
+          </mat-form-field>
+        </div>
+
         <div>
           <mat-form-field appearance="outline">
             <mat-label>{{ "Donation amount" | translate }}</mat-label>
-            <input
-              class="bold"
-              matInput
-              formControlName="amount"
-              type="number"
-              placeholder="Donation amount"
-            />
+            <input class="bold" matInput formControlName="amount" type="number" placeholder="Donation amount" />
             <span matPrefix>
-              <mat-icon class="mat-18">attach_money</mat-icon>
+              <mat-icon class="mat-18">money</mat-icon>
             </span>
-            <mat-error *ngIf="amount?.touched && amount?.errors?.required"
-              >{{ "Please enter the amount you want to donate" | translate }}
+            <mat-error *ngIf="amount?.touched && amount?.errors?.required">
+              {{ "Please enter the amount you want to donate" | translate }}
             </mat-error>
-            <mat-error *ngIf="amount?.touched && amount?.errors?.min"
-              >{{
+            <mat-error *ngIf="amount?.touched && amount?.errors?.min">{{
                 "The minimum amount to donate is"
                   | translate: { min: amount?.errors?.min?.min }
               }}
@@ -99,43 +112,26 @@
         </div>
 
         <!-- Tip amount -->
-        <div>
+        <!-- <div>
           <h3 class="bold">{{ "Tip amount" | translate }}</h3>
           <div fxLayout="column" fxLayoutAlign="start center">
-            <!-- Add a tooltip here -->
-            <mat-slider
-              color="primary"
-              step="1"
-              value="donation.tip"
-              min="1"
-              max="25"
-              tickInterval="1"
-              [thumbLabel]="true"
-              [value]="tip!.value"
-              (change)="sliderChange($event)"
-              [displayWith]="percentSymbol()"
-            >
+             Add a tooltip here
+            <mat-slider color="primary" step="1" value="donation.tip" min="1" max="25" tickInterval="1"
+              [thumbLabel]="true" [value]="tip!.value" (change)="sliderChange($event)" [displayWith]="percentSymbol()">
             </mat-slider>
           </div>
-        </div>
-        <mat-form-field
-          *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)"
-          appearance="outline"
-        >
+        </div> -->
+        <mat-form-field *ngIf="fundraiserService.hasAcceptedTeamMembers(fundraiser!)" appearance="outline">
           <mat-label>{{
             "Referer: Who invited you to this campaign?" | translate
           }}</mat-label>
           <mat-select formControlName="memberId">
             <mat-option>{{ "Select a team member" | translate }}</mat-option>
             <ng-container *ngFor="let member of fundraiser!.teams">
-              <mat-option
-                *ngIf="member.status !== 'pending'"
-                [value]="member.id._id"
-                >{{
+              <mat-option *ngIf="member.status !== 'pending'" [value]="member.id._id">{{
                   member.id.userId.firstName + " " + member.id.userId.firstName
                     | titlecase
-                }}</mat-option
-              >
+                }}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>
@@ -144,18 +140,12 @@
             <mat-label>{{ "Comment" | translate }}</mat-label>
             <textarea matInput formControlName="comment" type="text"></textarea>
           </mat-form-field>
-          <mat-error *ngIf="comment?.touched && comment?.errors?.minlength"
-            >Comment should be
+          <mat-error *ngIf="comment?.touched && comment?.errors?.minlength">Comment should be
             {{ comment?.errors?.minlength.requiredLength }} letters
-            minimum</mat-error
-          >
+            minimum</mat-error>
         </div>
         <div>
-          <mat-checkbox
-            formControlName="isAnonymous"
-            [indeterminate]="false"
-            color="primary"
-          >
+          <mat-checkbox formControlName="isAnonymous" [indeterminate]="false" color="primary">
             {{ "Don't display my name publicly on the campaign." | translate }}
           </mat-checkbox>
         </div>
@@ -171,63 +161,35 @@
           Donate now
         </button>  -->
       </div>
-      <ngx-paypal
-        aria-disabled="form.invalid"
-        [config]="payPalConfig"
-      ></ngx-paypal>
-      <button
-      (click)="goToTelebirr()"
-      class="telebirr-btn" mat-raised-button>
-        <img
-          class="telebirr-img"
-          title="Telebirr"
-          src="/assets/images/telebirr-logo.svg"
-        />
+      <ngx-paypal aria-disabled="form.invalid" [config]="payPalConfig"></ngx-paypal>
+      <button (click)="goToTelebirr()" class="telebirr-btn" mat-raised-button [class.spinner]="loadingBtn"
+        [disabled]="loadingBtn">
+        <img class="telebirr-img" title="Telebirr" src="/assets/images/telebirr-logo.svg" />
       </button>
     </form>
     <mat-card [ngStyle.xs]="{ width: '90%' }">
       <mat-card-content>
         <h2 class="bold">{{ "Your donation" | translate }}</h2>
-        <div
-          fxLayout="column"
-          fxLayout.xs="row"
-          fxLayoutAlign="space-between center"
-          fxLayoutGap="10px"
-        >
-          <div
-            class="color-gray"
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-          >
+        <div fxLayout="column" fxLayout.xs="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+          <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
             <p>{{ "Your donation" | translate }}</p>
-            <p class="bold">${{ amount!.value }}</p>
+            <p class="bold">{{ amount!.value }}</p>
           </div>
 
-          <div
-            class="color-gray"
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-          >
+          <!-- <div class="color-gray" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
             <p>{{ "Legas tip" | translate }}</p>
             <p class="bold">${{ tip_percentage }}</p>
-          </div>
+          </div> -->
           <div>
             <mat-divider></mat-divider>
           </div>
           <p></p>
-          <div
-            fxLayout="row"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-between start"
-            class="bold"
-          >
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start" class="bold">
             <p>
               {{ "Total" | translate }}
               <span fxHide.xs> {{ "due today" | translate }}</span>
             </p>
-            <p>{{ amount!.value + tip_percentage }}</p>
+            <p>{{ amount!.value }}</p>
           </div>
         </div>
       </mat-card-content>

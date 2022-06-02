@@ -40,18 +40,7 @@ export class WithdrawalsOverviewComponent implements OnInit, OnDestroy {
     );
   }
 
-  getExchangeRate() {
-    this.exchangeRateSubscription = this.currencyConverterService
-      .getExchangeRate()
-      .subscribe(
-        (rate) => {
-          if (rate) {
-            this.exchangeRate = rate.USD_ETB;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-        }
-      );
+  async getExchangeRate() {
+    this.exchangeRate = await this.currencyConverterService.getExchangeRate();
   }
 }

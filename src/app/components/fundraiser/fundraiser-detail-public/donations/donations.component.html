@@ -1,22 +1,12 @@
 <div fxLayout="column">
   <div fxLayout="column" fxLayoutGap="0px">
-    <div
-      mat-dialog-title
-      fxLayout="row"
-      fxLayoutAlign="space-between start"
-      fxLayoutGap="30px"
-    >
+    <div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="30px">
       <h2 data-cy="donations-title" class="bold" matDialogTitle>
         {{ type | translate
         }}<span fxHide.lt-md>{{ "donations" | translate }}</span>
       </h2>
       <div fxLayout="row" fxLayoutGap="20px">
-        <button
-          data-cy="toggle-btn"
-          mat-stroked-button
-          (click)="getDonations()"
-          style="border-radius: 20px"
-        >
+        <button data-cy="toggle-btn" mat-stroked-button (click)="getDonations()" style="border-radius: 20px">
           <mat-icon *ngIf="type === 'All'" class="mat-18">sort</mat-icon>
           {{ topButtonLabel | translate }}
           <span fxHide.lt-md>{{ "donations" | translate }}</span>
@@ -26,28 +16,18 @@
         </span>
       </div>
     </div>
-    <button
-      data-cy="donate-btn"
-      mat-raised-button
-      (click)="gotoDonatePage()"
-      class="styled-button donate btn-large"
-    >
-      <mat-icon>attach_money</mat-icon> {{ "Donate now" | translate }}
+    <button data-cy="donate-btn" mat-raised-button (click)="gotoDonatePage()" class="styled-button donate btn-large">
+      <!-- <mat-icon>money</mat-icon> -->
+      {{ "Donate now" | translate }}
     </button>
   </div>
-  <mat-divider></mat-divider>
-  <mat-list>
+  <!-- <mat-divider></mat-divider> -->
+  <!-- <mat-list>
     <mat-list-item *ngFor="let donation of donations" style="margin: 20px 0px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <img
-          src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg"
-        />
+        <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
         <div fxLayout="column" fxLayoutAlign="center start">
-          <div
-            fxLayout="row wrap"
-            fxLayoutAlign="start start"
-            fxLayoutGap="10px"
-          >
+          <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
             <span data-cy="donor-name" *ngIf="donation?.isAnonymous">{{
               "Anonymous" | translate
             }}</span>
@@ -57,8 +37,7 @@
             }}</span>
           </div>
           <span data-cy="donation-time">
-            <strong
-              >{{ getDonationAmount(donation) | currency: "ETB" }}
+            <strong>{{ getDonationAmount(donation) | currency: "ETB" }}
             </strong>
             •{{ donation.date | timeago }}
           </span>
@@ -66,5 +45,72 @@
       </div>
       <mat-divider></mat-divider>
     </mat-list-item>
-  </mat-list>
+  </mat-list> -->
+
+  <cdk-virtual-scroll-viewport *ngIf="type === 'All'" itemSize="50" class="scroll-viewport">
+
+    <mat-list>
+      <mat-list-item *cdkVirtualFor="let donation of donations" style="margin: 20px 0px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <span data-cy="donor-name" *ngIf="donation?.isAnonymous">{{
+                "Anonymous" | translate
+              }}</span>
+              <!-- <span data-cy="donor-name" *ngIf="!donation?.isAnonymous">{{
+                donation?.userId?.firstName! + " " + donation?.userId?.lastName
+                  | titlecase
+              }}</span> -->
+              <span data-cy="donor-name" *ngIf="!donation?.isAnonymous">{{
+                donation?.name! 
+                  | titlecase
+              }}</span>
+            </div>
+            <span data-cy="donation-time">
+              <strong>{{ getDonationAmount(donation) | currency: "ETB" }}
+              </strong>
+              •{{ donation.date | timeago }}
+            </span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </cdk-virtual-scroll-viewport>
+
+  <cdk-virtual-scroll-viewport *ngIf="type === 'Top'" itemSize="50" class="scroll-viewport">
+
+    <mat-list>
+      <mat-list-item *cdkVirtualFor="let donation of topDonations" style="margin: 20px 0px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <img src="https://www.gofundme.com/static/media/DefaultAvatar.4bb188e1d41df75419450a820a958679.svg" />
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <span data-cy="donor-name" *ngIf="donation?.isAnonymous">{{
+                "Anonymous" | translate
+              }}</span>
+              <span data-cy="donor-name" *ngIf="!donation?.isAnonymous">{{
+                donation?.name! 
+                  | titlecase
+              }}</span>
+            </div>
+            <span data-cy="donation-time">
+              <strong>{{ getDonationAmount(donation) | currency: "ETB" }}
+              </strong>
+              •{{ donation.date | timeago }}
+            </span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </cdk-virtual-scroll-viewport>
+
+
+
+  <button *ngIf="hasMoreDonations" data-cy="top-donations-btn" (click)="getMoreDonations()" mat-stroked-button
+    color="primary">
+    {{ "See more" | translate }}
+  </button>
 </div>

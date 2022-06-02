@@ -22,7 +22,7 @@ export class DonationsTabContentComponent implements OnInit {
   }
   openShareDialog() {
     let data: ShareArgs = {
-      url: `http://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `http://legasfund.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I have created a fundraiser on Legas ${this.fundraiser?.beneficiary ? 'to help' + this.fundraiser.beneficiary.firstName : ''} please signup and help me by donating and sharing it to your friends. thanks!`

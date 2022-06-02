@@ -40,7 +40,7 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
     private docTitle: Title,
     private router: Router,
     private currencyConverterService: CurrencyConverterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.docTitle.setTitle('Manage fundraiser');
@@ -79,11 +79,12 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
   }
 
   withdrawal(id: string) {
-    {
-      this.fundraiser.withdraw
-        ? this.router.navigate(['/my-fundraiser/withdrawals/', id, 'overview'])
-        : this.router.navigate(['/withdrawal', id]);
-    }
+    this.router.navigate(['/withdrawal', id]);
+    // {
+    //   this.fundraiser.withdraw
+    //     ? this.router.navigate(['/my-fundraiser/withdrawals/', id, 'overview'])
+    //     : this.router.navigate(['/withdrawal', id]);
+    // }
   }
 
   //  open dialog for update
@@ -95,14 +96,14 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
 
   openShareDialog() {
     let data: ShareArgs = {
-      url: `http://legas.highlight-group.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
+      url: `http://legasfund.com/fundraiser-detail/${this.fundraiser?._id}?ref=${this.userId}`,
       image: this.fundraiser?.image,
       title: this.fundraiser?.title,
       description: `Hi, I have created a fundraiser on legas ${
         this.fundraiser?.beneficiary
           ? 'to help' + this.fundraiser.beneficiary.firstName
           : ''
-      } please signup and help me by donating and sharing it to your friends. thanks!`,
+        } please signup and help me by donating and sharing it to your friends. thanks!`,
     };
     this.dialog.open(ShareDialogComponent, {
       data: data,
@@ -127,19 +128,8 @@ export class MyFundraiserDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  getExchangeRate() {
-    this.exchangeRateSubscription = this.currencyConverterService
-      .getExchangeRate()
-      .subscribe(
-        (rate) => {
-          if (rate) {
-            this.exchangeRate = rate.USD_ETB;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error);
-        }
-      );
+  async getExchangeRate() {
+    this.exchangeRate = await this.currencyConverterService.getExchangeRate();
   }
 
   ngOnDestroy(): void {

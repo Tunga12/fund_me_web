@@ -1,6 +1,6 @@
-<nav class="mat-elevation-z2">
+<!-- <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav>
+</nav> -->
 <main fxLayout="column">
   <mat-card
     [ngStyle.xs]="{ width: '90%' }"
@@ -9,29 +9,25 @@
   >
     <mat-card-content>
       <h4 class="progress-bar-sections-title heading-4">
-        Step {{ currentStep }} of 3
+        Step {{ currentStep }} of 4
       </h4>
       <div class="progress-bar-sections-wrap">
         <div
           *ngFor="let item of numSequence(currentStep)"
-          class="
-            progress-bar-sections-section
-            progress-bar-sections-section--complete
-          "
+          class="progress-bar-sections-section progress-bar-sections-section--complete"
         ></div>
         <div
-          *ngFor="let item of numSequence(3 - currentStep)"
-          class="
-            progress-bar-sections-section
-            progress-bar-sections-section--remaining
-          "
+          *ngFor="let item of numSequence(4 - currentStep)"
+          class="progress-bar-sections-section progress-bar-sections-section--remaining"
         ></div>
       </div>
       <h2 class="bold">
         {{
           (currentStep === 1
-            ? "Let’s start with the basics"
+            ? "Payment Info"
             : currentStep === 2
+            ? "Let’s start with the basics"
+            : currentStep === 3
             ? "Set fundraiser media"
             : "Set fundraiser story"
           ) | translate
@@ -39,18 +35,23 @@
       </h2>
       <form>
         <span [ngSwitch]="currentStep">
-          <set-basic-info
+          <set-shortcode
             [fundraiser]="fundraiser"
             *ngSwitchCase="1"
             (next)="next($event)"
+          ></set-shortcode>
+          <set-basic-info
+            [fundraiser]="fundraiser"
+            *ngSwitchCase="2"
+            (next)="next($event)"
           ></set-basic-info>
           <set-fundraiser-media
-            *ngSwitchCase="2"
+            *ngSwitchCase="3"
             [fundraiser]="fundraiser"
             (next)="next($event)"
           ></set-fundraiser-media>
           <set-fundraiser-story
-            *ngSwitchCase="3"
+            *ngSwitchCase="4"
             [fundraiser]="fundraiser"
             (next)="submit($event)"
           ></set-fundraiser-story>
@@ -59,7 +60,6 @@
 
         <mat-error *ngIf="errorMessage"> {{ errorMessage }}</mat-error>
 
-        
         <button
           *ngIf="currentStep !== 1"
           mat-stroked-button
@@ -74,27 +74,14 @@
           "By continuing, you agree to the Legas"
             | translate: { terms: terms.innerHTML }
         }}
-        <a
-          link
-          #terms
-          hidden
-          routerLink="/terms"
-          color="accent"
-          class="bold"
-        >
+        <a link #terms hidden routerLink="/terms" color="accent" class="bold">
           {{ "terms" | translate }}</a
         >
         {{
           "and acknowledge receipt of our"
             | translate: { privacy_policy: privacy_policy.innerHTML }
         }}
-        <a
-          hidden
-          link
-          #privacy_policy
-          routerLink="/privacy"
-          color="accent"
-        >
+        <a hidden link #privacy_policy routerLink="/privacy" color="accent">
           {{ "privacy policy" | translate }}</a
         >
       </p>

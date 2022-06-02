@@ -1,6 +1,6 @@
-<nav class="mat-elevation-z2">
+<!-- <nav class="mat-elevation-z2">
   <nav-bar></nav-bar>
-</nav>
+</nav> -->
 <main fxLayout="column">
   <div
     fxLayout="column"
@@ -10,7 +10,7 @@
     fxLayoutGap="20px"
     style="margin: 20px auto"
   >
-    <h2 class="bold" matBadge="{{ count }}">
+    <h2 class="bold">
       <!-- <mat-icon class="mat-18">notifications_active</mat-icon>  -->
       {{ "Notifications" | translate }}
     </h2>
@@ -70,9 +70,9 @@
                 "
               >
                 {{ "Accept" | translate }}
-                <span *ngIf="isBeneficiaryInvitation(notification)"
-                  >{{"and become a beneficiary"|translate}}</span
-                >
+                <span *ngIf="isBeneficiaryInvitation(notification)">{{
+                  "and become a beneficiary" | translate
+                }}</span>
               </button>
 
               <button

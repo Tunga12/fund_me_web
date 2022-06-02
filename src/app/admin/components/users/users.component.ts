@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   errorMessage: string = '';
   users: User[] = [];
   user?: User;
-  constructor(private useSrv: AdminUsersService, private title: Title) {}
+  constructor(private useSrv: AdminUsersService, private title: Title) { }
 
   async ngOnInit(): Promise<void> {
     this.title.setTitle('Admin| Users');
@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   search(email: string) {
     let user: User | undefined;
     user = this.users.find(
-      (_user) => _user.email.toLowerCase() === email.toLowerCase()
+      (_user) => _user.email!.toLowerCase() === email.toLowerCase()
     );
     this.user = user;
   }
